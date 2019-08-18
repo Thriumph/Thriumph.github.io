@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>ctf编码加解密总结 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="不全，以后慢慢完善喽⁽˙³˙⁾(๑•́ ₃ •̀๑)⁽˙³˙⁾">
+<meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ctf编码加解密总结">
+<meta property="og:url" content="http://yoursite.com/ctf编码加解密总结.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="不全，以后慢慢完善喽⁽˙³˙⁾(๑•́ ₃ •̀๑)⁽˙³˙⁾">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-e690679d89ce9dd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-3e519d8ec552a181.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-9d16e379e80d338b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-706034fd1ec97edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-37438607e860b22c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-aa3bf1fb0fcb578a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-f85ccd162a4e0c2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-7ee7b4e96930837f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-f36b678eae7a70dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-90869e3b7ec0f3c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-8cf90ee621fe94c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-a2c30b55b73e6447.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-a7838a29a5e776c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-e3e0fe998259a6fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-17T01:45:29.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ctf编码加解密总结">
+<meta name="twitter:description" content="不全，以后慢慢完善喽⁽˙³˙⁾(๑•́ ₃ •̀๑)⁽˙³˙⁾">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14577467-e690679d89ce9dd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-ctf编码加解密总结" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/ctf编码加解密总结.html" class="article-date">
+      <time datetime="2019-02-18T16:04:00.000Z" itemprop="datePublished">2019-02-19</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ctf编码加解密总结
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/ctf/">ctf</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>不全，以后慢慢完善喽⁽˙³˙⁾(๑•́ ₃ •̀๑)⁽˙³˙⁾</p>
+<a id="more"></a>
+
+<h1 id="Base64-32-16编码"><a href="#Base64-32-16编码" class="headerlink" title="Base64/32/16编码"></a>Base64/32/16编码</h1><h2 id="Base64编码"><a href="#Base64编码" class="headerlink" title="Base64编码"></a>Base64编码</h2><p>base64编码是用64（2的6次方）个ASCII字符来表示256（2的8次方）个ASCII字符，也就是三位二进制数组经过编码后变为四位的ASCII字符显示，长度比原来增加1/3</p>
+<p><strong>base64包含大写字母A-Z,小写字母a-z，数字0-9,以及+/</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-e690679d89ce9dd1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="base64编码表"></p>
+<p><strong><code>字符串转为2进制，每3个8位二进制转化为4个6位二进制，六位二进制转化为十进制，根据十进制数值在base64编码表中获取字符。Base64编码将串起来的二进制以6位进行分割.所以分切之前的二进制位数应该是24的倍数(即6,8的最小公倍数).如果不足24位,则在编码后数据后面添加&quot;=&quot;</code></strong></p>
+<p><strong>例</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-3e519d8ec552a181.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="Base32编码"><a href="#Base32编码" class="headerlink" title="Base32编码"></a>Base32编码</h2><p>base32就是用32（2的5次方）个特定ASCII码来表示256个ASCII码。所以，5个ASCII字符经过base32编码后会变为8个字符,长度变为原来得到5/3</p>
+<p><strong>Base32中只有大写字母A-Z和数字234567</strong></p>
+<p><strong><code>Base32将串起来的二进制数据按照5个二进制位分为一组,由于传输数据的单位是字节(即8个二进制位).所以分割之前的二进制位数是40的倍数(40是5和8的最小公倍数).如果不足40位,则在编码后数据补充&quot;=&quot;</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-9d16e379e80d338b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="base32编码表"></p>
+<h2 id="Base16编码"><a href="#Base16编码" class="headerlink" title="Base16编码"></a>Base16编码</h2><p>base16就是用16（2的4次方）个特定ASCII码表示256个ASCII字符。1个ASCII字符经过base16编码后会变为2个字符，长度增加一倍。</p>
+<p><strong>base16范围是数字0-9，字母ABCDEF</strong></p>
+<p><strong><code>不足8比特位高位补0.然后将所有的二进制全部串起来,4个二进制位为一组,转化成对应十进制数,根据十进制数值找到Base16编码表里面对应的字符.Base16是4个比特位表示一个字符,所以原始是1个字节(8个比特位)刚好可以分成两组,也就是说原先如果使用ASCII编码后的一个字符,现在转化成两个字符.数据量是原先的2倍,不需要补&#39;=&#39;</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-706034fd1ec97edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="base16编码表"></p>
+<h1 id="ASCII编码"><a href="#ASCII编码" class="headerlink" title="ASCII编码"></a>ASCII编码</h1><p>ASCII码是用128（2的8次方）个字符，对2进制数据进行编码<br>ASCII码大致分为3部分</p>
+<p>第一部分：ASCII非打印控制字符（0~31）</p>
+<p>第二部分：ASCII打印字符（31~126）,127是删除命令</p>
+<p>第三部分：扩展ASCII打印字符为了适应更多字符128到255，或-128到-1,其中，-128对应128，依次递增对应</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-37438607e860b22c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="Quoted-printable编码"><a href="#Quoted-printable编码" class="headerlink" title="Quoted-printable编码"></a>Quoted-printable编码</h1><p>Quoted-printable或QP encoding，可译为’’可打印字符引用编码’’或’’使用可打印字符的编码’’</p>
+<blockquote>
+<p>Quoted-printable是使用可打印的ASCII字符 (如字母、数字与”=”)表示各种编码格式下的字符，以便能在7-bit数据通路上传输8-bit数据, 也就是在非8-bit clean媒体上正确处理数据,收邮件，查看信件原始信息会有这种编码</p>
+</blockquote>
+<p><strong>编码原理</strong></p>
+<p>任何8bit字节值都可以编码为3个字符。<code>一个等号&quot;=&quot;和两个十六进制数字</code>(0到9和A到F)表示该字节的数值。</p>
+<p> 例如，十进制数12可以表示为”=0C”</p>
+<p><strong>等号”=”（十进制值为61）必须表示为”=3D”. 除了可打印ASCII字符与换行符以外，所有字符必须表示为这种格式</strong></p>
+<p><strong>所有可打印ASCII字符(十进制值的范围为33到126)可用ASCII字符编码来直接表示, 但是等号”=”(十进制值为61)不可以这样直接表示</strong></p>
+<p><strong>ASCII的水平制表符(tab)与空格符, 十进制为9和32, 如果不出现在行尾则可以用其ASCII字符编码直接表示。如果这两个字符出现在行尾，表示为”=09” (tab)或”=20” (space)</strong></p>
+<p><strong>如果数据中包含有意义的行结束标志，必须转换为ASCII回车(CR)换行(LF)序列，既不能用原来的ASCII字符也不能用QP编码的”=”转义字符序列如果字节值13与10有其它的不是行结束的含义，它们必须QP编码为=0D与=0A</strong></p>
+<p><strong>例子</strong></p>
+<p><code>If you believe that truth=3Dbeauty, then surely=20= mathematics is the most beautiful branch of philosophy.</code></p>
+<p>解码后：</p>
+<p><code>If you believe that truth=beauty, then surely mathematics is the most beautiful branch of philosophy.</code></p>
+<h1 id="UUencode编码"><a href="#UUencode编码" class="headerlink" title="UUencode编码"></a>UUencode编码</h1><blockquote>
+<p>是Unix系统下将二进制的资料借由uucp邮件系统传输的一个编码程式，是一种二进制到文字的编码。</p>
+</blockquote>
+<p><strong>UUencode将输入资料以每三个字节为单位进行编码，如此重复进行。如果最后剩下的资料少于三个字节，不够的部份用零补齐。这三个字节共有24个Bit，以6-bit为单位分为4个群组，每个群组以十进制来表示所出现的数值只会落在0到63之间。<code>将每个数加上32</code>，所产生的结果刚好落在ASCII字符集中可打印字符（32-空白…95-底线）的范围之中。</strong></p>
+<p><strong>例</strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-aa3bf1fb0fcb578a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="XXencode编码"><a href="#XXencode编码" class="headerlink" title="XXencode编码"></a>XXencode编码</h1><blockquote>
+<p>XXencode是一种类似于uuencode的一种二进制到文字的编码，它只使用字母数字字符，以及加号和减号。也是一种用于传输文件的编码格式。</p>
+</blockquote>
+<p>XXencode编码原理和UUencode编码原理相似，唯独不同的是可打印字符不同。UUencode编码有个缺点，就是64个可打印字符中，有很多的特殊字符。而XXencode编码方法，对64个原字符有做规范，和Base64差不多，都有指定可打印字符范围、及编号。</p>
+<p><strong>原理</strong></p>
+<p>XXencode将输入文本以每三个字节为单位进行编码。如果最后剩下的资料少于三个字节，不够的部份用零补齐。这三个字节共有24个Bit，以6bit为单位分为4个组，每个组以十进制来表示所出现的数值只会落在0到63之间。以所对应值的位置字符代替。它所选择的可打印字符是：<code>+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</code>，一共64个字符。跟base64打印字符相比，就是uuencode多一个“-” 字符，少一个”/” 字符。 但是，它里面字符顺序与Base64完全不一样。与UUencode比较，这里面所选择字符，都是常见字符，没有特殊字符</p>
+<p><strong>例子</strong><br><img src="https://upload-images.jianshu.io/upload_images/14577467-f85ccd162a4e0c2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="JJencode编码"><a href="#JJencode编码" class="headerlink" title="JJencode编码"></a>JJencode编码</h1><p>将JS代码转换成只有符号的字符串</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-7ee7b4e96930837f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="AAencode编码"><a href="#AAencode编码" class="headerlink" title="AAencode编码"></a>AAencode编码</h1><p> 将JS代码转换成常用的网络表情</p>
+<p>(ﾟoﾟ)=(ﾟДﾟ) [‘c’]+(ﾟДﾟ) [‘o’]+(ﾟωﾟﾉ +’<em>‘)[ﾟΘﾟ]+ ((ﾟωﾟﾉ==3) +’</em>‘) [ﾟｰﾟ] + ((ﾟДﾟ) +’<em>‘) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ ((ﾟｰﾟ==3) +’</em>‘) [ﾟΘﾟ]+((ﾟｰﾟ==3) +’<em>‘) [(ﾟｰﾟ) - (ﾟΘﾟ)]+(ﾟДﾟ) [‘c’]+((ﾟДﾟ)+’</em>‘) [(ﾟｰﾟ)+(ﾟｰﾟ)]+ (ﾟДﾟ) [‘o’]+((ﾟｰﾟ==3) +’<em>‘) [ﾟΘﾟ];(ﾟДﾟ)[‘</em>‘] =(o^_^o) [ﾟoﾟ] [ﾟoﾟ]</p>
+<h1 id="PPencode编码"><a href="#PPencode编码" class="headerlink" title="PPencode编码"></a>PPencode编码</h1><p>ppencode-Perl把Perl代码转换成只有英文字母的字符串。</p>
+<h1 id="RRencode编码"><a href="#RRencode编码" class="headerlink" title="RRencode编码"></a>RRencode编码</h1><p>rrencode可以把ruby代码全部转换成符号</p>
+<h1 id="URL编码"><a href="#URL编码" class="headerlink" title="URL编码"></a>URL编码</h1><blockquote>
+<p>url编码又叫百分号编码，是统一资源定位(URL)编码方式。URL地址（常说网址）规定了常用地数字，字母可以直接使用，另外一批作为特殊用户字符也可以直接用（/,:@等），剩下的其它所有字符必须通过%xx编码处理。 现在已经成为一种规范了，基本所有程序语言都有这种编码，如js：有encodeURI、encodeURIComponent，PHP有 urlencode、urldecode等。编码方法很简单，在该字节ascii码的的16进制字符前面加%. 如 空格字符，ascii码是32，对应16进制是’20’，那么urlencode编码结果是:%20。</p>
+</blockquote>
+<p>URL只能使用<code>英文字母、阿拉伯数字和某些标点符号，不能使用其他文字和符号</code>。这意味着，如果URL中有汉字和其他符号，就必须编码后使用。我们在进行 URL 请求时，浏览器会自动帮我们把部分符号转换成 <code>% + 十六进制数字</code> 的形式<img src="https://upload-images.jianshu.io/upload_images/14577467-f36b678eae7a70dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="URL编码表"></p>
+<h1 id="HTML实体编码"><a href="#HTML实体编码" class="headerlink" title="HTML实体编码"></a>HTML实体编码</h1><p>有些时候，想在页面上显示的东西会跟 HTML 本身的标记冲突，进行HTML实体编码后就行了<br><a href="http://www.w3school.com.cn/tags/html_ref_entities.html" target="_blank" rel="noopener">HTML ISO-8859-1 参考手册</a></p>
+<h1 id="Unicode编码"><a href="#Unicode编码" class="headerlink" title="Unicode编码"></a>Unicode编码</h1><p>ASCII码转Unicode:</p>
+<p>原文本：qweasdzxc</p>
+<p>编码后 ：&#113;&#119;&#101;&#97;&#115;&#100;&#122;&#120;&#99;</p>
+<p>中文转Unicode:</p>
+<p>原文本：你好世界</p>
+<p>编码后：\u4f60\u597d\u4e16\u754c</p>
+<h1 id="Escape-Unescape编码"><a href="#Escape-Unescape编码" class="headerlink" title="Escape/Unescape编码"></a>Escape/Unescape编码</h1><p>Escape/Unescape加密解码/编码解码,又叫%u编码，采用UTF-16BE模式， Escape编码/加密,就是字符对应UTF-16 16进制表示方式前面加%u。</p>
+<p>Unescape解码/解密，就是去掉”%u”后，将16进制字符还原后，由utf-16转码到自己目标字符。如：字符“中”，UTF-16BE是：“6d93”，因此Escape是“%u6d93”。ㄟ( ▔, ▔ )ㄏ</p>
+<h1 id="shellcode编码"><a href="#shellcode编码" class="headerlink" title="shellcode编码"></a>shellcode编码</h1><p>原文本：The quick brown fox jumps over the lazy dog</p>
+<p>编码后：<br>\x54\x68\x65\x7f\x71\x75\x69\x63\x6b\x7f\x62\x72\x6f\x77\x6e\x7f\x66\x6f\x78\x7f\x6a\x75\x6d\x70\x73\x7f\x6f\x76\x65\x72\x7f\x74\x68\x65\x7f\x6c\x61\x7a\x79\x7f\x64\x6f\x67</p>
+<h1 id="摩尔斯电码"><a href="#摩尔斯电码" class="headerlink" title="摩尔斯电码"></a>摩尔斯电码</h1><p>摩尔斯电码是一种早期的数字化通信形式，但是它不同于现代只使用0和1两种状态的二进制代码，它的代码包括五种<br>1.点（.）</p>
+<p>2.划（-）</p>
+<p>3.每个字符间短的停顿（通常用空格表示停顿）</p>
+<p>4.每个词之间中等的停顿（通常用/划分）</p>
+<p>5.以及句子之间长的停顿 </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-90869e3b7ec0f3c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="敲击码"><a href="#敲击码" class="headerlink" title="敲击码"></a>敲击码</h1><p>敲击码(Tap code)是一种以非常简单的方式对文本信息进行编码的方法。因该编码对信息通过使用一系列的点击声音来编码而命名，敲击码是基于5×5方格波利比奥斯方阵来实现的，不同点是是用K字母被整合到C中<br>   | |1|2|3|4|5<br>:–:|:-:|:-:|:–:|:-:|:-:<br>1|A|B|C/K  |D|E<br>2|F|G|H|I|J<br>3|L|M|N|O|P<br>4|Q|R|S|T|U<br>5|V|W|X   |Y   |Z</p>
+<table>
+<thead>
+<tr>
+<th align="center">原文本</th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">位置</td>
+<td align="center">1，1</td>
+<td align="center">1，2</td>
+<td align="center">1，3</td>
+</tr>
+<tr>
+<td align="center">敲击码</td>
+<td align="center">.  .</td>
+<td align="center">.  ..</td>
+<td align="center">.  …</td>
+</tr>
+<tr>
+<td align="center"># 波利比奥斯方阵密码</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>波利比奥斯方阵密码（Polybius Square Cipher）是棋盘密码的一种，是利用波利比奥斯方阵进行加密的密码形式，产生于公元二十世纪的希腊。就是把字母排列好，用坐标的形式表示出来，字母是密文，明文是对应的字母坐标。<br>   | |1|2|3|4|5<br>:–:|:-:|:-:|:–:|:-:|:-:<br>1|A|B|C|D|E<br>2|F|G|H|I/J|K<br>3|L|M|N|O|P<br>4|Q|R|S|T|U<br>5|V|W|X|Y|Z</p>
+<table>
+<thead>
+<tr>
+<th align="center">密文</th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">明文</td>
+<td align="center">1，1</td>
+<td align="center">1，2</td>
+<td align="center">11，3</td>
+</tr>
+<tr>
+<td align="center"># 普莱菲尔密码(单方密码)</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>普莱菲尔密码(Playfair Cipher)是第一种用于实际的双字替换密码，用双字加密取代了简单代换密码的单字加密，很明显这样使得密文更难破译，因为使用简单替换密码的频率分析基本没有什么作用，虽然频率分析，通常仍然可以进行，但是有25×25=625种可能</p>
+</blockquote>
+<p><strong>编写分三步:</strong></p>
+<p>1.编制密码表</p>
+<p>2.整理明文 </p>
+<p>3.编写密文 </p>
+<p><strong>构成部分:</strong></p>
+<p>1.密钥</p>
+<p>2.明文</p>
+<p>3.密文</p>
+<p>4.注明的某个字母代替的另一个字母</p>
+<p><strong>算法</strong></p>
+<p>根据5x5的的正方形密码表进行编写，密码表里有25个字母，如果一种语言超过25个，去掉使用频率最小的那个。法语一般去掉w或k，德语把i和j合起来当成一个字母看待。英语中z使用最少，可以去掉z</p>
+<p><strong>例：明文’’pishoupideweinasi”密钥”culture”</strong></p>
+<p><strong>1.编写密码表</strong></p>
+<p>（1）整理密钥culture，去掉重复字母,则为cultre</p>
+<p>（2）自上而下填充5X5方格，空白以相同顺序用字母表中的数据依次填充，得到5x5的方格</p>
+<table>
+<thead>
+<tr>
+<th align="center">c</th>
+<th align="center">e</th>
+<th align="center">g</th>
+<th align="center">m</th>
+<th align="center">s</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">u</td>
+<td align="center">a</td>
+<td align="center">h</td>
+<td align="center">n</td>
+<td align="center">v</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center">b</td>
+<td align="center">i</td>
+<td align="center">o</td>
+<td align="center">w</td>
+</tr>
+<tr>
+<td align="center">t</td>
+<td align="center">d</td>
+<td align="center">j</td>
+<td align="center">p</td>
+<td align="center">x</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">f</td>
+<td align="center">k</td>
+<td align="center">q</td>
+<td align="center">y</td>
+</tr>
+<tr>
+<td align="center"><strong>2.整理明文</strong></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>（1）遵循2个一组，得到若干个两两成对的字符段，用到明文’’pishoupideweinasi”和字母’x’</p>
+<p>（2）将明文两两一组按顺序排开,得到pi sh ou pi de we in as i</p>
+<p>（3）对于末尾的单个字母要加上一个”X“使之成为对</p>
+<p>pi sh ou pi de we in as ix</p>
+<p><code>对于相连的字母相同者，每个后面需要加上X</code><br><code>例如TOMORROW，需要写成：TO MO RX RX OW</code></p>
+<p><strong>3.编写密文</strong></p>
+<p>（1）<code>两个字母在同一行则要用它右邻的字母替换，如果已在最右边，则用该行最左边的替换</code>，如明文为<code>ce</code>，依据上表，应替换为<code>eg</code>；</p>
+<p>2.<code>两个字母在同一列用它下边的字母替换，如果已在最下边，则用该行最上边的替换</code>，如明文为<code>oq</code>，依据上表，应替换为<code>pm</code>；</p>
+<p>3.<code>两个字母在不同的行或列，则应在密码表中找两个字母使四个字母组成一个矩形，明文占据两个顶点，需用另外两个顶点的字母替换</code>，如明文为<code>hx</code>，可以替换为<code>vj</code>或<code>jv</code>（本例按照横向替换原则）。</p>
+<p>将明文加以编写，得到jo gv ln jo fa bs oh ve wj</p>
+<p>将得到的字母改为大写，并五个一组列好，得到密码JOGVL NJOFA BSOHV EWJ</p>
+<h1 id="ADFGX密码"><a href="#ADFGX密码" class="headerlink" title="ADFGX密码"></a>ADFGX密码</h1><p><strong>原理：</strong></p>
+<p>置换技术与替代技术的结合<br>结合了改良过的Polybius方格替代密码与单行换位密码的矩阵加密密码，使用了5个合理的密文字母：A，D，F，G，X，这些字母之所以这样选择是因为当转译成摩尔斯电码不易混淆，尽可能减少转译过程的操作错误。</p>
+<h1 id="ADFGVX密码"><a href="#ADFGVX密码" class="headerlink" title="ADFGVX密码"></a>ADFGVX密码</h1><p>ADFGVX密码是ADFGX密码的扩充升级版，一样具有ADFGX密码相同的特点，加密过程也类似，不同的是密文字母增加了V，使得可以再使用10数字来替换明文。</p>
+<h1 id="栅栏密码"><a href="#栅栏密码" class="headerlink" title="栅栏密码"></a>栅栏密码</h1><blockquote>
+<p>栅栏密码(Rail-fence Cipher)就是把要加密的明文分成N个一组，然后把每组的第1个字符组合，每组第2个字符组合…每组的第N(最后一个分组可能不足N个)个字符组合，最后把他们全部连接起来就是密文</p>
+</blockquote>
+<p><strong>n=2为例</strong></p>
+<p>明文：The quick brown fox jumps over the lazy dog</p>
+<p>去空格：Thequickbrownfoxjumpsoverthelazydog</p>
+<p>分组：Th eq ui ck br ow nf ox ju mp so ve rt he la zy do g</p>
+<p>第一组：Teucbonojmsvrhlzdg</p>
+<p>第二组：hqikrwfxupoeteayo</p>
+<p>密文：Teucbonojmsvrhlzdghqikrwfxupoeteayo</p>
+<h1 id="凯撒密码"><a href="#凯撒密码" class="headerlink" title="凯撒密码"></a>凯撒密码</h1><blockquote>
+<p>凯撒密码(Caesar Cipher或称恺撒加密、恺撒变换、变换加密、位移加密)是一种替换加密，明文中的所有字母都在字母表上向后（或向前）按照一个固定数目进行偏移后被替换成密文</p>
+</blockquote>
+<p><strong>例</strong></p>
+<p>明文：ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+<p>偏移量：1</p>
+<p>密文：BCDEFGHIJKLMNOPQRSTUVWXYZA</p>
+<h1 id="ROT5-13-18-47"><a href="#ROT5-13-18-47" class="headerlink" title="ROT5/13/18/47"></a>ROT5/13/18/47</h1><blockquote>
+<p>ROT5、ROT13、ROT18、ROT47 编码是一种简单的码元位置顺序替换暗码。此类编码具有可逆性，可以自我解密，主要用于应对快速浏览，或者是机器的读取，而不让其理解其意</p>
+</blockquote>
+<p><strong>ROT5：</strong>只对数字进行编码，用当前数字往前数的第5个数字替换当前数字，例如当前为0，编码后变成5，当前为1，编码后变成6，以此类推顺序循环。</p>
+<p><strong>ROT13：</strong>只对字母进行编码，用当前字母往前数的第13个字母替换当前字母，例如当前为A，编码后变成N，当前为B，编码后变成O，以此类推顺序循环。</p>
+<p><strong>ROT18：</strong>这是一个异类，本来没有，它是将ROT5和ROT13组合在一起，为了好称呼，将其命名为ROT18。</p>
+<p><strong>ROT47：</strong>对数字、字母、常用符号进行编码，按照它们的ASCII值进行位置替换，用当前字符ASCII值往前数的第47位对应字符替换当前字符，例如当前为小写字母z，编码后变成大写字母K，当前为数字0，编码后变成符号_。用于ROT47编码的字符其ASCII值范围是33－126</p>
+<h1 id="埃特巴什码"><a href="#埃特巴什码" class="headerlink" title="埃特巴什码"></a>埃特巴什码</h1><blockquote>
+<p>埃特巴什码（Atbash Cipher）是一个系统：最后一个字母代表第一个字母，倒数第二个字母代表第二个字母。</p>
+</blockquote>
+<p>常文：A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</p>
+<p>密文：Z Y X W V U T S R Q P O N M L K J I H G F E D C B A</p>
+<h1 id="当铺密码"><a href="#当铺密码" class="headerlink" title="当铺密码"></a>当铺密码</h1><p>当铺密码是将中文和数字进行转化的密码，汉字有多少笔画出头，就是转化成数字几</p>
+<p><strong>例子</strong></p>
+<p>王夫    井工   夫口   由中人   井中   夫夫   由中大</p>
+<p>6  7      8  4    7  0    1  2  3    8  2    7  7     1 2 5</p>
+<h1 id="简单替换密码"><a href="#简单替换密码" class="headerlink" title="简单替换密码"></a>简单替换密码</h1><blockquote>
+<p>将字母表的26个字母，分别与这26个字母本身建立一对一的对应关系，那么无论哪一种对应关系就都可以作为密码来使用。这种将明文所使用的字母表替换为另一套字母表的密码称为简单替换密码。凯撒也可以说是简单替换密码的特例。</p>
+</blockquote>
+<p><strong>简单替换密码的密钥空间</strong></p>
+<p>凯撒密码可以通过暴力破解，简单替换密码难以暴力破解，简单替换密码的密钥总数为26x25x24x…..x3x2x1=403291461126605633584000000</p>
+<p><strong>用频率分析破译密码</strong></p>
+<p>使用频率分析的密码破译方法，能够破译简单得到替换密码。<br>频率分析利用了明文中的字母出现的频率与密文中的字母的出现频率一致性的特性。</p>
+<p><code>英文文章中出现频率最高的字母是e，低频字母是z</code></p>
+<h1 id="维吉尼亚密码（Vigenere-Cipher）"><a href="#维吉尼亚密码（Vigenere-Cipher）" class="headerlink" title="维吉尼亚密码（Vigenere Cipher）"></a>维吉尼亚密码（Vigenere Cipher）</h1><p><code>位移密码和替换密码中，一但密钥被选定，每个字母对应的数字都被加密变换成对应的唯一数字，这种密码体制称为单表转换密码,维吉尼亚密码是多表代换密码</code></p>
+<blockquote>
+<p>维吉尼亚密码由凯撒密码扩展而来，引入了密钥的概念。即根据密钥来决定用哪一行的密表来进行替换，以此来对抗字频统计。</p>
+</blockquote>
+<p><strong>例</strong></p>
+<p>明文：TO BE OR NOT TO BE THAT IS THE QUESTION</p>
+<p>密钥：RELATIONS</p>
+<p>加密过程是：明文一个字母为T，第一个密钥字母为R，因此可以找到在R行T列的密文K，依此类推，得出对应关系如下：</p>
+<p>密钥:RE LA  TI  ONS  RE LA TION   SR ELA TIONSREL</p>
+<p>明文:TO BE OR NOT TO BE THAT  IS  THE QUESTION</p>
+<p>密文:KS ME HZ  BBL  KS ME MPOG AJ XSE JCSFLZSY</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-8cf90ee621fe94c6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><strong>变种</strong></p>
+<p>有几种密码和维吉尼亚密码相似，格罗斯费尔德密码(Gronsfeld cipher)实际上和维吉尼亚密码相同，除了使用了数字来代替字母以外没有什么区别。数字可以选择一种数列，如斐波那契数列，或者一些其他的伪随机序列。格罗斯费尔德密码密码分析过程和维吉尼亚密码大同小异，不过，自动密钥密码不能使用<a href="http://www.zybang.com/question/a0a1108423f63d10dbbf0c3e1bfdf3b3.html" target="_blank" rel="noopener">卡西斯基算法</a>(kasiski)来破译，因为自动密钥密码的密钥不重复循环使用，破译自动密钥密码最好的方法的就是从密文不断尝试和猜测其中明文或密钥的一部分。</p>
+<h1 id="自动密钥密码"><a href="#自动密钥密码" class="headerlink" title="自动密钥密码"></a>自动密钥密码</h1><p><strong>自动密钥密码</strong>是密码学中的一种加密算法，与维吉尼亚密码类似，区别在于密钥不同。<code>它的密钥开头是一个关键词，之后则是明文的重复</code></p>
+<p><strong>例</strong></p>
+<p>明文：ABC</p>
+<p>关键词：DE</p>
+<p>自动生成密钥：DEA</p>
+<p>加密过程和维吉尼亚密码类似，从密表可得：DFC</p>
+<p><strong>破译方法</strong></p>
+<p>（1）假设明文为MEET AT THE FOUNTAIN，关键词为kilt：</p>
+<p>　　明文：MEETATTHEFOUNTAIN（未知）</p>
+<p>　　密钥：KILTMEETATTHEFOUN（未知）</p>
+<p>　　密文：WMPMMXXAEYHBRYOCA（已知）</p>
+<p>（2） 尝试一些常用单词、双字母组、三字母组等在密钥中的可能位置，如THE：</p>
+<p>　　密文：WMP MMX XAE YHB RYO CA</p>
+<p>　　密钥：THE THE THE THE THE ..</p>
+<p>　　明文：DFL TFT ETA FAX YRK ..</p>
+<p>　　密文：W MPM MXX AEY HBR YOC A</p>
+<p>　　密钥：. THE THE THE THE THE .</p>
+<p>　　明文：. TII TQT HXU OUNFHY</p>
+<p>　　密文：WM PMM XXA EYH BRY OCA</p>
+<p>　　密钥：.. THE THE THE THE THE</p>
+<p>　　明文：..wfiIKU VVW</p>
+<p>（3）由于正确的明文片段同样也会出现在密钥中，因此可以将其偏移关键词的长度而得到密钥片段。同样地，我们猜测的密钥片段THE也会出现在明文中。因此，猜测关键词的长度（譬如说3到12之间），我们就能得到明文和密钥。</p>
+<p>　　尝试OUN可能得到：</p>
+<p>　　偏移4位：</p>
+<p>　　密文：WMPMMXXAEYHBRYOCA.</p>
+<p>　　密钥：……ETA.THE.OUN.</p>
+<p>　　明文：……THE.OUN.AIN.</p>
+<p>　　偏移5位：</p>
+<p>　　密文：WMPMMXXAEYHBRYOCA.</p>
+<p>　　密钥：…..EQW..THE..OU.</p>
+<p>　　明文：…..THE..OUN..OG.</p>
+<p>　　偏移6位：</p>
+<p>　　密文：WMPMMXXAEYHBRYOCA.</p>
+<p>　　密钥：….TQT…THE…O.</p>
+<p>　　明文：….THE…OUN…M.</p>
+<p>（4）看起来偏移量为4时的可能性最大（其他的都含有不太可能出现的Q），因此我们再将新得到的ETA偏移4位：</p>
+<p>　　密文：WMPMMXXAEYHBRYOCA.</p>
+<p>　　密钥：..LTM.ETA.THE.OUN.</p>
+<p>　　明文：..ETA.THE.OUN.AIN.</p>
+<p>（5）我们知道了关键词的长度很可能是4位，且已有了文本的一部分M.ETA.THE.OUN.AIN。</p>
+<p>（6）之后以此为依据再进行一些猜测，可以验证真正的明文：MEETATTHEFOUNTAIN。</p>
+<h1 id="博福特密码"><a href="#博福特密码" class="headerlink" title="博福特密码"></a>博福特密码</h1><p>同福特密码，类似于维吉尼亚密码的替代密码,博福特密码属于对等加密，所以加密算法和解密算法相同。</p>
+<p>假如明文的第一个字母为D，则先在表格中找到第D列。假如密钥的第一个字母为F，于是D列从上往下找到F。这一F对应的行号为C，因而C便是密文的第一个字母。以此类推可以得到密文。</p>
+<p><strong>例</strong></p>
+<p>明文：DEFENDTHEEASTWALLOFTHECASTLE</p>
+<p>密钥：FORTIFICATIONFORTIFICATIONFO</p>
+<p>密文：CKMPVCPVWPIWUJOGIUAPVWRIWUUK</p>
+<h1 id="滚动密钥密码"><a href="#滚动密钥密码" class="headerlink" title="滚动密钥密码"></a>滚动密钥密码</h1><p>滚动密钥密码(Running Key Cipher)和维吉尼亚密码有着相同的加密机制，区别是密钥的选取，维吉尼亚使用的密钥简短，而且重复循环使用，与之相反，滚动密钥密码使用很长的密钥，比如引用一本书作为密钥。这样做的目的是不重复循环使用密钥，使密文更难破译，尽管如此，滚动密钥密码还是可以被攻破，因为有关于密钥和明文的统计分析模式可供利用，如果滚动密钥密码使用统计上的随机密钥来源，那么理论上是不可破译的，因为任何可能都可以成为密钥，并且所有的可能性都是相等的。</p>
+<p>明文：THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</p>
+<p>密钥：选取C语言编程(1978版)第63页第1行”errors can occur in several places. A label has…”，去掉非字母部分作为密钥(实际选取的密钥很长，长度至少不小于明文长度)。</p>
+<p>加密过程：加密过程和维吉尼亚密码加密过程相同</p>
+<p>密文:XYV ELAEK OFQYH WWK BYHTJ OGTC TJI DAK YESR好神奇的样子</p>
+<p>#培根密码</p>
+<p>培根密码又名倍康尼密码（Bacon’s cipher）是由法兰西斯·培根发明的一种隐写术，也是一种替换密码，每个明文字母被一个由5字符组成的序列替换。</p>
+<table>
+<thead>
+<tr>
+<th align="center">A/a</th>
+<th align="center">aaaaa</th>
+<th align="center">H/h</th>
+<th align="center">aabbb</th>
+<th align="center">O/o</th>
+<th align="center">abbba</th>
+<th align="center">V/v</th>
+<th align="center">babab</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">B/b</td>
+<td align="center">aaaab</td>
+<td align="center">I/i</td>
+<td align="center">abaaa</td>
+<td align="center">P/p</td>
+<td align="center">abbbb</td>
+<td align="center">W/w</td>
+<td align="center">babba</td>
+</tr>
+<tr>
+<td align="center">C/c</td>
+<td align="center">aaaba</td>
+<td align="center">J/j</td>
+<td align="center">abaab</td>
+<td align="center">Q/q</td>
+<td align="center">baaaa</td>
+<td align="center">X/x</td>
+<td align="center">babbb</td>
+</tr>
+<tr>
+<td align="center">D/d</td>
+<td align="center">aaabb</td>
+<td align="center">K/k</td>
+<td align="center">ababa</td>
+<td align="center">R/r</td>
+<td align="center">baaab</td>
+<td align="center">Y/y</td>
+<td align="center">bbaaa</td>
+</tr>
+<tr>
+<td align="center">E/e</td>
+<td align="center">aabaa</td>
+<td align="center">L/l</td>
+<td align="center">ababb</td>
+<td align="center">S/s</td>
+<td align="center">baaba</td>
+<td align="center">Z/z</td>
+<td align="center">bbaab</td>
+</tr>
+<tr>
+<td align="center">F/f</td>
+<td align="center">aabab</td>
+<td align="center">M/m</td>
+<td align="center">abbaa</td>
+<td align="center">T/t</td>
+<td align="center">baabb</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">G/g</td>
+<td align="center">aabba</td>
+<td align="center">N/n</td>
+<td align="center">abbab</td>
+<td align="center">U/u</td>
+<td align="center">babaa</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>加密者需使用两种不同字体,分别代表A和B。准备好一篇包含相同AB字数的假<br>信息后，按照密文格式化假信息，即依密文中每个字母是A还是B分别套用两种字体。</p>
+<p>解密时，将上述方法倒转。所有字体一转回A，字体二转回B，以后再按上表拼回字母。</p>
+<p>法兰西斯·培根另外准备了一种方法，其将大小写分别看作A与B，可用于无法使用不同字体的场合（例如只能处理纯文本时）。但这样比起字体不同更容易被看出来，而且和语言对大小写的要求也不太兼容。</p>
+<h1 id="猪圈密码"><a href="#猪圈密码" class="headerlink" title="猪圈密码"></a>猪圈密码</h1><p><strong>猪圈密码</strong>（亦称<strong>朱高密码</strong>、<strong>共济会暗号</strong>、<strong>共济会密码</strong>或<strong>共济会员密码</strong>），是一种以格子为基础的简单替代式密码。即使使用符号，也不会影响密码分析，亦可用在其它替代式的方法，在丹·布朗《失落的秘码》中曾提到，emmm丹·布朗的小说达芬奇密码中有关的密码也挺多的。。。<img src="https://upload-images.jianshu.io/upload_images/14577467-a2c30b55b73e6447.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>对应明文：</p>
+<table>
+<thead>
+<tr>
+<th align="center">a</th>
+<th align="center">b</th>
+<th align="center">c</th>
+<th align="center">d</th>
+<th align="center">e</th>
+<th align="center">f</th>
+<th align="center">g</th>
+<th align="center">h</th>
+<th align="center">i</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">j</td>
+<td align="center">k</td>
+<td align="center">l</td>
+<td align="center">m</td>
+<td align="center">n</td>
+<td align="center">o</td>
+<td align="center">p</td>
+<td align="center">q</td>
+<td align="center">r</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center">t</td>
+<td align="center">u</td>
+<td align="center">v</td>
+<td align="center">w</td>
+<td align="center">x</td>
+<td align="center">y</td>
+<td align="center">z</td>
+<td align="center">:</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">&gt;</td>
+<td align="center">?</td>
+<td align="center">@</td>
+<td align="center">;</td>
+<td align="center">=</td>
+<td align="center">[</td>
+<td align="center">\</td>
+<td align="center">]</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">_</td>
+<td align="center">`</td>
+<td align="center">{</td>
+<td align="center">}</td>
+<td align="center"><strong>I</strong></td>
+<td align="center">~</td>
+<td align="center">%</td>
+<td align="center">+</td>
+</tr>
+<tr>
+<td align="center"># 夏多密码（曲折密码）</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">夏多密码是麦克斯韦·格兰特在中篇小说《死亡之链》中塑造夏多这一英雄人物中所自创的密码</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-a7838a29a5e776c8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>最下面的1234表示转动的角度。1是纸张上端朝上，2是上端朝右，3是上端朝下，4是上端朝左。密文：<img src="https://upload-images.jianshu.io/upload_images/14577467-e3e0fe998259a6fd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>原文本：I am in danger send help</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/ctf编码加解密总结.html">ctf编码加解密总结</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年02月19日 - 00时04分</p>
+        <p><span>最后更新:</span>2019年07月17日 - 09时45分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/ctf编码加解密总结.html" title="ctf编码加解密总结">http://yoursite.com/ctf编码加解密总结.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/ctf编码加解密总结.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/rc3ctf-logmein.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          rc3ctf--logmein
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/DLL注入.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">DLL注入</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Base64-32-16编码"><span class="toc-number">1.</span> <span class="toc-text">Base64/32/16编码</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Base64编码"><span class="toc-number">1.1.</span> <span class="toc-text">Base64编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base32编码"><span class="toc-number">1.2.</span> <span class="toc-text">Base32编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base16编码"><span class="toc-number">1.3.</span> <span class="toc-text">Base16编码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ASCII编码"><span class="toc-number">2.</span> <span class="toc-text">ASCII编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Quoted-printable编码"><span class="toc-number">3.</span> <span class="toc-text">Quoted-printable编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UUencode编码"><span class="toc-number">4.</span> <span class="toc-text">UUencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#XXencode编码"><span class="toc-number">5.</span> <span class="toc-text">XXencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JJencode编码"><span class="toc-number">6.</span> <span class="toc-text">JJencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AAencode编码"><span class="toc-number">7.</span> <span class="toc-text">AAencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PPencode编码"><span class="toc-number">8.</span> <span class="toc-text">PPencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RRencode编码"><span class="toc-number">9.</span> <span class="toc-text">RRencode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#URL编码"><span class="toc-number">10.</span> <span class="toc-text">URL编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML实体编码"><span class="toc-number">11.</span> <span class="toc-text">HTML实体编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Unicode编码"><span class="toc-number">12.</span> <span class="toc-text">Unicode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Escape-Unescape编码"><span class="toc-number">13.</span> <span class="toc-text">Escape/Unescape编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shellcode编码"><span class="toc-number">14.</span> <span class="toc-text">shellcode编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#摩尔斯电码"><span class="toc-number">15.</span> <span class="toc-text">摩尔斯电码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#敲击码"><span class="toc-number">16.</span> <span class="toc-text">敲击码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ADFGX密码"><span class="toc-number">17.</span> <span class="toc-text">ADFGX密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ADFGVX密码"><span class="toc-number">18.</span> <span class="toc-text">ADFGVX密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栅栏密码"><span class="toc-number">19.</span> <span class="toc-text">栅栏密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#凯撒密码"><span class="toc-number">20.</span> <span class="toc-text">凯撒密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ROT5-13-18-47"><span class="toc-number">21.</span> <span class="toc-text">ROT5/13/18/47</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#埃特巴什码"><span class="toc-number">22.</span> <span class="toc-text">埃特巴什码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#当铺密码"><span class="toc-number">23.</span> <span class="toc-text">当铺密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#简单替换密码"><span class="toc-number">24.</span> <span class="toc-text">简单替换密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#维吉尼亚密码（Vigenere-Cipher）"><span class="toc-number">25.</span> <span class="toc-text">维吉尼亚密码（Vigenere Cipher）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#自动密钥密码"><span class="toc-number">26.</span> <span class="toc-text">自动密钥密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#博福特密码"><span class="toc-number">27.</span> <span class="toc-text">博福特密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#滚动密钥密码"><span class="toc-number">28.</span> <span class="toc-text">滚动密钥密码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#猪圈密码"><span class="toc-number">29.</span> <span class="toc-text">猪圈密码</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/rc3ctf-logmein.html" title="上一篇: rc3ctf--logmein">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/DLL注入.html" title="下一篇: DLL注入">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

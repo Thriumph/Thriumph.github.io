@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>PE文件格式 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Microsoft为了让程序在Windows上可移植而做的一种文件格式规定。比如exe就是一种PE文件，再印象中Windows操作系统都能执行exe程序，这就是Microsoft做的让程序在Windows平台上实现移植的功能，这个移植功能的实现是因为规定了exe的格式，Windows在执行exe程序时，PE文件加载器会按照约定加载exe程序，所以程序就能正常运行了。">
+<meta name="keywords" content="PE文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE文件格式">
+<meta property="og:url" content="http://yoursite.com/PE文件格式.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="Microsoft为了让程序在Windows上可移植而做的一种文件格式规定。比如exe就是一种PE文件，再印象中Windows操作系统都能执行exe程序，这就是Microsoft做的让程序在Windows平台上实现移植的功能，这个移植功能的实现是因为规定了exe的格式，Windows在执行exe程序时，PE文件加载器会按照约定加载exe程序，所以程序就能正常运行了。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5CPE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%5Col-1566122435074.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PE文件格式">
+<meta name="twitter:description" content="Microsoft为了让程序在Windows上可移植而做的一种文件格式规定。比如exe就是一种PE文件，再印象中Windows操作系统都能执行exe程序，这就是Microsoft做的让程序在Windows平台上实现移植的功能，这个移植功能的实现是因为规定了exe的格式，Windows在执行exe程序时，PE文件加载器会按照约定加载exe程序，所以程序就能正常运行了。">
+<meta name="twitter:image" content="http://yoursite.com/images%5CPE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%5Col-1566122435074.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-PE文件格式" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/PE文件格式.html" class="article-date">
+      <time datetime="2019-01-02T16:37:00.000Z" itemprop="datePublished">2019-01-03</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PE文件格式
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PE文件/">PE文件</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>Microsoft为了让程序在Windows上可移植而做的一种文件格式规定。比如exe就是一种PE文件，再印象中Windows操作系统都能执行exe程序，这就是Microsoft做的让程序在Windows平台上实现移植的功能，这个移植功能的实现是因为规定了exe的格式，Windows在执行exe程序时，PE文件加载器会按照约定加载exe程序，所以程序就能正常运行了。</p>
+<a id="more"></a>
+
+<p>PE文件的基本结构是PE头和PE体</p>
+<p>PE头又分为<code>DOS头，DOS存根，NT头，节区头。</code></p>
+<h1 id="DOS头"><a href="#DOS头" class="headerlink" title="DOS头"></a>DOS头</h1><p><code>DOS头文件格式</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span> &#123;</span>      <span class="comment">// DOS .EXE header</span></span><br><span class="line">    WORD   e_magic;                     <span class="comment">// Magic number设置ox5A4D  ascii码值为'MZ'(标志,不会变的标志)</span></span><br><span class="line">    WORD   e_cblp;                      <span class="comment">// Bytes on last page of file</span></span><br><span class="line">    WORD   e_cp;                        <span class="comment">// Pages in file</span></span><br><span class="line">    WORD   e_crlc;                      <span class="comment">// Relocations</span></span><br><span class="line">    WORD   e_cparhdr;                   <span class="comment">// Size of header in paragraphs</span></span><br><span class="line">    WORD   e_minalloc;                  <span class="comment">// Minimum extra paragraphs needed</span></span><br><span class="line">    WORD   e_maxalloc;                  <span class="comment">// Maximum extra paragraphs needed</span></span><br><span class="line">    WORD   e_ss;                        <span class="comment">// Initial (relative) SS value</span></span><br><span class="line">    WORD   e_sp;                        <span class="comment">// Initial SP value</span></span><br><span class="line">    WORD   e_csum;                      <span class="comment">// Checksum</span></span><br><span class="line">    WORD   e_ip;                        <span class="comment">// Initial IP value </span></span><br><span class="line">    WORD   e_cs;                        <span class="comment">// Initial (relative) CS value</span></span><br><span class="line">    WORD   e_lfarlc;                    <span class="comment">// File address of relocation table</span></span><br><span class="line">    WORD   e_ovno;                      <span class="comment">// Overlay number</span></span><br><span class="line">    WORD   e_res[<span class="number">4</span>];                    <span class="comment">// Reserved words</span></span><br><span class="line">    WORD   e_oemid;                     <span class="comment">// OEM identifier (for e_oeminfo)</span></span><br><span class="line">    WORD   e_oeminfo;                   <span class="comment">// OEM information; e_oemid specific</span></span><br><span class="line">    WORD   e_res2[<span class="number">10</span>];                  <span class="comment">// Reserved words</span></span><br><span class="line">    LONG   e_lfanew;                    <span class="comment">//PE头文件的偏移地址</span></span><br><span class="line">  &#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</span><br></pre></td></tr></table></figure>
+
+<p>DOS头是个结构体（IMAGE_DOS_HEADER），在32位系统中占64个字节。<br>其中首尾有两个重要的结构体成员<code>e_magic</code>和<code>e_lfanew</code></p>
+<p><code>e_magic</code>表示这是一个DOS头，用两个字节4D5A,ASCII码为’MZ’</p>
+<p><code>e_lfanew</code>标注NT头的偏移，通常情况下32位系统下e_lfanew的值通常为000000E0</p>
+<p>64位系统下e_lfanew的值通常为000000F0</p>
+<h1 id="DOS存根"><a href="#DOS存根" class="headerlink" title="DOS存根"></a>DOS存根</h1><p>DOS存根是可选项，可有可无。在DOS头下方，大小不固定，代码与数据混合。用来在dos环境下执行文件。</p>
+<h1 id="NT头"><a href="#NT头" class="headerlink" title="NT头"></a>NT头</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    DWORD  Signature;                    <span class="comment">//PE Signature : 50450000("PE"00)</span></span><br><span class="line">    IMAGE_FILE_HEADER  FileHeader;                <span class="comment">//文件头结构体</span></span><br><span class="line">    IMAGE_ OPTIONAL_HEADER32  OptionalHeader;                <span class="comment">//可选头结构体</span></span><br><span class="line">&#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER32;</span><br></pre></td></tr></table></figure>
+
+<p><code>NT头也是一个结构体。它有三个成员。</code><br>第一个成员是“签名”成员占4个字节，类似于DOS头的“MZ”。<br>第二个成员本身是一个结构体，叫做<code>文件头</code>：file header。<br>第三个成员本身也是一个结构体，叫做<code>可选头</code>：OptionalHeader</p>
+<p><code>文件头</code>本身有七个成员（四个重要成员）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DOS_HEADER</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    WORD  Machine;                <span class="comment">//每个CPU都拥有唯一的machine码</span></span><br><span class="line">    WORD  NumberOfSections;                <span class="comment">//节区数量，当定义节区数与实际不同时会发生错误</span></span><br><span class="line">    DWORD  TimeDateStamp;</span><br><span class="line">    DWORD  PointerToSymbolTable;</span><br><span class="line">    DWORD  NumberOfSymbols;</span><br><span class="line">    WORD  SizeOfOptionalHeader;                <span class="comment">//IMAGE_OPTIONAL_HEADER32结构体的大小，固定的</span></span><br><span class="line">    WORD  Characteristics;                <span class="comment">//文件属性，0x0002h为可执行文件，0x2000h为DLL文件</span></span><br><span class="line">&#125; IMAGE_DOS_HEADER, *PIMAGE_DOS_HEAD</span><br></pre></td></tr></table></figure>
+
+
+<p><code>Machine:</code> 两个字节，标识CPU型号。</p>
+<p><code>NumberOfSections:</code> 标识节区数目，两个字节。</p>
+<p><code>SizeOfOptionalHeader:</code> 标识可选头的大小</p>
+<p><code>Characteristic:</code> 标识文件属性，bit OR的形式，每一位代表一种信息，两个字节。</p>
+<p>其他三个成员都是四个字节。</p>
+<p> <code>可选头</code>的成员比较多，以可选头起始位置为基准，使用偏移量（十六进制）来描述重要成员。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_OPTIONAL_HEADER</span> &#123;</span></span><br><span class="line">WORD    Magic;            <span class="comment">//标志字(32位时0x10Bh)</span></span><br><span class="line">BYTE    MajorLinkerVersion;        <span class="comment">//连接器版本号</span></span><br><span class="line">BYTE    MinorLinkerVersion;        <span class="comment">//</span></span><br><span class="line">DWORD   SizeOfCode;            <span class="comment">//代码段大小</span></span><br><span class="line">DWORD   SizeOfInitializedData;    <span class="comment">//已初始化数据块大小</span></span><br><span class="line">DWORD   SizeOfUninitializedData;    <span class="comment">//未初始化数据块大小</span></span><br><span class="line">DWORD   AddressOfEntryPoint;     <span class="comment">//EP的RVA值，程序最先执行代码的地址</span></span><br><span class="line">DWORD   BaseOfCode;            <span class="comment">//代码段起始RVA</span></span><br><span class="line">DWORD   BaseOfData;            <span class="comment">//数据段起始RVA</span></span><br><span class="line">DWORD   ImageBase;            <span class="comment">//PE文件的装载地址</span></span><br><span class="line">DWORD   SectionAlignment;        <span class="comment">//块对齐，节区在内存中最小单位</span></span><br><span class="line">DWORD   FileAlignment;        <span class="comment">//文件块对齐，节区在文件中的最小单位</span></span><br><span class="line">WORD    MajorOperatingSystemVersion;<span class="comment">//所需操作系统版本号</span></span><br><span class="line">WORD    MinorOperatingSystemVersion;<span class="comment">//</span></span><br><span class="line">WORD    MajorImageVersion;        <span class="comment">//用户自定义版本号</span></span><br><span class="line">WORD    MinorImageVersion;        <span class="comment">//</span></span><br><span class="line">WORD    MajorSubsystemVersion;    <span class="comment">//win32子系统版本。若PE文件是专门为Win32设计的</span></span><br><span class="line">WORD    MinorSubsystemVersion;    <span class="comment">//该子系统版本必定是4.0否则对话框不会有3维立体感</span></span><br><span class="line">DWORD   Win32VersionValue;        <span class="comment">//保留</span></span><br><span class="line">DWORD   SizeOfImage;            <span class="comment">//内存中整个PE映像体的尺寸</span></span><br><span class="line">DWORD   SizeOfHeaders;        <span class="comment">//所有头+节表的大小，即整个PE头的大小</span></span><br><span class="line">DWORD   CheckSum;            <span class="comment">//校验和</span></span><br><span class="line">WORD    Subsystem;            <span class="comment">//NT用来识别PE文件属于哪个子系统（系统驱动、GUI、CUI）</span></span><br><span class="line">WORD    DllCharacteristics;        </span><br><span class="line">DWORD   SizeOfStackReserve;        </span><br><span class="line">DWORD   SizeOfStackCommit;        </span><br><span class="line">DWORD   SizeOfHeapReserve;        </span><br><span class="line">DWORD   SizeOfHeapCommit;        </span><br><span class="line">DWORD   LoaderFlags;            </span><br><span class="line">DWORD   NumberOfRvaAndSizes;    <span class="comment">//指定DataDirectory数组的个数</span></span><br><span class="line">IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];<span class="comment">//IMAGE_DATA_DIRECTORY 结构数组。每个结构给出一个重要数据结构的RVA，比如引入地址表等</span></span><br><span class="line">&#125; IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;</span><br></pre></td></tr></table></figure>
+
+<p>可选头的成员比较多，我们以可选头起始位置为基准，使用偏移量（十六进制）来描述重要成员。</p>
+<p>Magic成员，32位系统可选头是010B，64位是020B。<br>AddressOfEntryPoint，标识PE文件的入口点地址（这个地址是相对虚拟地址）。</p>
+<p>ImageBase成员，用来标识装载到内存时文件的起始位置。</p>
+<p>SectionAlignment成员，标识节区在内存中的最小单位。</p>
+<p>FileAlignment成员，标识节区在文件中的最小单位。</p>
+<p>成员SizeOfImage，标识着文件加载到内存之后，在内存中的大小。<br>成员SizeOfHeaders，标识着PE头的大小，同时也就标识着第一节区头的偏移量。</p>
+<p>成员Subsystem，标识着文件的类型，1表示驱动文件（sys）2表示窗口应用程序3表示控制台应用程序。</p>
+<p>成员NumberOfRvaAndSizes，标识着DataDirectory成员的个数。</p>
+<p>最后一个成员是一个结构体数组：DataDirectory，每个数组成员的大小是8个字节，成员的数目由NumberOfRvaAndSizes来给出，默认是16个。</p>
+<h1 id="节区头"><a href="#节区头" class="headerlink" title="节区头"></a>节区头</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IMAGE_SIZEOF_SHORT_NAME 8</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_SECTION_HEADER</span>&#123;</span> </span><br><span class="line">    BYTE Name[IMAGE_SIZEOF_SHORT_NAME]; <span class="comment">// 8个字节的节区名称  </span></span><br><span class="line">    <span class="keyword">union</span> &#123;  </span><br><span class="line">        DWORD PhysicalAddress;         </span><br><span class="line">        DWORD VirtualSize;            <span class="comment">//内存中节区的大小</span></span><br><span class="line">    &#125; Misc; </span><br><span class="line">    DWORD VirtualAddress;         <span class="comment">// 内存中节区的起始地址（RVA）  </span></span><br><span class="line">    DWORD SizeOfRawData;            <span class="comment">// 磁盘中文件中节区所占大小</span></span><br><span class="line">    DWORD PointerToRawData;        <span class="comment">// 磁盘中文件的起始位置  </span></span><br><span class="line">    DWORD PointerToRelocations;     <span class="comment">// 在OBJ文件中使用，重定位的偏移  </span></span><br><span class="line">    DWORD PointerToLinenumbers;   <span class="comment">// 行号表的偏移（供调试使用地）  </span></span><br><span class="line">    WORD NumberOfRelocations;      <span class="comment">// 在OBJ文件中使用，重定位项数目  </span></span><br><span class="line">    WORD NumberOfLinenumbers;    <span class="comment">// 行号表中行号的数目  </span></span><br><span class="line">    DWORD Characteristics;       <span class="comment">// 节属性如可读，可写，可执行等  </span></span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
+
+<p>节区头定义了各个节区的属性。将代码、数据资源分为不同的节区存放的好处是保证程序的安全性。节区头是由结构体数组组成的。每个数组元素对应一个节区。每个数组元素都是一个结构体，每个结构体内成员个数是一样的。</p>
+<p>第一个成员是name，标识着节区名字，默认为八个字节，可以变更。</p>
+<p>第二个成员是一个联合体，物理地址PhysicalAddress和虚拟空间大小<br>VirtualSize，四个字节（两个成员存储任意一个，这里一般存储后一个），VitualSize标识着该节区在内存中的大小。</p>
+<p>第三个成员位虚拟地址，VirtualAddress，占用四个字节；</p>
+<p>第四个成员SizeOfRawData，标识着该节区在磁盘中的大小，四个字节。</p>
+<p>第五个成员PointerToRawData，四个字节。</p>
+<p>第三、五个成员的值一般与可选头中SectionAlignment和FileAlignment成员的值的整数倍。</p>
+<p><img src="/images%5CPE%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%5Col-1566122435074.jpg" alt="图片.png"></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/PE文件格式.html">PE文件格式</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年01月03日 - 00时37分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/PE文件格式.html" title="PE文件格式">http://yoursite.com/PE文件格式.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/PE文件格式.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/VA-RVA-RAW.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          VA RVA RAW
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/寄存器.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">寄存器</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DOS头"><span class="toc-number">1.</span> <span class="toc-text">DOS头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DOS存根"><span class="toc-number">2.</span> <span class="toc-text">DOS存根</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NT头"><span class="toc-number">3.</span> <span class="toc-text">NT头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#节区头"><span class="toc-number">4.</span> <span class="toc-text">节区头</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/VA-RVA-RAW.html" title="上一篇: VA RVA RAW">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/寄存器.html" title="下一篇: 寄存器">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

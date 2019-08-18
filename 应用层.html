@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>应用层 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="《计算机网络自顶向下方法》第二章读书笔记">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用层">
+<meta property="og:url" content="http://yoursite.com/应用层.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="《计算机网络自顶向下方法》第二章读书笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-5c26745e96267490.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-1b5a8fdb0cc517a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-f77a3b592184feb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-06fbff8a86413822.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-ff5ae48e5be45161.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-39955dc0ecfc18a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-b48165d159f7789e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-6f89e1da950dc5e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-201249ac5a782164.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-a35857d2cefe785b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-9de39bc3628cf6b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-935975f1667ea3d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-01ad127ee74ea271.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-4df5e58259e5bacc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-9128447e85da79b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-e92642373e90c79b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-30afbefa3552587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-5c5ee54e8a91af5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-9efb66b341a127a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-d8e765b8f3a27aad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-17T04:26:54.544Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="应用层">
+<meta name="twitter:description" content="《计算机网络自顶向下方法》第二章读书笔记">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14577467-5c26745e96267490.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-应用层" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/应用层.html" class="article-date">
+      <time datetime="2019-07-06T10:48:00.000Z" itemprop="datePublished">2019-07-06</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      应用层
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>《计算机网络自顶向下方法》第二章读书笔记</p>
+<a id="more"></a>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-5c26745e96267490.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="应用层协议原理"><a href="#应用层协议原理" class="headerlink" title="应用层协议原理"></a>应用层协议原理</h1><h2 id="网络应用程序体系结构"><a href="#网络应用程序体系结构" class="headerlink" title="网络应用程序体系结构"></a>网络应用程序体系结构</h2><p><strong><code>应用体系结构</code></strong> 由应用程序研发者设计，规定了如何在各种端系统上组织该应用程序。在选择应用程序结构体系时，应用程序研发者很可能利用现代网络应用程序中所使用的两种主流体系结构之一，<strong><code>客户-服务器体系结构</code></strong> 或<strong><code>对等（P2P）体系结构</code></strong></p>
+<h3 id="客户-服务器体系结构-CS-："><a href="#客户-服务器体系结构-CS-：" class="headerlink" title="客户-服务器体系结构(CS)："></a>客户-服务器体系结构(CS)：</h3><p>1.有一个总是打开的主机称为服务器，它服务于来自许多其他称为客户的主机的请求。</p>
+<p>2.特点的一对多，一台服务器对应多个客户机</p>
+<p>3.客户之间不能直接通信，需要经过服务器</p>
+<p>4.服务器是处理所有逻辑的中心，具有固定的ip地址，客户总能通过向该服务器的IP地址发送分组来与其联系</p>
+<p>5.基础设施密集。虽然客户机/服务器体系结构的特征是“一对多”，但是服务器却并不总是一台，因为有的时候要处理海量的客户机的请求， 一台服务器很快就会不堪重负，所以这个时候常用服务器集群技术（server clustering）创建强大的虚拟服务器。所以此时这里“一对多”的一要理解为一组服务器组成的“一”个整体的意思</p>
+<p>6.应用：WEB，FTP，电子邮件，Telnet</p>
+<h3 id="P2P体系结构："><a href="#P2P体系结构：" class="headerlink" title="P2P体系结构："></a>P2P体系结构：</h3><p>1.对位于数据中心的专用服务器有最小（或者没有）依赖，应用程序在间断的主机对之间使用直接通信，对于这些主机称为对等方</p>
+<p>2.特点：客户机间的直接通信使得P2P有了强大的自扩展性<br>（self-calability），比如下载文件时接收到文件的主机又可以直接把文件上载给其他的主机，因此对基础设施服务器依赖较小，并且可上载该文件的主机的数量是指数递增的，系统的服务能力只会越来越强。</p>
+<p>3.应用：文件分发，因特网电话，文件搜索</p>
+<p>4.任意的端系统直接通信</p>
+<p>5.对等方间歇地连接，改变IP地址</p>
+<p>6.P2P应用由于高度非集中式结构，面临安全性，性能和可靠性的挑战</p>
+<h3 id="区别："><a href="#区别：" class="headerlink" title="区别："></a>区别：</h3><p>应用程序体系结构（P2P, 客户-服务器）来自于应用设计者设定下更加宽泛的结构，而网络体系结构注重于通信进程的结构组织</p>
+<h2 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h2><p>进行通信的实际是进程而不是程序，一个进程可以认为是运行在端系统中的一个程序。两个不同端系统上的进程，可以通过跨越计算机网络交换报文而相互通信。</p>
+<h3 id="客户和服务器进程："><a href="#客户和服务器进程：" class="headerlink" title="客户和服务器进程："></a>客户和服务器进程：</h3><p>1.网络应用程序由成对的进程组成，这些进程通过网络相互发送报文</p>
+<p>2.两个进程一个标识为客户，一个标识为服务器</p>
+<p>3.在一对进程之间的通信绘画会话场景中，发起通信的进程被标识为客户，回话开始时等待联系的进程时服务器</p>
+<h3 id="进程与计算机网络中的接口："><a href="#进程与计算机网络中的接口：" class="headerlink" title="进程与计算机网络中的接口："></a>进程与计算机网络中的接口：</h3><p>1.进程通过套接字的软件接口向网络发送和接收报文</p>
+<p>2.套接字时同一台主机内应用层和运输层之间的接口，套接字是建立网络程序的可编程接口，因此套接字称为应用程序和网络之间的应用程序编程接口（api）</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-1b5a8fdb0cc517a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="进程寻址："><a href="#进程寻址：" class="headerlink" title="进程寻址："></a>进程寻址：</h3><p>一台主机的进程向另一台主机的进程发送分组，接收进程需要一个地址。为了标识该进程，需要定义两种信息： </p>
+<p><strong><code>主机的地址：</code></strong>用IP地址标识；</p>
+<p><strong><code>定义在目标主机中的接收进程的标识符：</code></strong>用目的地端口号标识。</p>
+<h2 id="可供应用程序使用的运输服务"><a href="#可供应用程序使用的运输服务" class="headerlink" title="可供应用程序使用的运输服务"></a>可供应用程序使用的运输服务</h2><p>1.可靠数据传输。容忍丢失的应用。</p>
+<p>2.吞吐量:带宽敏感应用。弹性应用。</p>
+<p>3.定时</p>
+<p>4.安全性</p>
+<h2 id="因特网提供的运输服务"><a href="#因特网提供的运输服务" class="headerlink" title="因特网提供的运输服务"></a>因特网提供的运输服务</h2><p>因特网为应用程序提供了两个运输服务类型UDP和TCP</p>
+<h3 id="TCP服务："><a href="#TCP服务：" class="headerlink" title="TCP服务："></a>TCP服务：</h3><p><strong><code>面向连接服务：</code></strong> 在应用层数据报文流动之前，TCP让客户和服务器互相交换运输层控制信息，握手阶段后，TCP连接就在两个进程的套接字之间建立了</p>
+<p><strong><code>可靠的信息传送服务：</code></strong> 通信进程能够依靠TCP，无差错、按适当顺序交付所有发送的数据</p>
+<p><strong><code>拥塞控制机制：</code></strong> 发送方和接收方之间的网络出现拥塞时，TCP 的拥塞控制机制会抑制发送进程。   TCP 拥塞控制机制也试图限制每个 TCP 连接，使他们达到公平共享网络带宽的目的。    这种服务不一定为通信进程带来直接好处，但是能为因特网带来整体好处。</p>
+<p><strong><code>安全套接字层（SSL）：</code></strong> 用SSL加强后的TCP不仅能够做TCP所做的一切，而且提供了关键的进程到进程的安全性服务。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-f77a3b592184feb7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="UDP服务："><a href="#UDP服务：" class="headerlink" title="UDP服务："></a>UDP服务：</h3><p>1.UDP 是一种不提供不必要服务的轻量级运输协议，它仅提供最小服务。</p>
+<p>2.UDP 是无连接的，因此在两个进程通信之前无握手。</p>
+<p>3.UDP 协议提供一种不可靠数据传送服务，也就是说，当进程将一个报文发送<br>进</p>
+<p>4.UDP 套接字时，UDP并不保证该报文到达接收进程。不仅如此，到达接收进程的报文也可能是乱序到达的。</p>
+<p>5.UDP 没有包括拥塞控制机制，所以 UDP 的发送端可以用它选定的任何速率向其下层（网络层）注入数据</p>
+<p>6.不抑制发送速率，实时应用通常选择UDP</p>
+<h3 id="因特网运输协议不提供的服务："><a href="#因特网运输协议不提供的服务：" class="headerlink" title="因特网运输协议不提供的服务："></a>因特网运输协议不提供的服务：</h3><p>1.TCP 能提供可靠的数据传输服务，也能通过 SSL 来加强以提供安全服务。</p>
+<p>2.今天的因特网通常能够为时间敏感应用提供满意的服务，但不能提供任何定时或带宽保证。</p>
+<h3 id="TCP和UDP的应用："><a href="#TCP和UDP的应用：" class="headerlink" title="TCP和UDP的应用："></a>TCP和UDP的应用：</h3><p><img src="https://upload-images.jianshu.io/upload_images/14577467-06fbff8a86413822.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>1.应用层协议定义了运行在不同端系统上的进程如何相互传递报文。 </p>
+<p>2.交换报文的类型，例如请求报文和响应报文。</p>
+<p>3.各种报文类型的语法，如报文中各个字段及这些字段是如何描述的。</p>
+<p>4.字段的语义，即这些字段中包含的信息的含义。</p>
+<p>5.一个进程何时以及如何发送报文，对报文进行响应的规划。</p>
+<h1 id="WEB和HTTP"><a href="#WEB和HTTP" class="headerlink" title="WEB和HTTP"></a>WEB和HTTP</h1><h2 id="HTTP概况"><a href="#HTTP概况" class="headerlink" title="HTTP概况"></a>HTTP概况</h2><p>1.web的应用层协议是超文本传输协议，它是web的核心</p>
+<p>2.http由两个程序实现：客户程序和服务器程序</p>
+<p>3.web页面是由对象组成的，一个对象只有一个文件，多数web页面含有一个<br>html基本文件以及几个引用对象</p>
+<p>4.html基本文件通过对象的URL的地址引用页面中的其他对象，URL由两部分组成：存放对象的主机名和路径名</p>
+<p>5.web浏览器实现了http的客户端，web服务器实现了http的服务器端。</p>
+<p>6.http定义了web客户向web服务器请求web页面的方式，以及服务器向客户传送web页面的方式</p>
+<p>7.服务器向客户发送被请求的文件，而不储存任何关于客户的状态信息，所以<br><strong><code>http是无状态协议</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-ff5ae48e5be45161.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="非持续连接和持续连接"><a href="#非持续连接和持续连接" class="headerlink" title="非持续连接和持续连接"></a>非持续连接和持续连接</h2><h3 id="非持续连接的HTTP："><a href="#非持续连接的HTTP：" class="headerlink" title="非持续连接的HTTP："></a>非持续连接的HTTP：</h3><p><strong><code>每个请求/响应是经过一个单独的TCP连接发送。</code></strong></p>
+<p>每个TCP连接只传输一个请求报文和一个响应报文。因此一次请求Web页面往往要产生多个TCP连接。</p>
+<p>缺点：<br>必须为每个请求的对象建立和维护一个全新的连接；每个对象要经受两倍RTT的交付时延，一个RTT用于创建TCP，一个传输。总响应时间是两个RTT加上服务器传输HTML文件的时间。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-39955dc0ecfc18a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="持续连接的HTTP："><a href="#持续连接的HTTP：" class="headerlink" title="持续连接的HTTP："></a>持续连接的HTTP：</h3><p><strong><code>所有的请求以及响应经相同的TCP连接发送。</code></strong></p>
+<p>1.在采用持续连接的情况下，服务器再发送响应后保持该 TCP 连接打开。再相同的客户与服务器之间的后续请求和响应报文能够通过相同的连接进行传送。</p>
+<p>2.一般来说，如果一条连接经过一定的时间间隔（一个可配置的时间间隔）仍未被使用，HTTP 服务器就关闭该连接。</p>
+<p>3.HTTP 的默认模式是使用带流水线的持续连接。</p>
+<h2 id="http报文格式"><a href="#http报文格式" class="headerlink" title="http报文格式"></a>http报文格式</h2><h3 id="http请求报文："><a href="#http请求报文：" class="headerlink" title="http请求报文："></a>http请求报文：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /somedir/page.html HTTP/1.1      //请求行</span><br><span class="line">Host: www.somechool.edu              //指明了对象所在的主机</span><br><span class="line">Connection: close                    //要求服务器发送完请求的对象后就关闭该连接</span><br><span class="line">User-agent: Mozilla/5.0              //用来指明用户代理，即向服务器发送请求的浏览器的类型</span><br><span class="line">Accept-language: fr                  //指明了用户想要得到该对象的中文版本</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>请求行有三个字段：</code></strong></p>
+<p>方法字段：包括 GET、POST、HEAD、PUT 和 DELETE。绝大部分报文使用 GET 方法。</p>
+<p>URL 字段</p>
+<p>HTTP 版本字段</p>
+<p><strong><code>通用格式:</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-b48165d159f7789e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="http响应报文："><a href="#http响应报文：" class="headerlink" title="http响应报文："></a>http响应报文：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK                                  //状态行（3个字段：版本协议字段、状态码和相应状态信息）</span><br><span class="line">Connection: close                                //发送完报文后关闭TCP连接 </span><br><span class="line">Date: Tue, 18 Aug 2015 15:44:04 GMT              //服务器产生并发送该响应报文的日期和时间</span><br><span class="line">Server: Apache/2.2.3 (CentOS)                    //改报文是Apache web服务器产生的</span><br><span class="line">Last-Modified: Tue, 18 Aug 2015 15:11:03 GMT     //代理服务器</span><br><span class="line">Content-Length: 6821                             //指示了被发送对象的字节数</span><br><span class="line">Content-Type: text/html                          //指示了实体体中的对象是html文本</span><br><span class="line">(data data data data data ......)                //实体体</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>常见的状态码和相关短语：</code></strong></p>
+<p> <img src="https://upload-images.jianshu.io/upload_images/14577467-6f89e1da950dc5e7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p> <strong><code>通用格式：</code></strong> </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-201249ac5a782164.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="用户和服务器的交互-cookie"><a href="#用户和服务器的交互-cookie" class="headerlink" title="用户和服务器的交互(cookie)"></a>用户和服务器的交互(cookie)</h2><p>http服务器是无状态的，Web 站点通常希望能够识别用户，为此，HTTP 使用了 cookie ，它允许站点对用户进行跟踪</p>
+<p><strong><code>cookie 有 4 个技术组件：</code></strong></p>
+<p>1.在 HTTP 响应报文中的一个 cookie 首部行；</p>
+<p>2.在 HTTP 请求报文中的一个 cookie 首部行；</p>
+<p>3.在用户端系统中保留有一个 cookie 文件，并由用户的浏览器进行管理；</p>
+<p>4.位于 Web 站点的一个后端数据库。</p>
+<p>在web站点后台有数据库。其工作原理是，用户第一次访问某服务器时，其响应报文中包含一个Set-cookie字段，该字段的值往往是服务器设定的唯一标识码，浏览器将该字段和服务器主机名等信息保存在本地，以后用户每次访问时，浏览器都会从cookies中找到该站点的标识码放在请求报文中发送，这样服务器就能通过这个唯一标识辨认这个用户，通过用户在网站上的浏览记录采取行为。</p>
+<p><strong><code>cookie的工作过程：</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-a35857d2cefe785b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="web缓存"><a href="#web缓存" class="headerlink" title="web缓存"></a>web缓存</h2><p>1.Web缓存器也叫 代理服务器，是能够代表 Web 服务器来满足 HTTP 请求的网络实体。</p>
+<p>2.Web服务器有自己的磁盘存储空间，并在存储空间中保存着最近存储过的对象的副本。</p>
+<p>3.可以配置用户的浏览器，使得用户所有的 HTTP 请求首先指向 Web 缓存器。</p>
+<p>4.客户与 Web 缓存器之间的速度通常比较快，所以可以提高访问的速度，降低时延。</p>
+<p>5.客户通过 Web 缓存器请求对象 </p>
+<p>6.当浏览器申请一个文件时，先建立一个到web缓存的TCP连接，如果缓存服务器上有这个文件就返回，否则，他就建立一个到原始服务器的TCP获得该文件并存储，之后将该文件发回客户端。web缓存可以大幅减少对客户端的响应时间，减少机构内部网络和internet之间的链路通信量并节约带宽。这样会带来的新的问题是，web缓存上的文件可能是陈旧的。为此HTTP引入了条件get，即web缓存在保存一个文件时会记录其最后修改时间，客户端每次请求文件时，web缓存会向原始服务器发送一个带有if-modified-since的报文，如果该文件没有改动就直接把缓存中的文件返回给用户，否则重新下载该文件。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-9de39bc3628cf6b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="条件get的方法"><a href="#条件get的方法" class="headerlink" title="条件get的方法"></a>条件get的方法</h2><p>条件get方法用来解决 Web 缓存器中的对象拷贝可能是旧的的问题</p>
+<p><strong><code>条件</code></strong></p>
+<p> ①请求报文使用 GET 方法。</p>
+<p> ②请求报文中包含一个 If-Modified-Since: 首部行</p>
+<h1 id="因特网中的电子邮件"><a href="#因特网中的电子邮件" class="headerlink" title="因特网中的电子邮件"></a>因特网中的电子邮件</h1><p>因特网电子邮箱系统有三个重要的组成部分：</p>
+<p><strong><code>①用户代理②邮件服务器③简单邮件传输协议（SMTP）</code></strong></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-935975f1667ea3d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h2><p>1.SMTP是因特网电子邮件应用的核心，用于从发送方的邮件服务器发送报文到接收方的邮件服务器</p>
+<p>2.SMTP 是因特网中电子邮件中主要的应用层协议。它使用 TCP 可靠数据传输</p>
+<p>3.SMTP 限制所有的邮件报文只能采用简单的 7 比特 ASCII 表示。</p>
+<p>邮件发送过程是：从发送方的用户代理开始，传输到发送方的邮件服务器，再传输到接收方的邮件服务器，然后在这里被分发到接收方的邮箱上</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-01ad127ee74ea271.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<ul>
+<li><p>如果 Bob 的邮件服务器没有开机，该报文会保留在 Alice 的邮件服务器上并尝试进行新的尝试。这意味着邮件并不会在中间的某个邮件服务器存留。</p>
+</li>
+<li><p>SMTP 一般不使用中间服务器发送邮件，即使这两个邮件服务器位于地球的两端也一样。</p>
+</li>
+<li><p>SMTP 用的是 持续链接：如果发送邮件服务器有几个报文发往同一个接收邮件服务器，它可以通过同一个 TCP 连接发送所有的的报文。</p>
+</li>
+</ul>
+<h2 id="与HTTP对比"><a href="#与HTTP对比" class="headerlink" title="与HTTP对比"></a>与HTTP对比</h2><p><strong><code>不同：</code></strong></p>
+<ul>
+<li>HTTP主要是一个拉协议，TCP连接由想要接收文件的机器发起。即在方便的时候，某些人在Web服务器上装载信息，用户使用HTTP从该服务器上拉取这些信息。</li>
+<li>SMTP基本上是一个推协议，TCP连接由想要发送该文件的机器发起。即发送邮件服务器到接收邮件服务器</li>
+<li>SMTP要求每个报文使用7比特ASCLL码形式。HTTP不受限制</li>
+<li>处理一个既包含文本又包含图形的文档，HTTP把每个对象封装到自己的HTTP响应报文中，SMTP则把所有的报文对象放在一个报文之中。</li>
+</ul>
+<p><strong><code>相同：</code></strong></p>
+<ul>
+<li>都用于从一台主机向另一台主机传送文件。</li>
+<li>都使用持续连接。</li>
+</ul>
+<h2 id="邮件报文格式"><a href="#邮件报文格式" class="headerlink" title="邮件报文格式"></a>邮件报文格式</h2><p>每个首部必须含有一个From：首部行和一个To：首部行；也许有Subject：首部行以及其他可选的首部行</p>
+<h2 id="邮件访问协议"><a href="#邮件访问协议" class="headerlink" title="邮件访问协议"></a>邮件访问协议</h2><p>邮件访问使用<strong><code>客户-服务器体系结构</code></strong> ，用户通过用户端系统上运行的客户程序阅读电子邮件</p>
+<p><strong><code>流行的邮件访问协议：</code></strong></p>
+<p>①第三版邮局协议（POP3）</p>
+<p>②因特网邮件访问协议(IMAP)</p>
+<p>③HTTP(基于web的电子邮件)</p>
+<h3 id="POP3"><a href="#POP3" class="headerlink" title="POP3"></a>POP3</h3><p>比较简单的邮件范文协议。</p>
+<p>按三个阶段工作：</p>
+<p>①特许阶段：特许、事物处理以及更新。第一阶段通过用户名和口令鉴别用户；</p>
+<p>②事务处理阶段：第二阶段用户取回报文等操作；</p>
+<p>③更新阶段：第三阶段退出，邮件服务器会删除那些被标记为删除的报文。</p>
+<h3 id="IMAP"><a href="#IMAP" class="headerlink" title="IMAP"></a>IMAP</h3><p>POP3协议只在本地维持邮件的文件夹，不提供任何创建远程文件夹并为报文指派文件夹的方法。而IMAP服务器把每个报文与一个文件夹联系起来，为用户提供创建文件夹以及将邮件从一个文件夹移动到另一个文件夹的命令，允许用户<br>代理获取报文组件的命令。</p>
+<h3 id="基于web的电子邮件"><a href="#基于web的电子邮件" class="headerlink" title="基于web的电子邮件"></a>基于web的电子邮件</h3><p>使用浏览器收发邮件时，从用户到邮件服务器之间用HTTP传输。</p>
+<h1 id="DNS因特网的目录服务"><a href="#DNS因特网的目录服务" class="headerlink" title="DNS因特网的目录服务"></a>DNS因特网的目录服务</h1><p>主机的一种标识方式是用主机名，也可以用ip地址标识 </p>
+<p>①主机名：thriumph.top</p>
+<p>②ip地址：xxx.xxx.xxx.xxx</p>
+<h2 id="DNS提供的服务"><a href="#DNS提供的服务" class="headerlink" title="DNS提供的服务"></a>DNS提供的服务</h2><p>1.人们便于记忆主机名的方式，而路由器喜欢定长的具有层次结构的IP地址，所以需要一种能进行主机名到IP地址转换的服务，也就是域名系统(Domain Name System，DNS)</p>
+<p>2.DNS 协议基于 UDP ，使用 53 端口</p>
+<p>3.DNS也是应用层协议，它通常会被其他应用层协议所使用，包括HTTP、SMTP和FTP，将用户的主机名解析为 IP 地址</p>
+<p><strong><code>DNS域名系统是</code></strong></p>
+<p>①一个由分层的 DNS 服务器 实现的分布式数据库</p>
+<p>②一个使得主机能够查询分布式数据库的应用层协议</p>
+<p><strong><code>DNS的其他服务：</code></strong></p>
+<p>①识别主机别名（用于HTTP、FTP）：有着复杂主机名的主机能拥有一个或者多个别名</p>
+<p>②识别邮件服务器别名（用于SMTP）：便于记忆的电子邮件别名。</p>
+<p>③负载分配：DNS可以用于冗余服务器之间进行负载分配。单个站点会有多台服务器，DNS数据中心会存储这些IP地址集合，因此多个服务器可以有相同的别名</p>
+<h2 id="DNS工作机理的概述"><a href="#DNS工作机理的概述" class="headerlink" title="DNS工作机理的概述"></a>DNS工作机理的概述</h2><p>当主机上的DNS客户端收到一个转换请求时，客户端将向网络发送一个DNS查询报文，然后客户端将收到一个包含相关信息的DNS回答报文，这个报文里有客户端想要的内容，之后DNS客户端将IP地址返回给请求的提出者</p>
+<h3 id="分布式，层次数据库："><a href="#分布式，层次数据库：" class="headerlink" title="分布式，层次数据库："></a>分布式，层次数据库：</h3><p><img src="https://upload-images.jianshu.io/upload_images/14577467-4df5e58259e5bacc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>为了处理扩展性问题，DNS服务器采用层次式组织，并且分布在全世界范围内；大致来说，存在三种DNS服务器</p>
+<p><strong><code>DNS服务器：</code></strong></p>
+<p>①根 DNS 服务器：因特网上有13个根DNS服务器，大部分分布在北美洲，尽管我们可以将这13个根DNS服务器视为单个的服务器，但是每台服务器实际上是一个冗余的计算机网络以提供安全性和可靠性</p>
+<p>②顶级域（DNS）服务器：负责顶级域名，如com，org，net，edu，gov以及各个国家的顶级域名的转换</p>
+<p>③权威DNS服务器：因特网上，具有公共可访问主机的每个组织机构必须公共可访问的DNS记录，这些记录将主机名映射为IP地址。一个组织的权威DNS服务器收藏了这些DNS记录，多数大学和大公司实现和维护它们自己的基本和辅助（备份）权威DNS服务器；当然，也可以通过付费的方式，将相关的信息插入到其它权威服务器中</p>
+<p>还有一种不在DNS层次结构之中，是本地DNS服务器。本地DNS服务器通常邻近其所在网络的其他主机。当主机发出DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将请求转发到DNS服务器层次结构中。DNS服务器的层次结构，每个ISP都有一台本地DNS服务器。</p>
+<h3 id="DNS查询"><a href="#DNS查询" class="headerlink" title="DNS查询"></a>DNS查询</h3><p>①递归查询</p>
+<p>②迭代查询</p>
+<p>从请求主机到本地DNS服务器的查询是递归的，其他查询是迭代的，如果请求的接收者不知道所请求的内容，那么接收者将扮演请求者，发出有关请求，直到获得所需要的内容，然后将内容返回给最初的请求者。也就是说，在递归查询中，一定要给请求者想要的答案；迭代查询则是指，如果接收者没有请求者所需要的准确内容，接收者将告诉请求者，如何去获得，但是自己并不去发出请求</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-9128447e85da79b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="DNS缓存："><a href="#DNS缓存：" class="headerlink" title="DNS缓存："></a>DNS缓存：</h3><p>为了改善时延性能并减少在因特网上传输的DNS报文数量，DNS使用缓存技术。通常在本地服务器实现，可以缓存主机名/IP地址对，可以缓存TLD服务器地址，从而绕过根DNS服务器</p>
+<h2 id="DNS记录和报文"><a href="#DNS记录和报文" class="headerlink" title="DNS记录和报文"></a>DNS记录和报文</h2><p>资源记录是一个4元组：（Name，Value，Type，TTL）</p>
+<p>TTL为该记录的生存时间，决定了资源记录应当从缓存中删除的时间。</p>
+<p>①Type=A，则Name是主机名，Value是该主机名对应的IP地址。</p>
+<p>②Type=NS，则Name是域，Value是如何获取该域中主机IP地址的权威DNS服务<br>器的主机名。</p>
+<p>③Type=CNAME，则Value是别名为Name的主机对应的规范主机名。</p>
+<p>④Type=MX，则Value是别名为Name的邮件服务器对应的规范主机名。从而使得同一公司的邮件服务器和web服务器可以使用相同别名。</p>
+<p>所以如果一条记录为type=A，则它直接包含了需要的信息；如果是NS，需要进一步得到权威DNS服务器的IP地址（不一定需要再次请求哦~），然后向其发出，请求希望得到一条A记录；而type=CNAME和MX的记录则实现了主机别名到主机规范名的转换，可以通过该规范名继续构建查询链条，直到获得希望的IP地址</p>
+<h3 id="DNS报文"><a href="#DNS报文" class="headerlink" title="DNS报文"></a>DNS报文</h3><p>DNS报文有两种，即查询报文和回答报文，并且两种报文有着相同的结构： </p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-e92642373e90c79b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>①前12字节为首部区域。标识符是一个用来标记该查询的16比特数。该标志符会被复制到相应的回答报文里，以便匹配请求和回答；</p>
+<p>②标志字段有若干标志，用来指出报文的类型（请求还是响应）、查询类型（递归还是迭代）、是否是所请求名字的权威DNS服务器、以及4个有关数量的字段，用来指示4类数据区域出现的数量。</p>
+<p>③问题区域包含了正在进行的查询信息，包括名字字段、查询类型。</p>
+<p>④回答区域包含了对最初请求的名字的资源记录，回答报文回答区域可以包含多条RR，因此一个主机名能有多个IP地址。</p>
+<p>⑤权威区域包含了其他权威服务器的信息。</p>
+<p>⑥附加区域包含了其它有帮助的记录，比如在对于一个MX类型的请求回答报文里，回答区域里指出了邮件服务器的规范主机名，而附加区域里就有可能包含一个类型为A的关于该规范主机名的的IP地址。</p>
+<h3 id="向DNS数据库中插入记录"><a href="#向DNS数据库中插入记录" class="headerlink" title="向DNS数据库中插入记录"></a>向DNS数据库中插入记录</h3><p>需要在注册登记机构完成这一任务，当你注册一个域名时，需要向该机构提供你的基本和辅助DNS服务器的名字和IP地址，该注册机构将确保一个类型为NS和类型为A的记录输入对应的顶级域名服务器，这样就完成了插入数据。</p>
+<h1 id="P2P文件分发"><a href="#P2P文件分发" class="headerlink" title="P2P文件分发"></a>P2P文件分发</h1><p>有两种典型因特网应用十分适合P2P体系结构，一种是文件分发，另一种是大型对等方社区中的数据库；P2P体系结构有着良好的自扩展性；</p>
+<p>BitTorrent 是一种用于文件分发的流行P2P协议；用BitTorrent的术语来说，参与一个特定文件分发的所有对等方的集合被称为一个洪流；在一个洪流中的对等方彼此下载等长度的文件块；当一个对等方下载文件块的时候，也向其他对等方发送了多个块；一旦某对等方获得了完整文件，就可以自私地离开洪流或者大公无私地留下来继续向其他对等方发送文件</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-30afbefa3552587d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>P2P的最小分发时间</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-5c5ee54e8a91af5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h1 id="套接字编程"><a href="#套接字编程" class="headerlink" title="套接字编程"></a>套接字编程</h1><h2 id="UDP套接字编程"><a href="#UDP套接字编程" class="headerlink" title="UDP套接字编程"></a>UDP套接字编程</h2><p><img src="https://upload-images.jianshu.io/upload_images/14577467-9efb66b341a127a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><strong><code>UDPClient.py</code></strong> </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">"127.0.0.1"</span></span><br><span class="line">serverPort = <span class="number">10021</span></span><br><span class="line">clientSocket = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	message = raw_input(<span class="string">'Input lowercase sentence:'</span>)</span><br><span class="line">	<span class="keyword">if</span> message==<span class="string">'quit'</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	clientSocket.sendto(message,(serverName,serverPort))</span><br><span class="line">	modifiedMessage,serverAddress = clientSocket.recvfrom(<span class="number">2048</span>)</span><br><span class="line">	<span class="keyword">print</span> modifiedMessage</span><br><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>UDPServer.py</code></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">"127.0.0.1"</span></span><br><span class="line">serverPort = <span class="number">10021</span></span><br><span class="line">serverSocket = socket(AF_INET,SOCK_DGRAM)</span><br><span class="line">serverSocket.bind((serverName,serverPort))</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"The server is ready to receive"</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	message,clientAddress = serverSocket.recvfrom(<span class="number">2048</span>)</span><br><span class="line">	modifiedMessage = message.upper()</span><br><span class="line">	serverSocket.sendto(modifiedMessage,clientAddress)</span><br></pre></td></tr></table></figure>
+
+<h2 id="TCP套接字编程"><a href="#TCP套接字编程" class="headerlink" title="TCP套接字编程"></a>TCP套接字编程</h2><p><img src="https://upload-images.jianshu.io/upload_images/14577467-d8e765b8f3a27aad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><strong><code>TCPClient.py</code></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">"127.0.0.1"</span></span><br><span class="line">serverPort = <span class="number">10021</span></span><br><span class="line">clientSocket = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">clientSocket.connect((serverName,serverPort))</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	message = raw_input(<span class="string">'Input lowercase sentence:'</span>)</span><br><span class="line">	<span class="keyword">if</span> message==<span class="string">'quit'</span>:</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	clientSocket.send(message)</span><br><span class="line">	modifiedMessage,serverAddress = clientSocket.recvfrom(<span class="number">2048</span>)</span><br><span class="line">	<span class="keyword">print</span> modifiedMessage</span><br><span class="line">clientSocket.close()</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>TCPServer.py</code></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">"127.0.0.1"</span></span><br><span class="line">serverPort = <span class="number">10021</span></span><br><span class="line">serverSocket = socket(AF_INET,SOCK_STREAM)</span><br><span class="line">serverSocket.bind((serverName,serverPort))</span><br><span class="line">serverSocket.listen(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">"The server is ready to receive"</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	connectionSocket,addr = serverSocket.accept()</span><br><span class="line">	message = connectionSocket.recv(<span class="number">2048</span>)</span><br><span class="line">	modifiedMessage = message.upper()</span><br><span class="line">	connectionSocket.send(modifiedMessage)</span><br><span class="line">	connectionSocket.close()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/应用层.html">应用层</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年07月06日 - 18时48分</p>
+        <p><span>最后更新:</span>2019年07月17日 - 12时26分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/应用层.html" title="应用层">http://yoursite.com/应用层.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/应用层.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/运输层.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          运输层
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/计算机网络和因特网.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">计算机网络和因特网</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#应用层协议原理"><span class="toc-number">1.</span> <span class="toc-text">应用层协议原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络应用程序体系结构"><span class="toc-number">1.1.</span> <span class="toc-text">网络应用程序体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户-服务器体系结构-CS-："><span class="toc-number">1.1.1.</span> <span class="toc-text">客户-服务器体系结构(CS)：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#P2P体系结构："><span class="toc-number">1.1.2.</span> <span class="toc-text">P2P体系结构：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区别："><span class="toc-number">1.1.3.</span> <span class="toc-text">区别：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进程通信"><span class="toc-number">1.2.</span> <span class="toc-text">进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户和服务器进程："><span class="toc-number">1.2.1.</span> <span class="toc-text">客户和服务器进程：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程与计算机网络中的接口："><span class="toc-number">1.2.2.</span> <span class="toc-text">进程与计算机网络中的接口：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#进程寻址："><span class="toc-number">1.2.3.</span> <span class="toc-text">进程寻址：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可供应用程序使用的运输服务"><span class="toc-number">1.3.</span> <span class="toc-text">可供应用程序使用的运输服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#因特网提供的运输服务"><span class="toc-number">1.4.</span> <span class="toc-text">因特网提供的运输服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP服务："><span class="toc-number">1.4.1.</span> <span class="toc-text">TCP服务：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UDP服务："><span class="toc-number">1.4.2.</span> <span class="toc-text">UDP服务：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#因特网运输协议不提供的服务："><span class="toc-number">1.4.3.</span> <span class="toc-text">因特网运输协议不提供的服务：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP和UDP的应用："><span class="toc-number">1.4.4.</span> <span class="toc-text">TCP和UDP的应用：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用层协议"><span class="toc-number">1.5.</span> <span class="toc-text">应用层协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WEB和HTTP"><span class="toc-number">2.</span> <span class="toc-text">WEB和HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP概况"><span class="toc-number">2.1.</span> <span class="toc-text">HTTP概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非持续连接和持续连接"><span class="toc-number">2.2.</span> <span class="toc-text">非持续连接和持续连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#非持续连接的HTTP："><span class="toc-number">2.2.1.</span> <span class="toc-text">非持续连接的HTTP：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持续连接的HTTP："><span class="toc-number">2.2.2.</span> <span class="toc-text">持续连接的HTTP：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http报文格式"><span class="toc-number">2.3.</span> <span class="toc-text">http报文格式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#http请求报文："><span class="toc-number">2.3.1.</span> <span class="toc-text">http请求报文：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#http响应报文："><span class="toc-number">2.3.2.</span> <span class="toc-text">http响应报文：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户和服务器的交互-cookie"><span class="toc-number">2.4.</span> <span class="toc-text">用户和服务器的交互(cookie)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web缓存"><span class="toc-number">2.5.</span> <span class="toc-text">web缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件get的方法"><span class="toc-number">2.6.</span> <span class="toc-text">条件get的方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#因特网中的电子邮件"><span class="toc-number">3.</span> <span class="toc-text">因特网中的电子邮件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SMTP"><span class="toc-number">3.1.</span> <span class="toc-text">SMTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#与HTTP对比"><span class="toc-number">3.2.</span> <span class="toc-text">与HTTP对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邮件报文格式"><span class="toc-number">3.3.</span> <span class="toc-text">邮件报文格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#邮件访问协议"><span class="toc-number">3.4.</span> <span class="toc-text">邮件访问协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#POP3"><span class="toc-number">3.4.1.</span> <span class="toc-text">POP3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAP"><span class="toc-number">3.4.2.</span> <span class="toc-text">IMAP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于web的电子邮件"><span class="toc-number">3.4.3.</span> <span class="toc-text">基于web的电子邮件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS因特网的目录服务"><span class="toc-number">4.</span> <span class="toc-text">DNS因特网的目录服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS提供的服务"><span class="toc-number">4.1.</span> <span class="toc-text">DNS提供的服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS工作机理的概述"><span class="toc-number">4.2.</span> <span class="toc-text">DNS工作机理的概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式，层次数据库："><span class="toc-number">4.2.1.</span> <span class="toc-text">分布式，层次数据库：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS查询"><span class="toc-number">4.2.2.</span> <span class="toc-text">DNS查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS缓存："><span class="toc-number">4.2.3.</span> <span class="toc-text">DNS缓存：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS记录和报文"><span class="toc-number">4.3.</span> <span class="toc-text">DNS记录和报文</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS报文"><span class="toc-number">4.3.1.</span> <span class="toc-text">DNS报文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#向DNS数据库中插入记录"><span class="toc-number">4.3.2.</span> <span class="toc-text">向DNS数据库中插入记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#P2P文件分发"><span class="toc-number">5.</span> <span class="toc-text">P2P文件分发</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#套接字编程"><span class="toc-number">6.</span> <span class="toc-text">套接字编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP套接字编程"><span class="toc-number">6.1.</span> <span class="toc-text">UDP套接字编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP套接字编程"><span class="toc-number">6.2.</span> <span class="toc-text">TCP套接字编程</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/运输层.html" title="上一篇: 运输层">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/计算机网络和因特网.html" title="下一篇: 计算机网络和因特网">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

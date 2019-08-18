@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>windows消息钩取 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="windows消息机制windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
+<meta name="keywords" content="HOOK技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows消息钩取">
+<meta property="og:url" content="http://yoursite.com/windows消息钩取.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="windows消息机制windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows消息钩取">
+<meta name="twitter:description" content="windows消息机制windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
+<meta name="twitter:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-windows消息钩取" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/windows消息钩取.html" class="article-date">
+      <time datetime="2019-02-10T06:39:00.000Z" itemprop="datePublished">2019-02-10</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      windows消息钩取
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HOOK技术/">HOOK技术</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="windows消息机制"><a href="#windows消息机制" class="headerlink" title="windows消息机制"></a>windows消息机制</h1><p>windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。</p>
+<a id="more"></a>
+<p><code>进程</code></p>
+<p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位。</p>
+<p>进程可以看做程序执行的一个实例。进程是系统资源分配的独立实体，每个进程都有独立的地址空间。一个进程可以拥有多个线程，每个线程使用其所属进程的栈空间。同一进程内的多个线程可以共享部分状态，多个线程可以读写同一块内存，进程无法访问其他进程的内存。</p>
+<p><code>线程</code></p>
+<p>线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位。是进程的一条执行路径。</p>
+<p>线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源,但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.。</p>
+<ul>
+<li>进程是一个容器，线程在进程这个容器中执行，是实际执行的代码。一 个进程至少拥有一个线程，而这个线程通常被称之为主线程，主线程的入口点也是应用程序的起始点。线程除了必不 可少的资源（程序计数器 一组寄存器和栈）之外，不拥有系统资源，所有进程内 的线程共享分配给这个进程拥有的所有资源。</li>
+</ul>
+<p><code>事件</code></p>
+<p>在操作系统中借助键盘，鼠标，选择菜单，按钮，以及移动鼠标，改动窗口大小和位置都是事件。</p>
+<p><code>句柄</code></p>
+<p>句柄在程序设计中是一种特殊的指针，当一个程序需要引用其他系统时，就要使用句柄。</p>
+<p>句柄是windows编程的基础。一个句柄是指使用一个唯一的整数值（4字节，64位 程序中是8字节），来标识应用程序中的不同对象和同类中的不同实例。</p>
+<h1 id="钩子"><a href="#钩子" class="headerlink" title="钩子"></a>钩子</h1><ul>
+<li><p>钩子（Hook）是windows消息处理机制的一个平台，应用程序可以在上面设置子进程以监视指定窗口的某种消息，监视的窗口可以是其他进程所创建的。当消息到达后，在目标窗口处理函数之前处理它，钩子机制允许应用程序截获处理windows消息或特定事件。</p>
+</li>
+<li><p>钩子是一个处理消息的程序段，通过系统调用，把他们挂入系统。当特定的消息发出，在没有达到目的窗口前，钩子程序就先捕获该消息，钩子函数先得到控制权，就可以加工处理或改变消息，也可以不处理继续传递消息，也可强制结束消息。</p>
+</li>
+</ul>
+<h1 id="常规windows消息流"><a href="#常规windows消息流" class="headerlink" title="常规windows消息流"></a>常规windows消息流</h1><p>1.发生键盘输入时，WM_KEYDOMN消息被添加到[OS message queue]</p>
+<p>2.OS判断那个应用发生了事件，然后从[OS message queue]取出消息，添加到相应的[application message queue]中。</p>
+<p>3.应用程序监视自身的[application message queue]，发现新添加的WM_KEYDOMN消息后，调用相应的事件处理程序处理。</p>
+<h1 id="消息钩取工作原理"><a href="#消息钩取工作原理" class="headerlink" title="消息钩取工作原理"></a>消息钩取工作原理</h1><p> windows操作系统向用户提供GUI（ 图形用户界面），以事件驱动的方式工作。<br>当事件发生时，OS会把事先定义好的消息发送给响应的应用程序，应用程序收到消息后执行相应的动作。</p>
+<p>OS消息队列与应用程序消息队列之间存在一条钩链（HookChain）处于钩链的钩子会比应用程序先看到相应的信息。在键盘钩子函数的内部，除了可以查看消息外，还可以修改消息本身，对消息拦截或阻止消息传递。可以同时设置多个键盘钩子，按照设置顺序依次调用这些钩子</p>
+<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt></p>
+<h1 id="windows消息钩取的实现——SetWindowsHookEx"><a href="#windows消息钩取的实现——SetWindowsHookEx" class="headerlink" title="windows消息钩取的实现——SetWindowsHookEx()"></a>windows消息钩取的实现——SetWindowsHookEx()</h1><p>使用SetWindowsHookEx()API可以轻松实现消息钩子</p>
+<p><code>SetWindowsHookEx（）API定义</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HHOOK <span class="title">SetWindowsHookEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> idHook,			<span class="comment">//hook type</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HOOKPROC lpfn,		<span class="comment">//hook procedure</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HINSTANCE hMod,		<span class="comment">//hook procedure所属的DLL句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    DWORD dwThreadId	<span class="comment">//将要挂钩的目标线程ID</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><code>idHook：</code> 指示将要安装的挂钩处理过程的类型</p>
+<p><code>Lpfn：</code> 消息的回调函数地址</p>
+<p><code>hMod：</code> 钩子函数所在的实例的句柄。对于线程钩子，该参数为NULL。对于系统钩子，该参数为钩子函数所在的DLL句柄</p>
+<p><code>dwThreadId：</code> 钩子所监视的线程的线程号，可通过GetCurrentThreadId()获得线程号。若dwThreadId参数设置为0，安装的钩子时全局钩子（Global Hook）</p>
+<p>钩子过程是由操作系统调用的回调函数。安装钩子时，钩子过程需要存在某个DLL的内部，这个DLL的实例句柄是hMod</p>
+<p>使用SetWindowsHookEx()设置好钩子后，在某个进程中生成指定消息时，OS会将相关的DLL文件强制注入相应的进程，然后调用注册的钩子过程。</p>
+<h1 id="键盘消息钩子"><a href="#键盘消息钩子" class="headerlink" title="键盘消息钩子"></a>键盘消息钩子</h1><h2 id="Keyhook-cpp"><a href="#Keyhook-cpp" class="headerlink" title="Keyhook.cpp"></a>Keyhook.cpp</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEF_PROCESS_NAME		<span class="meta-string">"notepad.exe"</span></span></span><br><span class="line">HINSTANCE g_hInstance = <span class="literal">NULL</span>;</span><br><span class="line">HHOOK g_hHook = <span class="literal">NULL</span>;</span><br><span class="line">HWND g_hWnd = <span class="literal">NULL</span>;</span><br><span class="line"><span class="function">BOOL WINAPI <span class="title">DllMain</span><span class="params">(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (dwReason)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hInstance = hinstDLL;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LRESULT CALLBACK <span class="title">KeyboardProc</span><span class="params">(<span class="keyword">int</span> nCode, WPARAM wParam, LPARAM lParam)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> szPath[MAX_PATH] = &#123; <span class="number">0</span>, &#125;;</span><br><span class="line">	<span class="keyword">char</span> *p = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">if</span> (nCode &gt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// bit 31 : 0 =key press, 1 =key release</span></span><br><span class="line">		<span class="keyword">if</span> (!(lParam &amp; <span class="number">0x80000000</span>)) <span class="comment">//释放键盘按键时</span></span><br><span class="line">		&#123;</span><br><span class="line">			GetModuleFileNameA(<span class="literal">NULL</span>, szPath, MAX_PATH);</span><br><span class="line">			p = <span class="built_in">strrchr</span>(szPath, <span class="string">'\\'</span>);<span class="comment">//比较当前进程名称，若为notepad.exe,则消息不会传给应用程序</span></span><br><span class="line">		        <span class="keyword">if</span> (!_stricmp(p + <span class="number">1</span>, DEF_PROCESS_NAME))</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//若非notepad.exe,则调用CallNextHookEx()函数，消息将传递给下一个程序</span></span><br><span class="line"><span class="comment">//_stricmp()函数用于比较字符串，i表示不区分大小写，若两个值相等则返回0</span></span><br><span class="line">	<span class="keyword">return</span> CallNextHookEx(g_hHook, nCode, wParam, lParam);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	__declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">HookStart</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		g_hHook = SetWindowsHookEx(WH_KEYBOARD, KeyboardProc, g_hInstance, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	__declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">HookStop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (g_hHook)</span><br><span class="line">		&#123;</span><br><span class="line">			UnhookWindowsHookEx(g_hHook);</span><br><span class="line">			g_hHook = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>安装好键盘钩子，无论什么进程，只要键盘输入事件，OS就会强行将KeyHook.dll注入进程，加载了KeyHook.dll的进程中，发生键盘事件时会首先调用执行KeyHook.KeyboardProc()</p>
+<p>KeyHook.KeyboardProc()函数中发生键盘输入事件时，会比较进程的名字是否与notepad.exe相同，相同返回1，终止KeyHook.KeyboardProc()函数，截获且删除信息，键盘消息就不会传递到notepad.exe程序的消息队列中。</p>
+<h2 id="HookMain-cpp"><a href="#HookMain-cpp" class="headerlink" title="HookMain.cpp"></a>HookMain.cpp</h2><p>调用导出函数HookStrat()时，SetWindowsHookEx()函数会将KeybroadProc()添加到键盘钩链</p>
+<blockquote>
+<p>KeybroadProc()函数定义<br><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt><br>*</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"conio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_DLL_NAME		<span class="meta-string">"KeyHook.dll"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTART		<span class="meta-string">"HookStart"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTOP		<span class="meta-string">"HookStop"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTART)</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTOP)</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HMODULE			hDll = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTART	HookStart = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTOP	HookStop = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>			ch = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载KeyHook.dll </span></span><br><span class="line">	hDll = LoadLibraryA(DEF_DLL_NAME);</span><br><span class="line">    <span class="keyword">if</span>( hDll == <span class="literal">NULL</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"LoadLibrary(%s) failed!!! [%d]"</span>, DEF_DLL_NAME, GetLastError());</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取导出函数地址 </span></span><br><span class="line">	HookStart = (PFN_HOOKSTART)GetProcAddress(hDll, DEF_HOOKSTART);</span><br><span class="line">	HookStop = (PFN_HOOKSTOP)GetProcAddress(hDll, DEF_HOOKSTOP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始钩取 </span></span><br><span class="line">	HookStart();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待用户输入“q” </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"press 'q' to quit!\n"</span>);</span><br><span class="line">	<span class="keyword">while</span>( _getch() != <span class="string">'q'</span> )	;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 终止钩取 </span></span><br><span class="line">	HookStop();</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 卸载KeyHook.dll </span></span><br><span class="line">	FreeLibrary(hDll);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行HookMain.exe可安装键盘钩子</p>
+<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+<p>输入q可停止键盘钩取</p>
+<p><code>调试HookMain.exe</code></p>
+<p>通过字符串检索找到main函数</p>
+<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+<p>程序在00C2140E地址处调用LoadLibraryA(KeyHook.dll)</p>
+<p>调用了SetWindowsHookExW()函数时，先有两条PUSH指令将该函数的第一、第二两个参数压入栈。其中第一个参数idHook值为2，即WH_KEYBOARD，第二个参数lpfn值为为钩子过程的地址。</p>
+<p><code>调试notepad.exe进程中的KeyHook.dll</code></p>
+<p>运行notpead.exe后弹出Executable modules窗口，KeyHook.dll已被加载</p>
+<p><code>操作过程</code><br><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/windows消息钩取.html">windows消息钩取</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年02月10日 - 14时39分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/windows消息钩取.html" title="windows消息钩取">http://yoursite.com/windows消息钩取.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/windows消息钩取.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/DLL注入.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          DLL注入
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/BugKu逆向.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">BugKu逆向</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows消息机制"><span class="toc-number">1.</span> <span class="toc-text">windows消息机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#钩子"><span class="toc-number">2.</span> <span class="toc-text">钩子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常规windows消息流"><span class="toc-number">3.</span> <span class="toc-text">常规windows消息流</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#消息钩取工作原理"><span class="toc-number">4.</span> <span class="toc-text">消息钩取工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows消息钩取的实现——SetWindowsHookEx"><span class="toc-number">5.</span> <span class="toc-text">windows消息钩取的实现——SetWindowsHookEx()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#键盘消息钩子"><span class="toc-number">6.</span> <span class="toc-text">键盘消息钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Keyhook-cpp"><span class="toc-number">6.1.</span> <span class="toc-text">Keyhook.cpp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HookMain-cpp"><span class="toc-number">6.2.</span> <span class="toc-text">HookMain.cpp</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/DLL注入.html" title="上一篇: DLL注入">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/BugKu逆向.html" title="下一篇: BugKu逆向">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

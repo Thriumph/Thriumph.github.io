@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>计算机网络中的安全 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="《计算机网络自顶向下方法》第八章读书笔记">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络中的安全">
+<meta property="og:url" content="http://yoursite.com/计算机网络中的安全.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="《计算机网络自顶向下方法》第八章读书笔记">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络中的安全">
+<meta name="twitter:description" content="《计算机网络自顶向下方法》第八章读书笔记">
+<meta name="twitter:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-计算机网络中的安全" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/计算机网络中的安全.html" class="article-date">
+      <time datetime="2019-07-17T06:50:11.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机网络中的安全
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>《计算机网络自顶向下方法》第八章读书笔记</p>
+<a id="more"></a>
+
+<h1 id="什么是网络安全"><a href="#什么是网络安全" class="headerlink" title="什么是网络安全"></a>什么是网络安全</h1><p>安全通信具有下列所需要的特性：</p>
+<p><code>机密性。</code>仅有发送方和希望的接收方能够理解传输报文的内容。因为窃听者可以截获报文，这必须要求报文在一定程度上进行加密，是截取的报文无法被截获者所理解。</p>
+<p><code>报文完整性。</code>发送方和希望的接收方希望确保其通信的内容在传输过程中未被改变——或者恶意篡改或者意外活动。</p>
+<p><code>端点鉴别。</code>发送方和接收方都应该能证实通信过程所涉及的另一方，以确信通信的另一方确实具有其所生成的身份。</p>
+<p><code>运行安全性。</code>几乎所有的机构几天都有了于公共因特网连接的网络。这些网络因此潜在地能够被危及安全。攻击者能够试图在网络主机中安放蠕虫，获取公司秘密，勘察内部网络配置并发起DoS攻击。</p>
+<h1 id="密码学的原则"><a href="#密码学的原则" class="headerlink" title="密码学的原则"></a>密码学的原则</h1><p>发送者报文的最初形式被称为<code>明文</code>。发送者使用<code>加密算法</code>加密其明文报文，生成的加密报文被称为<code>密文</code>，该密文对任何入侵者看起来是不可懂的。发送方提供了一个<code>密钥</code>KA，它是一串数字或字符，作为加密算法的输入。加密算法以密钥和明文报文m为输入，生成的密文作为输出。用符号KA(m)表示使用密钥KA加密的明文报文m的密文形式。类似地，接收方将为<code>解密算法</code>提供密钥KB，将密文和接收方的密钥作为输入，输出初始明文。也就是说，如果接收方接收到一个加密的报文KA(m)，他可通过计算KB(KA(m)) = m进行解密。在<code>对称密钥系统</code>中，发送方和接收方的密钥是相同并且是秘密的。在<code>公开密钥系统</code>中，使用一对密钥：一个密钥为发送方和接收方两人所知，另一个密钥只有发送方或接收方知道</p>
+<p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<h2 id="对称密钥密码体制"><a href="#对称密钥密码体制" class="headerlink" title="对称密钥密码体制"></a>对称密钥密码体制</h2><p><code>凯撒密码</code>用于英语文本时，将明文报文中的每个字母用字母表中该字母后第k个字母进行替换。</p>
+<p>凯撒密码的一种改进方法是单码代替密码，也是使用自字母表中的一个字母替换该字母表中的另一个字母。然而，并非按照规则的模式进行替换，只要每个字母都有一个唯一的替换字母，任一字母都可用另一字母替换，反之亦然。</p>
+<p><code>当考虑入侵者破解加密方案的难易程度时，可以根据入侵者所拥有的信息分为三种不同的情况：</code></p>
+<p><code>1.唯密文攻击。</code>有些情况下，入侵者只能得到截取的密文，也不了解明文报文的内容。</p>
+<p><code>2.已知明文攻击。</code>如果入侵者以某种方式确信在密文报文中会出现的信息，就可以破解部分匹配关系。</p>
+<p><code>3.选择明文攻击。</code>在选择明文攻击中，入侵者能够选择某一明文报文并得到该明文报文对应的密文形式。</p>
+<p><code>4.多码代替密码</code>是对单码代替密码的改进。多码代替密码的基本思想是使用多个单码代替密码，一个单码代替密码用于加密某明文中一个特定位置的字母。因此，在某明文报文中不同位置出现的相同字母可能以不同方式编码。</p>
+<h3 id="块密码"><a href="#块密码" class="headerlink" title="块密码"></a>块密码</h3><p>块密码中，要加密的报文被处理为k比特的块。为了加密一个块，该密码采用了一对一映射，将k比特块的明文映射为k比特块的密文。块密码通常使用函数模拟随机排列表。例如当k = 64时，该函数首先将64比特块划分为8个块，每个块由8比特组成。每个8比特块由一个“8比特到8比特”表处理，这是个可管理的长度。接下来，这8个输出块被重新装配成一个64比特的块。该输出被回馈到64比特的输入，开始了第二次循环。经n此这样的循环后，该函数提供了一个64比特的密文块。</p>
+<p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<h3 id="密码块链接"><a href="#密码块链接" class="headerlink" title="密码块链接"></a>密码块链接</h3><p>​ 如果使用上述的块密码，会出现一个微妙而重要的问题，即相同铭文块对应的密文块可能是相同的。为了解决这个问题，可以在密文中混合某些随机性，使得相同的明文块产生不同的密文块。令m(i)表示第i个明文块，c(i)表示第i个密文块，并且a⊕b表示两个比特串a和b的异或。将具有密钥S的块密码加密算法表示为KS。其基本思想如下：发送方为第i块生成一个随机的k比特数r(i)，并且计算c(i) = KS(m(i)⊕r(i))。接收方收到c(i)和r(i)，它能够通过计算m(i) = KS(c(i)⊕r(i))而恢复每个明文块。</p>
+<ul>
+<li>引入随机性产生了另一个问题：发送方必须传输一千两倍的比特。为了有效利用该技术，块密码通常使用了一种称为<code>密码块链接（Cipher Block Chaining, CBC）</code>的技术。其基本思想是仅随第一个报文发送一个随机值，然后让发送方和接收方使用计算的编码块代替后继的随机数。集体而言，CBC运行过程如下：</li>
+<li>在加密报文之前，发送方生成一个随机的k比特穿，称为初始向量（Initialization Vector, IV）。将该初始向量表示为c(0)。发送方以明文方式将IV发送给接收方。</li>
+<li>对第一个块，发送方计算m(1)⊕c(0)，即计算第一块明文与IV的异或。然后通过块密码算法运行得到的结果以得到对应的密文块，即c(1) = KS(m(1)⊕c(0))。发送方向接收方发送加密块c(1)。</li>
+<li>对于第i个块，发送方根据c(i) = KS(m(i)⊕c(i – 1))生成第i个密文块。</li>
+</ul>
+<h2 id="公开密钥加密"><a href="#公开密钥加密" class="headerlink" title="公开密钥加密"></a>公开密钥加密</h2><p>在公开密钥密码中，发送方和接收方并未共享一个密钥，而接收方则由两个密钥，一个世界上任何人都可得到的公钥，另一个是只有接收方知道的私钥。使用符号$ K^+_B 和 和和 K^-_B 来分别表示接收方的公钥和私钥。<br>为了与接收方通信，发送方首先取得接收方的公钥，然后用这个公钥和一个众所周知的加密算法，加密他要传递给发送方的报文m；即发送方计算 来分别表示接收方的公钥和私钥。为了与接收方通信，发送方首先取得接收方的公钥，然后用这个公钥和一个众所周知的加密算法，加密他要传递给发送方的报文m；即发送方计算来分别表示接收方的公钥和私钥。为了与接收方通信，发送方首先取得接收方的公钥，然后用这个公钥和一个众所周知的加密算法，加密他要传递给发送方的报文m；即发送方计算 K^+_B (m)。接收方接收到发送方的加密报文后，用其私钥和一个众所周知的解密算法解密发送方的加密报文，即接收方计算 (m)。接收方接收到发送方的加密报文后，用其私钥和一个众所周知的解密算法解密发送方的加密报文，即接收方计算(m)。接收方接收到发送方的加密报文后，用其私钥和一个众所周知的解密算法解密发送方的加密报文，即接收方计算 K^-_B ( (( K^+_B (m))。存在着可以选择公钥和私钥的加密/解密算法和技术，使得 (m))。存在着可以选择公钥和私钥的加密/解密算法和技术，使得(m))。存在着可以选择公钥和私钥的加密/解密算法和技术，使得 K^-_B ( (( K^+_B (m))；也就是说，用接收方的公钥 (m))；也就是说，用接收方的公钥(m))；也就是说，用接收方的公钥 K^+_B 加密报文m，然后再用接收方的私钥解密报文密文形式就能得到最初得到明文m。公钥和私钥加密相互交换同样能够得到结果，即 加密报文m，然后再用接收方的私钥 解密报文密文形式就能得到最初得到明文m。公钥和私钥加密相互交换同样能够得到结果，即加密报文m，然后再用接收方的私钥解密报文密文形式就能得到最初得到明文m。公钥和私钥加密相互交换同样能够得到结果，即 K^-_B ( (( K^+_B $(m)) = $ K^+_B ( (( K^-_B $(m)) = m。</p>
+<h3 id="RSA"><a href="#RSA" class="headerlink" title="RSA"></a>RSA</h3><p>RSA算法广泛地使用模n算术运算。RSA由两个互相关联的部分：</p>
+<ul>
+<li>公钥和私钥的选择。</li>
+<li>解密和解密算法。</li>
+</ul>
+<p>为了生成RSA的公钥和私钥，接收方执行如下步骤：</p>
+<ul>
+<li>选择两个大素数p和q。该值越大，破解RSA越困难，而执行加密和解密所用的时间也越长。</li>
+<li>计算n = pq和z = (p – 1)(q – 1)。</li>
+<li>选择小于n的一个数e，且使e和z互素。</li>
+<li>求一个数d，使得ed – 1可以被z整除。即给定e，求d，使得ed mod z = 1。</li>
+<li>接收方使外界可用的公钥 是一对数(n, e)，其私钥是 是一对数(n, d)。</li>
+</ul>
+<p>发送方执行的加密和接收方执行的解密过程如下：</p>
+<ul>
+<li>假设发送方要给接收方发送一个由整数m表示的比特组合，且m &lt; n。为了进行编码，接受当执行指数运算me，然后计算me被n除的整数余数。换言之，发送方的明文m的加密值c就是：c = me mod n。对于这个密文c的比特模式发送给接收方。</li>
+<li>为了对收到的密文报文c解密，接收方计算：m = cd mod n。</li>
+</ul>
+<p>在实际应用中，RSA通常与对称密钥密码结合起来使用。例如，如果发送方要向接收方发送大量的加密数据，他可以用下述方式做。首先，发送方选择一个用于加密数据本身的密钥，这个密钥称为<code>会话密钥</code>，该会话密钥表示为KS。发送方必须把这个会话密钥告知接收方，因为这是他们在对称密钥密码中所使用的共享对称密钥。发送方可以使用接收方的RSA公钥来加密该会话密钥，即计算c = (KS)e mod n。接收方收到了该RSA加密的会话密钥c后，解密得到会话密钥KS。接收方此时已经知道将要用于加密数据传输的会话密钥了</p>
+<h1 id="报文完整性和数字签名"><a href="#报文完整性和数字签名" class="headerlink" title="报文完整性和数字签名"></a>报文完整性和数字签名</h1><p>报文完整性是指，接收方为了鉴别收到的报文，需要证实：</p>
+<ul>
+<li>该报文确实源自希望的发送方。</li>
+<li>该报文在到达的途中没有被篡改。</li>
+</ul>
+<h2 id="密码散列函数"><a href="#密码散列函数" class="headerlink" title="密码散列函数"></a>密码散列函数</h2><p>散列函数以m为输入，并计算得到一个称为散列的固定长度的字符串H(m)。<code>密码散列函数</code>要求具有下列附加的性质：找到任意两个不同的报文x和y使得H(x) = H(y)，在计算上是不可能的。这种性质就意味着入侵者在计算上不可能用其他报文替换由散列函数保护的报文。这就是说，如果(m, H(m))是报文和由发送方生成的报文散列的话，则入侵者不可能伪造另一个报文y的内容，使得该报文具有与原报文相同的散列值</p>
+<h2 id="报文鉴别码"><a href="#报文鉴别码" class="headerlink" title="报文鉴别码"></a>报文鉴别码</h2><p>为了鉴别报文完整性，除了使用密码散列函数外，发送方和接收方需要共享秘密s。这个共享的秘密只不过是一个比特串，它被称为鉴别密钥。使用这个共享秘密，报文完整性能够执行如下：</p>
+<ul>
+<li>发送方生成报文m，用s级联m以生成m + s，并计算散列H(m + s)。H(m + s)被称为报文鉴别码（Message Authentication Code, MAC）。</li>
+<li>然后发送方将MAC附加到报文m上，生成扩展报文(m, H(m + s))，并将报文发送给接受方。</li>
+<li>接收方接收到一个扩展报文(m, h)，由于知道s，计算出报文鉴别码H(m + s)。如果H(m + s) = h，接受方得到结论：一切正常。</li>
+</ul>
+<h2 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h2><p>数字签名是一种在数字领域实现的密码技术。</p>
+<p>使用数字签名的发送方的步骤：发送方让他的初始长报文通过一个散列函数。然后他用自己的私钥对得到的散列进行数字签名。明文形式的初始报文连同已经数字签名的报文摘要一道被发送给接收方。</p>
+<p>接收方的步骤：接收方先把发送方的公钥应用于报文获得一个散列结果。然后再把该散列函数应用于明文报文以得到第二个散列结果。若果这两个散列匹配，则接收方可以确信报文的完整性及其发送方。</p>
+<h3 id="公钥认证"><a href="#公钥认证" class="headerlink" title="公钥认证"></a>公钥认证</h3><p>将公钥于特定实体绑定通常是由认证中心（Certification Authority, CA）完成的，CA的职责就是使识别和发行证书合法化。CA具有下列作用：</p>
+<ul>
+<li>CA认证一个实体的真实身份。</li>
+<li>一旦CA验证了某个实体的身份，这个CA会生成一个将其身份和实体的公钥绑定起来的证书。这个证书包含这个公钥和公钥所有者全局唯一的身份标识信息。由CA对这个证书进行数字签名。</li>
+</ul>
+<h1 id="端点鉴别"><a href="#端点鉴别" class="headerlink" title="端点鉴别"></a>端点鉴别</h1><p>1.端点鉴别就是一个实体经过计算机网络向另一个实体证明其身份的过程</p>
+<ol start="2">
+<li>不重数是在一个协议的生存期中只使用一次的数。也就是说，一旦某协议使用了一个不重数，就永远不会再使用那个数字了。</li>
+</ol>
+<p>3.端点鉴别的步骤：</p>
+<ul>
+<li>发送方向接收方发送报文“我是xxx”。</li>
+<li>接收方选择一个不重数R，然后把这个值发给发送方。</li>
+<li>发送方使用他与接收方共享的对称秘密密钥K来加密这个不重数，然后把加密的不重数K®发回给接收方。由于发送方知道K并用它加密一个值，就使得接收方知道收到的报文是由希望的发送方产生的。这个不重数用于确定希望的发送方是活跃的。</li>
+<li>接收方解密收到的报文，如果解密得到的不重数等于他发送给发送方的那个不重数，则可鉴别发送方的身份。</li>
+</ul>
+<h1 id="安全电子邮件"><a href="#安全电子邮件" class="headerlink" title="安全电子邮件"></a>安全电子邮件</h1><h2 id="安全电子邮件-1"><a href="#安全电子邮件-1" class="headerlink" title="安全电子邮件"></a>安全电子邮件</h2><p>如果要设计一个提供机密性、发送方鉴别和报文完整性的电子邮件系统，可以通过把会话密钥和数字签名结合起来实现：发送方首先生成一个预备包，该预备包是通过会话密钥生成的，包括了发送方的初始报文和该报文数字签名过的散列。然后发送方把这个预备包看作一个报文，再经过数字签名后发送给接收方。接收方收到这个包后，通过与发送方相反的步骤获得初始报文。</p>
+<h2 id="PGP"><a href="#PGP" class="headerlink" title="PGP"></a>PGP</h2><p>PGR是安全电子邮件加密方案的一个范例，在公共领域中有各个版本的PGR可以使用</p>
+<h1 id="TCP安全连接-SSL"><a href="#TCP安全连接-SSL" class="headerlink" title="TCP安全连接 SSL"></a>TCP安全连接 SSL</h1><p>TCP的强化版本<code>安全套接字层（Secure Socket Layer, SSL）</code>用安全性服务加强TCP，该安全性服务包括机密性、数据完整性和端点鉴别。SSL版本3的一个稍加修改的版本被称为<code>运输层安全性（Transport Layer Security, TLS）。</code></p>
+<h2 id="宏观描述"><a href="#宏观描述" class="headerlink" title="宏观描述"></a>宏观描述</h2><p>SSL具有三个阶段：握手、密钥导出和数据传输</p>
+<p>一个客户B和一个服务器A之间的通信会话的这三个阶段</p>
+<h3 id="握手"><a href="#握手" class="headerlink" title="握手"></a>握手</h3><p>①与A创建一条TCP连接；</p>
+<p>②验证A是真实的，而不是入侵者假冒的；</p>
+<p>③发送给A一个主密钥，B和A持用该主密钥生成SSL会话所需的所有对称密钥。具体过程：一旦创建了TCP连接，B就向A发送一个hello报文。A用它得到证书进行响应，证书中包含了它的公钥。因为该证书已被某CA证实过，B明白无误地知道该公钥属于A。然后，B产生一个主密钥（EMS），并将该EMS发送给A。A用它的私钥解密该EMS从而得到MS。在这个阶段后，B和A均知道了用于这次SSL会话的主密钥。</p>
+<h3 id="密钥导出"><a href="#密钥导出" class="headerlink" title="密钥导出"></a>密钥导出</h3><p>​在密钥导出阶段，MS已由B和A共享，它能够用作所有后继加密和数据完整性检查的对称会话密钥。然而，对于A和B每人而言，使用不同的密码密钥，并且对于加密和完整性检查也使用不同的密钥，通常认为更为安全。因此，A和B都使用MS生成4个密钥：</p>
+<ul>
+<li>EB，用于从B发送到A的数据的会话加密密钥。</li>
+<li>MB，用于从B发送到A的数据的会话MAC密钥。</li>
+<li>EA，用于从A发送到B的数据的会话加密密钥。</li>
+<li>MA，用于从A发送到B的数据的会话MAC密钥。</li>
+</ul>
+<p>这通过直接将MS分为4个密钥来实现。</p>
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><p>​<br>在数据传输阶段，SSL将数据流分割成记录，对每个记录附加一个MAC用于完整性检查，然后加密该“记录+MAC”。为了产生这个MAC，B将数据连同密钥MB，一起放入一个散列函数中。B维护一个序号计数器，计数器开始为0，B每发送的一个SSL记录它都增加1。B计算MAC时，他把该序列号包括在MAC的计算中。所以，MAC现在是数据加MAC密钥MB加当前序列号的散列。为了加密“记录+MAC”这个包，B使用他的会话加密密钥EB。然后这个加密的包将传递给TCP经因特网传输。</p>
+<h2 id="完整描述"><a href="#完整描述" class="headerlink" title="完整描述"></a>完整描述</h2><p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<p>前三个字段是不加密的。类型字段指出了该字段是握手报文还是包含应用数据的报文。它也用于关闭SSL连接。在接收端SSL使用长度字段以从到达的TCP字节流中提取SSL记录。</p>
+<h3 id="SSL握手"><a href="#SSL握手" class="headerlink" title="SSL握手"></a>SSL握手</h3><p>详细的SSL握手步骤：</p>
+<ul>
+<li>客户发送它支持的密码算法的列表，连同一个客户的不重数。</li>
+<li>从该列表中，服务器选择一种对称算法、一种公钥算法和一种MAC算法。它把它的选择以及证书和一个服务器不重数返回给客户。</li>
+<li>客户验证该证书，提取服务器的公钥，生成一个前主密钥（Pre-Master Secret, PMS），用服务器的公钥加密该PMS，并将加密的PMS发送给服务器。</li>
+<li>使用相同的密钥导出函数，客户和服务器独立地从PMS和不重数中计算出主密钥（MS）。然后该MS被切片以生成两个密码和两个MAC密钥。此外，当选择的对称密码应用于CBC，则两个初始化向量（IV）也从该MS获得，这两个IV分别用于该连接的两端。自此以后，客户和服务器之间发送的所有报文均被加密和鉴别。</li>
+<li>客户发送所有握手报文的一个MAC。</li>
+<li>服务器发送所有握手报文的一个MAC。</li>
+</ul>
+<h1 id="网络安全性（IPsec和虚拟专用网）"><a href="#网络安全性（IPsec和虚拟专用网）" class="headerlink" title="网络安全性（IPsec和虚拟专用网）"></a>网络安全性（IPsec和虚拟专用网）</h1><p>IP安全（IP Security）协议更常被称为IPsec，它为网络层提供了安全性。IPsec为任意两个网络层实体（包括主机和路由器）之间的IP数据报提供了安全</p>
+<h2 id="IPsec和虚拟专用网"><a href="#IPsec和虚拟专用网" class="headerlink" title="IPsec和虚拟专用网"></a>IPsec和虚拟专用网</h2><p>跨越在多个地理区域上的某机构常常希望有自己的IP网络，使它的主机和服务器能够以一种安全和机密的方式彼此发送数据。为了达到这个目标，该机构能够实际部署一个单独的物理网络，该网络包括路由器、链路和DNS基础设施且与公共因特网完全分析。这样一种为特定的机构专用的分立网络被称为<code>专用网络</code>。专用网络可能耗资巨大，因为该机构需要购买、安装和维护它自己的物理网络基础设施。而使用<code>虚拟专用网（Virtual Private Network, VPN）</code>，机构和办公室之间的流量经公共因特网而不是经物理上独立的网络发送。而为了提供机密性，办公室之间的流量在进入公共因特网之前进行加密。</p>
+<h2 id="AH协议和ESP协议"><a href="#AH协议和ESP协议" class="headerlink" title="AH协议和ESP协议"></a>AH协议和ESP协议</h2><p>在IPsec协议族中，有两个主要协议：鉴别首部（Authentication Header, AH）协议和封装安全性协议（Encapsulation Security Payload, ESP）协议。AH协议提供源鉴别和数据完整性服务，但不提供机密性服务。ESP提供了源鉴别、数据完整性和机密性服务</p>
+<h2 id="安全关联"><a href="#安全关联" class="headerlink" title="安全关联"></a>安全关联</h2><p>IPsec数据报在网络实体对之间发送。在从源实体向目的实体发送IPsec数据报之前，源和目的实体创建了一个网络层的逻辑连接。这个逻辑连接称为<code>安全关联（Security Association, SA）。</code></p>
+<p>在SA内部，路由器将维护有关该SA的状态信息，这包括：</p>
+<ul>
+<li>SA的32比特的标识符，称为安全参数索引（Security Parameter Index, SPI）。</li>
+<li>SA的初始接口和SA的目的接口。</li>
+<li>将使用的加密类型。</li>
+<li>加密密钥。</li>
+<li>整性检查的类型。</li>
+<li>鉴别密钥。</li>
+</ul>
+<p>一个IPsec协议在它的<code>安全关联数据库（Security Association Database, SAD）</code>中存储其所有SA的状态信息，SAD是实体操作系统内核中得到一个数据结构</p>
+<h2 id="IPsec数据报"><a href="#IPsec数据报" class="headerlink" title="IPsec数据报"></a>IPsec数据报</h2><p>IPsec有两种不同的分组形式，一种用于所谓的<code>隧道模式</code>，另一种用于所谓的<code>运输模式</code>。</p>
+<p>IPsec数据报的分组格式。<br><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<p>将一个IPv4数据报转换成一个IPsec数据报的步骤：</p>
+<ul>
+<li>在初始IPv4数据报后面附上一个“ESP尾部”字段。</li>
+<li>使用算法和由SA规定的密钥加密该结果。</li>
+<li>在这个加密量的前面附加上一个称为“ESP首部”的字段，得到的包称为“enchilada”。</li>
+<li>使用算法和由SA规定的密钥生成一个覆盖整个enchilada的鉴别MAC。</li>
+<li>该MAC附加到enchilada的后面形成载荷。</li>
+<li>最后，生成一个就有经典IPv4首部字段的全新IP首部，该新首部附加到载荷之前。</li>
+</ul>
+<p>IPsec数据报中的新IP首部的源地址和目的地址分别设置为位于隧道两个端点的源和目的地路由器接口。同时，整个新IPv4首部字段中的协议号不被设置为TCP、UDP或SMTP，而是设置为50，指示这是一个使用ESP协议的IPsec数据报。</p>
+<p>​ESP尾部由三个字段组成：填充、填充长度和下一个首部。块密码要求被加密的报文必须为块长度的整数倍。使用填充（由无意义的字节组成），使得当其加上初始数据报（连同长度字段和下一个首部字段）形成的“报文”是块的整数倍。填充长度字段指示接收实体插入的填充是多少（并且需要被删除）。下一个首部字段指示包含在载荷数据字段中数据的类型。载荷数据和ESP尾部级联起来并被加密。</p>
+<p>​ESP首部以明文发送，它由两个字段组成：SPI字段和序号字段。SPI字段指示接收实体该数据属于哪个SA；接收实体则能够用该SPI索引其SAD以确定适当的鉴别/解密算法和密钥。序号字段用于防御重放攻击。</p>
+<p>​发送实体也附加一个鉴别MAC。发送实体跨越整个enchilada计算一个MAC。</p>
+<ul>
+<li>当接收路由器收到IPsec数据报时，首先判断数据报的目的IP地址是否为自己本身。是则进行以下步骤：</li>
+<li>针对enchilada，使用SPI以确定该数据报属于哪个SA。</li>
+<li>计算该enchilada的MAC并且验证该MAC与在ESP MAC字段中<br>的值一致。如果两者一致，它知道该enchilada未被篡改。</li>
+<li>检查序列号字段以验证该数据报是新的（并且不是重放的数据报）。</li>
+<li>使用与SA关联的解密算法和密钥解密该加密单元。</li>
+<li>删除填充并抽取初始的普通IP报文。</li>
+<li>朝着最终目的地将该初始数据报转发进分支机构网络。</li>
+</ul>
+<p><code>安全策略库（Security Policy Database, SPD）</code>。该SPD指示哪些类型的数据报将被IPsec处理；并且对这些将被IPsec处理的数据报应当使用哪个SA。</p>
+<h2 id="IKE-IPsec中的密钥管理"><a href="#IKE-IPsec中的密钥管理" class="headerlink" title="IKE:IPsec中的密钥管理"></a>IKE:IPsec中的密钥管理</h2><p>大型的、地理上分散的部署要求一个自动的机制来生成SA。IPsec使用<code>因特网密钥交换（Internet Key Exchange, IKE）</code>协议来从事这项工作。</p>
+<h1 id="使无限LAN安全"><a href="#使无限LAN安全" class="headerlink" title="使无限LAN安全"></a>使无限LAN安全</h1><h2 id="有限等效保密"><a href="#有限等效保密" class="headerlink" title="有限等效保密"></a>有限等效保密</h2><p>有线等效保密（Wired Qeuivalent Privacy, WEP）协议为在主机和无线接入点之间提供鉴别和数据的加密。鉴别以下列方式进行：</p>
+<ul>
+<li>无线主机通过接入点请求鉴别。</li>
+<li>接入点以一个128字节的不重数响应该鉴别请求。</li>
+<li>无线主机用它与这个接入点共享的密钥加密这个不重数值。</li>
+<li>加入点解密主机加密的不重数值。</li>
+</ul>
+<h2 id="IEEE-802-11i"><a href="#IEEE-802-11i" class="headerlink" title="IEEE 802.11i"></a>IEEE 802.11i</h2><p>802.11i是具有更强安全性机制的802.11的新型、改进版本。802.11i运行分为4个阶段：</p>
+<ul>
+<li>发现。在发现阶段，AP通告它的存在以及它能够向无线客户节点提供的鉴别和加密的形式。客户则请求它希望的特定鉴别和加密形式。</li>
+<li>相互鉴别和主密钥（MK）生成。鉴别发生在无线客户和鉴别服务器之间。在这个阶段，接入点基本是其中继的作用，在客户和鉴别服务器之间转发报文。可扩展鉴别协议（Extensible Authentication Protocol, EAP）定义了客户和鉴别服务器之间交互时的请求/响应模式中使用的端到端报文格式。</li>
+<li>成对主密钥（Pairwise Master Key, PMK）生成。MK是一个仅为客户和鉴别服务器所知的共享密钥，它们都使用MK来生成一个次密钥，即成对主密钥（PMK）。鉴别服务器则向AP发送该PMK。客户和AP现在具有一个共享的密钥，并彼此相互鉴别。</li>
+<li>临时密钥（Tamporal Key, TK）生成。使用PMK，无线客户和AP现在能够生成附加的、将用于通信的密钥。其中的关键是临时密钥，TK将被用于执行经无线链路向任意远程主机发送数据的链路级的加密。</li>
+</ul>
+<h1 id="运行安全性-防火墙和入侵检测系统"><a href="#运行安全性-防火墙和入侵检测系统" class="headerlink" title="运行安全性:防火墙和入侵检测系统"></a>运行安全性:防火墙和入侵检测系统</h1><h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>防火墙是一个硬件和软件的结合体，它将一个机构的内部网络与整个因特网隔离开，允许一些数据分组通过而组织另一些分组通过。防火墙具有3个目标：</p>
+<ul>
+<li>从外部到内部和从内部到外部的所有流量都通过防火墙。</li>
+<li>仅被授权的流量允许通过。</li>
+<li>防火墙自身免于渗透。</li>
+</ul>
+<p><code>防火墙能够分为3类：传统分组过滤器、状态过滤器和应用程序网关。</code></p>
+<p>传统分组过滤器独立地检查每个数据报，然后基于管理员特定的规则决定该数据报应当允许通过还是应当丢弃。过滤决定通常基于下列因素：</p>
+<ul>
+<li>IP源或目的地址。</li>
+<li>在IP数据报中的协议类型字段：TCP、UDP、ICMP、OSPF等。</li>
+<li>TCP或UCP的源和目的端口。</li>
+<li>TCP标志比特：SYN、ACK等。</li>
+<li>ICMP报文类型。</li>
+<li>数据报离开和进入网络的不同规则。</li>
+<li>对不同路由器接口的不同规则。</li>
+</ul>
+<h2 id="入侵检测系统"><a href="#入侵检测系统" class="headerlink" title="入侵检测系统"></a>入侵检测系统</h2><p>状态过滤器通过用一张连接表来跟踪所有进行中的TCP连接</p>
+<p>应用程序网关是一个应用程序特定的服务器，所有应用程序数据都必须通过它。</p>
+<p>当观察到潜在恶意流量时产生告警的设备称为<code>入侵检测系统（Intrusion Detection System, IDS）</code>。滤除可疑流量的设备称为<code>入侵防止系统（Intrusion Prevention System, IPS）</code>。IDS系统大致可分为基于特征的系统和基于异常的系统。基于特征的IDS维护了一个范围广泛的攻击特征数据库。每个特征与一个入侵活动相关联的规则集。一个特征可能只是有关单个分组的特性列表，或者可能与一系列分组有关。基于异常的IDS系统最大的特点是它们不依赖现有攻击的以前知识。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/计算机网络中的安全.html">计算机网络中的安全</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年07月17日 - 14时50分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/计算机网络中的安全.html" title="计算机网络中的安全">http://yoursite.com/计算机网络中的安全.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/计算机网络中的安全.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/多媒体网络.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          多媒体网络
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/无线网络和移动网络.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">无线网络和移动网络</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是网络安全"><span class="toc-number">1.</span> <span class="toc-text">什么是网络安全</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#密码学的原则"><span class="toc-number">2.</span> <span class="toc-text">密码学的原则</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对称密钥密码体制"><span class="toc-number">2.1.</span> <span class="toc-text">对称密钥密码体制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#块密码"><span class="toc-number">2.1.1.</span> <span class="toc-text">块密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密码块链接"><span class="toc-number">2.1.2.</span> <span class="toc-text">密码块链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公开密钥加密"><span class="toc-number">2.2.</span> <span class="toc-text">公开密钥加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RSA"><span class="toc-number">2.2.1.</span> <span class="toc-text">RSA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报文完整性和数字签名"><span class="toc-number">3.</span> <span class="toc-text">报文完整性和数字签名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#密码散列函数"><span class="toc-number">3.1.</span> <span class="toc-text">密码散列函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#报文鉴别码"><span class="toc-number">3.2.</span> <span class="toc-text">报文鉴别码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数字签名"><span class="toc-number">3.3.</span> <span class="toc-text">数字签名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#公钥认证"><span class="toc-number">3.3.1.</span> <span class="toc-text">公钥认证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#端点鉴别"><span class="toc-number">4.</span> <span class="toc-text">端点鉴别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安全电子邮件"><span class="toc-number">5.</span> <span class="toc-text">安全电子邮件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全电子邮件-1"><span class="toc-number">5.1.</span> <span class="toc-text">安全电子邮件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PGP"><span class="toc-number">5.2.</span> <span class="toc-text">PGP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP安全连接-SSL"><span class="toc-number">6.</span> <span class="toc-text">TCP安全连接 SSL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#宏观描述"><span class="toc-number">6.1.</span> <span class="toc-text">宏观描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#握手"><span class="toc-number">6.1.1.</span> <span class="toc-text">握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#密钥导出"><span class="toc-number">6.1.2.</span> <span class="toc-text">密钥导出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据传输"><span class="toc-number">6.1.3.</span> <span class="toc-text">数据传输</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完整描述"><span class="toc-number">6.2.</span> <span class="toc-text">完整描述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSL握手"><span class="toc-number">6.2.1.</span> <span class="toc-text">SSL握手</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络安全性（IPsec和虚拟专用网）"><span class="toc-number">7.</span> <span class="toc-text">网络安全性（IPsec和虚拟专用网）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IPsec和虚拟专用网"><span class="toc-number">7.1.</span> <span class="toc-text">IPsec和虚拟专用网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AH协议和ESP协议"><span class="toc-number">7.2.</span> <span class="toc-text">AH协议和ESP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全关联"><span class="toc-number">7.3.</span> <span class="toc-text">安全关联</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPsec数据报"><span class="toc-number">7.4.</span> <span class="toc-text">IPsec数据报</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IKE-IPsec中的密钥管理"><span class="toc-number">7.5.</span> <span class="toc-text">IKE:IPsec中的密钥管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使无限LAN安全"><span class="toc-number">8.</span> <span class="toc-text">使无限LAN安全</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#有限等效保密"><span class="toc-number">8.1.</span> <span class="toc-text">有限等效保密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IEEE-802-11i"><span class="toc-number">8.2.</span> <span class="toc-text">IEEE 802.11i</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#运行安全性-防火墙和入侵检测系统"><span class="toc-number">9.</span> <span class="toc-text">运行安全性:防火墙和入侵检测系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#防火墙"><span class="toc-number">9.1.</span> <span class="toc-text">防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#入侵检测系统"><span class="toc-number">9.2.</span> <span class="toc-text">入侵检测系统</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/多媒体网络.html" title="上一篇: 多媒体网络">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/无线网络和移动网络.html" title="下一篇: 无线网络和移动网络">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

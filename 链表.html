@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>链表 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="链表是一种数据结构，在内存中通过节点记录内存地址而相互链接形成一条链的储存方式。相比数组而言，链表在内存中不需要连续的区域，只需要每一个节点都能够记录下一个节点的内存地址，通过引用进行查找，这样的特点也就造就了链表增删操作时间消耗很小，而查找遍历时间消耗很大的特点。">
+<meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链表">
+<meta property="og:url" content="http://yoursite.com/链表.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="链表是一种数据结构，在内存中通过节点记录内存地址而相互链接形成一条链的储存方式。相比数组而言，链表在内存中不需要连续的区域，只需要每一个节点都能够记录下一个节点的内存地址，通过引用进行查找，这样的特点也就造就了链表增删操作时间消耗很小，而查找遍历时间消耗很大的特点。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="链表">
+<meta name="twitter:description" content="链表是一种数据结构，在内存中通过节点记录内存地址而相互链接形成一条链的储存方式。相比数组而言，链表在内存中不需要连续的区域，只需要每一个节点都能够记录下一个节点的内存地址，通过引用进行查找，这样的特点也就造就了链表增删操作时间消耗很小，而查找遍历时间消耗很大的特点。">
+<meta name="twitter:image" content="http://yoursite.com/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-链表" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/链表.html" class="article-date">
+      <time datetime="2019-05-14T15:22:00.000Z" itemprop="datePublished">2019-05-14</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      链表
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/数据结构/">数据结构</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>链表是一种数据结构，在内存中通过节点记录内存地址而相互链接形成一条链的储存方式。相比数组而言，链表在内存中不需要连续的区域，只需要每一个节点都能够记录下一个节点的内存地址，通过引用进行查找，这样的特点也就造就了链表增删操作时间消耗很小，而查找遍历时间消耗很大的特点。</p>
+<a id="more"></a>
+
+<p>链表的特性是在中间任意位置添加、删除元素都非常快，不需要移动其他元素。对于单链表，链表中每一个元素都要保存一个指向下一个元素的指针。对于双链表，每个元素既要保存一个指向下一个元素的指针，还要保存一个指向上一个元素的指针。循环链表（单向、双项）则在最后一个元素中保存一个指向第一个元素的指针。</p>
+<p>数组<br>存储效率高、存储速度快，如果需要频繁访问数据，很少插入删除操作，则用数组；反之，如果频繁插入删除，则应使用链表</p>
+<p><strong>感觉学习链表还是画图比较清晰，几张图感觉不错😁</strong></p>
+<h1 id="链表的形成"><a href="#链表的形成" class="headerlink" title="链表的形成"></a>链表的形成</h1><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h1 id="种类"><a href="#种类" class="headerlink" title="种类"></a>种类</h1><p>（单向，双向，带头，不带头，循环，非循环）</p>
+<h2 id="不带头单链表"><a href="#不带头单链表" class="headerlink" title="不带头单链表"></a>不带头单链表</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h2 id="不带头双向链表"><a href="#不带头双向链表" class="headerlink" title="不带头双向链表"></a>不带头双向链表</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h2 id="带头单链表"><a href="#带头单链表" class="headerlink" title="带头单链表"></a>带头单链表</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h2 id="循环单链表"><a href="#循环单链表" class="headerlink" title="循环单链表"></a>循环单链表</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h2 id="带头双向循环链表"><a href="#带头双向循环链表" class="headerlink" title="带头双向循环链表"></a>带头双向循环链表</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<h2 id="常用"><a href="#常用" class="headerlink" title="常用"></a>常用</h2><p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435088.jpg" alt></p>
+<p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg" alt></p>
+<p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg" alt></p>
+<p><img src="/images%5C%E9%93%BE%E8%A1%A8%5Col-1566122435089.jpg" alt></p>
+<h1 id="1-将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中没有重复的数据。"><a href="#1-将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中没有重复的数据。" class="headerlink" title="1 将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中没有重复的数据。"></a>1 将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中没有重复的数据。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//合并后的新表使用头指针Lc指向，pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点，从第一个结点开始进行比较，当两个链表La和Lb均为到达表尾结点时，依次摘取其中较小者重新链接在Lc表的最后。如果两个表中的元素相等，只摘取La表中的元素，删除Lb表中的元素，这样确保合并后表中无重复的元素。当一个表到达表尾结点，为空时，将非空表的剩余元素直接链接在Lc表的最后。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeList</span><span class="params">(LinkList &amp;La,LinkList &amp;Lb,LinkList &amp;Lc)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//合并链表La,Lb,合并后新表使用头指针Lc指向</span></span><br><span class="line">    pa-&gt;La-&gt;next;</span><br><span class="line">    pb-&gt;Lb-&gt;next;</span><br><span class="line">    <span class="comment">//pa,pb分别是链表La,Lb的工作指针，初始化为相应链表的第一个结点</span></span><br><span class="line">    Lc=pa=La; <span class="comment">//用La的头结点作为Lc的头结点</span></span><br><span class="line">    <span class="keyword">while</span>(pa&amp;&amp;pb)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(pa-&gt;date &lt; pb-&gt;date)</span><br><span class="line">        &#123;</span><br><span class="line">            pc-&gt;next=pa;</span><br><span class="line">            pc=pa;</span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">            <span class="comment">//取较小者La中的元素，将pa链接在pc的后面，pa指针后移</span></span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(pa-&gt;date &gt; pb-&gt;date)</span><br><span class="line">        &#123;</span><br><span class="line">            pc-&gt;next=pb;</span><br><span class="line">            pc=pb;</span><br><span class="line">            pb=pb-&gt;next;</span><br><span class="line">             <span class="comment">//取较小者Lb中的元素，将pb链接在pc的后面，pb指针后移</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            pc-&gt;next=pa;</span><br><span class="line">            pc=pa;</span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">            q=pb-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span> pb;</span><br><span class="line">            pb =q;</span><br><span class="line">            <span class="comment">//相等时取La中的元素，删除Lb中的元素</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    pc-&gt;next=pa?pa:pb; <span class="comment">//插入剩余段</span></span><br><span class="line">    <span class="keyword">delete</span> Lb;      <span class="comment">//释放Lb的头结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中允许有重复的数据"><a href="#2-将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中允许有重复的数据" class="headerlink" title="2.将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中允许有重复的数据"></a>2.将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中允许有重复的数据</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//合并后的新表使用头指针Lc指向，pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点，从第一个结点开始进行比较，当两个链表La和Lb均为到达表尾结点时，依次摘取其中较小者重新链接在Lc表的表头结点之后，如果两个表中的元素相等，只摘取La表中的元素，保留Lb表中的元素。当一个表到达表尾结点，为空时，将非空表的剩余元素依次摘取，链接在Lc表的表头结点之后。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeList</span><span class="params">(LinkList &amp;La, LinkList &amp;Lb, LinkList &amp;Lc)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//合并链表La和Lb，合并后的新表使用头指针Lc指向</span></span><br><span class="line">    pa=La-&gt;next;  </span><br><span class="line">    pb=Lb-&gt;next; </span><br><span class="line">    <span class="comment">//pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点</span></span><br><span class="line">    Lc=pc=La; <span class="comment">//用La的头结点作为Lc的头结点 </span></span><br><span class="line">    Lc-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">while</span>(pa||pb )</span><br><span class="line">&#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//只要存在一个非空表，用q指向待摘取的元素</span></span><br><span class="line">        <span class="keyword">if</span>(!pa)  </span><br><span class="line">        &#123;</span><br><span class="line">            q=pb;</span><br><span class="line">            pb=pb-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//La表为空，用q指向pb，pb指针后移</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!pb)</span><br><span class="line">        &#123;</span><br><span class="line">            q=pa;  </span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">//Lb表为空，用q指向pa，pa指针后移</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(pa-&gt;data&lt;=pb-&gt;data)  </span><br><span class="line">        &#123;</span><br><span class="line">            q=pa;  </span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//取较小者（包括相等）La中的元素，用q指向pa，pa指针后移</span></span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            q=pb;</span><br><span class="line">            pb=pb-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//取较小者Lb中的元素，用q指向pb，pb指针后移</span></span><br><span class="line">        q-&gt;next = Lc-&gt;next; </span><br><span class="line">        Lc-&gt;next = q;   </span><br><span class="line">        <span class="comment">//将q指向的结点插在Lc 表的表头结点之后</span></span><br><span class="line">    &#125;</span><br><span class="line">        <span class="keyword">delete</span> Lb;  <span class="comment">//释放Lb的头结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。"><a href="#3-已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。" class="headerlink" title="3.已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。"></a>3.已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只有同时出现在两集合中的元素才出现在结果表中,合并后的新表使用头指针Lc指向。pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点，从第一个结点开始进行比较，当两个链表La和Lb均为到达表尾结点时，如果两个表中相等的元素时，摘取La表中的元素，删除Lb表中的元素；如果其中一个表中的元素较小时，删除此表中较小的元素，此表的工作指针后移。当链表La和Lb有一个到达表尾结点，为空时，依次删除另一个非空表中的所有元素。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Mix</span><span class="params">(LinkList &amp;La, LinkList &amp;Lb, LinkList &amp;Lc)</span> </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    pa=La-&gt;next;</span><br><span class="line">    pb=Lb-&gt;next; </span><br><span class="line">    <span class="comment">//pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点</span></span><br><span class="line">    Lc=pc=La; <span class="comment">//用La的头结点作为Lc的头结点</span></span><br><span class="line">    <span class="keyword">while</span>(pa&amp;&amp;pb)</span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">if</span>(pa-&gt;data==pb-&gt;data)<span class="comment">//交集并入结果表中。</span></span><br><span class="line">        &#123;</span><br><span class="line">            pc-&gt;next=pa;</span><br><span class="line">            pc=pa;</span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">            u=pb;</span><br><span class="line">            pb=pb-&gt;next; </span><br><span class="line">            <span class="keyword">delete</span> u;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(pa-&gt;data&lt;pb-&gt;data) </span><br><span class="line">        &#123;</span><br><span class="line">            u=pa;</span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span> u;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            u=pb;</span><br><span class="line">            pb=pb-&gt;next;</span><br><span class="line">            <span class="keyword">delete</span> u;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(pa) </span><br><span class="line">    &#123;</span><br><span class="line">        u=pa;</span><br><span class="line">        pa=pa-&gt;next;</span><br><span class="line">        <span class="keyword">delete</span> u;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//释放结点空间</span></span><br><span class="line">    <span class="keyword">while</span>(pb) </span><br><span class="line">    &#123;</span><br><span class="line">        u=pb; </span><br><span class="line">        pb=pb-&gt;next; </span><br><span class="line">        <span class="keyword">delete</span> u;</span><br><span class="line">    &#125;<span class="comment">//释放结点空间</span></span><br><span class="line">    pc-&gt;next=null;  <span class="comment">//置链表尾标记。</span></span><br><span class="line">    <span class="keyword">delete</span> Lb;      <span class="comment">//释放Lb的头结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B-的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。"><a href="#4-两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B-的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。" class="headerlink" title="4.两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B 的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。"></a>4.两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B 的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求两个集合A和B的差集是指在A中删除A和B中共有的元素，即删除链表中的相应结点,所以要保存待删除结点的前驱，使用指针pre指向前驱结点。pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点，从第一个结点开始进行比较，当两个链表La和Lb均为到达表尾结点时，如果La表中的元素小于Lb表中的元素，pre置为La表的工作指针pa删除Lb表中的元素；如果其中一个表中的元素较小时，删除此表中较小的元素，此表的工作指针后移。当链表La和Lb有一个为空时，依次删除另一个非空表中的所有元素。</span></span><br><span class="line"><span class="keyword">void</span> Difference（LinkList &amp;La, LinkList &amp;Lb,<span class="keyword">int</span> *n）</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//差集的结果存储于单链表La中，*n是结果集合中元素个数，调用时为0</span></span><br><span class="line">    pa=La-&gt;next; </span><br><span class="line">    pb=Lb-&gt;next;      </span><br><span class="line">    <span class="comment">//pa和pb分别是链表La和Lb的工作指针,初始化为相应链表的第一个结点</span></span><br><span class="line">    pre=La;          </span><br><span class="line">    <span class="comment">//pre为La中pa所指结点的前驱结点的指针</span></span><br><span class="line">    <span class="keyword">while</span>（pa&amp;&amp;pb）</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>（pa-&gt;data&lt;q-&gt;data）</span><br><span class="line">        &#123;</span><br><span class="line">            pre=pa;</span><br><span class="line">            pa=pa-&gt;next;</span><br><span class="line">            *n++;</span><br><span class="line">        &#125; </span><br><span class="line"><span class="comment">//A链表中当前结点指针后移</span></span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span></span><br><span class="line">        (pa-&gt;data&gt;q-&gt;data)</span><br><span class="line">        q=q-&gt;next;    <span class="comment">//B链表中当前结点指针后移</span></span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            pre-&gt;next=pa-&gt;next; <span class="comment">//处理A，B中元素值相同的结点，删除</span></span><br><span class="line">            u=pa; </span><br><span class="line">            pa=pa-&gt;next; </span><br><span class="line">            <span class="keyword">delete</span> u;</span><br><span class="line">        &#125;  <span class="comment">//删除结点</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="5-将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）"><a href="#5-将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）" class="headerlink" title="5.将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）"></a>5.将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//B表的头结点使用原来A表的头结点，为C表新申请一个头结点。从A表的第一个结点开始，依次取其每个结点p，判断结点p的值是否小于0，利用前插法，将小于0的结点插入B表,大于等于0的结点插入C表。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DisCompose</span><span class="params">(LinkedList A)</span></span></span><br><span class="line"><span class="function"></span>&#123; 	 </span><br><span class="line">    B=A;</span><br><span class="line">    B-&gt;next= <span class="literal">NULL</span>;        <span class="comment">//B表初始化</span></span><br><span class="line">    C=<span class="keyword">new</span> LNode;          <span class="comment">//为C申请结点空间</span></span><br><span class="line">    C-&gt;next=<span class="literal">NULL</span>;         <span class="comment">//C初始化为空表</span></span><br><span class="line">    p=A-&gt;next;            <span class="comment">//p为工作指针</span></span><br><span class="line">    <span class="keyword">while</span>(p!= <span class="literal">NULL</span>)</span><br><span class="line">    &#123; </span><br><span class="line">        r=p-&gt;next;        <span class="comment">//存p的后继</span></span><br><span class="line">        <span class="keyword">if</span>(p-&gt;data&lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;next=B-&gt;next; </span><br><span class="line">            B-&gt;next=p; </span><br><span class="line">        &#125;                 <span class="comment">//将小于0的结点链入B表,前插法</span></span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            p-&gt;next=C-&gt;next; </span><br><span class="line">            C-&gt;next=p; </span><br><span class="line">        &#125;                 <span class="comment">//将大于等于0的结点链入C表,前插法</span></span><br><span class="line">         p=r;             <span class="comment">//p指向新的待处理结点。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="6-通过一趟遍历在单链表中确定值最大的结点"><a href="#6-通过一趟遍历在单链表中确定值最大的结点" class="headerlink" title="6.通过一趟遍历在单链表中确定值最大的结点"></a>6.通过一趟遍历在单链表中确定值最大的结点</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//假定第一个结点中数据具有最大值，依次与下一个元素比较，若其小于下一个元素，则设其下一个元素为最大值，反复进行比较，直到遍历完该链表。</span></span><br><span class="line"><span class="function">ElemType <span class="title">Max</span> <span class="params">(LinkList L)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(L-&gt;next==<span class="literal">NULL</span>) </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	pmax=L-&gt;next; <span class="comment">//假定第一个结点中数据具有最大值</span></span><br><span class="line">	p=L-&gt;next-&gt;next;</span><br><span class="line">	<span class="keyword">while</span>(p != <span class="literal">NULL</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//如果下一个结点存在</span></span><br><span class="line">		<span class="keyword">if</span>(p-&gt;data &gt; pmax-&gt;data) pmax=p;<span class="comment">//如果p的值大于pmax的值，则重新赋值</span></span><br><span class="line">		p=p-&gt;next;<span class="comment">//遍历链表</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> pmax-&gt;data;</span><br></pre></td></tr></table></figure>
+
+<h1 id="7-遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。"><a href="#7-遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。" class="headerlink" title="7.遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。"></a>7.遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从首元结点开始，逐个地把链表L的当前结点p插入新的链表头部。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">inverse</span><span class="params">(LinkList &amp;L)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 逆置带头结点的单链表 L</span></span><br><span class="line">    p=L-&gt;next;  </span><br><span class="line">    L-&gt;next=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span> ( p) </span><br><span class="line">    &#123;</span><br><span class="line">        q=p-&gt;next;       <span class="comment">// q指向*p的后继</span></span><br><span class="line">        p-&gt;next=L-&gt;next;</span><br><span class="line">        L-&gt;next=p;       <span class="comment">// *p插入在头结点之后</span></span><br><span class="line">        p = q;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="8-删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同-）"><a href="#8-删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同-）" class="headerlink" title="8.删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同 ）"></a>8.删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同 ）</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分别查找第一个值&gt;mink的结点和第一个值 ≥maxk的结点，再修改指针，删除值大于mink且小于maxk的所有元素。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delete</span><span class="params">(LinkList &amp;L, <span class="keyword">int</span> mink, <span class="keyword">int</span> maxk)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    p=L-&gt;next; <span class="comment">//首元结点</span></span><br><span class="line">    <span class="keyword">while</span> (p &amp;&amp; p-&gt;data&lt;=mink)</span><br><span class="line">    &#123; </span><br><span class="line">        pre=p;  </span><br><span class="line">        p=p-&gt;next; </span><br><span class="line">    &#125; <span class="comment">//查找第一个值&gt;mink的结点</span></span><br><span class="line">    <span class="keyword">if</span> (p) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (p &amp;&amp; p-&gt;data&lt;maxk)  </span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">                    <span class="comment">// 查找第一个值 ≥maxk的结点</span></span><br><span class="line">        q=pre-&gt;next;   </span><br><span class="line">        pre-&gt;next=p;  <span class="comment">// 修改指针</span></span><br><span class="line">        <span class="keyword">while</span> (q!=p) </span><br><span class="line">        &#123; </span><br><span class="line">            s=q-&gt;next;  </span><br><span class="line">            <span class="keyword">delete</span> q;  </span><br><span class="line">            q=s; </span><br><span class="line">        &#125; <span class="comment">// 释放结点空间</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="9-p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change-p-交换p所指向的结点和它的前缀结点的顺序。"><a href="#9-p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change-p-交换p所指向的结点和它的前缀结点的顺序。" class="headerlink" title="9.p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change(p),交换p所指向的结点和它的前缀结点的顺序。"></a>9.p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change(p),交换p所指向的结点和它的前缀结点的顺序。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//知道双向循环链表中的一个结点，与前驱交换涉及到四个结点（p结点，前驱结点，前驱的前驱结点，后继结点）六条链。</span></span><br><span class="line"><span class="keyword">void</span>  Exchange（LinkedList p）</span><br><span class="line"><span class="comment">//p是双向循环链表中的一个结点，本算法将p所指结点与其前驱结点交换。</span></span><br><span class="line">&#123;</span><br><span class="line">    q=p-&gt;llink；</span><br><span class="line">    q-&gt;llink-&gt;rlink=p；   <span class="comment">//p的前驱的前驱之后继为p</span></span><br><span class="line">    p-&gt;llink=q-&gt;llink；   <span class="comment">//p的前驱指向其前驱的前驱。</span></span><br><span class="line">    q-&gt;rlink=p-&gt;rlink；   <span class="comment">//p的前驱的后继为p的后继。</span></span><br><span class="line">    q-&gt;llink=p；          <span class="comment">//p与其前驱交换</span></span><br><span class="line">    p-&gt;rlink-&gt;llink=q；   <span class="comment">//p的后继的前驱指向原p的前驱</span></span><br><span class="line">    p-&gt;rlink=q；          <span class="comment">//p的后继指向其原来的前驱</span></span><br><span class="line">&#125;<span class="comment">//算法exchange结束。</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="10-已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O-n-、空间复杂度为O-1-的算法，该算法删除线性表中所有值为item的数据元素。"><a href="#10-已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O-n-、空间复杂度为O-1-的算法，该算法删除线性表中所有值为item的数据元素。" class="headerlink" title="10.已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O(n)、空间复杂度为O(1)的算法，该算法删除线性表中所有值为item的数据元素。"></a>10.已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O(n)、空间复杂度为O(1)的算法，该算法删除线性表中所有值为item的数据元素。</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在顺序存储的线性表上删除元素，通常要涉及到一系列元素的移动（删第i个元素，第i+1至第n个元素要依次前移）。本题要求删除线性表中所有值为item的数据元素，并未要求元素间的相对位置不变。因此可以考虑设头尾两个指针（i=1，j=n），从两端向中间移动，凡遇到值item的数据元素时，直接将右端元素左移至值为item的数据元素位置。</span></span><br><span class="line"><span class="keyword">void</span>  Delete（ElemType A[ ]，<span class="keyword">int</span>  n）</span><br><span class="line"><span class="comment">//A是有n个元素的一维数组，本算法删除A中所有值为item的元素。</span></span><br><span class="line">&#123;</span><br><span class="line">    i=<span class="number">1</span>；</span><br><span class="line">    j=n；</span><br><span class="line">    <span class="comment">//设置数组低、高端指针（下标）。</span></span><br><span class="line">    <span class="keyword">while</span>（i&lt;j）</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>（i&lt;j &amp;&amp; A[i]!=item）<span class="comment">//若值不为item，左移指针</span></span><br><span class="line">        i++；         </span><br><span class="line">        <span class="keyword">if</span>（i&lt;j）</span><br><span class="line">        <span class="keyword">while</span>（i&lt;j &amp;&amp; A[j]==item）<span class="comment">//若右端元素为item，指针左移</span></span><br><span class="line">        j--；         </span><br><span class="line">        <span class="keyword">if</span>（i&lt;j）</span><br><span class="line">        A[i++]=A[j--];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/链表.html">链表</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年05月14日 - 23时22分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/链表.html" title="链表">http://yoursite.com/链表.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/链表.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/DFS递归形式和非递归形式.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          DFS递归形式和非递归形式
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/掘安杯.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">掘安杯</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#链表的形成"><span class="toc-number">1.</span> <span class="toc-text">链表的形成</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#种类"><span class="toc-number">2.</span> <span class="toc-text">种类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#不带头单链表"><span class="toc-number">2.1.</span> <span class="toc-text">不带头单链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#不带头双向链表"><span class="toc-number">2.2.</span> <span class="toc-text">不带头双向链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带头单链表"><span class="toc-number">2.3.</span> <span class="toc-text">带头单链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#循环单链表"><span class="toc-number">2.4.</span> <span class="toc-text">循环单链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带头双向循环链表"><span class="toc-number">2.5.</span> <span class="toc-text">带头双向循环链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用"><span class="toc-number">2.6.</span> <span class="toc-text">常用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中没有重复的数据。"><span class="toc-number">3.</span> <span class="toc-text">1 将两个递增的有序链表合并为一个递增的有序链表。结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中没有重复的数据。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间-不另外占用其它的存储空间。表中允许有重复的数据"><span class="toc-number">4.</span> <span class="toc-text">2.将两个非递减的有序链表合并为一个非递增的有序链表。要求结果链表仍使用原来两个链表的存储空间, 不另外占用其它的存储空间。表中允许有重复的数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。"><span class="toc-number">5.</span> <span class="toc-text">3.已知两个链表A和B分别表示两个集合，其元素递增排列。求出A与B的交集，并存放于A链表中。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B-的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。"><span class="toc-number">6.</span> <span class="toc-text">4.两个链表A和B分别表示两个集合，其元素递增排列。求出两个集合A和B 的差集（即仅由在A中出现而不在B中出现的元素所构成的集合），并以同样的形式存储，同时返回该集合的元素个数。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）"><span class="toc-number">7.</span> <span class="toc-text">5.将一个带头结点的单链表A分解为两个具有相同结构的链表B、C，其中B表的结点为A表中值小于零的结点，而C表的结点为A表中值大于零的结点（链表A中的元素为非零整数，要求B、C表利用A表的结点）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-通过一趟遍历在单链表中确定值最大的结点"><span class="toc-number">8.</span> <span class="toc-text">6.通过一趟遍历在单链表中确定值最大的结点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。"><span class="toc-number">9.</span> <span class="toc-text">7.遍历一趟，将链表中所有结点的链接方向逆转，仍利用原表的存储空间。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同-）"><span class="toc-number">10.</span> <span class="toc-text">8.删除递增有序链表中值大于mink且小于maxk的所有元素（mink和maxk是给定的两个参数，其值可以和表中的元素相同，也可以不同 ）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change-p-交换p所指向的结点和它的前缀结点的顺序。"><span class="toc-number">11.</span> <span class="toc-text">9.p指向双向循环链表中的一个结点，其结点结构为data、prior、next三个域，写出算法change(p),交换p所指向的结点和它的前缀结点的顺序。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O-n-、空间复杂度为O-1-的算法，该算法删除线性表中所有值为item的数据元素。"><span class="toc-number">12.</span> <span class="toc-text">10.已知长度为n的线性表A采用顺序存储结构，写一时间复杂度为O(n)、空间复杂度为O(1)的算法，该算法删除线性表中所有值为item的数据元素。</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/DFS递归形式和非递归形式.html" title="上一篇: DFS递归形式和非递归形式">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/掘安杯.html" title="下一篇: 掘安杯">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

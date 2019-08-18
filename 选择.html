@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>选择 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="总结了一下数据结构的选择题">
+<meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="选择">
+<meta property="og:url" content="http://yoursite.com/选择.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="总结了一下数据结构的选择题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5C%E9%80%89%E6%8B%A9%5Col-1566122435184.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.466Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="选择">
+<meta name="twitter:description" content="总结了一下数据结构的选择题">
+<meta name="twitter:image" content="http://yoursite.com/images%5C%E9%80%89%E6%8B%A9%5Col-1566122435184.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-选择" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/选择.html" class="article-date">
+      <time datetime="2019-06-20T15:28:00.000Z" itemprop="datePublished">2019-06-20</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      选择
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/数据结构/">数据结构</a>
+    </div>
+
+
+        
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>总结了一下数据结构的选择题</p>
+<a id="more"></a>
+<h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><p><code>1.在数据结构中，从逻辑上可以把数据结构分成（C）</code></p>
+<p>A．动态结构和静态结构     B．紧凑结构和非紧凑结构</p>
+<p>C．线性结构和非线性结构   D．内部结构和外部结构</p>
+<p><code>2.与数据元素本身的形式、内容、相对位置、个数无关的是数据的（C）。</code></p>
+<p>A．存储结构               B．存储实现<br>C．逻辑结构               D．运算实现</p>
+<p><code>3.通常要求同一逻辑结构中的所有数据元素具有相同的特性，这意味着（B）。</code><br>A．数据具有同一特点</p>
+<p>B．不仅数据元素所包含的数据项的个数要相同，而且对应数据项的类型要一致</p>
+<p>C．每个数据元素都一样</p>
+<p>D．数据元素所包含的数据项的个数要相等</p>
+<p><code>4.以下说法正确的是(D)</code></p>
+<p>A．数据元素是数据的最小单位</p>
+<p>B．数据项是数据的基本单位</p>
+<p>C．数据结构是带有结构的各数据项的集合</p>
+<p>D．一些表面上很不相同的数据可以有相同的逻辑结构</p>
+<p><strong>数据元素是数据的基本单位，数据项是数据的最小单位，数据结构是带有结构的各数据元素的集合</strong></p>
+<p><code>5.算法的时间复杂度取决于（D）。</code></p>
+<p>A．问题的规模            B．待处理数据的初态</p>
+<p>C．计算机的配置            D．A和B</p>
+<p><strong>算法的时间复杂度不仅与问题的规模有关，还与问题的其他因素有关。如某些排序的算法，其执行时间与待排序记录的初始状态有关。为此，有时会对算法有最好、最坏以及平均时间复杂度的评价。</strong></p>
+<p><code>6.以下数据结构中，（A）是非线性数据结构</code></p>
+<p>A．树        B．字符串       C．队列           D．栈</p>
+<h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><p><code>1.顺序表中第一个元素的存储地址是100，每个元素的长度为2，则第5个元素的地址是（B）。</code></p>
+<p>A．110            B．108         C．100          D．120</p>
+<p>顺序表中的数据连续存储，所以第5个元素的地址为：100+2*4=108。</p>
+<p><code>2.在n个结点的顺序表中，算法的时间复杂度是O(1)的操作是（A）。</code></p>
+<p>A．访问第i个结点（1≤i≤n）和求第i个结点的直接前驱（2≤i≤n） </p>
+<p>B．在第i个结点后插入一个新结点（1≤i≤n）</p>
+<p>C．删除第i个结点（1≤i≤n）</p>
+<p>D．将n个结点从小到大排序</p>
+<p><strong>在顺序表中插入一个结点的时间复杂度都是O(n2)，排序的时间复杂度为O(n2)或O(nlog2n)。顺序表是一种随机存取结构，访问第i个结点和求第i个结点的直接前驱都可以直接通过数组的下标直接定位，时间复杂度是O(1)。</strong>\</p>
+<p><code>3.向一个有127个元素的顺序表中插入一个新元素并保持原来顺序不变，平均要移动的元素个数为（B）。</code></p>
+<p>A．8      B．63.5<br>C．63      D．7</p>
+<p><code>4.链接存储的存储结构所占存储空间（A）。</code></p>
+<p>A．分两部分，一部分存放结点值，另一部分存放表示结点间关系的指针</p>
+<p>B．只有一部分，存放结点值</p>
+<p>C．只有一部分，存储表示结点间关系的指针</p>
+<p>D．分两部分，一部分存放结点值，另一部分存放结点所占单元数</p>
+<p><code>5.线性表若采用链式存储结构时，要求内存中可用存储单元的地址（D）。</code></p>
+<p>A．必须是连续的        B．部分地址必须是连续的</p>
+<p>C．一定是不连续的      D．连续或不连续都可以</p>
+<p><code>6.线性表Ｌ在（B）情况下适用于使用链式结构实现。</code></p>
+<p>A．需经常修改Ｌ中的结点值      Ｂ．需不断对Ｌ进行删除插入 </p>
+<p>C．Ｌ中含有大量的结点          Ｄ．Ｌ中结点结构复杂</p>
+<p><code>7.单链表的存储密度（C）。</code></p>
+<p>A．大于1        B．等于1      C．小于1    D．不能确定</p>
+<p><strong>存储密度是指一个结点数据本身所占的存储空间和整个结点所占的存储空间之比，假设单链表一个结点本身所占的空间为D，指针域所占的空间为N，则存储密度为：D/(D+N)，一定小于1。</strong></p>
+<p><code>8.将两个各有n个元素的有序表归并成一个有序表，其最少的比较次数是（A）。</code><br>A．n            B．2n-1        C．2n        D．n-1</p>
+<p><strong>`当第一个有序表中所有的元素都小于（或大于）第二个表中的元素，只需要用第二个表中的第一个元素依次与第一个表的元素比较，总计比较n次。</strong></p>
+<p><code>9.在一个长度为n的顺序表中，在第i个元素（1≤i≤n+1）之前插入一个新元素时须向后移动（B）个元素。</code></p>
+<p>A．n-i           B．n-i+1       C．n-i-1      D．I</p>
+<p><code>10.线性表L=(a1，a2,……an)，下列说法正确的是（D）。</code></p>
+<p>A．每个元素都有一个直接前驱和一个直接后继</p>
+<p>B．线性表中至少有一个元素</p>
+<p>C．表中诸元素的排列必须是由小到大或由大到小</p>
+<p>D．除第一个和最后一个元素外，其余每个元素都有一个且仅有一个直接前驱和直接后继。</p>
+<p><code>11.创建一个包括n个结点的有序单链表的时间复杂度是（C）。</code></p>
+<p>A．O(1)          B．O(n)            C．O(n2)          D．O(nlog2n)</p>
+<p><strong>单链表创建的时间复杂度是O(n)，而要建立一个有序的单链表，则每生成一个新结点时需要和已有的结点进行比较，确定合适的插入位置，所以时间复杂度是O(n2)。</strong></p>
+<p><code>12.以下说法错误的是（D）。*</code></p>
+<p>A．求表长、定位这两种运算在采用顺序存储结构时实现的效率不比采用链式存储结构时实现的效率低</p>
+<p>B．顺序存储的线性表可以随机存取</p>
+<p>C．由于顺序存储要求连续的存储区域，所以在存储管理上不够灵活</p>
+<p>D．线性表的链式存储结构优于顺序存储结构    </p>
+<p><code>13. 在单链表中，要将s所指结点插入到p所指结点之后，其语句应为（D）。</code></p>
+<p>A．s-&gt;next=p+1; p-&gt;next=s;</p>
+<p>B．(<em>p).next=s; (</em>s).next=(*p).next;</p>
+<p>C．s-&gt;next=p-&gt;next; p-&gt;next=s-&gt;next;</p>
+<p>D．s-&gt;next=p-&gt;next; p-&gt;next=s;  </p>
+<p> <code>14.在双向链表存储结构中，删除p所指的结点时须修改指针（A）。</code></p>
+<p>A．p-&gt;next-&gt;prior=p-&gt;prior; p-&gt;prior-&gt;next=p-&gt;next;</p>
+<p>B．p-&gt;next=p-&gt;next-&gt;next; p-&gt;next-&gt;prior=p;</p>
+<p>C．p-&gt;prior-&gt;next=p; p-&gt;prior=p-&gt;prior-&gt;prior;</p>
+<p>D．p-&gt;prior=p-&gt;next-&gt;next; p-&gt;next=p-&gt;prior-&gt;prior;</p>
+<p><code>15.在双向循环链表中，在p指针所指的结点后插入q所指向的新结点，其修改指针的操作是（C）。</code></p>
+<p>A．p-&gt;next=q; q-&gt;prior=p; p-&gt;next-&gt;prior=q; q-&gt;next=q;</p>
+<p>B．p-&gt;next=q; p-&gt;next-&gt;prior=q; q-&gt;prior=p; q-&gt;next=p-&gt;next;</p>
+<p>C．q-&gt;prior=p; q-&gt;next=p-&gt;next; p-&gt;next-&gt;prior=q; p-&gt;next=q;</p>
+<p>D．q-&gt;prior=p; q-&gt;next=p-&gt;next; p-&gt;next=q; p-&gt;next-&gt;prior=q;</p>
+<h1 id="栈与队列"><a href="#栈与队列" class="headerlink" title="栈与队列"></a>栈与队列</h1><p><code>1.若让元素1，2，3，4，5依次进栈，则出栈次序不可能出现在（C）种情况。</code></p>
+<p>A．5，4，3，2，1 </p>
+<p>B．2，1，5，4，3  </p>
+<p>C．4，3，1，2，5    </p>
+<p>D．2，3，5，4，1</p>
+<p><code>2.若已知一个栈的入栈序列是1，2，3，…，n，其输出序列为p1，p2，p3，…，pn，若p1=n，则pi为（C）。</code></p>
+<p>A．i    B．n-i    C．n-i+1    D．不确定<br><strong>栈是后进先出的线性表，一个栈的入栈序列是1，2，3，…，n，而输出序列的第一个元素为n，说明1，2，3，…，n一次性全部进栈，再进行输出，所以p1=n，p2=n-1，…，pi=n-i+1</strong></p>
+<p><code>3.数组Ｑ［ｎ］用来表示一个循环队列，ｆ为当前队列头元素的前一位置，ｒ为队尾元素的位置，假定队列中元素的个数小于ｎ，计算队列中元素个数的公式为（D）</code></p>
+<p>A．r-f B．(n+f-r)%n C．n+r-f D．（n+r-f)%n<br><strong>非循环队列，尾指针和头指针的差值便是队列的长度，循环队列，差值可能为负数，所以需要将差值加上MAXSIZE（n），然后与MAXSIZE（n）求余，即（n+r-f)%n。</strong></p>
+<p><code>4.链式栈结点为：(data,link)，top指向栈顶.若想摘除栈顶结点，并将删除结点的值保存到x中,则应执行操作（A）</code></p>
+<p>A．x=top-&gt;data;top=top-&gt;link； B．top=top-&gt;link;x=top-&gt;link；</p>
+<p>C．x=top;top=top-&gt;link；  D．x=top-&gt;link；</p>
+<p><strong>x=top-&gt;data将结点的值保存到x中，top=top-&gt;link栈顶指针指向栈顶下一结点，即摘除栈顶结点。</strong></p>
+<p><code>5.设有一个递归算法如下</code></p>
+<pre><code>int fact(int n) {  //n大于等于0
+
+     if(n&lt;=0) return 1;
+
+     else return n*fact(n-1);        }</code></pre><p>则计算fact(n)需要调用该函数的次数为（A）。 </p>
+<p>A． n+1      B．n-1 C． n D． n+2<br><strong>特殊值法。设n=0，仅调用一次fact(n)函数</strong></p>
+<p><code>6.栈在 （D）中有所应用。</code></p>
+<p>A．递归调用 B．函数调用      C．表达式求值 D．前三个选项都有</p>
+<p><code>7.为解决计算机主机与打印机间速度不匹配问题，通常设一个打印数据缓冲区。主机将要输出的数据依次写入该缓冲区，而打印机则依次从该缓冲区中取出数据。该缓冲区的逻辑结构应该是（A）。</code></p>
+<p>A．队列            B．栈 C．  线性表  D．有序表</p>
+<p><code>8.设栈S和队列Q的初始状态为空，元素e1、e2、e3、e4、e5和e6依次进入栈S，一个元素出栈后即进入Q，若6个元素出队的序列是e2、e4、e3、e6、e5和e1，则栈S的容量至少应该是（B）。</code></p>
+<p>A．2  B．3             C．4 D． 6</p>
+<p><code>9.若一个栈以向量V[1..n]存储，初始栈顶指针top设为n+1，则元素x进栈的正确操作是(C)。</code></p>
+<p>A．top++; V[top]=x;      B．V[top]=x; top++;</p>
+<p>C．top–; V[top]=x;      D．V[top]=x; top–;</p>
+<p><code>10.设计一个判别表达式中左，右括号是否配对出现的算法，采用（D）数据结构最佳。</code></p>
+<p>A．线性表的顺序存储结构 B．队列   </p>
+<p>C. 线性表的链式存储结构 D. 栈</p>
+<p><strong>利用栈的后进先出原则。</strong></p>
+<p><code>11.用链接方式存储的队列，在进行删除运算时（D）。</code></p>
+<p>A. 仅修改头指针 B. 仅修改尾指针</p>
+<p>C. 头、尾指针都要修改 D. 头、尾指针可能都要修改</p>
+<p><strong>一般情况下只修改头指针，但是，当删除的是队列中最后一个元素时，队尾指针也丢失了，因此需对队尾指针重新赋值。</strong></p>
+<p><code>12.循环队列存储在数组A[0..m]中，则入队时的操作为（D）。</code></p>
+<p>A. rear=rear+1           B. rear=(rear+1)%(m-1)</p>
+<p>C. rear=(rear+1)%m        D. rear=(rear+1)%(m+1)</p>
+<p><code>13.最大容量为n的循环队列，队尾指针是rear，队头是front，则队空的条件是（B）。</code></p>
+<p>A. (rear+1)%n==front B. rear==front</p>
+<p>C．rear+1==front                     D. (rear-l)%n==front<br><strong>最大容量为n的循环队列，队满条件是(rear+1)%n==front，队空条件是rear==front。</strong></p>
+<p><code>14.栈和队列的共同点是（C）。</code></p>
+<p>A. 都是先进先出 B. 都是先进后出  </p>
+<p>C. 只允许在端点处插入和删除元素 D. 没有共同点</p>
+<p><strong>栈只允许在栈顶处进行插入和删除元素，队列只允许在队尾插入元素和在队头删除元素。</strong></p>
+<p><code>15.一个递归算法必须包括（B）。</code></p>
+<p>A. 递归部分 B. 终止条件和递归部分</p>
+<p>C. 迭代部分 D. 终止条件和迭代部分</p>
+<h1 id="串，数组，广义表"><a href="#串，数组，广义表" class="headerlink" title="串，数组，广义表"></a>串，数组，广义表</h1><p><code>1.串是一种特殊的线性表，其特殊性体现在（B）。</code></p>
+<p>A．可以顺序存储               B．数据元素是一个字符      </p>
+<p>C．可以链式存储               D．数据元素可以是多个字符若 </p>
+<p><code>2.串下面关于串的的叙述中，（B）是不正确的？</code></p>
+<p>A．串是字符的有限序列          B．空串是由空格构成的串</p>
+<p>C．模式匹配是串的一种重要运算  D．串既可以采用顺序存储，也可以采用链式存储</p>
+<p><strong>空格常常是串的字符集合中的一个元素，有一个或多个空格组成的串成为空格串，零个字符的串成为空串，其长度为零。</strong></p>
+<p><code>3.串“ababaaababaa”的next数组为（C）。</code></p>
+<p>A．012345678999   B．012121111212   C．011234223456    D．0123012322345</p>
+<p><code>4.串“ababaabab”的nextval为（A）。</code></p>
+<p>A．010104101      B．010102101      C．010100011       D．010101011 </p>
+<p><code>5.串的长度是指（B）。</code></p>
+<p>A．串中所含不同字母的个数       B．串中所含字符的个数</p>
+<p>C．串中所含不同字符的个数       D．串中所含非空格字符的个数</p>
+<p><code>6.假设以行序为主序存储二维数组A=array[1..100,1..100]，设每个数据元素占2个存储单元，基地址为10，则LOC[5,5]=（B）。</code></p>
+<p>A．808            B．818             C．1010             D．1020<br><strong>以行序为主，LOC[5,5]=[（5-1）<em>100+（5-1）]</em>2+10=818</strong></p>
+<p><code>7.设有数组A[i,j]，数组的每个元素长度为3字节，i的值为1到8，j的值为1到10，数组从内存首地址BA开始顺序存放，当用以列为主存放时，元素A[5,8]的存储首地址为（B）。</code></p>
+<p>A．BA+141        B．BA+180         C．BA+222         D．BA+225<br><strong>以列序为主，LOC[5,8]=[（8-1）<em>8+（5-1）]</em>3+BA=BA+180</strong></p>
+<p><code>8.设有一个10阶的对称矩阵A，采用压缩存储方式，以行序为主存储，a11为第一元素，其存储地址为1，每个元素占一个地址空间，则a85的地址为（C）。</code></p>
+<p>A．13             B．32              C．33               D．40</p>
+<p><code>9.若对n阶对称矩阵A以行序为主序方式将其下三角形的元素(包括主对角线上所有元素)依次存放于一维数组B[1..(n(n+1))/2]中，则在B中确定aij（i&lt;j）的位置k的关系为（B）。</code></p>
+<p>A．i<em>(i-1)/2+j      B．j</em>(j-1)/2+i      C．i<em>(i+1)/2+j      D．j</em>(j+1)/2+i</p>
+<p><code>10.二维数组A的每个元素是由10个字符组成的串，其行下标i=0,1,…,8,列下标j=1,2,…,10。若A按行先存储，元素A[8,5]的起始地址与当A按列先存储时的元素（B）的起始地址相同。设每个字符占一个字节。</code></p>
+<p>A．A[8,5]         B．A[3,10]         C. A[5,8]          D．A[0,9]</p>
+<p>设数组从内存首地址M开始顺序存放，若数组按行先存储，元素A[8,5]的起始地址为：M+[（8-0）<em>10+（5-1）]</em>1=M+84；若数组按列先存储，易计算出元素A[3,10]的起始地址为：M+[（10-1）<em>9+（3-0）]</em>1=M+84</p>
+<p><code>11.设二维数组A[1.. m，1.. n]（即m行n列）按行存储在数组B[1.. m*n]中，则二维数组元素A[i,j]在一维数组B中的下标为（A）。</code></p>
+<p>A．(i-1)<em>n+j       B．(i-1)*n+j-1      C．i</em>(j-1)         D．j*m+i-1</p>
+<p><strong>特殊值法。取i=j=1，易知A[1,1]的的下标为1，四个选项中仅有A选项能确定的值为1</strong></p>
+<p><code>12.数组A[0..4,-1..-3,5..7]中含有元素的个数（B）。</code></p>
+<p>A．55            B．45             C．36            D．16</p>
+<p><strong>共有5<em>3</em>3=45个元素</strong></p>
+<p><code>13.广义表A=(a,b,(c,d),(e,(f,g)))，则Head(Tail(Head(Tail(Tail(A)))))的值为（D）。</code></p>
+<p>A．(g)            B．(d)             C．c            D．d</p>
+<p><strong>Tail(A)=(b,(c,d),(e,(f,g)))；Tail(Tail(A))=( (c,d),(e,(f,g)))； Head(Tail(Tail(A)))= (c,d)；Tail(Head(Tail(Tail(A))))=(d)；Head(Tail(Head(Tail(Tail(A)))))=d。</strong></p>
+<p><code>14.广义表((a,b,c,d))的表头是（C），表尾是（B）</code></p>
+<p>A．a              B．( )             C．(a,b,c,d)      D．(b,c,d)</p>
+<p><strong>表头为非空广义表的第一个元素，可以是一个单原子，也可以是一个子表，((a,b,c,d))的表头为一个子表(a,b,c,d)；表尾为除去表头之外，由其余元素构成的表，表为一定是个广义表，((a,b,c,d))的表尾为空表( )。</strong></p>
+<p><code>15.设广义表L=((a,b,c))，则L的长度和深度分别为（C）。</code></p>
+<p>A．1和1          B．1和3          C．1和2          D．2和3 </p>
+<h1 id="树和二叉树"><a href="#树和二叉树" class="headerlink" title="树和二叉树"></a>树和二叉树</h1><p><code>1.把一棵树转换为二叉树后，这棵二叉树的形态是（A）</code></p>
+<p>A．唯一的                           Ｂ．有多种</p>
+<p>C．有多种，但根结点都没有左孩子  Ｄ．有多种，但根结点都没有右孩子</p>
+<p><strong>二叉树有左孩子、右孩子之分，一棵树转换为二叉树后，这棵二叉树的形态是唯一的。</strong></p>
+<p><code>2.由3个结点可以构造出多少种不同的二叉树？（D）</code></p>
+<p>A．2     B．3      C．4     D．5  </p>
+<p><img src="/images%5C%E9%80%89%E6%8B%A9%5Col-1566122435184.jpg" alt></p>
+<p><code>3.一棵完全二叉树上有1001个结点，其中叶子结点的个数是（D）。</code></p>
+<p>A．250       B． 500       C．254     D．501   </p>
+<p><strong>设度为0结点（叶子结点）个数为A，度为1的结点个数为B，度为2的结点个数为C，有A=C+1，A+B+C=1001，可得2C+B=1000，由完全二叉树的性质可得B=0或1，又因为C为整数，所以B=0，C=500，A=501，有501个叶子结点</strong></p>
+<p><code>4.一个具有1025个结点的二叉树的高h为（C）。</code></p>
+<p>A．11     B．10          C．11至1025之间 D．10至1024之间</p>
+<p><strong>若每层仅有一个结点，则树高h为1025；且其最小树高为 ëlog<sub>2</sub>1025û + 1=11，即h在11至1025之间。</strong></p>
+<p><code>5.深度为h的满m叉树的第k层有（A）个结点。(1=&lt;k=&lt;h)</code></p>
+<p>A．m<sup>k-1</sup>          B．m<sup>k</sup>-1<br>    C．m<sup>h-1</sup>    D．m<sup>h</sup>-1</p>
+<p><strong>深度为h的满m叉树共有m<sup>h</sup>-1个结点，第k层有m<sup>k-1</sup>个结点。</strong></p>
+<p><code>6.利用二叉链表存储树，则根结点的右指针是（C）。</code></p>
+<p>A．指向最左孩子 B．指向最右孩子 C．空        D．非空</p>
+<p><strong>利用二叉链表存储树时，右指针指向兄弟结点，因为根节点没有兄弟结点，故根节点的右指针指向空。</strong></p>
+<p><code>7.对二叉树的结点从1开始进行连续编号，要求每个结点的编号大于其左、右孩子的编号，同一结点的左右孩子中，其左孩子的编号小于其右孩子的编号，可采用（C）遍历实现编号。</code></p>
+<p>A．先序 B. 中序 C. 后序 D. 从根开始按层次遍历</p>
+<p><strong>根据题意可知按照先左孩子、再右孩子、最后双亲结点的顺序遍历二叉树，即后序遍历二叉树。</strong></p>
+<p><code>8.若二叉树采用二叉链表存储结构，要交换其所有分支结点左、右子树的位置，利用（C）遍历方法最合适。</code></p>
+<p>A．前序 B．中序 C．后序     D．按层次</p>
+<p><strong>后续遍历和层次遍历均可实现左右子树的交换，不过层次遍历的实现消耗比后续大，后序遍历方法最合适。</strong></p>
+<p><code>9.在下列存储形式中，（D）不是树的存储形式？</code></p>
+<p>A．双亲表示法   B．孩子链表表示法   C．孩子兄弟表示法   D．顺序存储表示法</p>
+<p><strong>树的存储结构有三种：双亲表示法、孩子表示法、孩子兄弟表示法，其中孩子兄弟表示法是常用的表示法，任意一棵树都能通过孩子兄弟表示法转换为二叉树进行存储。</strong></p>
+<p><code>10.一棵非空的二叉树的先序遍历序列与后序遍历序列正好相反，则该二叉树一定满足（C）。</code></p>
+<p>A．所有的结点均无左孩子 B．所有的结点均无右孩子</p>
+<p>C．只有一个叶子结点           D．是任意一棵二叉树</p>
+<p><strong>因为先序遍历结果是“中左右”，后序遍历结果是“左右中”，当没有左子树时，就是“中右”和“右中”；当没有右子树时，就是“中左”和“左中”。则所有的结点均无左孩子或所有的结点均无右孩子均可，所以A、B不能选，又所有的结点均无左孩子与所有的结点均无右孩子时，均只有一个叶子结点</strong></p>
+<p><code>11.设哈夫曼树中有199个结点，则该哈夫曼树中有（B）个叶子结点。</code></p>
+<p>A．99       B．100</p>
+<p>C．101        D．102</p>
+<p><strong>在哈夫曼树中没有度为1的结点，只有度为0（叶子结点）和度为2的结点。设叶子结点的个数为n0，度为2的结点的个数为n2，由二叉树的性质n0=n2+1，则总结点数n= n0+n2=2*n0-1，得到n0=100。</strong></p>
+<p><code>12.若X是二叉中序线索树中一个有左孩子的结点，且X不为根，则X的前驱为（ C ）。</code></p>
+<p>A．X的双亲 B．X的右子树中最左的结点</p>
+<p>C．X的左子树中最右结点          D．X的左子树中最右叶结点</p>
+<p><code>13.引入二叉线索树的目的是（A）。</code></p>
+<p>A．加快查找结点的前驱或后继的速度   B．为了能在二叉树中方便的进行插入与删除</p>
+<p>C．为了能方便的找到双亲 D．使二叉树的遍历结果唯一</p>
+<p><code>14.设F是一个森林，B是由F变换得的二叉树。若F中有n个非终端结点，则B中右指针域为空的结点有（C）个。</code></p>
+<p>A．n−1   B．n    C．n + 1     D．n + 2</p>
+<p><code>15.n（n≥2）个权值均不相同的字符构成哈夫曼树，关于该树的叙述中，错误的是（A）。</code></p>
+<p>A．该树一定是一棵完全二叉树</p>
+<p>B．树中一定没有度为1的结点</p>
+<p>C．树中两个权值最小的结点一定是兄弟结点</p>
+<p>D．树中任一非叶结点的权值一定不小于下一层任一结点的权值</p>
+<p><strong>哈夫曼树的构造过程是每次都选取权值最小的树作为左右子树构造一棵新的二叉树，所以树中一定没有度为1的结点、两个权值最小的结点一定是兄弟结点、任一非叶结点的权值一定不小于下一层任一结点的权值</strong></p>
+<h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><p><code>1.在一个图中，所有顶点的度数之和等于图的边数的（C）倍。</code></p>
+<p> A．1/2 </p>
+<p> B．1  </p>
+<p>C．2 </p>
+<p> D．4</p>
+<p><code>2.在一个有向图中，所有顶点的入度之和等于所有顶点的出度之和的（B）倍。</code><br> A．1/2<br>B．1<br>C．2<br>D．4</p>
+<p><strong>有向图所有顶点入度之和等于所有顶点出度之和。</strong></p>
+<p><code>3.具有n个顶点的有向图最多有（B）条边。</code></p>
+<p>A．n    B．n(n-1) </p>
+<p>C．n(n+1)   D．n<sup>2</sup></p>
+<p><strong>有向图的边有方向之分，即为从n个顶点中选取2个顶点有序排列，结果为n(n-1)。</strong></p>
+<p><code>4.n个顶点的连通图用邻接距阵表示时，该距阵至少有（B）个非零元素。</code></p>
+<p>A．n    B．2(n-1) C．n/2      D．n<sup>2</sup></p>
+<p><code>5.G是一个非连通无向图，共有28条边，则该图至少有（C）个顶点。</code></p>
+<p>A．7    B．8          C．9          D．10</p>
+<p><strong>8个顶点的无向图最多有8*7/2=28条边，再添加一个点即构成非连通无向图，故至少有9个顶点。</strong></p>
+<p><code>6.若从无向图的任意一个顶点出发进行一次深度优先搜索可以访问图中所有的顶点，则该图一定是（B）图。</code></p>
+<p>A．非连通         B．连通 C．强连通 D．有向</p>
+<p><strong>即从该无向图任意一个顶点出发有到各个顶点的路径，所以该无向图是连通图。</strong></p>
+<p><code>7.下面（A）算法适合构造一个稠密图G的最小生成树。</code></p>
+<p>A． Prim算法 B．Kruskal算法 C．Floyd算法 D．Dijkstra算法</p>
+<p><strong>Prim算法适合构造一个稠密图G的最小生成树，Kruskal算法适合构造一个稀疏图G的最小生成树。</strong></p>
+<p><code>8.用邻接表表示图进行广度优先遍历时，通常借助（B）来实现算法。</code></p>
+<p>A．栈 B. 队列 C. 树 D．图</p>
+<p><strong>广度优先遍历通常借助队列来实现算法，深度优先遍历通常借助栈来实现算法。</strong></p>
+<p><code>9.用邻接表表示图进行深度优先遍历时，通常借助（A）来实现算法。</code></p>
+<p>A．栈 B. 队列 C. 树 D．图</p>
+<p> <strong>广度优先遍历通常借助队列来实现算法，深度优先遍历通常借助栈来实现算法。</strong></p>
+<p><code>10.深度优先遍历类似于二叉树的（A）。</code></p>
+<p>A．先序遍历 B．中序遍历 C．后序遍历 D．层次遍历</p>
+<p><code>11.广度优先遍历类似于二叉树的（D）。</code></p>
+<p>A．先序遍历 B．中序遍历 C．后序遍历 D．层次遍历</p>
+<p><code>11.图的BFS生成树的树高比DFS生成树的树高（C）。</code></p>
+<p>A．小 B．相等 C．小或相等 D．大或相等</p>
+<p><strong>对于一些特殊的图，比如只有一个顶点的图，其BFS生成树的树高和DFS生成树的树高相等。一般的图，根据图的BFS生成树和DFS树的算法思想，BFS生成树的树高比DFS生成树的树高小。</strong></p>
+<p><code>12.下面（B）方法可以判断出一个有向图是否有环。</code></p>
+<p>A．深度优先遍历 B．拓扑排序 C．求最短路径 D．求关键路径</p>
+<h1 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h1><p><code>1.对n个元素的表做顺序查找时，若查找每个元素的概率相同，则平均查找长度为（   C）。</code></p>
+<p>A．(n-1)/2       B． n/2        C．(n+1)/2        D．n </p>
+<p><strong>总查找次数N=1+2+3+…+n=n(n+1)/2，则平均查找长度为N/n=(n+1)/2。</strong></p>
+<p><code>2.适用于折半查找的表的存储方式及元素排列要求为（D）。</code></p>
+<p>  A．链接方式存储，元素无序            B．链接方式存储，元素有序</p>
+<p>C．顺序方式存储，元素无序            D．顺序方式存储，元素有序</p>
+<p><strong>折半查找要求线性表必须采用顺序存储结构，而且表中元素按关键字有序排列。</strong></p>
+<p><code>3.如果要求一个线性表既能较快的查找，又能适应动态变化的要求，最好采用(C)查找法。</code></p>
+<p>A．顺序查找                            B．折半查找        </p>
+<p>C．分块查找                            D．哈希查找</p>
+<p><strong>分块查找的优点是：在表中插入和删除数据元素时，只要找到该元素对应的块，就可以在该块内进行插入和删除运算。由于块内是无序的，故插入和删除比较容易，无需进行大量移动。如果线性表既要快速查找又经常动态变化，则可采用分块查找。</strong></p>
+<p><code>4.折半查找有序表（4，6，10，12，20，30，50，70，88，100）。若查找表中元素58，则它将依次与表中（A）比较大小，查找结果是失败。</code></p>
+<p>A．20，70，30，50                    B．30，88，70，50 </p>
+<p>C．20，50                            D．30，88，50</p>
+<p><code>5.对22个记录的有序表作折半查找，当查找失败时，至少需要比较（B）次关键字。</code></p>
+<p>A．3            B．4          C．5           D．6</p>
+<p><strong>22个记录的有序表，其折半查找的判定树深度为 5，且该判定树不是满二叉树，即查找失败时至多比较5次，至少比较4次。</strong></p>
+<p><code>6.折半搜索与二叉排序树的时间性能（C）。</code></p>
+<p>  A．相同                              B．完全不同        </p>
+<p>C．有时不相同                        D．数量级都是O(log2n)</p>
+<p><code>7.分别以下列序列构造二叉排序树，与用其它三个序列所构造的结果不同的是（   C）。</code></p>
+<p>A．（100，80， 90， 60， 120，110，130） </p>
+<p>B．（100，120，110，130，80， 60， 90）</p>
+<p>C．（100，60， 80， 90， 120，110，130）</p>
+<p>D．(100，80， 60， 90， 120，130，110)</p>
+<p><strong>A、B、C、D四个选项构造二叉排序树都以100为根，A、B、D三个序列中第一个比100小的关键字为80，即100的左孩子为80，而C选项中100的左孩子为60</strong></p>
+<p><code>8.在平衡二叉树中插入一个结点后造成了不平衡，设最低的不平衡结点为A，并已知A的左孩子的平衡因子为0右孩子的平衡因子为1，则应作（C）型调整以使其平衡。</code></p>
+<p>A．LL           B．LR          C．RL          D．RR</p>
+<p><code>9.下列关于m阶B-树的说法错误的是（D）。</code></p>
+<p>A．根结点至多有m棵子树     </p>
+<p>B．所有叶子都在同一层次上</p>
+<p>C．非叶结点至少有m/2 (m为偶数)或m/2+1（m为奇数）棵子树  </p>
+<p>D．根结点中的数据是有序的</p>
+<p><code>10.下面关于B-和B+树的叙述中，不正确的是C</code></p>
+<p>A．B-树和B+树都是平衡的多叉树       B．B-树和B+树都可用于文件的索引结构</p>
+<p>C．B-树和B+树都能有效地支持顺序检索 D．B-树和B+树都能有效地支持随机检索</p>
+<p><code>11.m阶B-树是一棵（B）。</code></p>
+<p>A．m叉排序树                        B．m叉平衡排序树  </p>
+<p>C．m-1叉平衡排序树                  D．m+1叉平衡排序树</p>
+<p><code>12.下面关于哈希查找的说法，正确的是（C)</code></p>
+<p>A．哈希函数构造的越复杂越好，因为这样随机性好，冲突小      </p>
+<p>B．除留余数法是所有哈希函数中最好的   </p>
+<p>C．不存在特别好与坏的哈希函数，要视情况而定</p>
+<p>D．哈希表的平均查找长度有时也和记录总数有关</p>
+<p><code>13.下面关于哈希查找的说法，不正确的是（A）</code></p>
+<p>  A．采用链地址法处理冲突时，查找一个元素的时间是相同的</p>
+<p>  B．采用链地址法处理冲突时，若插入规定总是在链首，则插入任一个元素<br>  的时间是相同的</p>
+<p>  C．用链地址法处理冲突，不会引起二次聚集现象</p>
+<p>  D．用链地址法处理冲突，适合表长不确定的情况</p>
+<p><strong>在同义词构成的单链表中，查找该单链表表中不同元素，所消耗的时间不同。</strong></p>
+<p><code>14.设哈希表长为14，哈希函数是H(key)=key%11，表中已有数据的关键字为15，38，61，84共四个，现要将关键字为49的元素加到表中，用二次探测法解决冲突，则放入的位置是（D）。</code></p>
+<p>  A．8              B．3              C．5             D．9 </p>
+<p><strong>关键字15放入位置4，关键字38放入位置5，关键字61放入位置6，关键字84放入位置7，再添加关键字49，计算得到地址为5，冲突，用二次探测法解决冲突得到新地址为6，仍冲突，再用用二次探测法解决冲突，得到新地址为4，仍冲突，再用用二次探测法解决冲突，得到新地址为9，不冲突，即将关键字49放入位置9。</strong></p>
+<p><code>15.采用线性探测法处理冲突，可能要探测多个位置，在查找成功的情况下，所探测的这些位置上的关键字 (A)。</code></p>
+<p>A．不一定都是同义词                  B．一定都是同义词       </p>
+<p>C．一定都不是同义词                  D．都相同</p>
+<p><strong>所探测的这些关键字可能是在处理其它关键字冲突过程中放入该位置的。</strong></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/选择.html">选择</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年06月20日 - 23时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/选择.html" title="选择">http://yoursite.com/选择.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/选择.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/【Pwnable-kr】passcode.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          【Pwnable.kr】passcode
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/十大排序.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">十大排序</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#绪论"><span class="toc-number">1.</span> <span class="toc-text">绪论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线性表"><span class="toc-number">2.</span> <span class="toc-text">线性表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#栈与队列"><span class="toc-number">3.</span> <span class="toc-text">栈与队列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#串，数组，广义表"><span class="toc-number">4.</span> <span class="toc-text">串，数组，广义表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#树和二叉树"><span class="toc-number">5.</span> <span class="toc-text">树和二叉树</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#图"><span class="toc-number">6.</span> <span class="toc-text">图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找"><span class="toc-number">7.</span> <span class="toc-text">查找</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/【Pwnable-kr】passcode.html" title="上一篇: 【Pwnable.kr】passcode">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/十大排序.html" title="下一篇: 十大排序">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>计算机网络和因特网 | Thriumph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="《计算机网络自顶向下方法》第一章读书笔记自顶向下方法挺通俗易懂的٩(๑òωó๑)۶">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络和因特网">
+<meta property="og:url" content="http://yoursite.com/计算机网络和因特网.html">
+<meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="《计算机网络自顶向下方法》第一章读书笔记自顶向下方法挺通俗易懂的٩(๑òωó๑)۶">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91%5Col-1566122435087.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络和因特网">
+<meta name="twitter:description" content="《计算机网络自顶向下方法》第一章读书笔记自顶向下方法挺通俗易懂的٩(๑òωó๑)۶">
+<meta name="twitter:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91%5Col-1566122435087.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Thriumph</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/">博客主页</a></li>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/tags/">标签</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl qq"  target="_blank" href="#" title="qq">qq</a>
+                            
+                                <a class="fl mail"  target="_blank" href="#" title="mail">mail</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/HOOK技术/" style="font-size: 10px;">HOOK技术</a> <a href="/tags/PE文件/" style="font-size: 11.67px;">PE文件</a> <a href="/tags/c/" style="font-size: 10px;">c</a> <a href="/tags/kali/" style="font-size: 10px;">kali</a> <a href="/tags/pwn/" style="font-size: 20px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 18.33px;">pwnable.kr</a> <a href="/tags/re/" style="font-size: 13.33px;">re</a> <a href="/tags/wp/" style="font-size: 15px;">wp</a> <a href="/tags/加密算法/" style="font-size: 10px;">加密算法</a> <a href="/tags/汇编/" style="font-size: 11.67px;">汇编</a> <a href="/tags/注入技术/" style="font-size: 10px;">注入技术</a> <a href="/tags/脱壳/" style="font-size: 10px;">脱壳</a> <a href="/tags/补丁/" style="font-size: 10px;">补丁</a> <a href="/tags/计算机网络/" style="font-size: 16.67px;">计算机网络</a>
+                    </div>
+                </section>
+                
+                
+                
+                
+                <section class="switch-part switch-part3">
+                
+                    <div id="js-aboutme">网安界的小萌新，喜欢逆向，二进制，日常划水，嘻嘻嘻ヾ(≧▽≦*)o</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Thriumph</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Thriumph</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">路漫漫其修远兮，吾将上下而求索</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">博客主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="qq" target="_blank" href="#" title="qq">qq</a>
+                    
+                        <a class="mail" target="_blank" href="#" title="mail">mail</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-计算机网络和因特网" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/计算机网络和因特网.html" class="article-date">
+      <time datetime="2019-07-03T16:00:00.000Z" itemprop="datePublished">2019-07-04</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机网络和因特网
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>《计算机网络自顶向下方法》第一章读书笔记<br>自顶向下方法挺通俗易懂的٩(๑òωó๑)۶</p>
+<a id="more"></a>
+
+<p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%92%8C%E5%9B%A0%E7%89%B9%E7%BD%91%5Col-1566122435087.jpg" alt></p>
+<h1 id="什么是因特网"><a href="#什么是因特网" class="headerlink" title="什么是因特网"></a>什么是因特网</h1><h2 id="什么是因特网-1"><a href="#什么是因特网-1" class="headerlink" title="什么是因特网"></a>什么是因特网</h2><h3 id="具体构成描述"><a href="#具体构成描述" class="headerlink" title="具体构成描述"></a>具体构成描述</h3><p>主机(端系统)通过通信链路和分组交换机连接到一起，遵守一定协议以分组的形式相互传递数据</p>
+<h3 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h3><p> 各种涉及多台相互交换数据的端系统的应用程序通过因特网提供给每台端系统的应用编程接口(API)完成不同端系统的数据交换，以完成该应用程序的运行。即因特网是为应用程序提供服务的基础设施。</p>
+<p><code>主机：</code>主机通过 <code>通信链路</code> 和 <code>分组交换机</code> 连接<br><code>分组交换机</code> 典型的有：<code>路由器</code> （router)、 <code>链路层交换机</code>(link-layer switch)</p>
+<p><code>端系统：</code> 通常把与因特网相连的计算机和其他设备称为端系统。端系统是通信链路和分组交换机连接在一起的</p>
+<p><code>ISP：</code>因特网服务提供商</p>
+<p><code>分组：</code> 发送端系统将数据分段，并为每段加上首部字节</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p><code>TCP：</code> 传输控制协议</p>
+<p><code>IP：</code> 网络协议</p>
+<p>端系统，分组交换机和其他因特网部件都要运行一系列协议，这些协议控制因特网中信息的接收和发送，IP协议定义了在路由器的端系统之间发送和接受的分组格式，因特网中的协议统称为TCP/IP</p>
+<p><code>协议：</code> 定义了在两个或多个通信实体之间交换的报文和顺序，以及报文发送和接收一条报文或其他事件所采取的动作</p>
+<h1 id="网络边缘"><a href="#网络边缘" class="headerlink" title="网络边缘"></a>网络边缘</h1><h2 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h2><p><code>接入网：</code> 接入网是指将端系统物连接到其边缘路由器的网络</p>
+<p><code>边缘路由器：</code> 端系统到任何其他远程端系统的路径上的第一台路由器。</p>
+<p>1.家庭接入：DSL，电缆，FTTH，拨号和卫星</p>
+<p>2.企业接入：以太网和wife</p>
+<p>3.广域无限接入：3G和LTE</p>
+<h2 id="物理媒体"><a href="#物理媒体" class="headerlink" title="物理媒体"></a>物理媒体</h2><p>物理媒体分为两类：</p>
+<p><code>导引型媒体：</code> 电波沿着固体媒体（光缆，双绞铜线或同轴电缆）被导引。</p>
+<p><code>非导引型媒体：</code> 电波在空气或外层空间（在无线局域网或数字卫星频道）中传播</p>
+<p>1.双绞铜线<br>2.同轴电缆<br>3.光纤<br>4.陆地无线电信道<br>5.卫星无线电信道</p>
+<h1 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h1><p><code>网络核心，即互联了因特网端系统的分组交换机和链路的网状网络</code></p>
+<h2 id="分组交换"><a href="#分组交换" class="headerlink" title="分组交换"></a>分组交换</h2><h3 id="储存转发运输"><a href="#储存转发运输" class="headerlink" title="储存转发运输"></a>储存转发运输</h3><p><code>存储转发机制：</code> 多数分组交换机在链路的输入端使用储存转发运输，交换机能够开始向输出链路传输该分组的第一个比特之前，必须接受到整个分组。 </p>
+<p><code>时延：</code> <code>d=NL/R</code> (N为链路数目，R为速率，L是链路长度) </p>
+<h3 id="排队时延和分组丢失"><a href="#排队时延和分组丢失" class="headerlink" title="排队时延和分组丢失"></a>排队时延和分组丢失</h3><p>每个分组交换机有多条链路相连，对于每条相连的链路，交换机具有输出缓存。除了存储转发时延，分组还要承受输出缓存的排队时延。当一个到达的分组发现该缓存已经被其他分组充满时，就会出现分组丢包。 </p>
+<h3 id="转发表和路由选择协议"><a href="#转发表和路由选择协议" class="headerlink" title="转发表和路由选择协议"></a>转发表和路由选择协议</h3><p>在因特网中，每台端系统具有一个IP地址，每台路由器具有一个转发表(用于将目的地址(或者其一部分)映射为输出链路)。因特网中具有一些特殊的路由选择协议，用于自动设置转发表。</p>
+<h2 id="电路交换（创建专用的端到端连接）"><a href="#电路交换（创建专用的端到端连接）" class="headerlink" title="电路交换（创建专用的端到端连接）"></a>电路交换（创建专用的端到端连接）</h2><p>在电路交换网络中，端系统通信会话期间，预留了端系统通信沿电路所需要的资源(缓存，链路传输速率)。在分组交换网络中，这些资源是不被预留的，会话报文按需使用这些资源，可能不得不等待(排队)接入通信线路。传统的电话网络是电路交换。</p>
+<p>经过建立连接(占用通信资源)=&gt;通话(一直占用通信资源)=&gt;释放连接(归还通信资源)三个步骤的交换方式成为电路交换。</p>
+<p>电路交换的一个重要特点就是在通话的全部时间内，通话的两个用户始终占用端到端的通信资源</p>
+<h3 id="电路交换在网络中的复用"><a href="#电路交换在网络中的复用" class="headerlink" title="电路交换在网络中的复用"></a>电路交换在网络中的复用</h3><p><code>频分复用</code> 或 <code>时分复用</code></p>
+<h3 id="分组交换和电路交换的对比"><a href="#分组交换和电路交换的对比" class="headerlink" title="分组交换和电路交换的对比"></a>分组交换和电路交换的对比</h3><p>1.分组交换不适合实时服务，因为端到端时延是不可预测的。 </p>
+<p>2.分组交换提供了比电路交换更好的带宽共享 </p>
+<p>3.分组交换比电路交换更简单，更有效，实现成本更低</p>
+<h2 id="网络中的网络"><a href="#网络中的网络" class="headerlink" title="网络中的网络"></a>网络中的网络</h2><h3 id="因特网是网络的网络。"><a href="#因特网是网络的网络。" class="headerlink" title="因特网是网络的网络。"></a>因特网是网络的网络。</h3><p>在公共因特网中，坐落在因特网边缘的接入网络通过分层的ISP层次结构和因特网其他部分相连。</p>
+<p>因特网由十多个第一层ISP和数十万个较低层ISP组成，不同ISP覆盖不同的区域。较低层的ISP和叫高层的ISP相连，较高层ISP彼此互联。位于相同的等级结构的临近一对ISP能够对等，即直接传输数据不收取费用。同时第三方公司也会提供因特网交换点(IXP)，作为各种ISP的汇集点。用户和内容提供商是较低层ISP的客户，较低层ISP是较高层ISP的客户。近年来，主要的内容提供商已经开始创建自己的网络，直接在可能的地方与较低层ISP互联</p>
+<h3 id="第一层ISP"><a href="#第一层ISP" class="headerlink" title="第一层ISP"></a>第一层ISP</h3><p>第一层ISP和其他ISP相同点：</p>
+<p> 有链路和路由器</p>
+<p>不同之处：</p>
+<ol>
+<li><p>链路速度通常为622Mbps或更高。大型第一层ISP，其链路速率的范围为2.5~10Gbps。</p>
+</li>
+<li><p>直接和其他每个第一层ISP相连，和大量第二层ISP和其他客户网络相连。</p>
+</li>
+<li><p>覆盖国际范围。</p>
+</li>
+</ol>
+<h3 id="第二层ISP"><a href="#第二层ISP" class="headerlink" title="第二层ISP"></a>第二层ISP</h3><p>第二层ISP：具有区域性或国家性覆盖范围；第一层ISP的客户。</p>
+<p>许多大公司和机构将他们的企业网直接与第一层或第二层ISP相连，因而成为该ISP的客户。第一层ISP相对于该客户而言是提供商。一个提供商ISP向他的客户收费，费用通常根据连接两者的带宽而定。</p>
+<p>一个第二层网络也可以选择与其他第二层网络直接相连。</p>
+<h3 id="较低层ISP"><a href="#较低层ISP" class="headerlink" title="较低层ISP"></a>较低层ISP</h3><p>在第二层ISP之下是较低层的ISP，这些较低层ISP经过一个或多个第二层ISP和更的因特网相连。</p>
+<p>当两个ISP彼此直接相连时，它们被称为彼此是对等的。</p>
+<p>在一个ISP的网络中，某ISP和其他ISP的连接点被称为 <code>汇集点</code></p>
+<p>（Point of Presence,POP）。POP就是某ISP网络中的一台或多台路由器组，通过它们能够和其他ISP的路由器连接。</p>
+<pre><code>一个第一层提供商通常有许多POP，这些POP分桑在其网络中不同的地理位置。每个POP与多个客户网络和其他ISP相连。</code></pre><p>因特网的拓扑很复杂，他由几十个第一层ISP和第二层ISP和数以千计的较低层ISP组成。</p>
+<h1 id="分组交换网中的时延，丢包和吞吐量"><a href="#分组交换网中的时延，丢包和吞吐量" class="headerlink" title="分组交换网中的时延，丢包和吞吐量"></a>分组交换网中的时延，丢包和吞吐量</h1><h2 id="分组交换网中的时延概述"><a href="#分组交换网中的时延概述" class="headerlink" title="分组交换网中的时延概述"></a>分组交换网中的时延概述</h2><p>时延是指数据（一个报文或分组，甚至比特）从网络（或链路）的一端传送到另一端所需的时间</p>
+<p>时延分为节点处理时延（nodal processing delay），排队时延（queuing delay），传输时延（transmission delay）和传播时延（propagation delay），这些加起来就是节点总时延（total nodal delay），即<br>节点总时延 = 节点处理时延 + 排队时延 + 传输时延 + 传播时延</p>
+<h3 id="时延的类型"><a href="#时延的类型" class="headerlink" title="时延的类型"></a>时延的类型</h3><p>处理时延：`检查分组首部和决定将分组导向哪一个队列。检查比特级差错所需要的时间。</p>
+<p><code>排队时延</code>：分组在链路上等待传输的时间</p>
+<p><code>传输时延</code>：将所有分组的比特推（传输）向链路所需要的时间。<br>用L比特表示分组的长度，用R bps(b/s)表示从路由器A到路由器B的链路传输速率。传输时延是L/R</p>
+<p><code>传播时延：</code>从链路的起点到下一个路由器的时间，取决于链路的物理媒体和链路长度。</p>
+<p> 传播时延 = 两台路由器的距离d / 传播速率s</p>
+<h2 id="排队时延和丢包"><a href="#排队时延和丢包" class="headerlink" title="排队时延和丢包"></a>排队时延和丢包</h2><p>a表示分组到达队列的平均速度（a的单位是分组每秒pkt/s）<br>R是传输速率，即从队列中推出比特的速率（bps即b/s为单位）<br>所有的分组都是由L比特组成的，比特的平均速率为La bps<br>比率La/R称为 <code>流量强度</code></p>
+<p>如果La/R&gt;1,则比特到达队列的平均速率超过从该队列传输出去的速率<br>La/R&lt;=1,到达流量的性质影响排队延时<br>第n个分组具有（n-1）L/R秒的排队延时</p>
+<p>La/R &gt; 1，则比特到达队列的平均速率超过从该队列传输出去的速率。在这种不幸的情况下，队列的增加将趋近于无界，并且排队时延将趋向无穷大。因此，流量工程中设计系统时流量强度不能大于1。在因特网中，接近1时将容易发生丢包</p>
+<h2 id="端到端的时延"><a href="#端到端的时延" class="headerlink" title="端到端的时延"></a>端到端的时延</h2><p>假定在源主机和目的主机之间有N-1台路由器，并且该网络是无拥塞的（因此排队时延是微不足道的），处理时延为dproc，每台路由器和源主机的输出速率是 R bps，每条链路的传播时延是dprop，节点时延累加起来得到端到端时延</p>
+<p>dend-end = N（dproc + dtrans + dprop）<br>dtrans= 分组长度L /R</p>
+<h2 id="计算机网络的吞吐量"><a href="#计算机网络的吞吐量" class="headerlink" title="计算机网络的吞吐量"></a>计算机网络的吞吐量</h2><p><code>吞吐量分为瞬时吞吐量（instancous throughput）和平均吞吐量（average throughput）</code></p>
+<p><code>瞬时吞吐量:</code>主机接收文件的速率是瞬时吞吐量。</p>
+<p><code>平均吞吐量：</code>接收F比特用去T秒，平均吞吐量是F/T bps</p>
+<h1 id="协议层次及其服务类型"><a href="#协议层次及其服务类型" class="headerlink" title="协议层次及其服务类型"></a>协议层次及其服务类型</h1><h2 id="协议分层"><a href="#协议分层" class="headerlink" title="协议分层"></a>协议分层</h2><p>各层的所有协议被称为协议栈（protocol stack）。</p>
+<p><code>分层的优点：</code>改变服务的实验而不影响该系统其它部分的能力</p>
+<p><code>分层提供一种结构化方式来讨论系统组件，各层的所有协议被称为协议栈。因特网的协议栈分为5层：物理层、链路层、网络层、运输层和应用层。</code></p>
+<h2 id="TCP-IP各层描述："><a href="#TCP-IP各层描述：" class="headerlink" title="TCP/IP各层描述："></a>TCP/IP各层描述：</h2><p>应用层：端到端，应用层的通信处于两个进程（该层正在运行的两个程序）之间，进程到进程的通信就是应用层的任务</p>
+<p>HTTP:超级文本传输协议是访问万维网的载体</p>
+<p>SMTP:简单邮件传输协议是电子邮件服务的主要协议</p>
+<p>FTP:文件传输协议用于将文件从一台主机传输到另一台主机</p>
+<p>TELNET:远程登陆 和SSH:安全外壳 用于访问远端的站点</p>
+<p>SNMP:简单网络管理协议，用于对Internet全局或局部进行管理</p>
+<p>DNS:域名系统：使其他的协议能够查询另一台计算机的网络层地址</p>
+<p>IGMP:英特网组管理协议，用于管理一个组的成员资格</p>
+<h2 id="分层的体系结构"><a href="#分层的体系结构" class="headerlink" title="分层的体系结构"></a>分层的体系结构</h2><p><code>应用层：</code> 是网络应用程序及其应用层协议存留的地方，包括HTTP，SMTP、FTP。报文</p>
+<p><strong><code>运输层：</code></strong> 在应用程序端点之间传送应用层报文。TCP和UDP协议。TCP提供面向连接的服务，包括应用层报文向目的地的确保传递和流量控制；也将长报文分为短报文，提供拥塞控制。UDP提供无连接服务，没有可靠性、流量控制、拥塞控制。报文段</p>
+<p><strong><code>网络层</code>：</strong><br>负责将运输层提交的报文段和目的地址传递到另一台主机。IP协议：定义了数据报中各个字段以及端系统和路由器如何作用于这些字段，也包括路由选择协议。数据报</p>
+<p><strong><code>链路层</code>：</strong> 将网络层的数据报从一个结点（主机或路由器）移动到下一个结点。帧</p>
+<p><strong><code>物理层：</code></strong> 将帧中的每一个比特从一个结点移动到下一个结点。</p>
+<p><strong><code>osi模型：</code></strong> 物理层、链路层、网络层、运输层、会话层、表示层、应用层。</p>
+<p><strong><code>表示层：</code></strong> 使通信的应用程序能够解释交换数据的含义。</p>
+<p><strong><code>会话层：</code></strong> 提供了数据交换定界和同步功能。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>应用层报文和运输层首部信息一起构成了运输层报文段，附加的信息包括差错检测位信息。网络层增加了源和目的端地址等首部。每一层都对上一层的数据进行了封装。</p>
+<p>因特网协议栈自顶向下传输时，各层会将上层信息包装，上层信息包装为有效载荷字段，本层信息包装为首部字段</p>
+<p>在发送主机端，一个应用层报文被发送到运输层。运输层收取到报文并附上附加信息(运输层首部信息)，该首部将被接收端的运输层使用。应用层报文和运输层首部信息(差错检测信息等)一起构成了运输层报文段。运输层报文段因此封装了应用程报文。运输层则向网络层传递该报文段，网络层增加了网络层首部信息(源和目的端系统地址等)，产生了网络层数据报。该数据报接下来传递给链路层，链路层增加了自己的链路层首部信息并创建了链路层帧。所以，在一层，一个分组有两种类型字段:首部字段和有效载荷字段(通常来自上一个分组)。</p>
+<h3 id="源主机的封装"><a href="#源主机的封装" class="headerlink" title="源主机的封装"></a>源主机的封装</h3><p>1.在应用层交换的数据称为消息。消息通常不包含任何头部和尾部，包含也统称为消息</p>
+<p>2.传输层将传来的消息称为有效载荷，该载荷是传输层应该关注的负载。传输层在有效载荷基础上增加传输层头部，包含通信的源和目的应用程序的标识符等。其结果为一个传输层分组，该分组在TCP中称为段，在UDP中称为用户数据报</p>
+<p>3.网络层把传输层分组作为数据或有效载荷，并且在该有效何在上添加自己的头部。头部包含源和目的主机的地址，以及用于头部差错检查、分片的信息等。其结果为一个称为数据报的网络层分组。</p>
+<p>4.数据链路层把网络层分组作为数据或有效载荷，并且添加自己的头部。该头部包含主机或下一跳步（路由器）的链路层地址。其结果为一个称为帧的链路层分组。</p>
+<h3 id="路由器的解封装与封装"><a href="#路由器的解封装与封装" class="headerlink" title="路由器的解封装与封装"></a>路由器的解封装与封装</h3><p>1.在比特集被投递到数据链路层后，从帧中解封装出数据报投递到网络层</p>
+<p>2.网络层只检查数据报头部的源地址和目的地址，查阅它的转发表以寻找数据报投递的下一跳步。若数据报太大对其分片，内容不会被改变</p>
+<p>3.数据链路层将数据报封装成一个帧，传递到物理层</p>
+<h1 id="面对攻击的网络"><a href="#面对攻击的网络" class="headerlink" title="面对攻击的网络"></a>面对攻击的网络</h1><p><strong><code>病毒：</code></strong>一种需要某种形式的用户交互来感染用户设备的恶意软件。<br><strong><code>蠕虫：</code></strong>无需任何明显用户交互就能进入设备的恶意软件。</p>
+<h2 id="拒绝服务攻击"><a href="#拒绝服务攻击" class="headerlink" title="拒绝服务攻击"></a>拒绝服务攻击</h2><p><strong><code>弱点攻击：</code></strong> 向一台目标主机上运行的易受攻击的应用程序或操作系统发送制作精细的报文</p>
+<p><strong><code>带宽洪泛：</code></strong> 向目标主机发送大量的分组，分组过多使目标的接入链路变得拥塞，使得合法的分组无法到达服务器。</p>
+<p><strong><code>连接洪泛:</code></strong> 攻击者在目标主机中创建大量的半开或全开TCP连接。该主机因这些连接陷入困境，并停止接受合法的连接。</p>
+<h2 id="嗅探攻击："><a href="#嗅探攻击：" class="headerlink" title="嗅探攻击："></a>嗅探攻击：</h2><p>通过被动接收机接收数据，从而获取口令，商业秘密的私密信息，最好的防范方法是难以破解的密码。</p>
+<h2 id="IP哄骗："><a href="#IP哄骗：" class="headerlink" title="IP哄骗："></a>IP哄骗：</h2><p>将具有虚假源地址的分组注入因特网</p>
+<h2 id="中间人攻击："><a href="#中间人攻击：" class="headerlink" title="中间人攻击："></a>中间人攻击：</h2><p>处于信息传递着的中间，获取或修改数据。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/计算机网络和因特网.html">计算机网络和因特网</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
+        <p><span>发布时间:</span>2019年07月04日 - 00时00分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/计算机网络和因特网.html" title="计算机网络和因特网">http://yoursite.com/计算机网络和因特网.html</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/计算机网络和因特网.html　　作者: Thriumph" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/应用层.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          应用层
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/【Pwnable-kr】blackjack.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【Pwnable.kr】blackjack</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是因特网"><span class="toc-number">1.</span> <span class="toc-text">什么是因特网</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是因特网-1"><span class="toc-number">1.1.</span> <span class="toc-text">什么是因特网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#具体构成描述"><span class="toc-number">1.1.1.</span> <span class="toc-text">具体构成描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务描述"><span class="toc-number">1.1.2.</span> <span class="toc-text">服务描述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协议"><span class="toc-number">1.2.</span> <span class="toc-text">协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络边缘"><span class="toc-number">2.</span> <span class="toc-text">网络边缘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#接入网"><span class="toc-number">2.1.</span> <span class="toc-text">接入网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物理媒体"><span class="toc-number">2.2.</span> <span class="toc-text">物理媒体</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络核心"><span class="toc-number">3.</span> <span class="toc-text">网络核心</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分组交换"><span class="toc-number">3.1.</span> <span class="toc-text">分组交换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#储存转发运输"><span class="toc-number">3.1.1.</span> <span class="toc-text">储存转发运输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排队时延和分组丢失"><span class="toc-number">3.1.2.</span> <span class="toc-text">排队时延和分组丢失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转发表和路由选择协议"><span class="toc-number">3.1.3.</span> <span class="toc-text">转发表和路由选择协议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电路交换（创建专用的端到端连接）"><span class="toc-number">3.2.</span> <span class="toc-text">电路交换（创建专用的端到端连接）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#电路交换在网络中的复用"><span class="toc-number">3.2.1.</span> <span class="toc-text">电路交换在网络中的复用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分组交换和电路交换的对比"><span class="toc-number">3.2.2.</span> <span class="toc-text">分组交换和电路交换的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络中的网络"><span class="toc-number">3.3.</span> <span class="toc-text">网络中的网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#因特网是网络的网络。"><span class="toc-number">3.3.1.</span> <span class="toc-text">因特网是网络的网络。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第一层ISP"><span class="toc-number">3.3.2.</span> <span class="toc-text">第一层ISP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二层ISP"><span class="toc-number">3.3.3.</span> <span class="toc-text">第二层ISP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#较低层ISP"><span class="toc-number">3.3.4.</span> <span class="toc-text">较低层ISP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分组交换网中的时延，丢包和吞吐量"><span class="toc-number">4.</span> <span class="toc-text">分组交换网中的时延，丢包和吞吐量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分组交换网中的时延概述"><span class="toc-number">4.1.</span> <span class="toc-text">分组交换网中的时延概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#时延的类型"><span class="toc-number">4.1.1.</span> <span class="toc-text">时延的类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排队时延和丢包"><span class="toc-number">4.2.</span> <span class="toc-text">排队时延和丢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#端到端的时延"><span class="toc-number">4.3.</span> <span class="toc-text">端到端的时延</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算机网络的吞吐量"><span class="toc-number">4.4.</span> <span class="toc-text">计算机网络的吞吐量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协议层次及其服务类型"><span class="toc-number">5.</span> <span class="toc-text">协议层次及其服务类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#协议分层"><span class="toc-number">5.1.</span> <span class="toc-text">协议分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-IP各层描述："><span class="toc-number">5.2.</span> <span class="toc-text">TCP/IP各层描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分层的体系结构"><span class="toc-number">5.3.</span> <span class="toc-text">分层的体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封装"><span class="toc-number">5.4.</span> <span class="toc-text">封装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#源主机的封装"><span class="toc-number">5.4.1.</span> <span class="toc-text">源主机的封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路由器的解封装与封装"><span class="toc-number">5.4.2.</span> <span class="toc-text">路由器的解封装与封装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#面对攻击的网络"><span class="toc-number">6.</span> <span class="toc-text">面对攻击的网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#拒绝服务攻击"><span class="toc-number">6.1.</span> <span class="toc-text">拒绝服务攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#嗅探攻击："><span class="toc-number">6.2.</span> <span class="toc-text">嗅探攻击：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IP哄骗："><span class="toc-number">6.3.</span> <span class="toc-text">IP哄骗：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中间人攻击："><span class="toc-number">6.4.</span> <span class="toc-text">中间人攻击：</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/应用层.html" title="上一篇: 应用层">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/【Pwnable-kr】blackjack.html" title="下一篇: 【Pwnable.kr】blackjack">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/格式化字符串漏洞.html">格式化字符串漏洞</a></li><li class="post-list-item"><a class="post-list-link" href="/一个有趣的a+b.html">一个有趣的a+b</a></li><li class="post-list-item"><a class="post-list-link" href="/多媒体网络.html">多媒体网络</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络中的安全.html">计算机网络中的安全</a></li><li class="post-list-item"><a class="post-list-link" href="/无线网络和移动网络.html">无线网络和移动网络</a></li><li class="post-list-item"><a class="post-list-link" href="/链路层和局域网.html">链路层和局域网</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-控制平面.html">网络层:控制平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】cmd1.html">【Pwnable.kr】cmd1</a></li><li class="post-list-item"><a class="post-list-link" href="/网络层-数据平面.html">网络层:数据平面</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】lotto.html">【Pwnable.kr】lotto</a></li><li class="post-list-item"><a class="post-list-link" href="/运输层.html">运输层</a></li><li class="post-list-item"><a class="post-list-link" href="/应用层.html">应用层</a></li><li class="post-list-item"><a class="post-list-link" href="/计算机网络和因特网.html">计算机网络和因特网</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】blackjack.html">【Pwnable.kr】blackjack</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】coin1.html">【Pwnable.kr】coin1</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】leg.html">【Pwnable.kr】leg</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】input.html">【Pwnable.kr】input</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】random.html">【Pwnable.kr】random</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></li><li class="post-list-item"><a class="post-list-link" href="/选择.html">选择</a></li><li class="post-list-item"><a class="post-list-link" href="/十大排序.html">十大排序</a></li><li class="post-list-item"><a class="post-list-link" href="/RC4.html">RC4</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】collision.html">【Pwnable.kr】collision</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】flag.html">【Pwnable.kr】flag</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></li><li class="post-list-item"><a class="post-list-link" href="/【Pwnable-kr】fd.html">【Pwnable.kr】fd</a></li><li class="post-list-item"><a class="post-list-link" href="/哈夫曼树.html">哈夫曼树</a></li><li class="post-list-item"><a class="post-list-link" href="/数据结构课程设计.html">数据结构课程设计</a></li><li class="post-list-item"><a class="post-list-link" href="/ISCC2019线上.html">ISCC2019线上</a></li><li class="post-list-item"><a class="post-list-link" href="/DFS递归形式和非递归形式.html">DFS递归形式和非递归形式</a></li><li class="post-list-item"><a class="post-list-link" href="/链表.html">链表</a></li><li class="post-list-item"><a class="post-list-link" href="/掘安杯.html">掘安杯</a></li><li class="post-list-item"><a class="post-list-link" href="/gadget-libc-csu-init.html">gadget_libc_csu_init</a></li><li class="post-list-item"><a class="post-list-link" href="/嘉韦思杯.html">嘉韦思杯</a></li><li class="post-list-item"><a class="post-list-link" href="/linux下基本缓冲区溢出shellcode编写.html">linux下基本缓冲区溢出shellcode编写</a></li><li class="post-list-item"><a class="post-list-link" href="/基本ROP.html">基本ROP</a></li><li class="post-list-item"><a class="post-list-link" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a></li><li class="post-list-item"><a class="post-list-link" href="/gdb常用命令.html">gdb常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/pwn-环境配置.html">pwn 环境配置</a></li><li class="post-list-item"><a class="post-list-link" href="/kali更新源.html">kali更新源</a></li><li class="post-list-item"><a class="post-list-link" href="/rc3ctf-logmein.html">rc3ctf--logmein</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf编码加解密总结.html">ctf编码加解密总结</a></li><li class="post-list-item"><a class="post-list-link" href="/DLL注入.html">DLL注入</a></li><li class="post-list-item"><a class="post-list-link" href="/windows消息钩取.html">windows消息钩取</a></li><li class="post-list-item"><a class="post-list-link" href="/BugKu逆向.html">BugKu逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/内嵌补丁.html">内嵌补丁</a></li><li class="post-list-item"><a class="post-list-link" href="/ESP脱壳定律.html">ESP定律脱壳</a></li><li class="post-list-item"><a class="post-list-link" href="/IAT导入地址表-EAT机制.html">IAT导入地址表/EAT机制</a></li><li class="post-list-item"><a class="post-list-link" href="/VA-RVA-RAW.html">VA RVA RAW</a></li><li class="post-list-item"><a class="post-list-link" href="/PE文件格式.html">PE文件格式</a></li><li class="post-list-item"><a class="post-list-link" href="/寄存器.html">寄存器</a></li><li class="post-list-item"><a class="post-list-link" href="/栈帧.html">栈帧</a></li><li class="post-list-item"><a class="post-list-link" href="/南邮逆向.html">南邮逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/ctf-play-a-game.html">ctf play a game</a></li><li class="post-list-item"><a class="post-list-link" href="/关于二进制.html">关于二进制</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Thriumph
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 4;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
