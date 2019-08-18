@@ -5,14 +5,16 @@
   <meta name="baidu-site-verification" content="L6Lm9d5Crl">
   
   
+   
+    <meta name="keywords" content="二进制安全">
   
   
-  <title>Thriumph</title>
+  <title>Category: 二进制安全 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="keywords" content="pwn,re,渗透测试">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Thriumph">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/categories/二进制安全/index.html">
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -30,9 +32,6 @@
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
-    
-    
-  
   
       <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   
@@ -43,11 +42,11 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: true,
+          isHome: false,
           isPost: false,
           isArchive: false,
           isTag: false,
-          isCategory: false,
+          isCategory: true,
           open_in_new: false
       }
   </script>
@@ -247,209 +246,54 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-运输层" class="article article-type-post" itemscope itemprop="blogPost">
   
-    <div class="article-meta">
-      <a  href="/运输层.html" class="article-date">
-      <time datetime="2019-07-07T14:40:00.000Z" itemprop="datePublished">2019-07-07</time>
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a  href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a  href="/栈溢出的保护机制和利用方法.html" class="archive-article-date">
+      <time datetime="2019-03-18T12:01:00.000Z" itemprop="datePublished">03-18</time>
 </a>
 
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
+        </div>
+         
   
     <h1 itemprop="name">
-      <a  class="article-title" href="/运输层.html">运输层</a>
+      <a  class="archive-article-title" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a>
     </h1>
   
 
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-              <p>《计算机网络自顶向下方法》第三章读书笔记</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/读书笔记/">读书笔记</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机网络/">计算机网络</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a   href="/运输层.html#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-栈溢出的保护机制和利用方法" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a  href="/栈溢出的保护机制和利用方法.html" class="article-date">
-      <time datetime="2019-03-18T12:01:00.000Z" itemprop="datePublished">2019-03-18</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a  class="article-title" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h1 id="保护机制"><a href="#保护机制" class="headerlink" title="保护机制"></a>保护机制</h1><h2 id="Canary-栈保护"><a href="#Canary-栈保护" class="headerlink" title="Canary(栈保护)"></a>Canary(栈保护)</h2><p>栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在linux中将cookie信息称为canary。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
     <div class="article-category tagcloud">
     <a class="article-category-link" href="/categories/二进制安全/">二进制安全</a>
     </div>
 
 
-      
-      
-        <p class="article-more-link">
-          <a   href="/栈溢出的保护机制和利用方法.html#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-栈帧" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a  href="/栈帧.html" class="article-date">
-      <time datetime="2018-12-20T16:20:00.000Z" itemprop="datePublished">2018-12-21</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a  class="article-title" href="/栈帧.html">栈帧</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
           
-              <h1 id="栈帧结构"><a href="#栈帧结构" class="headerlink" title="栈帧结构"></a>栈帧结构</h1>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/汇编/">汇编</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a   href="/栈帧.html#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
-  
 </article>
-
-
-
-
-
-
-
-
-
-
-
   
   
+    </div></section>
+  
+
+    
+
 
 </div>
       <footer id="footer">
@@ -543,6 +387,18 @@ ga('send', 'pageview');
         };
     })
 </script>
+
+    <button class="hide-labels">TAG 开关</button>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("button").click(function() {
+                $(".article-info").toggle(200);
+            });
+        });
+    </script>
 
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
 </script>
