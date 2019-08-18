@@ -17,15 +17,15 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="RVA: 相对虚拟地址:是指相对于基地址的偏移量。也就是PE结构被映射到内存中后，某个位置所在内存相对于基地址的偏移。即：相对虚拟地址(RVA)=虚拟地址（VA）-基址（imageBase）。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5CVA-RVA-RAW%5Col-1566122434976.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5CVA-RVA-RAW%5Col-1566122434978.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5CVA-RVA-RAW%5Col-1566122434978.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5CVA-RVA-RAW%5Col-1566122434978.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5CVA-RVA-RAW%5Col-1566122434976.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VA RVA RAW">
 <meta name="twitter:description" content="RVA: 相对虚拟地址:是指相对于基地址的偏移量。也就是PE结构被映射到内存中后，某个位置所在内存相对于基地址的偏移。即：相对虚拟地址(RVA)=虚拟地址（VA）-基址（imageBase）。">
-<meta name="twitter:image" content="http://yoursite.com/images%5CVA-RVA-RAW%5Col-1566122434976.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5CVA-RVA-RAW%5Col-1566122434976.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -298,12 +298,12 @@
 <p><code>VA（虚拟地址）:</code> 由于windows运行在保护模式下，所以程序访问存储器所使用的逻辑地址就是<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>，简称VA，又称为内存<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>。也就是程序被加载到内存中的地址。</p>
 <p><code>RAW:</code> 文件偏移</p>
 <h1 id="VA-virtual-Address"><a href="#VA-virtual-Address" class="headerlink" title="VA (virtual Address)"></a>VA (virtual Address)</h1><p>在od中打开一个PE文件，这些都是VA</p>
-<p><img src="/images%5CVA-RVA-RAW%5Col-1566122434976.jpg" alt="图片.png"></p>
-<h1 id="RVA"><a href="#RVA" class="headerlink" title="RVA"></a>RVA</h1><p><img src="/images%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
+<p><img src="..%5Cimages%5CVA-RVA-RAW%5Col-1566122434976.jpg" alt="图片.png"></p>
+<h1 id="RVA"><a href="#RVA" class="headerlink" title="RVA"></a>RVA</h1><p><img src="..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
 <p>假设虚拟地址VA为00401518，要想知道相对偏移RVA，就要知道00401528属于那个节区，点M查看，是.text 也就是代码区，从00401000开始的，即RVA=00401518-00401000=518</p>
-<p><img src="/images%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
+<p><img src="..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
 <h1 id="VA-to-RAW"><a href="#VA-to-RAW" class="headerlink" title="VA to RAW"></a>VA to RAW</h1><p>想要知道在文件中的偏移，首先要通过VA计算出RVA（如上所示），在通过RAV计算RAW，这时就需要查看区段表了</p>
-<p><img src="/images%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
+<p><img src="..%5Cimages%5CVA-RVA-RAW%5Col-1566122434978.jpg" alt="图片.png"></p>
 <p>VOffset是内存中的偏移</p>
 <p>VSize是内存中的大小</p>
 <p>ROffset是文件中的偏移</p>
@@ -320,7 +320,7 @@
         <p><span>本文标题:</span><a  href="/VA-RVA-RAW.html">VA RVA RAW</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年01月05日 - 11时24分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/VA-RVA-RAW.html" title="VA RVA RAW">http://yoursite.com/VA-RVA-RAW.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/VA-RVA-RAW.html　　作者: Thriumph" title=""></span>

@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="0x09">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.419Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Pwnable.kr】mistake">
 <meta name="twitter:description" content="0x09">
-<meta name="twitter:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -302,7 +302,7 @@
 <h1 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h1><p><strong>如果能够cat出passcode中的内容，就能轻松的知道需要输入什么了，但是passcode没有读权限，根据题目的提示，与操作符优先级有关，关键在于<code>if(fd=open)(&quot;/home/mistake/password&quot;,O_RDONLY,0400) &lt; 0){</code>这句话，这里的比较运算符优先级高于赋值运算符，因此实际上fd最终并不是理想的文件描述符，而是0，0作为文件描述符，它指向的是stdin，所以<code>if((fd=open(&quot;/home/mistake/password&quot;,O_RDONLY,0400)) &lt; 0){</code>就行了</strong></p>
 <p><strong>read(fd,pw_buf,PW_LEN)实际上是从stdin读取，而不是password文件，所以控制stdin就行了</strong></p>
 <p><strong>第一次输入1111111111（1是0x31），第二次输入0000000000（0x30），第二次经异或0x1也变为了111111111</strong></p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91mistake%5Col-1566122434990.jpg" alt></p>
 <blockquote>
 <p>Mommy, the operator priority always confuses me :(</p>
 </blockquote>
@@ -317,7 +317,7 @@
         <p><span>本文标题:</span><a  href="/【Pwnable-kr】mistake.html">【Pwnable.kr】mistake</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年06月28日 - 21时29分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/【Pwnable-kr】mistake.html" title="【Pwnable.kr】mistake">http://yoursite.com/【Pwnable-kr】mistake.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/【Pwnable-kr】mistake.html　　作者: Thriumph" title=""></span>

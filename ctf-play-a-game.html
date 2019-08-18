@@ -17,18 +17,18 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="这是我做出的第一个逆向题，写一个笔记做一个纪念">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434974.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434974.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434974.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434974.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434975.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434975.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434975.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ctf play a game">
 <meta name="twitter:description" content="这是我做出的第一个逆向题，写一个笔记做一个纪念">
-<meta name="twitter:image" content="http://yoursite.com/images%5Cctf-play-a-game%5Col-1566122434974.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -301,7 +301,7 @@
         <p>这是我做出的第一个逆向题，写一个笔记做一个纪念</p>
 <a id="more"></a>
 
-<p>打开是一个exe文件<br><img src="/images%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>这是什么鬼emmm<br>耐着性子仔细看一下，大致看懂了意思，输入1 ~ 8，相应的灯会亮，当灯全亮时，就可以了。输入0时，重新开始。那就试试吧。<br>依次输入1~8，惊奇的发现灯全亮了，嘻嘻，找到flag了。<br><img src="/images%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>当然，这种野路子做出来的题终究时不行滴<br>那就用od做呗把文件拖到od里<img src="/images%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>先搜索ASCll,然后出现了下面的界面，双击进入<img src="/images%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>然后出现done!!! the flag is,猜测当输入n时，可能有一段代码对n的值进行判断，然后用jmp语句跳到done!!! the flag is的段地址00F1E940处<img src="/images%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"><br>然后往上翻，找到箭头指的那一行，修改成jmp 00F1E940<br><img src="/images%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"><br>最后运行一下就找到flag喽。<br><img src="/images%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"></p>
+<p>打开是一个exe文件<br><img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>这是什么鬼emmm<br>耐着性子仔细看一下，大致看懂了意思，输入1 ~ 8，相应的灯会亮，当灯全亮时，就可以了。输入0时，重新开始。那就试试吧。<br>依次输入1~8，惊奇的发现灯全亮了，嘻嘻，找到flag了。<br><img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>当然，这种野路子做出来的题终究时不行滴<br>那就用od做呗把文件拖到od里<img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>先搜索ASCll,然后出现了下面的界面，双击进入<img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434974.jpg" alt="图片.png"><br>然后出现done!!! the flag is,猜测当输入n时，可能有一段代码对n的值进行判断，然后用jmp语句跳到done!!! the flag is的段地址00F1E940处<img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"><br>然后往上翻，找到箭头指的那一行，修改成jmp 00F1E940<br><img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"><br>最后运行一下就找到flag喽。<br><img src="..%5Cimages%5Cctf-play-a-game%5Col-1566122434975.jpg" alt="图片.png"></p>
 
       
     </div>
@@ -313,7 +313,7 @@
         <p><span>本文标题:</span><a  href="/ctf-play-a-game.html">ctf play a game</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2018年12月13日 - 15时00分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ctf-play-a-game.html" title="ctf play a game">http://yoursite.com/ctf-play-a-game.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/ctf-play-a-game.html　　作者: Thriumph" title=""></span>

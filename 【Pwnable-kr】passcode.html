@@ -17,16 +17,16 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="0x05">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Pwnable.kr】passcode">
 <meta name="twitter:description" content="0x05">
-<meta name="twitter:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -321,9 +321,9 @@
 <p><code>可以利用welcome来改变passcode1的值</code></p>
 <p><code>因为开启了栈溢出保护，不能通过增加name的输入增加passcode2的值</code></p>
 <p>开启了栈溢出保护和堆栈不可执行保护</p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435080.jpg" alt></p>
 <p>尝试输入正确的passcode1和passcode2发现并不可行</p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
 <h3 id="思路2（利用got表覆写技术）"><a href="#思路2（利用got表覆写技术）" class="headerlink" title="思路2（利用got表覆写技术）"></a>思路2（利用got表覆写技术）</h3><p><code>将GOT表中的函数地址写到栈中，用来充当scanf（）取的地址:name值的最后4个字节是passcode1值，所以可以通过将passcode1的值改为scanf(&quot;%d&quot;,passcode2)的地址</code></p>
 <p><code>然后把system(&quot;/bin/cat flag&quot;)这条指令的地址写到这个GOT表中的函数,从而获得flag</code></p>
 <p><code>当这个函数被调用时，就会直接执行system(&quot;/bin/cat flag&quot;)</code></p>
@@ -333,12 +333,12 @@
 <h4 id="plt表："><a href="#plt表：" class="headerlink" title="plt表："></a>plt表：</h4><p>过程连接表(Procedure Linkage Table)，一个PLT条目对应一个GOT条目</p>
 <p>当main()函数开始，会请求plt中这个函数的对应GOT地址，如果第一次调用那么GOT会重定位到plt，并向栈中压入一个偏移，程序的执行回到_init()函数，rtld得以调用就可以定位printf的符号地址，第二次运行程序再次调用这个函数时程序跳入plt，对应的GOT入口点就是真实的函数入口地址。</p>
 <p>动态连接器并不会把动态库函数在编译的时候就包含到ELF文件中,仅仅是在这个ELF被加载的时候,才会把那些动态函库数代码加载进来,之前系统只会在ELF文件中的GOT中保留一个调用地址</p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
 <p><code>（1）scanf()之后会调用fflush()函数，所以可以覆盖fflush在GOT表中的内容，让程序去执行system(&quot;/bin/cat flag&quot;)</code></p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
 <p><code>system(&quot;/bin/cat flag&quot;)对应汇编代码地址在0x80485e3</code></p>
 <p><code>也就是说要把0x80485e3这个值写入fflush()中</code></p>
-<h4 id="查看got表"><a href="#查看got表" class="headerlink" title="查看got表"></a>查看got表</h4><p><code>objdump -R passcode</code><br><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
+<h4 id="查看got表"><a href="#查看got表" class="headerlink" title="查看got表"></a>查看got表</h4><p><code>objdump -R passcode</code><br><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91passcode%5Col-1566122435081.jpg" alt></p>
 <p>fflush()位于0x0804a004</p>
 <p><code>即将0x80485e3（调用system的地址）覆写位于0x0804a004的fflush()函数的GOT表</code></p>
 <p>0x70 - 0x10 = 96,ame这个字符串第96个字节后的4字节数据将会被作为passcode1的地址</p>
@@ -362,7 +362,7 @@
         <p><span>本文标题:</span><a  href="/【Pwnable-kr】passcode.html">【Pwnable.kr】passcode</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年06月21日 - 23时42分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/【Pwnable-kr】passcode.html" title="【Pwnable.kr】passcode">http://yoursite.com/【Pwnable-kr】passcode.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/【Pwnable-kr】passcode.html　　作者: Thriumph" title=""></span>

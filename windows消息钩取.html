@@ -17,16 +17,16 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="windows消息机制windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.449Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.265Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows消息钩取">
 <meta name="twitter:description" content="windows消息机制windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
-<meta name="twitter:image" content="http://yoursite.com/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -319,7 +319,7 @@
 <p>3.应用程序监视自身的[application message queue]，发现新添加的WM_KEYDOMN消息后，调用相应的事件处理程序处理。</p>
 <h1 id="消息钩取工作原理"><a href="#消息钩取工作原理" class="headerlink" title="消息钩取工作原理"></a>消息钩取工作原理</h1><p> windows操作系统向用户提供GUI（ 图形用户界面），以事件驱动的方式工作。<br>当事件发生时，OS会把事先定义好的消息发送给响应的应用程序，应用程序收到消息后执行相应的动作。</p>
 <p>OS消息队列与应用程序消息队列之间存在一条钩链（HookChain）处于钩链的钩子会比应用程序先看到相应的信息。在键盘钩子函数的内部，除了可以查看消息外，还可以修改消息本身，对消息拦截或阻止消息传递。可以同时设置多个键盘钩子，按照设置顺序依次调用这些钩子</p>
-<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt></p>
+<p><img src="..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt></p>
 <h1 id="windows消息钩取的实现——SetWindowsHookEx"><a href="#windows消息钩取的实现——SetWindowsHookEx" class="headerlink" title="windows消息钩取的实现——SetWindowsHookEx()"></a>windows消息钩取的实现——SetWindowsHookEx()</h1><p>使用SetWindowsHookEx()API可以轻松实现消息钩子</p>
 <p><code>SetWindowsHookEx（）API定义</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HHOOK <span class="title">SetWindowsHookEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> idHook,			<span class="comment">//hook type</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HOOKPROC lpfn,		<span class="comment">//hook procedure</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HINSTANCE hMod,		<span class="comment">//hook procedure所属的DLL句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    DWORD dwThreadId	<span class="comment">//将要挂钩的目标线程ID</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
@@ -336,21 +336,21 @@
 <p>KeyHook.KeyboardProc()函数中发生键盘输入事件时，会比较进程的名字是否与notepad.exe相同，相同返回1，终止KeyHook.KeyboardProc()函数，截获且删除信息，键盘消息就不会传递到notepad.exe程序的消息队列中。</p>
 <h2 id="HookMain-cpp"><a href="#HookMain-cpp" class="headerlink" title="HookMain.cpp"></a>HookMain.cpp</h2><p>调用导出函数HookStrat()时，SetWindowsHookEx()函数会将KeybroadProc()添加到键盘钩链</p>
 <blockquote>
-<p>KeybroadProc()函数定义<br><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt><br>*</p>
+<p>KeybroadProc()函数定义<br><img src="..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435078.jpg" alt><br>*</p>
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"conio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_DLL_NAME		<span class="meta-string">"KeyHook.dll"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTART		<span class="meta-string">"HookStart"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTOP		<span class="meta-string">"HookStop"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTART)</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTOP)</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HMODULE			hDll = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTART	HookStart = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTOP	HookStop = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>			ch = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载KeyHook.dll </span></span><br><span class="line">	hDll = LoadLibraryA(DEF_DLL_NAME);</span><br><span class="line">    <span class="keyword">if</span>( hDll == <span class="literal">NULL</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"LoadLibrary(%s) failed!!! [%d]"</span>, DEF_DLL_NAME, GetLastError());</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取导出函数地址 </span></span><br><span class="line">	HookStart = (PFN_HOOKSTART)GetProcAddress(hDll, DEF_HOOKSTART);</span><br><span class="line">	HookStop = (PFN_HOOKSTOP)GetProcAddress(hDll, DEF_HOOKSTOP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始钩取 </span></span><br><span class="line">	HookStart();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待用户输入“q” </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"press 'q' to quit!\n"</span>);</span><br><span class="line">	<span class="keyword">while</span>( _getch() != <span class="string">'q'</span> )	;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 终止钩取 </span></span><br><span class="line">	HookStop();</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 卸载KeyHook.dll </span></span><br><span class="line">	FreeLibrary(hDll);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>运行HookMain.exe可安装键盘钩子</p>
-<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+<p><img src="..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
 <p>输入q可停止键盘钩取</p>
 <p><code>调试HookMain.exe</code></p>
 <p>通过字符串检索找到main函数</p>
-<p><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+<p><img src="..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
 <p>程序在00C2140E地址处调用LoadLibraryA(KeyHook.dll)</p>
 <p>调用了SetWindowsHookExW()函数时，先有两条PUSH指令将该函数的第一、第二两个参数压入栈。其中第一个参数idHook值为2，即WH_KEYBOARD，第二个参数lpfn值为为钩子过程的地址。</p>
 <p><code>调试notepad.exe进程中的KeyHook.dll</code></p>
 <p>运行notpead.exe后弹出Executable modules窗口，KeyHook.dll已被加载</p>
-<p><code>操作过程</code><br><img src="/images%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
+<p><code>操作过程</code><br><img src="..%5Cimages%5Cwindows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96%5Col-1566122435079.jpg" alt></p>
 
       
     </div>
@@ -362,7 +362,7 @@
         <p><span>本文标题:</span><a  href="/windows消息钩取.html">windows消息钩取</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年02月10日 - 14时39分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/windows消息钩取.html" title="windows消息钩取">http://yoursite.com/windows消息钩取.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/windows消息钩取.html　　作者: Thriumph" title=""></span>

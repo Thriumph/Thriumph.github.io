@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="esp定律是常用的一种脱壳方法，适用于大部分程序的脱壳">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ESP定律脱壳">
 <meta name="twitter:description" content="esp定律是常用的一种脱壳方法，适用于大部分程序的脱壳">
-<meta name="twitter:image" content="http://yoursite.com/images%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -292,7 +292,7 @@
 <a id="more"></a>
 <h1 id="esp是什么："><a href="#esp是什么：" class="headerlink" title="esp是什么："></a>esp是什么：</h1><p><strong>s:</strong> stack栈，遵循先进后出的原则<br><strong>p:</strong> pointer指针<br><strong>esp:</strong>栈顶指针，始终指向栈顶<br><strong>堆栈平衡：</strong>当栈回到原来的状态时，达到堆栈平衡</p>
 <p>如图所示</p>
-<p><img src="/images%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg" alt="图片.png"></p>
+<p><img src="..%5Cimages%5CESP%E8%84%B1%E5%A3%B3%E5%AE%9A%E5%BE%8B%5Col-1566122434973.jpg" alt="图片.png"></p>
 <p>当执行完<br>push eax<br>push ebx<br>pop ebx<br>pop eax<br>达到堆栈平衡</p>
 <h1 id="硬件断点："><a href="#硬件断点：" class="headerlink" title="硬件断点："></a>硬件断点：</h1><p>程序启动时会将各寄存器的初始值压栈，对相应栈地址下硬件访问断点，当壳解密程序运行完毕恢复现场时将会中断。当在上图原来的栈顶下一个硬件断点时，继续执行pop ecx，就会断下。</p>
 <h1 id="运用esp定律脱壳："><a href="#运用esp定律脱壳：" class="headerlink" title="运用esp定律脱壳："></a>运用esp定律脱壳：</h1><p>用upx加壳后，会在程序中插入一段代码，这段代码执行完毕后，也就是达到堆栈平衡时，才会对原来压缩的程序解压。根据esp定律，在初始的esp上下一个硬件断点，段下来之后就离oep不远了。</p>
@@ -307,7 +307,7 @@
         <p><span>本文标题:</span><a  href="/ESP脱壳定律.html">ESP定律脱壳</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年01月16日 - 14时34分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/ESP脱壳定律.html" title="ESP定律脱壳">http://yoursite.com/ESP脱壳定律.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/ESP脱壳定律.html　　作者: Thriumph" title=""></span>

@@ -17,15 +17,15 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="《计算机网络自顶向下方法》第八章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.466Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络中的安全">
 <meta name="twitter:description" content="《计算机网络自顶向下方法》第八章读书笔记">
-<meta name="twitter:image" content="http://yoursite.com/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -304,7 +304,7 @@
 <p><code>端点鉴别。</code>发送方和接收方都应该能证实通信过程所涉及的另一方，以确信通信的另一方确实具有其所生成的身份。</p>
 <p><code>运行安全性。</code>几乎所有的机构几天都有了于公共因特网连接的网络。这些网络因此潜在地能够被危及安全。攻击者能够试图在网络主机中安放蠕虫，获取公司秘密，勘察内部网络配置并发起DoS攻击。</p>
 <h1 id="密码学的原则"><a href="#密码学的原则" class="headerlink" title="密码学的原则"></a>密码学的原则</h1><p>发送者报文的最初形式被称为<code>明文</code>。发送者使用<code>加密算法</code>加密其明文报文，生成的加密报文被称为<code>密文</code>，该密文对任何入侵者看起来是不可懂的。发送方提供了一个<code>密钥</code>KA，它是一串数字或字符，作为加密算法的输入。加密算法以密钥和明文报文m为输入，生成的密文作为输出。用符号KA(m)表示使用密钥KA加密的明文报文m的密文形式。类似地，接收方将为<code>解密算法</code>提供密钥KB，将密文和接收方的密钥作为输入，输出初始明文。也就是说，如果接收方接收到一个加密的报文KA(m)，他可通过计算KB(KA(m)) = m进行解密。在<code>对称密钥系统</code>中，发送方和接收方的密钥是相同并且是秘密的。在<code>公开密钥系统</code>中，使用一对密钥：一个密钥为发送方和接收方两人所知，另一个密钥只有发送方或接收方知道</p>
-<p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
 <h2 id="对称密钥密码体制"><a href="#对称密钥密码体制" class="headerlink" title="对称密钥密码体制"></a>对称密钥密码体制</h2><p><code>凯撒密码</code>用于英语文本时，将明文报文中的每个字母用字母表中该字母后第k个字母进行替换。</p>
 <p>凯撒密码的一种改进方法是单码代替密码，也是使用自字母表中的一个字母替换该字母表中的另一个字母。然而，并非按照规则的模式进行替换，只要每个字母都有一个唯一的替换字母，任一字母都可用另一字母替换，反之亦然。</p>
 <p><code>当考虑入侵者破解加密方案的难易程度时，可以根据入侵者所拥有的信息分为三种不同的情况：</code></p>
@@ -313,7 +313,7 @@
 <p><code>3.选择明文攻击。</code>在选择明文攻击中，入侵者能够选择某一明文报文并得到该明文报文对应的密文形式。</p>
 <p><code>4.多码代替密码</code>是对单码代替密码的改进。多码代替密码的基本思想是使用多个单码代替密码，一个单码代替密码用于加密某明文中一个特定位置的字母。因此，在某明文报文中不同位置出现的相同字母可能以不同方式编码。</p>
 <h3 id="块密码"><a href="#块密码" class="headerlink" title="块密码"></a>块密码</h3><p>块密码中，要加密的报文被处理为k比特的块。为了加密一个块，该密码采用了一对一映射，将k比特块的明文映射为k比特块的密文。块密码通常使用函数模拟随机排列表。例如当k = 64时，该函数首先将64比特块划分为8个块，每个块由8比特组成。每个8比特块由一个“8比特到8比特”表处理，这是个可管理的长度。接下来，这8个输出块被重新装配成一个64比特的块。该输出被回馈到64比特的输入，开始了第二次循环。经n此这样的循环后，该函数提供了一个64比特的密文块。</p>
-<p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
 <h3 id="密码块链接"><a href="#密码块链接" class="headerlink" title="密码块链接"></a>密码块链接</h3><p>​ 如果使用上述的块密码，会出现一个微妙而重要的问题，即相同铭文块对应的密文块可能是相同的。为了解决这个问题，可以在密文中混合某些随机性，使得相同的明文块产生不同的密文块。令m(i)表示第i个明文块，c(i)表示第i个密文块，并且a⊕b表示两个比特串a和b的异或。将具有密钥S的块密码加密算法表示为KS。其基本思想如下：发送方为第i块生成一个随机的k比特数r(i)，并且计算c(i) = KS(m(i)⊕r(i))。接收方收到c(i)和r(i)，它能够通过计算m(i) = KS(c(i)⊕r(i))而恢复每个明文块。</p>
 <ul>
 <li>引入随机性产生了另一个问题：发送方必须传输一千两倍的比特。为了有效利用该技术，块密码通常使用了一种称为<code>密码块链接（Cipher Block Chaining, CBC）</code>的技术。其基本思想是仅随第一个报文发送一个随机值，然后让发送方和接收方使用计算的编码块代替后继的随机数。集体而言，CBC运行过程如下：</li>
@@ -389,7 +389,7 @@
 </ul>
 <p>这通过直接将MS分为4个密钥来实现。</p>
 <h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><p>​<br>在数据传输阶段，SSL将数据流分割成记录，对每个记录附加一个MAC用于完整性检查，然后加密该“记录+MAC”。为了产生这个MAC，B将数据连同密钥MB，一起放入一个散列函数中。B维护一个序号计数器，计数器开始为0，B每发送的一个SSL记录它都增加1。B计算MAC时，他把该序列号包括在MAC的计算中。所以，MAC现在是数据加MAC密钥MB加当前序列号的散列。为了加密“记录+MAC”这个包，B使用他的会话加密密钥EB。然后这个加密的包将传递给TCP经因特网传输。</p>
-<h2 id="完整描述"><a href="#完整描述" class="headerlink" title="完整描述"></a>完整描述</h2><p><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<h2 id="完整描述"><a href="#完整描述" class="headerlink" title="完整描述"></a>完整描述</h2><p><img src="..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
 <p>前三个字段是不加密的。类型字段指出了该字段是握手报文还是包含应用数据的报文。它也用于关闭SSL连接。在接收端SSL使用长度字段以从到达的TCP字节流中提取SSL记录。</p>
 <h3 id="SSL握手"><a href="#SSL握手" class="headerlink" title="SSL握手"></a>SSL握手</h3><p>详细的SSL握手步骤：</p>
 <ul>
@@ -415,7 +415,7 @@
 </ul>
 <p>一个IPsec协议在它的<code>安全关联数据库（Security Association Database, SAD）</code>中存储其所有SA的状态信息，SAD是实体操作系统内核中得到一个数据结构</p>
 <h2 id="IPsec数据报"><a href="#IPsec数据报" class="headerlink" title="IPsec数据报"></a>IPsec数据报</h2><p>IPsec有两种不同的分组形式，一种用于所谓的<code>隧道模式</code>，另一种用于所谓的<code>运输模式</code>。</p>
-<p>IPsec数据报的分组格式。<br><img src="/images%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
+<p>IPsec数据报的分组格式。<br><img src="..%5Cimages%5C%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8%5Col-1566122435183.jpg" alt></p>
 <p>将一个IPv4数据报转换成一个IPsec数据报的步骤：</p>
 <ul>
 <li>在初始IPv4数据报后面附上一个“ESP尾部”字段。</li>
@@ -485,7 +485,7 @@
         <p><span>本文标题:</span><a  href="/计算机网络中的安全.html">计算机网络中的安全</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年07月17日 - 14时50分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/计算机网络中的安全.html" title="计算机网络中的安全">http://yoursite.com/计算机网络中的安全.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/计算机网络中的安全.html　　作者: Thriumph" title=""></span>

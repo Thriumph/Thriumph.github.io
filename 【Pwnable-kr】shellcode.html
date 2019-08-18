@@ -17,15 +17,15 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="题目源码0x0A">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
-<meta property="og:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Pwnable.kr】shellcode">
 <meta name="twitter:description" content="题目源码0x0A">
-<meta name="twitter:image" content="http://yoursite.com/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -307,18 +307,18 @@
 <p>Shellshock，又称Bashdoor，是在Unix中广泛使用的Bash shell中的一个安全漏洞，首次于2014年9月24日公开。许多互联网守护进程，如网页服务器，使用bash来处理某些命令，从而允许攻击者在易受攻击的Bash版本上执行任意代码。这可使攻击者在未授权的情况下访问计算机系统</p>
 </blockquote>
 <h2 id="漏洞原因"><a href="#漏洞原因" class="headerlink" title="漏洞原因"></a>漏洞原因</h2><p>Bash使用的环境变量是通过函数名称来调用的,导致漏洞出问题是以“() {”开头定义的环境变量在命令ENV中解析成函数后,Bash执行并未退出,而是继续解析并执行shell命令。而其核心的原因在于在输入的过滤中没有严格限制边界,也没有做出合法化的参数判断。</p>
-<h2 id="本地检测"><a href="#本地检测" class="headerlink" title="本地检测"></a>本地检测</h2><p><code>env x=&#39;() { :;}; echo vulnerable&#39; bash -c &quot;echo this is a test&quot;</code><br>这个漏洞存在<img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
+<h2 id="本地检测"><a href="#本地检测" class="headerlink" title="本地检测"></a>本地检测</h2><p><code>env x=&#39;() { :;}; echo vulnerable&#39; bash -c &quot;echo this is a test&quot;</code><br>这个漏洞存在<img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
 <h1 id="利用"><a href="#利用" class="headerlink" title="利用"></a>利用</h1><p><strong>echo vulnerable后可以执行任意代码</strong></p>
 <p>该漏洞影响的bash使用的环境变量是通过函数名称来调用的，以“(){”开头通过环境变量来定义的。而在处理这样的“函数环境变量”的时候，并没有以函数结尾“}”为结束，而是一直执行其后的shell命令，env x= ‘’表示向环境变量中注入x = ….的变量，bash在处理这样以”(){“开头的环境变量的值时并没有以函数结尾”}”为结束，而是一直执行其后的shell命令，最后就会执行”echo vulnerable”这个语句</p>
 <p><code>env x=&#39;() { :;}; &#39; bash -c &quot;cat flag&quot;</code></p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
 <p><strong>发现没有权限，查看权限</strong></p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
 <p>启动时，用户是shellshock权限，也就是other权限，这样flag是不可读的，但是shellshock这个可执行文件与root用户是在同一个组中，对group是具有特殊权限读(w)的，所以egid是属于shellshock_pwn的，这个权限很高，对flag文件是可读的-r-xr-sr-x表示SGID和同组用户权限中可执行位被设置</p>
 <p><strong>echo vulnerable’ 换成想执行的命令 bash -c “cat ./flag”</strong></p>
 <p><strong>./ bash -c “echo this is a test” 换成./shellshock</strong></p>
 <p><code>env var=&#39;() { :;}; cat flag&#39; ./shellshock</code></p>
-<p><img src="/images%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
+<p><img src="..%5Cimages%5C%E3%80%90Pwnable-kr%E3%80%91shellcode%5Col-1566122434992.jpg" alt></p>
 <blockquote>
 <p>only if I knew CVE-2014-6271 ten years ago..!!</p>
 </blockquote>
@@ -333,7 +333,7 @@
         <p><span>本文标题:</span><a  href="/【Pwnable-kr】shellcode.html">【Pwnable.kr】shellcode</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年06月30日 - 17时35分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/【Pwnable-kr】shellcode.html" title="【Pwnable.kr】shellcode">http://yoursite.com/【Pwnable-kr】shellcode.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/【Pwnable-kr】shellcode.html　　作者: Thriumph" title=""></span>

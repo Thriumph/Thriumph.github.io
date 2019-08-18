@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="用od打开直接查找main函数">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images%5Crc3ctf-logmein%5Col-1566122434982.jpg">
-<meta property="og:updated_time" content="2019-08-18T18:28:07.418Z">
+<meta property="og:image" content="http://yoursite.com/..%5Cimages%5Crc3ctf-logmein%5Col-1566122434982.jpg">
+<meta property="og:updated_time" content="2019-08-18T18:42:21.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rc3ctf--logmein">
 <meta name="twitter:description" content="用od打开直接查找main函数">
-<meta name="twitter:image" content="http://yoursite.com/images%5Crc3ctf-logmein%5Col-1566122434982.jpg">
+<meta name="twitter:image" content="http://yoursite.com/..%5Cimages%5Crc3ctf-logmein%5Col-1566122434982.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -295,7 +295,7 @@
         <p>用od打开直接查找main函数</p>
 <a id="more"></a>
 
-<p><img src="/images%5Crc3ctf-logmein%5Col-1566122434982.jpg" alt></p>
+<p><img src="..%5Cimages%5Crc3ctf-logmein%5Col-1566122434982.jpg" alt></p>
 <p>看懂了大概的意思，就是将v7和len_v7l两个字符串进行异或，就是flag。<br>但是解题的时候出现了一些小问题。首先将v7转换为字符串，先将v7转化为16进制，v7=0x65626d61726168,将65，62，6d,61,72,61,68对照ASCll码为ebmarah,写了个脚本发现flag不对，卡了好长时间，最后才发现应该从小端序读emmmm🐷v7转换为字符串harambe</p>
 <p>用c解</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a[] = <span class="string">"harambe"</span>;</span><br><span class="line">	<span class="keyword">char</span> b[] = <span class="string">":\"AL_RT^L*.?+6/46"</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; b[i] != <span class="number">0</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		b[i] = b[i] ^ a[i % <span class="number">7</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; b[i] != <span class="number">0</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c"</span>, b[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -312,7 +312,7 @@
         <p><span>本文标题:</span><a  href="/rc3ctf-logmein.html">rc3ctf--logmein</a></p>
         <p><span>文章作者:</span><a  href="/" title="访问 Thriumph 的个人博客">Thriumph</a></p>
         <p><span>发布时间:</span>2019年02月25日 - 00时05分</p>
-        <p><span>最后更新:</span>2019年08月19日 - 02时28分</p>
+        <p><span>最后更新:</span>2019年08月19日 - 02时42分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/rc3ctf-logmein.html" title="rc3ctf--logmein">http://yoursite.com/rc3ctf-logmein.html</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/rc3ctf-logmein.html　　作者: Thriumph" title=""></span>
