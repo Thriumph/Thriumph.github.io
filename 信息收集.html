@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>栈帧 | Thriumph</title>
+  <title>信息收集 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一下有关栈帧的东东">
-<meta name="keywords" content="二进制安全">
+  <meta name="description" content="知己知彼，百战不殆">
+<meta name="keywords" content="渗透测试,信息收集">
 <meta property="og:type" content="article">
-<meta property="og:title" content="栈帧">
-<meta property="og:url" content="http://yoursite.com/栈帧.html">
+<meta property="og:title" content="信息收集">
+<meta property="og:url" content="http://yoursite.com/信息收集.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="记录一下有关栈帧的东东">
+<meta property="og:description" content="知己知彼，百战不殆">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T12:50:14.606Z">
+<meta property="og:image" content="http://yoursite.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png">
+<meta property="og:updated_time" content="2019-09-16T09:51:13.986Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="栈帧">
-<meta name="twitter:description" content="记录一下有关栈帧的东东">
+<meta name="twitter:title" content="信息收集">
+<meta name="twitter:description" content="知己知彼，百战不殆">
+<meta name="twitter:image" content="http://yoursite.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -157,14 +159,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-栈帧" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-信息收集" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      栈帧
+      信息收集
     </h1>
   
 
@@ -184,78 +186,81 @@
 
 
         
-        <a href="/栈帧.html" class="archive-article-date">
-  	<time datetime="2019-08-11T12:31:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
+        <a href="/信息收集.html" class="archive-article-date">
+  	<time datetime="2019-09-16T02:12:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-16</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>记录一下有关栈帧的东东</p>
+        <p>知己知彼，百战不殆</p>
 <a id="more"></a>
 
-<h1 id="栈帧结构"><a href="#栈帧结构" class="headerlink" title="栈帧结构"></a>栈帧结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">push ebp                          ;函数开始（使用ebp前先把已有的值保存在栈中）</span><br><span class="line">mov ebp,esp                       ；保存当前esp到ebp中</span><br><span class="line"></span><br><span class="line">                                  ；函数体  </span><br><span class="line">  ...                             ；无论esp如何变化，ebp都保持不变，可以安全访问函数的局部变量，参数</span><br><span class="line"></span><br><span class="line">mov esp,ebp                       ；将函数的起始地址返回到ebp中</span><br><span class="line">pop ebp                           ；函数返回前弹出保存在栈中的esp的值</span><br><span class="line">retn                              ；函数终止</span><br></pre></td></tr></table></figure>
-
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">add</span><span class="params">(<span class="keyword">long</span> a, <span class="keyword">long</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> x=a,y=b;</span><br><span class="line"><span class="keyword">return</span>(x+y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc,<span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">long</span> a=<span class="number">1</span>,b=<span class="number">2</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%d\n"</span>,add(a+b));</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="执行main-函数-amp-生成栈帧"><a href="#执行main-函数-amp-生成栈帧" class="headerlink" title="执行main()函数&amp;生成栈帧"></a>执行main()函数&amp;生成栈帧</h1><blockquote>
-<p>int  main(int argc,char* argv)</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">push ebp</span><br></pre></td></tr></table></figure>
-
-<p>把ebp的值压入栈，main()函数中，EBP为栈帧指针，用来把ebp的值备份到栈中，main函数执行完毕，返回之前，该值会再次恢复<br><strong>mov ebp,esp</strong><br>把esp的值传到ebp，直到main()函数执行完毕，ebp的值始终不变，可以通过ebp安全访问到储存在栈中的函数和局部变量。</p>
-<h1 id="设置局部变量"><a href="#设置局部变量" class="headerlink" title="设置局部变量"></a>设置局部变量</h1><blockquote>
-<p>long a=1,b=2;</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sub esp,8</span><br></pre></td></tr></table></figure>
-
-<p>esp减去8个字节，为函数的局部变量a,b开辟空间，以便它们保存在栈中，，开辟好空间后，main()内部无论esp的值如何变化，变量a和b的栈空间否不会受到破坏。</p>
-<h2 id="add-函数参数传递与调用"><a href="#add-函数参数传递与调用" class="headerlink" title="add()函数参数传递与调用"></a>add()函数参数传递与调用</h2><blockquote>
-<p>printf(“%d\n”,add(a,b));</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mov eax,dword ptr ss:[ebp-8]                   ;[ebp-8]=b</span><br><span class="line">push eax                                       ;传参</span><br><span class="line">mov ecx,deord ptr ss:[ebp-4]                   ;[ebp-4]=a</span><br><span class="line">push ecx                                       ;传参</span><br><span class="line">call 00401000                                  ;add()</span><br></pre></td></tr></table></figure>
-
-<p>call命令用来调用函数，即add（）函数。调用add（）函数之前，要先把两个参数压入栈，变量b先入栈，变量a后如栈。进入call命令进入被调用函数之前，先把函数的返回地址压入栈，用作函数执行完毕的返回地址。</p>
-<h2 id="开始执行add-函数-amp-生成栈帧"><a href="#开始执行add-函数-amp-生成栈帧" class="headerlink" title="开始执行add()函数&amp;生成栈帧"></a>开始执行add()函数&amp;生成栈帧</h2><blockquote>
-<p>long add(long a,long b)</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">push ebp</span><br><span class="line">mov ebp,esp</span><br></pre></td></tr></table></figure>
-
-<p>先把ebp保存到栈中，再把当前的esp储存在ebp中，add()函数内部中的ebp的值始终不变。</p>
-<h2 id="设置add-函数的局部变量（x-y）"><a href="#设置add-函数的局部变量（x-y）" class="headerlink" title="设置add()函数的局部变量（x,y）"></a>设置add()函数的局部变量（x,y）</h2><blockquote>
-<p>long x=a,y=b;</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sub esp,8</span><br><span class="line">mov eax,dword ptr ss:[ebp+8]                  ;[ebp]+8=param a</span><br><span class="line">mov dword ptr ss:[ebp-8],eax                  ;[ebp-8]=local x</span><br><span class="line">mov ecx,dword ptr ss:[ebp+c]                  ;[ebp+c]=param b</span><br><span class="line">mov dword ptr ss:[ebp-4],ecx                  ;[ebp-4]=local y</span><br></pre></td></tr></table></figure>
-
-<p>首先在栈内存中为局部变量x,y开辟一段空间，[ebp+8] [ebp+c]分别指向参数a,b，[ebp-8] [ebp-4]指向add()函数的两个局部变量x,y</p>
-<h2 id="add运算"><a href="#add运算" class="headerlink" title="add运算"></a>add运算</h2><blockquote>
-<p>return (x+y);</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov eax,dword ptr ss:[ebp-8]                 ;[ebp-8]=local x</span><br><span class="line">add eax,dword ptr ss:[ebp-4]                 ;[ebp-4]=local y</span><br></pre></td></tr></table></figure>
-
-<p>add为加法指令，变量y([ebp-4])与eax原值（x）相加的结果储存在eax中。</p>
-<h2 id="删除add（）的栈帧-amp-函数执行完毕（返回）"><a href="#删除add（）的栈帧-amp-函数执行完毕（返回）" class="headerlink" title="删除add（）的栈帧&amp;函数执行完毕（返回）"></a>删除add（）的栈帧&amp;函数执行完毕（返回）</h2><blockquote>
-<p>return (x+y);</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp</span><br><span class="line">pop ebp</span><br><span class="line">retn</span><br></pre></td></tr></table></figure>
-
-<p>执加法运算，返回add()函数，在此之前要删除add()的栈帧。把ebp的值赋给esp。<br>即执行之前用mov ebp,esp命令把函数add()开始执行时的esp的值放入ebp，执行完毕后用mov esp,ebp命令再把储存在ebp的值恢复到esp<br>pop ebp与push ebp相对应，执行后ebp恢复为main函数的ebp的值，add（）函数则被删除</p>
-<h2 id="从栈中删除add-函数的参数（整理栈）"><a href="#从栈中删除add-函数的参数（整理栈）" class="headerlink" title="从栈中删除add()函数的参数（整理栈）"></a>从栈中删除add()函数的参数（整理栈）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">add esp,8</span><br></pre></td></tr></table></figure>
-
-<p>a,b为长整形，各占4个字节，共8个字节，esp+8则将a,b清除掉</p>
-<h2 id="调用printf（）函数"><a href="#调用printf（）函数" class="headerlink" title="调用printf（）函数"></a>调用printf（）函数</h2><blockquote>
-<p>printf(“%d\n”,(a,b));</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">push eax                         ;函数add（）的返回值</span><br><span class="line">push  ********                   ；&quot;%d\n&quot;</span><br><span class="line">call   ********                  ;printf()</span><br><span class="line">add esp,8</span><br></pre></td></tr></table></figure>
-
-<p>esp加上8个字节，将函数的参数从栈中删除</p>
-<h2 id="设置返回值"><a href="#设置返回值" class="headerlink" title="设置返回值"></a>设置返回值</h2><blockquote>
-<p>return 0;</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp</span><br><span class="line">pop ebp</span><br><span class="line">retn</span><br></pre></td></tr></table></figure>
-
-<p>main()函数中的栈帧被清除，局部变量a,b不再有效，retn后，主函数执行完毕并返回，之后进行进程终止代码。</p>
+<p><img src="/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png" alt></p>
+<h1 id="被动信息收集"><a href="#被动信息收集" class="headerlink" title="被动信息收集"></a>被动信息收集</h1><ul>
+<li>ip地址</li>
+<li>域名信息（相关的域名和子域名）</li>
+<li>邮件地址</li>
+<li>文档图片数据</li>
+<li>公司地址</li>
+<li>公司组织构架</li>
+<li>人员姓名，职位，联系电话</li>
+<li>目标系统使用的技术构架</li>
+<li>备案信息</li>
+</ul>
+<h2 id="whois查询"><a href="#whois查询" class="headerlink" title="whois查询"></a>whois查询</h2><p>查找目标域名的详细信息</p>
+<ul>
+<li>域名的注册信息</li>
+<li>DNS服务器信息</li>
+<li>注册人邮箱电话</li>
+<li>联系信息</li>
+<li>域名的注册商</li>
+<li>注册地址</li>
+</ul>
+<p>命令查询：whois url<br>在线搜集：<br><a href="https://whois.aliyun.com/" target="_blank" rel="noopener">https://whois.aliyun.com/</a><br><a href="http://whois.chinaz.com/" target="_blank" rel="noopener">http://whois.chinaz.com/</a><br><a href="https://who.is/" target="_blank" rel="noopener">https://who.is/</a><br><a href="https://whois.aizhan.com/" target="_blank" rel="noopener">https://whois.aizhan.com/</a><br><a href="https://www.internic.net/whois.html" target="_blank" rel="noopener">https://www.internic.net/whois.html</a></p>
+<h2 id="备案信息查询"><a href="#备案信息查询" class="headerlink" title="备案信息查询"></a>备案信息查询</h2><p>天眼查：<a href="https://www.tianyancha.com" target="_blank" rel="noopener">https://www.tianyancha.com</a><br>企查查：<a href="https://www.qichacha.com/" target="_blank" rel="noopener">https://www.qichacha.com/</a><br>备案查询：<a href="http://www.beian.gov.cn/portal/recordQuery" target="_blank" rel="noopener">http://www.beian.gov.cn/portal/recordQuery</a><br><a href="http://www.beianbeian.com/" target="_blank" rel="noopener">http://www.beianbeian.com/</a></p>
+<h2 id="子域名查询"><a href="#子域名查询" class="headerlink" title="子域名查询"></a>子域名查询</h2><p>子域名挖掘机Layer<br>subDomainsBrute：<a href="https://github.com/lijiejie/subDomainsBrute" target="_blank" rel="noopener">https://github.com/lijiejie/subDomainsBrute</a><br>在线查询工具：<br><a href="http://tool.chinaz.com/subdomain/" target="_blank" rel="noopener">http://tool.chinaz.com/subdomain/</a><br><a href="https://www.virustotal.com/" target="_blank" rel="noopener">https://www.virustotal.com/</a><br><a href="https://x.threatbook.cn/" target="_blank" rel="noopener">https://x.threatbook.cn/</a><br><a href="https://phpinfo.me/domain/" target="_blank" rel="noopener">https://phpinfo.me/domain/</a></p>
+<h2 id="网站目录查询"><a href="#网站目录查询" class="headerlink" title="网站目录查询"></a>网站目录查询</h2><p>DirBuster</p>
+<h2 id="CMS指纹识别"><a href="#CMS指纹识别" class="headerlink" title="CMS指纹识别"></a>CMS指纹识别</h2><p>查询命令：whatweb url<br>在线工具：<br><a href="http://whatweb.bugscaner.com/look/" target="_blank" rel="noopener">http://whatweb.bugscaner.com/look/</a><br><a href="http://whatweb.bugscaner.com/batch.html" target="_blank" rel="noopener">http://whatweb.bugscaner.com/batch.html</a><br><a href="http://whatweb.bugscaner.com/batch.html" target="_blank" rel="noopener">http://whatweb.bugscaner.com/batch.html</a></p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>直接ping<br>17ce:<a href="https://www.17ce.com/" target="_blank" rel="noopener">https://www.17ce.com/</a> 返回规律多无规律，很大程度上用了CDN，若多个区域返回ip只有一个，就是真实ip</p>
+<p>绕过CDN查找真实ip</p>
+<ul>
+<li>内部邮箱系统(不是第三方的公共邮件服务器)</li>
+<li>扫描网站测试文件，如phpinfo，查看真实ip</li>
+<li>通过分站域名查询，一般分站流量小，不会是使用CDN</li>
+<li>用国外IP去ping <a href="https://asm.ca.com/en/ping.php" target="_blank" rel="noopener">https://asm.ca.com/en/ping.php</a></li>
+<li>查看域名解析记录 <a href="https://www.netcraft.com/" target="_blank" rel="noopener">https://www.netcraft.com/</a></li>
+<li>Burp抓app数据包，查找真实ip</li>
+</ul>
+<h2 id="nslookup"><a href="#nslookup" class="headerlink" title="nslookup"></a>nslookup</h2><p>nslookup是搜集目标地址各种解析记录的工具。<br><strong>基本的记录：</strong></p>
+<ul>
+<li>a记录：将域名解析为IPV4地址</li>
+<li>cname记录：将域名指向另一个域名，也叫别名记录</li>
+<li>mx记录：邮件服务器地址记录</li>
+<li>ns记录：域名解析服务器，用来指定域名是用哪个dns服务器来进行解析的</li>
+<li>txt/spf记录：用来做反垃圾邮件</li>
+<li>aaaa记录：将域名解析为IPV6地址</li>
+<li>ptr记录：a记录逆向，也是ip反查记录</li>
+</ul>
+<p><strong>命令参数:</strong><br>server:更改解析DNS的地址<br>set:设置参数的属性<br>type:指定要解析的记录类型<br>比如：set type=mx</p>
+<p><strong>在线查询：</strong><a href="http://tool.chinaz.com/nslookup/" target="_blank" rel="noopener">http://tool.chinaz.com/nslookup/</a></p>
+<h2 id="dig"><a href="#dig" class="headerlink" title="dig"></a>dig</h2><p>dig也是用来查询各种dns解析记录</p>
+<ul>
+<li>dig thriumph.top 解析记录（所有any）如果改变DNS地址加上@x.x.x.x</li>
+<li>dig +noall thriumph.top ns<br>noall +answer thriumph.top ns</li>
+</ul>
+<h1 id="主动信息收集"><a href="#主动信息收集" class="headerlink" title="主动信息收集"></a>主动信息收集</h1><ul>
+<li>主机发现</li>
+<li>端口扫描</li>
+<li>Banner信息获取</li>
+<li>端口服务识别</li>
+<li>系统识别</li>
+<li>服务漏洞检测</li>
+<li>Waf识别</li>
+<li>防火墙检测</li>
+<li>lds检测</li>
+</ul>
 
       
       
@@ -290,7 +295,7 @@
           
           <br>
           <strong>本文链接：</strong>
-          http://yoursite.com/栈帧.html
+          http://yoursite.com/信息收集.html
           <br>
           <strong>版权声明：</strong>
           本作品采用
@@ -315,7 +320,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">渗透测试</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">信息收集</a>
         		</li>
       		
 		</ul>
@@ -371,7 +380,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top/栈帧.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top/信息收集.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -385,18 +394,9 @@
   
 <nav id="article-nav">
   
-    <a href="/pwn环境配置.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          pwn 环境配置
-        
-      </div>
-    </a>
   
-  
-    <a href="/关于二进制.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">关于二进制</div>
+    <a href="/玩转RSA.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">玩转RSA</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -423,7 +423,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#栈帧结构"><span class="toc-number">1.</span> <span class="toc-text">栈帧结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#示例"><span class="toc-number">2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#执行main-函数-amp-生成栈帧"><span class="toc-number">3.</span> <span class="toc-text">执行main()函数&amp;生成栈帧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设置局部变量"><span class="toc-number">4.</span> <span class="toc-text">设置局部变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#add-函数参数传递与调用"><span class="toc-number">4.1.</span> <span class="toc-text">add()函数参数传递与调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始执行add-函数-amp-生成栈帧"><span class="toc-number">4.2.</span> <span class="toc-text">开始执行add()函数&amp;生成栈帧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置add-函数的局部变量（x-y）"><span class="toc-number">4.3.</span> <span class="toc-text">设置add()函数的局部变量（x,y）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add运算"><span class="toc-number">4.4.</span> <span class="toc-text">add运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除add（）的栈帧-amp-函数执行完毕（返回）"><span class="toc-number">4.5.</span> <span class="toc-text">删除add（）的栈帧&amp;函数执行完毕（返回）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从栈中删除add-函数的参数（整理栈）"><span class="toc-number">4.6.</span> <span class="toc-text">从栈中删除add()函数的参数（整理栈）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用printf（）函数"><span class="toc-number">4.7.</span> <span class="toc-text">调用printf（）函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置返回值"><span class="toc-number">4.8.</span> <span class="toc-text">设置返回值</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#被动信息收集"><span class="toc-number">1.</span> <span class="toc-text">被动信息收集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#whois查询"><span class="toc-number">1.1.</span> <span class="toc-text">whois查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#备案信息查询"><span class="toc-number">1.2.</span> <span class="toc-text">备案信息查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#子域名查询"><span class="toc-number">1.3.</span> <span class="toc-text">子域名查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网站目录查询"><span class="toc-number">1.4.</span> <span class="toc-text">网站目录查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMS指纹识别"><span class="toc-number">1.5.</span> <span class="toc-text">CMS指纹识别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CDN"><span class="toc-number">1.6.</span> <span class="toc-text">CDN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nslookup"><span class="toc-number">1.7.</span> <span class="toc-text">nslookup</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dig"><span class="toc-number">1.8.</span> <span class="toc-text">dig</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#主动信息收集"><span class="toc-number">2.</span> <span class="toc-text">主动信息收集</span></a></li></ol>
                     </div>
                 </span>
             </div>
