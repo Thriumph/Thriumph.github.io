@@ -8,20 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>玩转RSA | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成。">
+  <meta name="description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成S">
 <meta name="keywords" content="加密算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="玩转RSA">
 <meta property="og:url" content="http://yoursite.com/玩转RSA.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成。">
+<meta property="og:description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成S">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/%E7%8E%A9%E8%BD%ACRSA/1.png">
 <meta property="og:image" content="http://yoursite.com/%E7%8E%A9%E8%BD%ACRSA/2.png">
-<meta property="og:updated_time" content="2019-08-31T14:45:40.334Z">
+<meta property="og:updated_time" content="2019-09-16T01:46:06.714Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="玩转RSA">
-<meta name="twitter:description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成。">
+<meta name="twitter:description" content="RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成S">
 <meta name="twitter:image" content="http://yoursite.com/%E7%8E%A9%E8%BD%ACRSA/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
@@ -195,7 +195,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成。</p>
+        <p>RSA是一种既能用于数据加密也能用于数字签名的算法,是一种非对称加密算法，由公钥（n/e），私钥(n/d)，明文m和密文c组成S</p>
 <a id="more"></a>
 <h1 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h1><p>①选两个素数p和q(为了安全性，两数的长度一样)<br>②计算<code>n=pq</code>(n是模)<br>③计算欧拉函数(Euler):<code>f(n)=(p-1)(q-1)</code> ——&gt; e与f(n)互质 1&lt;e&lt;f(n)——–&gt;定义是公约数只有1的两个自然数<br>④选取密钥e，密钥常用值为<code>3，17，65537（2¹⁶+1）</code><br>④求出e模ϕ(n)的逆元d：<code>de≡1 mod f(n)</code>  <code>d ≡e－¹ mod f(n)</code><br>⑤加密m:<code>c≡m^e mod n</code><br>⑥解密c:<code>m≡c^d mod n</code><br><code>mod就是取余，比如 5 mod 4 = 1, 9 mod 4 = 1,即 5 ≡ 9（mod 4）</code><br><code>1 mod 任何数都是1</code></p>
 <p>rsa是一种非对称加密，明文使用公钥进行加密得到密文，密文使用私钥进行解密得到明文。</p>
@@ -547,11 +547,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
+                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
               </li>
              
               <li class="article-tag-list-item">
