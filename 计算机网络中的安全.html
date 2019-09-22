@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="《计算机网络自顶向下方法》第八章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8/20190823125325217.png">
+<meta property="og:image" content="http://yoursite.com/计算机网络中的安全/20190823125325217.png">
 <meta property="og:updated_time" content="2019-08-22T16:56:38.934Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="计算机网络中的安全">
 <meta name="twitter:description" content="《计算机网络自顶向下方法》第八章读书笔记">
-<meta name="twitter:image" content="http://yoursite.com/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8/20190823125325217.png">
+<meta name="twitter:image" content="http://yoursite.com/计算机网络中的安全/20190823125325217.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -70,7 +70,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -211,7 +211,7 @@
 <p><code>3.选择明文攻击。</code>在选择明文攻击中，入侵者能够选择某一明文报文并得到该明文报文对应的密文形式。</p>
 <p><code>4.多码代替密码</code>是对单码代替密码的改进。多码代替密码的基本思想是使用多个单码代替密码，一个单码代替密码用于加密某明文中一个特定位置的字母。因此，在某明文报文中不同位置出现的相同字母可能以不同方式编码。</p>
 <h3 id="块密码"><a href="#块密码" class="headerlink" title="块密码"></a>块密码</h3><p>块密码中，要加密的报文被处理为k比特的块。为了加密一个块，该密码采用了一对一映射，将k比特块的明文映射为k比特块的密文。块密码通常使用函数模拟随机排列表。例如当k = 64时，该函数首先将64比特块划分为8个块，每个块由8比特组成。每个8比特块由一个“8比特到8比特”表处理，这是个可管理的长度。接下来，这8个输出块被重新装配成一个64比特的块。该输出被回馈到64比特的输入，开始了第二次循环。经n此这样的循环后，该函数提供了一个64比特的密文块。</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E4%B8%AD%E7%9A%84%E5%AE%89%E5%85%A8/20190823125325217.png" alt></p>
+<p><img src="/计算机网络中的安全/20190823125325217.png" alt></p>
 <h3 id="密码块链接"><a href="#密码块链接" class="headerlink" title="密码块链接"></a>密码块链接</h3><p>​ 如果使用上述的块密码，会出现一个微妙而重要的问题，即相同铭文块对应的密文块可能是相同的。为了解决这个问题，可以在密文中混合某些随机性，使得相同的明文块产生不同的密文块。令m(i)表示第i个明文块，c(i)表示第i个密文块，并且a⊕b表示两个比特串a和b的异或。将具有密钥S的块密码加密算法表示为KS。其基本思想如下：发送方为第i块生成一个随机的k比特数r(i)，并且计算c(i) = KS(m(i)⊕r(i))。接收方收到c(i)和r(i)，它能够通过计算m(i) = KS(c(i)⊕r(i))而恢复每个明文块。</p>
 <ul>
 <li>引入随机性产生了另一个问题：发送方必须传输一千两倍的比特。为了有效利用该技术，块密码通常使用了一种称为<code>密码块链接（Cipher Block Chaining, CBC）</code>的技术。其基本思想是仅随第一个报文发送一个随机值，然后让发送方和接收方使用计算的编码块代替后继的随机数。集体而言，CBC运行过程如下：</li>
@@ -694,6 +694,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

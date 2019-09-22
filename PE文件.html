@@ -16,16 +16,16 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="总结一下pe文件">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/1.png">
-<meta property="og:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/2.png">
-<meta property="og:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/3.png">
-<meta property="og:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/4.png">
-<meta property="og:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/5.png">
+<meta property="og:image" content="http://yoursite.com/PE文件/1.png">
+<meta property="og:image" content="http://yoursite.com/PE文件/2.png">
+<meta property="og:image" content="http://yoursite.com/PE文件/3.png">
+<meta property="og:image" content="http://yoursite.com/PE文件/4.png">
+<meta property="og:image" content="http://yoursite.com/PE文件/5.png">
 <meta property="og:updated_time" content="2019-08-22T13:59:43.987Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PE文件">
 <meta name="twitter:description" content="总结一下pe文件">
-<meta name="twitter:image" content="http://yoursite.com/PE%E6%96%87%E4%BB%B6/1.png">
+<meta name="twitter:image" content="http://yoursite.com/PE文件/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -74,7 +74,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -221,14 +221,14 @@
 <p><strong>节区头</strong></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IMAGE_SIZEOF_SHORT_NAME 8</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_SECTION_HEADER</span>&#123;</span> </span><br><span class="line">    BYTE Name[IMAGE_SIZEOF_SHORT_NAME]; <span class="comment">// 8个字节的节区名称  </span></span><br><span class="line">    <span class="keyword">union</span> &#123;  </span><br><span class="line">        DWORD PhysicalAddress;         </span><br><span class="line">        DWORD VirtualSize;            <span class="comment">//内存中节区的大小</span></span><br><span class="line">    &#125; Misc; </span><br><span class="line">    DWORD VirtualAddress;         <span class="comment">// 内存中节区的起始地址（RVA）  </span></span><br><span class="line">    DWORD SizeOfRawData;            <span class="comment">// 磁盘中文件中节区所占大小</span></span><br><span class="line">    DWORD PointerToRawData;        <span class="comment">// 磁盘中文件的起始位置  </span></span><br><span class="line">    DWORD PointerToRelocations;     <span class="comment">// 在OBJ文件中使用，重定位的偏移  </span></span><br><span class="line">    DWORD PointerToLinenumbers;   <span class="comment">// 行号表的偏移（供调试使用地）  </span></span><br><span class="line">    WORD NumberOfRelocations;      <span class="comment">// 在OBJ文件中使用，重定位项数目  </span></span><br><span class="line">    WORD NumberOfLinenumbers;    <span class="comment">// 行号表中行号的数目  </span></span><br><span class="line">    DWORD Characteristics;       <span class="comment">// 节属性如可读，可写，可执行等  </span></span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER;</span><br></pre></td></tr></table></figure>
 
-<p>节区头定义了各个节区的属性。将代码、数据资源分为不同的节区存放的好处是保证程序的安全性。节区头是由结构体数组组成的。每个数组元素对应一个节区。每个数组元素都是一个结构体，每个结构体内成员个数是一样的。<br>第一个成员是name，标识着节区名字，默认为八个字节，可以变更。<br>第二个成员是一个联合体，物理地址PhysicalAddress和虚拟空间大小VirtualSize，四个字节（两个成员存储任意一个，这里一般存储后一个），VitualSize标识着该节区在内存中的大小。<br>第三个成员位虚拟地址，VirtualAddress，占用四个字节；<br>第四个成员SizeOfRawData，标识着该节区在磁盘中的大小，四个字节。<br>第五个成员PointerToRawData，四个字节。<br>第三、五个成员的值一般与可选头中SectionAlignment和FileAlignment成员的值的整数倍。<br><img src="/PE%E6%96%87%E4%BB%B6/1.png" alt></p>
+<p>节区头定义了各个节区的属性。将代码、数据资源分为不同的节区存放的好处是保证程序的安全性。节区头是由结构体数组组成的。每个数组元素对应一个节区。每个数组元素都是一个结构体，每个结构体内成员个数是一样的。<br>第一个成员是name，标识着节区名字，默认为八个字节，可以变更。<br>第二个成员是一个联合体，物理地址PhysicalAddress和虚拟空间大小VirtualSize，四个字节（两个成员存储任意一个，这里一般存储后一个），VitualSize标识着该节区在内存中的大小。<br>第三个成员位虚拟地址，VirtualAddress，占用四个字节；<br>第四个成员SizeOfRawData，标识着该节区在磁盘中的大小，四个字节。<br>第五个成员PointerToRawData，四个字节。<br>第三、五个成员的值一般与可选头中SectionAlignment和FileAlignment成员的值的整数倍。<br><img src="/PE文件/1.png" alt></p>
 <h1 id="VA，RVA，RAW"><a href="#VA，RVA，RAW" class="headerlink" title="VA，RVA，RAW"></a>VA，RVA，RAW</h1><p> <strong>RVA:</strong> <a href="https://www.baidu.com/s?wd=%E7%9B%B8%E5%AF%B9%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">相对虚拟地址</a>:是指相对于基地址的偏移量。也就是PE结构被映射到内存中后，某个位置所在内存相对于基地址的偏移。即：相对虚拟地址(RVA)=虚拟地址（VA）-基址（imageBase）。</p>
 <p><strong>基地址（imageBase）：</strong>　文件执行时将被映像到指定内存地址中，这个初始内存地址称为基址。</p>
 <p><strong>VA（虚拟地址）：</strong>由于windows运行在保护模式下，所以程序访问存储器所使用的逻辑地址就是<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>，简称VA，又称为内存<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>。也就是程序被加载到内存中的地址。</p>
 <p><strong>RAW:</strong>文件偏移</p>
-<h2 id="VA-virtual-Address"><a href="#VA-virtual-Address" class="headerlink" title="VA (virtual Address)"></a>VA (virtual Address)</h2><p>在od中打开一个PE文件，这些都是VA<br><img src="/PE%E6%96%87%E4%BB%B6/2.png" alt></p>
-<h2 id="RVA"><a href="#RVA" class="headerlink" title="RVA"></a>RVA</h2><p><img src="/PE%E6%96%87%E4%BB%B6/3.png" alt><br>假设虚拟地址VA为00401518，要想知道相对偏移RVA，就要知道00401528属于那个节区，点M查看，是.text 也就是代码区，从00401000开始的，即RVA=00401518-00401000=518<br><img src="/PE%E6%96%87%E4%BB%B6/4.png" alt></p>
-<h2 id="VA-to-RAW"><a href="#VA-to-RAW" class="headerlink" title="VA to RAW"></a>VA to RAW</h2><p>想要知道在文件中的偏移，首先要通过VA计算出RVA（如上所示），在通过RAV计算RAW，这时就需要查看区段表了<br><img src="/PE%E6%96%87%E4%BB%B6/5.png" alt><br>VOffset是内存中的偏移<br>VSize是内存中的大小<br>ROffset是文件中的偏移<br>RSize是文件中的大小<br>则RAW=400+518=918</p>
+<h2 id="VA-virtual-Address"><a href="#VA-virtual-Address" class="headerlink" title="VA (virtual Address)"></a>VA (virtual Address)</h2><p>在od中打开一个PE文件，这些都是VA<br><img src="/PE文件/2.png" alt></p>
+<h2 id="RVA"><a href="#RVA" class="headerlink" title="RVA"></a>RVA</h2><p><img src="/PE文件/3.png" alt><br>假设虚拟地址VA为00401518，要想知道相对偏移RVA，就要知道00401528属于那个节区，点M查看，是.text 也就是代码区，从00401000开始的，即RVA=00401518-00401000=518<br><img src="/PE文件/4.png" alt></p>
+<h2 id="VA-to-RAW"><a href="#VA-to-RAW" class="headerlink" title="VA to RAW"></a>VA to RAW</h2><p>想要知道在文件中的偏移，首先要通过VA计算出RVA（如上所示），在通过RAV计算RAW，这时就需要查看区段表了<br><img src="/PE文件/5.png" alt><br>VOffset是内存中的偏移<br>VSize是内存中的大小<br>ROffset是文件中的偏移<br>RSize是文件中的大小<br>则RAW=400+518=918</p>
 <h1 id="IAT导入地址表-EAT机制"><a href="#IAT导入地址表-EAT机制" class="headerlink" title="IAT导入地址表/EAT机制"></a>IAT导入地址表/EAT机制</h1><h2 id="DLL"><a href="#DLL" class="headerlink" title="DLL"></a>DLL</h2><p>DLL是动态链接库，是win特有的系统，16位的DOS时代不存在DLL概念，只有”库”，当需要使用库函数时，编译器会将库函数一起插入到应用程序中。当运行多个程序时，会造成资源浪费，于是引入了动态链接库，内存映射技术使得加载后的DLL代码、资源在多个进程中实现共享。</p>
 <p><strong>加载DLL的两种方法</strong><br>1.<strong>显示链接：</strong>程序使用DLL的时候加载，使用完毕释放内存。<br>2.<strong>隐式链接：</strong>程序开始时即一同加载DLL，程序终止时在释放内存。</p>
 <h2 id="IMAGE-IMPORT-DESCRIPTOR"><a href="#IMAGE-IMPORT-DESCRIPTOR" class="headerlink" title="IMAGE_IMPORT_DESCRIPTOR"></a>IMAGE_IMPORT_DESCRIPTOR</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_DESCRIPTOR</span> &#123;</span></span><br><span class="line">	<span class="keyword">union</span> &#123;</span><br><span class="line">		DWORD Characteristics;</span><br><span class="line">		DWORD OriginalFirstThunk;			<span class="comment">//INT(Import Name Table) address (RVA)</span></span><br><span class="line">	&#125;;</span><br><span class="line">	DWORD TimeDateStamp;</span><br><span class="line">	DWORD ForwarderChain;</span><br><span class="line">	DWORD Name;								<span class="comment">//library name string address (RVA)</span></span><br><span class="line">	DWORD FirstThunk;						<span class="comment">//IAT(Import Address Table) address (RVA)</span></span><br><span class="line">&#125; IMAGE_IMPORT_DESCRIPTOR;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_IMPORT_BY_NAME</span> &#123;</span></span><br><span class="line">	WORD Hint;								<span class="comment">//ordinal</span></span><br><span class="line">	BYTE Name[<span class="number">1</span>];							<span class="comment">//function name string</span></span><br><span class="line">&#125; IMAGE_IMPORT_BY_NAME, *PIMAGE_IMPORT_BY_NAME;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
@@ -572,6 +572,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

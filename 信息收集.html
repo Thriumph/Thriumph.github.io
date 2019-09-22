@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="知己知彼，百战不殆">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png">
-<meta property="og:image" content="http://yoursite.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/2.png">
+<meta property="og:image" content="http://yoursite.com/信息收集/1.png">
+<meta property="og:image" content="http://yoursite.com/信息收集/2.png">
 <meta property="og:updated_time" content="2019-09-16T17:39:51.468Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="信息收集">
 <meta name="twitter:description" content="知己知彼，百战不殆">
-<meta name="twitter:image" content="http://yoursite.com/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png">
+<meta name="twitter:image" content="http://yoursite.com/信息收集/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -71,7 +71,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -198,7 +198,7 @@
         <p>知己知彼，百战不殆</p>
 <a id="more"></a>
 
-<p><img src="/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/1.png" alt> </p>
+<p><img src="/信息收集/1.png" alt> </p>
 <h1 id="被动信息收集"><a href="#被动信息收集" class="headerlink" title="被动信息收集"></a>被动信息收集</h1><ul>
 <li>ip地址</li>
 <li>域名信息（相关的域名和子域名）</li>
@@ -273,7 +273,7 @@
 <p>chmod u+x arping.sh<br>./arping.sh eth0</p>
 <h2 id="二层发现nmap"><a href="#二层发现nmap" class="headerlink" title="二层发现nmap"></a>二层发现nmap</h2><p>-sn：只做主机发现，不做端口扫描<br>-iL：扫描指定的文件</p>
 <h2 id="二层发现netdiscover"><a href="#二层发现netdiscover" class="headerlink" title="二层发现netdiscover"></a>二层发现netdiscover</h2><p>netdiscover -i eth0 -r 192.168.1.0/24<br>netdiscover -p 进入被动模式</p>
-<h2 id="二层发现scapy"><a href="#二层发现scapy" class="headerlink" title="二层发现scapy"></a>二层发现scapy</h2><p>scapy是基于python的库文件，可以抓包，分析包，创建修改<br>例如构建一个arp类型数据包<br>arp=ARP()<br>arp.display() 显示<br>sr1(arp) 发送<br><img src="/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/2.png" alt></p>
+<h2 id="二层发现scapy"><a href="#二层发现scapy" class="headerlink" title="二层发现scapy"></a>二层发现scapy</h2><p>scapy是基于python的库文件，可以抓包，分析包，创建修改<br>例如构建一个arp类型数据包<br>arp=ARP()<br>arp.display() 显示<br>sr1(arp) 发送<br><img src="/信息收集/2.png" alt></p>
 <h2 id="三层发现ping"><a href="#三层发现ping" class="headerlink" title="三层发现ping"></a>三层发现ping</h2><p>使用ping命令时，可以用traceroute进行跟踪<br>linux：traceroute baidu.com<br>windows: tracert baidu.com</p>
 <h2 id="三层发现nmap"><a href="#三层发现nmap" class="headerlink" title="三层发现nmap"></a>三层发现nmap</h2><p>-sn：只做主机发现，不做端口扫描<br>-iL：扫描指定的文件</p>
 <h2 id="三层发现fping"><a href="#三层发现fping" class="headerlink" title="三层发现fping"></a>三层发现fping</h2><p>fping支持网段扫描<br>fping 1.1.1.0/24 -c 3<br>fping -g 1.1.1.0/24 -c 3 (group)<br>-f 跟已有的结果文件</p>
@@ -633,6 +633,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

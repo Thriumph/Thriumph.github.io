@@ -16,22 +16,22 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="《计算机网络自顶向下方法》第六章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/1.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/2.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/3.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/4.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/5.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/6.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/7.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/8.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/9.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/10.png">
-<meta property="og:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/11.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/1.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/2.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/3.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/4.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/5.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/6.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/7.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/8.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/9.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/10.png">
+<meta property="og:image" content="http://yoursite.com/链路层和局域网/11.png">
 <meta property="og:updated_time" content="2019-08-22T16:17:29.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="链路层和局域网">
 <meta name="twitter:description" content="《计算机网络自顶向下方法》第六章读书笔记">
-<meta name="twitter:image" content="http://yoursite.com/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/1.png">
+<meta name="twitter:image" content="http://yoursite.com/链路层和局域网/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -80,7 +80,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -218,7 +218,7 @@
 <p><code>可靠交付:</code>当链路层协议提供可靠交付服务时，它保证无差错地经链路层移动每个网络层数据报。</p>
 <p><code>差错检测和纠正:</code>当帧中的一个比特作为1传输时，接收方节点中的链路层硬件可能不正确地将其判断为0，反之亦然。这种比特差错是由信号衰减和电磁噪声导致的。因为没有必要转发一个有差错的数据报，所以许多链路层协议提供一种机制来检测这样的比特差错。通过让发送节点在帧中包含差错检测比特，让接收节点进行差错检查，以此来完成这项工作。</p>
 <h2 id="链路层在何处实现"><a href="#链路层在何处实现" class="headerlink" title="链路层在何处实现"></a>链路层在何处实现</h2><p>链路层的主体部分是在 <strong>网络适配器</strong> 中实现的，网络适配器有时也称为 <strong>网络接口卡</strong> ，位于适配器核心的是链路层控制器，这个控制器是实现许多链路层服务的专用芯片。链路层控制器的许多功能使用硬件是实现的。</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/1.png" alt></p>
+<p><img src="/链路层和局域网/1.png" alt></p>
 <h1 id="差错检测和纠正技术"><a href="#差错检测和纠正技术" class="headerlink" title="差错检测和纠正技术"></a>差错检测和纠正技术</h1><p>在发送节点，为了保护比特免受差错，使用 <strong>差错检测和纠正比特（Error-Detection and-Correction, EDC）</strong> 来增强数据D。通常，要保护的数据不仅包括从网络层传递下来需要通过链路传输的数据报，而且包括链路帧首部中的链路的寻址信息、序号和其他字段。链路级中的D和EDC都被发送到接收节点</p>
 <h2 id="奇偶校验"><a href="#奇偶校验" class="headerlink" title="奇偶校验"></a>奇偶校验</h2><p><code>奇偶校验</code>使用单个奇偶校验位。假设要发送的信息D有d比特。在偶校验方案中，发送方只需包含一个附加的比特，选择它的值，使得这d + 1比特中1的总数是偶数。对于奇校验方案，选择校验比特值使得有奇数个1。接收方只需要数一数接收的d + 1比特中1的数目即可。如果在采用偶校验方案中发现了奇数个值为1的比特，接收方知道出现了奇数个比特差错。</p>
 <p><code>二维奇偶校验</code>方案中，D中的d个比特被划分为i行j列。对每行和每列计算奇偶值。产生的i + j + 1奇偶比特构成了链路层帧的差错检测比特。包含比特值改变的列和行的校验值都将会出现差错。因此接收方不仅可以检测到出现了单个比特差错的事实，而且还可以利用存在就校验差错的列和行的索引来实际识别发生差错的比特并纠正它。</p>
@@ -226,7 +226,7 @@
 <h2 id="循环冗余检测"><a href="#循环冗余检测" class="headerlink" title="循环冗余检测"></a>循环冗余检测</h2><p>现今的计算机网络中广泛应用的差错检测技术基于<code>循环冗余检测（Cyclic Redundancy Check, CRC）</code>。CRC编码也称为多项式编码，因为该编码能够将要发送的比特串看作为系数是0和1一个多项式，对比特串的操作被解释为多项式算术。</p>
 <p>​假设发送节点要发送一个d比特的数据D给接收节点。发送方和接收方首先必须协商一个r + 1比特模式，称为生成多项式，将其表示为G。要求G的最高有效比特是1。对于一个给定的数据段D，发送方要选择r个附加比特R，并将它们附加到D上，使得得到的d + r比特模式用模2算术恰好能被G整除。接收方用G去除接收到的d + r比特。如果余数非0，接收方知道出现了差错；否则认为数据正确而被接收。</p>
 <p>​<code>求附加比特R的公式:</code></p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/2.png" alt></p>
+<p><img src="/链路层和局域网/2.png" alt></p>
 <p>其中remainder表示求余数。</p>
 <p>国际标准定义的32比特生成多项式为</p>
 <p>GCRC-32 = 100000100110000010001110110110111</p>
@@ -280,12 +280,12 @@
 </ul>
 <h4 id="CSMA-CD效率"><a href="#CSMA-CD效率" class="headerlink" title="CSMA/CD效率"></a>CSMA/CD效率</h4><p>CSMA/CD使用 <strong>二进制指数后退算法</strong> ，使得当碰撞节点数量较少时，节点等待的时间间隔较短；当碰撞节点数量较大时，时间间隔较长。当传输一个给定帧时，在该帧经历了一连串n此碰撞后，节点随机地从{0, 1, 2, …, 2n – 1}中选择一个K值。因此，一个帧经历的碰撞越多，K选择的间隔越大。对于以太网，一个节点等待实际时间量是K ∙ 512比特时间（即发送512比特进入以太网所需的时间量的K倍，n能够取的最大值为10。</p>
 <p>CSMA/CD效率定义：当有大量的活跃节点，且每个节点有大量帧要发送时，帧在信道中无碰撞地传输的那部分时间在长期运行时间中所占的份额。令dprop表示信号能量在任意两个适配器之间传播所需的最大时间。令dtrans表示传输一个最大长度的以太网帧的时间。则CSMA/CD的效率为</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/3.png" alt></p>
+<p><img src="/链路层和局域网/3.png" alt></p>
 <h2 id="轮流协议"><a href="#轮流协议" class="headerlink" title="轮流协议"></a>轮流协议</h2><p><code>轮流协议主要有两种：轮询协议和令牌传递协议。</code></p>
 <h3 id="轮询协议"><a href="#轮询协议" class="headerlink" title="轮询协议"></a>轮询协议</h3><p>轮询协议要求节点之一要被指定为主节点。主节点以循环的方式轮询每个节点。轮询协议消除了困扰随机接入协议的碰撞和空时隙，这使得轮询取得高得多的效率。但是它也有一些缺点。第一，该协议引入了轮询时延，即通知一个节点“它可以传输”所需的时间。第二，如果主节点有故障，整个信道都变得不可操作。</p>
 <h3 id="令牌传递协议"><a href="#令牌传递协议" class="headerlink" title="令牌传递协议"></a>令牌传递协议</h3><p>令牌传递协议中没有主节点。一个成为令牌的小的特殊帧在节点之间以某种固定的次序进行交换。当一个节点收到令牌时，仅当它有一些帧要发送时，它才持有这个令牌，并发送最大数目的帧数，然后把令牌转发给下一个节点；否则它立即向下一个节点转发该令牌。令牌传递是分散的，并有很高的效率。但是一个节点的故障可能会使整个信道崩溃。或者如果一个节点偶然忘记了释放令牌，则必须调用某些恢复步骤使令牌返回到循环中来。</p>
 <h2 id="DOCSIS：用于电缆因特网接入的链路层协议"><a href="#DOCSIS：用于电缆因特网接入的链路层协议" class="headerlink" title="DOCSIS：用于电缆因特网接入的链路层协议"></a>DOCSIS：用于电缆因特网接入的链路层协议</h2><p>一个电缆接入网通常在电缆网头端将几千个住宅电缆调制解调器与一个电缆调制解调器端接系统（Cable Modem Termination System, CMTS）连接。数据经电缆服务接口（Data-Over-Cable Service Interface, DOCSI）规范（DOCSIS）定义了电缆数据网络体系结构及其协议。</p>
-<h1 id="交换局域网"><a href="#交换局域网" class="headerlink" title="交换局域网"></a>交换局域网</h1><p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/4.png" alt></p>
+<h1 id="交换局域网"><a href="#交换局域网" class="headerlink" title="交换局域网"></a>交换局域网</h1><p><img src="/链路层和局域网/4.png" alt></p>
 <h2 id="链路层寻址和ARP"><a href="#链路层寻址和ARP" class="headerlink" title="链路层寻址和ARP"></a>链路层寻址和ARP</h2><p><strong>地址解析协议（ARP）</strong> 提供了将IP地址转换为链路层地址的协议</p>
 <h3 id="MAC地址"><a href="#MAC地址" class="headerlink" title="MAC地址"></a>MAC地址</h3><p>1.主机或路由器的适配器（即网络接口）具有链路层地址。链路层地址有各种不同的称呼：LAN地址、物理地址或MAC（Medium Access Control）地址。MAC地址是最为流行的术语。</p>
 <p>2.没有两块适配器具有相同的地址。适配器的MAC地址具有扁平结构，而且不论适配器到哪里用都不会变化。</p>
@@ -294,22 +294,22 @@
 <li>局域网是为任意网络层协议而设计的，而不只是用于IP和因特网。</li>
 <li>如果适配器使用网络层地址而不是MAC地址的话，网络层地址必须存储在适配器的RAM中，并且在每次适配器移动时要重新配置。</li>
 </ul>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/5.png" alt></p>
+<p><img src="/链路层和局域网/5.png" alt></p>
 <h3 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h3><p>1.<code>地址解析协议（Address Resolution Protocol, ARP）</code>用于在网络层地址（比如因特网的IP地址）和链路层地址(MAC地址)之间进行转换。ARP只为在同一个子网上的主机和路由器接口解析IP地址。</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/6.png" alt></p>
+<p><img src="/链路层和局域网/6.png" alt></p>
 <p>2.每台主机或路由器在其内存中具有一个ARP表，这张表包含IP地址到MAC地址的映射关系。该ARP表也包含一个寿命值，它指示了从表中删除每个映射的时间。</p>
 <p>3.假定主机A要向主机B发送一个数据报，该数据报要IP寻址到本子网上另一台主机或路由器。发送主机需要获得给定IP地址的目的主机的MAC地址。如果发送方的ARP表具有该目的节点的表项，则直接通过查询ARP表即可完成任务。如果ARP表中当前没有该目的主机的表项，发送方构造一个称为ARP分组的特殊分组。一个ARP分组有几个字段，包括发送和接收IP地址及MAC地址。ARP查询分组和响应分组都具有相同的格式。ARP查询分组的目的是询问子网上所有其他主机和路由器，以确定对应于要解析的IP地址的那个MAC地址</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/7.png" alt></p>
+<p><img src="/链路层和局域网/7.png" alt></p>
 <p>4.查询ARP报文是在广播帧中发送的，而响应ARP报文在一个标准帧中发送。ARP是即插即用的，即一个ARP表是自动建立的，它不需要系统管理员来配置。并且如果某主机与子网断开连接，它的表项最终会从留在子网中的节点的表中删除掉。</p>
 <h4 id="ARP协议原理"><a href="#ARP协议原理" class="headerlink" title="ARP协议原理"></a>ARP协议原理</h4><p>1.如果要通过IP来得到同一子网上的主机MAC地址；过程是这样的：首先源主机会看看自己的ARP机制的内存里有没有对应的IP MAC项，有就直接输出目标MAC地址；没有的话就需要ARP发送一个查询分组，分组以广播的形式发送，也就是每一个主机都能收到这个查询分组，收到之后，各个被询问的主机会先看看 目标IP是不是与自己的IP对应，不对应就不用响应，对应的就应该返回一个响应分组。这样源主机的ARP机制就有了目的IP地址的MAC地址了。</p>
 <p>2.通过目标IP获得子网以外的主机的MAC地址；首先，源主机有了目的主机的IP地址，假想我们通过某种手段已经得到了目的主机的MAC地址了，那现在是不是就可以直接放入数据帧里面呢，显然是不行的，因为目前看来，目的MAC地址与当前的任何一个路由的MAC地址都不匹配。任何路由都不会给与转发。事实上是这样的，我们有了目标IP地址，通过路由算法得到了最短路径的转发表，我们每一次转发不是直接用目标主机的IP地址的，而是用路由表中给出的每一跳的地址，这样，先得到通往外网的第一个路由的MAC地址，现在关键来了：由于在外网中路由器的一个IP对应一个MAC，他也是通过ARP查询得到与他匹配的IP再得到返回的MAC地址的。就这样得到外网路由的第二个MAC地址，这样直到终点</p>
-<h3 id="发送数据报到子网以外"><a href="#发送数据报到子网以外" class="headerlink" title="发送数据报到子网以外"></a>发送数据报到子网以外</h3><p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/8.png" alt></p>
+<h3 id="发送数据报到子网以外"><a href="#发送数据报到子网以外" class="headerlink" title="发送数据报到子网以外"></a>发送数据报到子网以外</h3><p><img src="/链路层和局域网/8.png" alt></p>
 <p>每台主机仅有一个IP地址和一个适配器，一台路由器对它的每个接口都有一个IP地址，也有一个ARP模块和一个适配器，每个适配器都有自己的MAC地址</p>
 <h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>1.如果某台主机要向子网外的另一台主机发送数据报，则发送主机必须首先发送给最终目的路径上的第一跳路由器</p>
 <p>2.初始的以太网是使用总线拓扑的一种广播局域网，即所有的帧传送到与该总线连接的所有适配器并被其处理。</p>
 <p>3.在20世纪90年代后期，大多数公司和大学使用一种基于集线器的星形拓扑以太网安装替代了它们的局域网。在这种安装中，主机和路由器直接用双绞对铜线与一台 <strong>集线器</strong> 相连。集线器是一种物理层设备，它作用于各个比特而不是作用于帧。当表示一个0或一个1的比特到达一个接口时，集线器只是重新生成这个比特，将其能量强度放大，并将该比特向其他所有接口传输出去。</p>
 <p>4.在21世纪初，以太网又经历了一次重要的革命性变化。以太网安装继续使用星形拓扑，但是位于中心的集线器被 <strong>交换机</strong> 所替代。</p>
-<h3 id="以太网帧结构"><a href="#以太网帧结构" class="headerlink" title="以太网帧结构"></a>以太网帧结构</h3><p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/9.png" alt></p>
+<h3 id="以太网帧结构"><a href="#以太网帧结构" class="headerlink" title="以太网帧结构"></a>以太网帧结构</h3><p><img src="/链路层和局域网/9.png" alt></p>
 <p><code>太网帧有以下6个字段</code></p>
 <ul>
 <li><code>数据字段（46~1500字节）。</code>这个字段承载了IP数据报。以太网的最大传输单元是1500字节。这意味着如果IP数据报超过了1500字节，则主机必须将该数据报分片。数据字段的最小长度是46字节。这意味着如果IP数据报小于46字节，数据报必须被填充到46字节。当采用填充时，传递到网络层的数据包括IP数据报和填充部分。网络层使用IP数据报首部中的长度字段来去除填充部分。</li>
@@ -345,7 +345,7 @@
 </ol>
 <h3 id="交换机和路由器比较"><a href="#交换机和路由器比较" class="headerlink" title="交换机和路由器比较"></a>交换机和路由器比较</h3><p>1.交换机是即插即用的；交换机能够具有相对高的分组过滤和转发速率；交换机必须处理高至第二层的帧，而路由器必须处理高至第三层的数据报；为了防止广播帧的循环，交换网络的活跃拓扑限制为一颗生成树。另外，一个大型交换网络将要求在主机和路由器中有大量的ARP表，这将生成客观的ARP流量和处理量。而且，交换机对于广播风暴并不提供任何保护措施。</p>
 <p>2.因为网络殉职通常是分层次的，即使当网络中存在冗余路径时，分组通常也不会通过路由器循环。所以，分组不会被限制到一颗生成树上，并可以使用源和目的地之间的最佳路径。路由器对第二层的广播风暴提供了防火墙保护。路由器不是即插即用的，即路由器和连接到它们的主机都需要人为地配置IP地址。而且路由器对每个分组的处理时间通常比交换机更长，因为它们必须处理高达第三层的字段。</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/10.png" alt></p>
+<p><img src="/链路层和局域网/10.png" alt></p>
 <h2 id="虚拟局域网"><a href="#虚拟局域网" class="headerlink" title="虚拟局域网"></a>虚拟局域网</h2><p>现代机构的局域网配置为等级结构的，每个工作组都有自己的交换局域网，经过一个交换机等级与其他工作组交换局域网互联</p>
 <p>三个缺点：</p>
 <p>1.缺乏流量隔离</p>
@@ -354,7 +354,7 @@
 <p><strong>可以用通过支持虚拟局域网（VLAN）的交换机来处理</strong></p>
 <h1 id="链路虚拟化-网络作为链路层"><a href="#链路虚拟化-网络作为链路层" class="headerlink" title="链路虚拟化:网络作为链路层"></a>链路虚拟化:网络作为链路层</h1><h3 id="多协议标签交换（MPLS）"><a href="#多协议标签交换（MPLS）" class="headerlink" title="多协议标签交换（MPLS）"></a>多协议标签交换（MPLS）</h3><p>1.<code>多协议标签交换（Multiprotocol Label Switching, MPLS）</code>采用来自虚电路网络领域的一个关键概念：固定长度标签。其目标是：对于基于固定长度标签和虚电路的技术，在不放弃基于目的地IP数据报转发的基础设施的前提下，当可能时通过选择性地标识数据报并允许路由器基于固定长度的标签转发数据报来增强其功能。</p>
 <p>2.在MPLS使能的路由器之间传输的一个链路层帧</p>
-<p><img src="/%E9%93%BE%E8%B7%AF%E5%B1%82%E5%92%8C%E5%B1%80%E5%9F%9F%E7%BD%91/11.png" alt></p>
+<p><img src="/链路层和局域网/11.png" alt></p>
 <p>包括在MPLS首部中的字段是：</p>
 <p>标签；</p>
 <p>预留的3比特实验字段；</p>
@@ -690,6 +690,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

@@ -16,17 +16,17 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="《计算机网络自顶向下方法》第七章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122814624.png">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122825585.png">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122954983.png">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122937909.png">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823123017524.png">
-<meta property="og:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823123159742.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823122814624.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823122825585.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823122954983.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823122937909.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823123017524.png">
+<meta property="og:image" content="http://yoursite.com/无线网络和移动网络/20190823123159742.png">
 <meta property="og:updated_time" content="2019-08-22T16:32:44.528Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="无线网络和移动网络">
 <meta name="twitter:description" content="《计算机网络自顶向下方法》第七章读书笔记">
-<meta name="twitter:image" content="http://yoursite.com/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122814624.png">
+<meta name="twitter:image" content="http://yoursite.com/无线网络和移动网络/20190823122814624.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -75,7 +75,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -229,15 +229,15 @@
 <h3 id="CMDA"><a href="#CMDA" class="headerlink" title="CMDA"></a>CMDA</h3><p>这个信号的变化速率（称为码片速率）比初始数据比特序列的变化速率快得多。假设初始数据比特到达CDMA编码其的速率定义了时间单元；也就是说，每个要发送的初始数据比特需要1比特时隙时间。</p>
 <p>设di为第i个比特时隙中的数据比特值。为计算便利，把具有0值的数据比特表示为-1。每个比特时隙又进一步细分为M个微时隙。发送方使用的CDMA编码由M个值的一个序列cm组成，m = 1, …, M，每个取值为+1或-1。</p>
 <p>对于第i个数据比特di。对于di比特传输时间的第m个微时隙，CDMA编码器的输出Zi,m是di乘以分配的CDMA编码的第m比特cm</p>
-<p><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122814624.png" alt></p>
+<p><img src="/无线网络和移动网络/20190823122814624.png" alt></p>
 <p>对没有干扰的发送方，接收方将收到编码的比特Zi,m，并且恢复初始的数据比特di，计算如下：</p>
-<p><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122825585.png" alt></p>
+<p><img src="/无线网络和移动网络/20190823122825585.png" alt></p>
 <p>然而，实际上的CDMA必须在存在干扰发送方的情况下工作，这些发送方用分配的不同编码来编码和传输它们的数据。但是当一个发送方的数据比特和其他发送方发送的比特混在一起时，CDMA发送方就需要其他的方法来恢复该发送方的初始数据比特。</p>
-<p>CDMA的工作有一种假设，即对干扰的传输比特信号是加性的，这意味着，例如在同一个微时隙中，如果3个发送段都发送1，第4个发送端发送-1，那么在那个微时隙中所有的接收方接收的信号都是2。在存在多个发送方时，发送方s计算它编码后的传输计算方式与上面完全相同<br><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122954983.png" alt></p>
+<p>CDMA的工作有一种假设，即对干扰的传输比特信号是加性的，这意味着，例如在同一个微时隙中，如果3个发送段都发送1，第4个发送端发送-1，那么在那个微时隙中所有的接收方接收的信号都是2。在存在多个发送方时，发送方s计算它编码后的传输计算方式与上面完全相同<br><img src="/无线网络和移动网络/20190823122954983.png" alt></p>
 <p>然而在第i个比特时隙的第m个微时隙期间，接收方现在收到的值是那个微时隙中从所有N个发送方传输的比特总和：</p>
-<p><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823122937909.png" alt></p>
+<p><img src="/无线网络和移动网络/20190823122937909.png" alt></p>
 <p>如果仔细地选择发送方的编码，每个接收方只通过式*中的同样方式使用发送方的编码，就能从聚合的信号中恢复一个给定的发送方发送的数据：</p>
-<p><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823123017524.png" alt></p>
+<p><img src="/无线网络和移动网络/20190823123017524.png" alt></p>
 <h1 id="Wife-802-11和无线Lan"><a href="#Wife-802-11和无线Lan" class="headerlink" title="Wife:802.11和无线Lan"></a>Wife:802.11和无线Lan</h1><p>IEEE 802.11 无限LAN，也成为wife</p>
 <h2 id="802-11结构体系"><a href="#802-11结构体系" class="headerlink" title="802.11结构体系"></a>802.11结构体系</h2><p>1.802.11体系结构的基本构建模块是<code>基本服务集（Basic Service Set, BSS）</code>。一个BSS包含一个或多个无线站点和一个在802.11术语中成为<code>接入点（Access Point, AP）</code>的中央基站。</p>
 <p>2.配置AP的无线LAN经常被称作基础设施无线LAN，其中的“基础设施”是指AP联通互联AP和一台路由器的有线以太网</p>
@@ -268,7 +268,7 @@
 <h2 id="IEEE-802-11帧"><a href="#IEEE-802-11帧" class="headerlink" title="IEEE 802.11帧"></a>IEEE 802.11帧</h2><h3 id="有效载荷与CRC字段"><a href="#有效载荷与CRC字段" class="headerlink" title="有效载荷与CRC字段"></a>有效载荷与CRC字段</h3><p>帧的核心是有效载荷，它通产是由一个IP数据报或者ARP分组组成。尽管这一字段允许的最大长度为2312字节，但它通常小于1500字节，放置一个IP数据报或一个ARP分组。如同以太网帧一样，802.11包括一个CRC码，从而接收方可以检测所收到帧中的比特错误。比特错误在无线局域网中比在有线局域网中更加普遍，因此CRC在这里更加有用。</p>
 <h3 id="地址字段"><a href="#地址字段" class="headerlink" title="地址字段"></a>地址字段</h3><p>802.11帧具有4个地址字段，其中每个都可以包含一个6字节的MAC地址。地址2是传输该帧的站点的MAC地址。地址1是要接收该帧的无线站点的MAC地址。BSS是一个子网的一部分，并且这个子网经一些路由器接口与其他子网相连，地址3包含这个路由器接口的MAC地址。</p>
 <h3 id="序号、持续期和帧控制字段"><a href="#序号、持续期和帧控制字段" class="headerlink" title="序号、持续期和帧控制字段"></a>序号、持续期和帧控制字段</h3><p>在802.11网络中，无论何时一个站点正确地收到一个来自其他站点的帧，它就回发一个确认。因为确认可能会丢失，发送站点可能会发送一个给定帧的多个副本。使用序号可以使接收方区分新传输的帧和以前的帧的重传。802.11协议允许传输节点预约信道一段时间，包括传输其数据帧的时间和传输确认的时间，这个持续期值被包括在该帧的持续期字段中。控制字段包括许多子字段，比较重要的是，类型和子类型字段用于区分关联、RTS、CTS、ACK和数据帧。到和从字段用于定义不同地址字段的含义。WEP字段指示了是否使用加密</p>
-<h2 id="在相同的IP子网中的移动性"><a href="#在相同的IP子网中的移动性" class="headerlink" title="在相同的IP子网中的移动性"></a>在相同的IP子网中的移动性</h2><p><img src="/%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C%E5%92%8C%E7%A7%BB%E5%8A%A8%E7%BD%91%E7%BB%9C/20190823123159742.png" alt></p>
+<h2 id="在相同的IP子网中的移动性"><a href="#在相同的IP子网中的移动性" class="headerlink" title="在相同的IP子网中的移动性"></a>在相同的IP子网中的移动性</h2><p><img src="/无线网络和移动网络/20190823123159742.png" alt></p>
 <h2 id="802-11-中的高级特色"><a href="#802-11-中的高级特色" class="headerlink" title="802.11 中的高级特色"></a>802.11 中的高级特色</h2><h3 id="效率适应"><a href="#效率适应" class="headerlink" title="效率适应"></a>效率适应</h3><p>802.11实现具有一种速率自适应能力，该能力自适应地根据当前和近期信道特点来选择下面的物理层调职技术。如果一个节点连续发送两个帧而没有收到确认，该传输速率降低到前一个较低的速率。如果10个帧连续得到确认，或如果用来跟踪自上次降速以来时间的定时器超时，该传输速率提高到上一个较高的速率。</p>
 <h3 id="功率管理"><a href="#功率管理" class="headerlink" title="功率管理"></a>功率管理</h3><p>802.11标准提供了功率管理能力，以使802.11节点的侦听、传输和接收功能以及其他需要“打开”电路的时间最小化。802.11功率管理按下列方式运行。一个节点能够明显地在睡眠和唤醒状态之间交替。通过将802.11帧首部的功率管理比特设置为1，某节点向接入点指示它将打算睡眠。设置节点中的一个定时器，使得正好在AP计划发送它的信标帧前唤醒节点。因为AP从设置的功率传输比特知道哪个节点打算睡眠，所以该AP知道它不应当向这个节点发送任何帧，先缓存目的地为睡眠主机的任何帧，待以后再传输。</p>
 <h2 id="个人域网络-蓝牙和ZigBee"><a href="#个人域网络-蓝牙和ZigBee" class="headerlink" title="个人域网络:蓝牙和ZigBee"></a>个人域网络:蓝牙和ZigBee</h2><h3 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h3><p>IEEE 802.15.1网络以低功率和低成本在小范围内运行。它本质上是一个低功率、小范围、低速率的“电缆替代”技术，用于计算机与其无线键盘、鼠标或其他外部设备的互联。802.15.1网络有时被称为无线个人网络（Wireless Personal Area Network, WPAN）。802.15.1的链路层和物理层基于早期用于个人域网络的蓝牙规范。</p>
@@ -667,6 +667,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

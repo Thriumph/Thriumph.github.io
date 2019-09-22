@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="shellcode:缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/linux%E4%B8%8B%E5%9F%BA%E6%9C%AC%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BAshellcode%E7%BC%96%E5%86%99/20190819042638629.png">
+<meta property="og:image" content="http://yoursite.com/linux下基本缓冲区溢出shellcode编写/20190819042638629.png">
 <meta property="og:updated_time" content="2019-08-19T12:51:03.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux下基本缓冲区溢出shellcode编写">
 <meta name="twitter:description" content="shellcode:缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。">
-<meta name="twitter:image" content="http://yoursite.com/linux%E4%B8%8B%E5%9F%BA%E6%9C%AC%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BAshellcode%E7%BC%96%E5%86%99/20190819042638629.png">
+<meta name="twitter:image" content="http://yoursite.com/linux下基本缓冲区溢出shellcode编写/20190819042638629.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -70,7 +70,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -208,7 +208,7 @@
 
 <p>编译<code>gcc -o shell shell.c</code></p>
 <p>运行<code>./shell</code></p>
-<p><img src="/linux%E4%B8%8B%E5%9F%BA%E6%9C%AC%E7%BC%93%E5%86%B2%E5%8C%BA%E6%BA%A2%E5%87%BAshellcode%E7%BC%96%E5%86%99/20190819042638629.png" alt></p>
+<p><img src="/linux下基本缓冲区溢出shellcode编写/20190819042638629.png" alt></p>
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p><strong>execve(name[0],name,NULL)</strong></p>
 <ul>
 <li><strong>name[0]</strong>/bin/sh的地址</li>
@@ -558,6 +558,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

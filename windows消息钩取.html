@@ -16,15 +16,15 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/1.png">
-<meta property="og:image" content="http://yoursite.com/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/2.png">
-<meta property="og:image" content="http://yoursite.com/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/3.png">
-<meta property="og:image" content="http://yoursite.com/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/4.png">
+<meta property="og:image" content="http://yoursite.com/windows消息钩取/1.png">
+<meta property="og:image" content="http://yoursite.com/windows消息钩取/2.png">
+<meta property="og:image" content="http://yoursite.com/windows消息钩取/3.png">
+<meta property="og:image" content="http://yoursite.com/windows消息钩取/4.png">
 <meta property="og:updated_time" content="2019-08-22T14:50:41.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="windows消息钩取">
 <meta name="twitter:description" content="windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
-<meta name="twitter:image" content="http://yoursite.com/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/1.png">
+<meta name="twitter:image" content="http://yoursite.com/windows消息钩取/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -73,7 +73,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -225,7 +225,7 @@
 <p>3.应用程序监视自身的[application message queue]，发现新添加的WM_KEYDOMN消息后，调用相应的事件处理程序处理。</p>
 <h1 id="消息钩取工作原理"><a href="#消息钩取工作原理" class="headerlink" title="消息钩取工作原理"></a>消息钩取工作原理</h1><p> windows操作系统向用户提供GUI（ 图形用户界面），以事件驱动的方式工作。<br>当事件发生时，OS会把事先定义好的消息发送给响应的应用程序，应用程序收到消息后执行相应的动作。</p>
 <p>OS消息队列与应用程序消息队列之间存在一条钩链（HookChain）处于钩链的钩子会比应用程序先看到相应的信息。在键盘钩子函数的内部，除了可以查看消息外，还可以修改消息本身，对消息拦截或阻止消息传递。可以同时设置多个键盘钩子，按照设置顺序依次调用这些钩子</p>
-<p><img src="/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/1.png" alt></p>
+<p><img src="/windows消息钩取/1.png" alt></p>
 <h1 id="windows消息钩取的实现——SetWindowsHookEx"><a href="#windows消息钩取的实现——SetWindowsHookEx" class="headerlink" title="windows消息钩取的实现——SetWindowsHookEx()"></a>windows消息钩取的实现——SetWindowsHookEx()</h1><p>使用SetWindowsHookEx()API可以轻松实现消息钩子</p>
 <p><code>SetWindowsHookEx（）API定义</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HHOOK <span class="title">SetWindowsHookEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> idHook,			<span class="comment">//hook type</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HOOKPROC lpfn,		<span class="comment">//hook procedure</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HINSTANCE hMod,		<span class="comment">//hook procedure所属的DLL句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    DWORD dwThreadId	<span class="comment">//将要挂钩的目标线程ID</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
@@ -247,15 +247,15 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"conio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_DLL_NAME		<span class="meta-string">"KeyHook.dll"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTART		<span class="meta-string">"HookStart"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTOP		<span class="meta-string">"HookStop"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTART)</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTOP)</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HMODULE			hDll = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTART	HookStart = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTOP	HookStop = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>			ch = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载KeyHook.dll </span></span><br><span class="line">	hDll = LoadLibraryA(DEF_DLL_NAME);</span><br><span class="line">    <span class="keyword">if</span>( hDll == <span class="literal">NULL</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"LoadLibrary(%s) failed!!! [%d]"</span>, DEF_DLL_NAME, GetLastError());</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取导出函数地址 </span></span><br><span class="line">	HookStart = (PFN_HOOKSTART)GetProcAddress(hDll, DEF_HOOKSTART);</span><br><span class="line">	HookStop = (PFN_HOOKSTOP)GetProcAddress(hDll, DEF_HOOKSTOP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始钩取 </span></span><br><span class="line">	HookStart();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待用户输入“q” </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"press 'q' to quit!\n"</span>);</span><br><span class="line">	<span class="keyword">while</span>( _getch() != <span class="string">'q'</span> )	;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 终止钩取 </span></span><br><span class="line">	HookStop();</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 卸载KeyHook.dll </span></span><br><span class="line">	FreeLibrary(hDll);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>运行HookMain.exe可安装键盘钩子</p>
-<p><img src="/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/2.png" alt></p>
+<p><img src="/windows消息钩取/2.png" alt></p>
 <p>输入q可停止键盘钩取</p>
 <h2 id="调试HookMain-exe"><a href="#调试HookMain-exe" class="headerlink" title="调试HookMain.exe"></a>调试HookMain.exe</h2><p>通过字符串检索找到main函数</p>
-<p><img src="/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/3.png" alt></p>
+<p><img src="/windows消息钩取/3.png" alt></p>
 <p>程序在00C2140E地址处调用LoadLibraryA(KeyHook.dll)</p>
 <p>调用了SetWindowsHookExW()函数时，先有两条PUSH指令将该函数的第一、第二两个参数压入栈。其中第一个参数idHook值为2，即WH_KEYBOARD，第二个参数lpfn值为为钩子过程的地址。</p>
 <p><code>调试notepad.exe进程中的KeyHook.dll</code></p>
 <p>运行notpead.exe后弹出Executable modules窗口，KeyHook.dll已被加载</p>
-<p><strong>操作过程</strong><br><img src="/windows%E6%B6%88%E6%81%AF%E9%92%A9%E5%8F%96/4.png" alt></p>
+<p><strong>操作过程</strong><br><img src="/windows消息钩取/4.png" alt></p>
 
       
       
@@ -580,6 +580,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>

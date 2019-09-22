@@ -16,22 +16,22 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="《计算机网络自顶向下方法》第四章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/1.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/2.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/3.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/4.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/5.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/6.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/7.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/8.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/9.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/10.png">
-<meta property="og:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/11.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/1.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/2.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/3.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/4.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/5.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/6.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/7.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/8.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/9.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/10.png">
+<meta property="og:image" content="http://yoursite.com/网络层数据平面/11.png">
 <meta property="og:updated_time" content="2019-08-22T15:53:20.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="网络层数据平面">
 <meta name="twitter:description" content="《计算机网络自顶向下方法》第四章读书笔记">
-<meta name="twitter:image" content="http://yoursite.com/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/1.png">
+<meta name="twitter:image" content="http://yoursite.com/网络层数据平面/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -80,7 +80,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 26
+			总文章数 27
 		</nav>
 
 
@@ -207,12 +207,12 @@
         <p>《计算机网络自顶向下方法》第四章读书笔记</p>
 <a id="more"></a>
 
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/1.png" alt></p>
+<p><img src="/网络层数据平面/1.png" alt></p>
 <h1 id="网络层概述"><a href="#网络层概述" class="headerlink" title="网络层概述"></a>网络层概述</h1><p>1.每台路由器的<strong><code>数据平面</code></strong> 的主要作用是从其输入链路向其输出链路转发数据报。</p>
 <p>2.<strong><code>控制平面</code></strong>的主要作用是协调这些本地的每路由器转发动作，使得数据报沿着源和目的地主机之间的路由器路径最终进行端到端传送。</p>
 <p>3.<strong><code>路由器</code></strong>（不运行应用层网络层协议）的主要作用是将数据从入链路转发到出链路。</p>
 <p>4.<strong><code>A,B两主机通信：</code></strong> A中网络层取得于A运输层的报文段，每个报文段封装成数据报，向相邻路由器发送。</p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/2.png" alt></p>
+<p><img src="/网络层数据平面/2.png" alt></p>
 <h2 id="转发和路由选择（数据平面和控制平面）"><a href="#转发和路由选择（数据平面和控制平面）" class="headerlink" title="转发和路由选择（数据平面和控制平面）"></a>转发和路由选择（数据平面和控制平面）</h2><p><strong><code>网络层作用：</code></strong> 将分组从一台发送主机发送到另一台接受主机。IP协议：编址规则，数据报格式，分组处理规则。</p>
 <p><strong><code>需要两种功能：转发和路由选择</code></strong></p>
 <ul>
@@ -229,10 +229,10 @@
 <li>集中式</li>
 <li>分布式</li>
 </ul>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/3.png" alt></p>
+<p><img src="/网络层数据平面/3.png" alt></p>
 <h3 id="控制平面：SDN方法"><a href="#控制平面：SDN方法" class="headerlink" title="控制平面：SDN方法"></a>控制平面：SDN方法</h3><p>远程控制器计算和分发转发表以供每台路由器使用</p>
 <p>控制平面路由 <strong><code>选择功能</code></strong> 和 <strong><code>物理路由器</code></strong> 是分开的，<strong><code>选择设备执行转发，远程控制器计算并分发转发表</code></strong> ，这种控制平面方法是 <strong><code>软件定义网络（Soft-ware-Defined Networking,SDN）</code></strong> 的本质</p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/4.png" alt>                                                </p>
+<p><img src="/网络层数据平面/4.png" alt>                                                </p>
 <h2 id="网络服务模型"><a href="#网络服务模型" class="headerlink" title="网络服务模型"></a>网络服务模型</h2><p><strong><code>网络服务模型：</code></strong> 定义了分组在发送与接收端系统之间的端到端运输特性</p>
 <p><strong><code>网络层提供的服务（IP没有的服务）：</code></strong></p>
 <p>运输层向网络层传递分组时：</p>
@@ -248,7 +248,7 @@
 <p><strong><code>②交换结构：</code></strong> 交换结构将路由器的输入端口连接到它的输出端口。这种交换结构完全包含在路由器之中</p>
 <p><strong><code>③输出端口：</code></strong> 输出端口存储从交换结构接收的分组，并通过执行必要的链路层和物理层功能在输出链路上传输这些分组。 </p>
 <p><strong><code>④路由选择处理器：</code></strong> 路由选择处理器执行控制平面功能。它执行路由选择协议，维护路由选择表与关联链路状态信息，并为该路由器计算转发表。在软件定义网络（Software-Defined Networking, SDN）路由器中，路由选择处理器负责与远程控制器通信，目的是接收由远程控制器计算的转发表项，并在该路由器的输入端口安装这些表项。</p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/5.png" alt></p>
+<p><img src="/网络层数据平面/5.png" alt></p>
 <h2 id="输入端口处理和基于目的地的转发"><a href="#输入端口处理和基于目的地的转发" class="headerlink" title="输入端口处理和基于目的地的转发"></a>输入端口处理和基于目的地的转发</h2><p>路由器用分组目的地址的前缀与转发表中的表项进行匹配。如果存在一个匹配项，则路由器向与该匹配项相关联的链路转发该分组。当有多个匹配时，该路由器使用 <strong><code>最长前缀匹配规则</code></strong> ，即在表中寻找最长的匹配项，并向与最长前缀匹配相关项的链路接口转发分组。</p>
 <h3 id="输入端口"><a href="#输入端口" class="headerlink" title="输入端口"></a>输入端口</h3><p>①线路端接</p>
 <p>②数据链路处理（协议、拆封）</p>
@@ -290,11 +290,11 @@
 <li>纵横式交换机，2N条总线组成网络，连接N各输入端口和N个输出端口<br>每条垂直的总线与每条水平的总线交叉，交叉点通过交换结构控制器开启闭合</li>
 <li>某分组到达端口A，需要转发到Y，交换机控制器闭合总线A和Y的交叉点，A在其总线上发送分组，仅由Y接收；同时B也能发分组到X，因为没有公用总线。纵横式网络能并行转发多个分组</li>
 </ul>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/6.png" alt></p>
+<p><img src="/网络层数据平面/6.png" alt></p>
 <h2 id="输出端口处理"><a href="#输出端口处理" class="headerlink" title="输出端口处理"></a>输出端口处理</h2><p>①排队（缓存管理）</p>
 <p>②数据链路处理（协议、拆封）</p>
 <p>③线路端接</p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/7.png" alt></p>
+<p><img src="/网络层数据平面/7.png" alt></p>
 <h2 id="排队"><a href="#排队" class="headerlink" title="排队"></a>排队</h2><p>输入、输出端口都能形成分组队列，取决于流量负载、交换结构<br>随着队列增长，路由器缓存空间会耗尽，出现丢包</p>
 <p>需要路由器缓存吸收流量负载波动，需要多少缓存？</p>
 <ul>
@@ -317,7 +317,7 @@
 <li><strong><code>控制报文协议（ICMP）</code></strong> ：报告数据报中的差错、对某些网络层信息请求进行响应的设施</li>
 </ul>
 <h2 id="IPv4数据报格式"><a href="#IPv4数据报格式" class="headerlink" title="IPv4数据报格式"></a>IPv4数据报格式</h2><p>网络层分组被称为<code>数据报</code></p>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/8.png" alt></p>
+<p><img src="/网络层数据平面/8.png" alt></p>
 <p><strong><code>版本号（IPv4、IPv6）：</code></strong> 不同版本对数据报不同解释，4比特规定了数据报的IP协议版本</p>
 <p><strong><code>首部长度：</code></strong> 数据报可包含可变数量的选项。不过大部分没有，首部固定20字节</p>
 <p><strong><code>服务类型：</code></strong> 区分不同类型的IP数据报</p>
@@ -376,7 +376,7 @@
 <li>子网获取IP地址：由ISP从它大块地址中分配</li>
 <li>ISP获取IP地址：IP地址由因特网名字和编号分配机构ICANN管理（也管理DNS根服务器、AS标识号）。ICANN向区域性因特网注册机构分配地址，处理本地域内的地址分配/管理</li>
 </ul>
-<p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/9.png" alt></p>
+<p><img src="/网络层数据平面/9.png" alt></p>
 <h3 id="获取主机地址"><a href="#获取主机地址" class="headerlink" title="获取主机地址"></a>获取主机地址</h3><ul>
 <li>组织获得一块地址，就可为组织内的主机、路由器接口逐个分配IP地址</li>
 <li>主机地址能手动配置，也能自动配置，即动态主机配置协议DHCP</li>
@@ -404,7 +404,7 @@
 <p>客户从提供中选一个，向选中的服务器提供一个DHCP请求报文进行响应，回显配置参数</p>
 <p><strong><code>DHCP ACK</code></strong></p>
 <p>收到DHCP请求报文后，用DHCP ACK报文对其记性响应，证实所传参数<br>客户收到ACK后，交互完成，在租期内使用DHCP分配的IP地址。DHCP提供了机制允许客户更新对一个IP地址的租用</p>
-<h2 id="网络地址转换"><a href="#网络地址转换" class="headerlink" title="网络地址转换"></a>网络地址转换</h2><p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/10.png" alt></p>
+<h2 id="网络地址转换"><a href="#网络地址转换" class="headerlink" title="网络地址转换"></a>网络地址转换</h2><p><img src="/网络层数据平面/10.png" alt></p>
 <p>当ISP已经为SOHO网络当前地址范围分配过一块连续地址，而SOHO内主机越来也多时，需要用到NAT（比如电信给你家分配一个动态IP地址，家里要好几台手机电脑联网用一个IP地址，需要用NAT）</p>
 <p> 当ISP已经为SOHO网络当前地址范围分配过一块连续地址，而SOHO内主机越来也多时，需要用到NAT（比如电信给你家分配一个动态IP地址，家里要好几台手机电脑联网用一个IP地址，需要用NAT）</p>
 <h3 id="UPnP"><a href="#UPnP" class="headerlink" title="UPnP"></a>UPnP</h3><ul>
@@ -413,7 +413,7 @@
 <li>使用UPnP，在主机上运行的应用程序能为某些请求的公共端口号请求一个NAT映射（专用IP地址，专用端口号 — 公共IP地址，公共端口号）。如果某NAT接收请求并生成映射，来自外部的结点能发起到（公共IP地址，公共端口号）的TCP连接</li>
 </ul>
 <h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>IPv4地址耗尽，IPv6也可强化IPv4某些方面</p>
-<h3 id="IPv6数据报格式"><a href="#IPv6数据报格式" class="headerlink" title="IPv6数据报格式"></a>IPv6数据报格式</h3><p><img src="/%E7%BD%91%E7%BB%9C%E5%B1%82%E6%95%B0%E6%8D%AE%E5%B9%B3%E9%9D%A2/11.png" alt></p>
+<h3 id="IPv6数据报格式"><a href="#IPv6数据报格式" class="headerlink" title="IPv6数据报格式"></a>IPv6数据报格式</h3><p><img src="/网络层数据平面/11.png" alt></p>
 <p>①扩大的地址容量 </p>
 <p>32bit —&gt; 128bit</p>
 <p>r除了单播多播地址，引入任播地址，使数据报交付给一组主机中的任意一个</p>
@@ -768,6 +768,10 @@ MathJax.Hub.Queue(function() {
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞复现</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
