@@ -64,7 +64,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 28
+			总文章数 29
 		</nav>
 
 
@@ -154,6 +154,124 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-栈溢出的保护机制和利用方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/栈溢出的保护机制和利用方法.html">栈溢出的保护机制和利用方法</a>
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/栈溢出的保护机制和利用方法.html" class="archive-article-date">
+  	<time datetime="2019-08-14T12:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="保护机制"><a href="#保护机制" class="headerlink" title="保护机制"></a>保护机制</h1><h2 id="Canary-栈保护"><a href="#Canary-栈保护" class="headerlink" title="Canary(栈保护)"></a>Canary(栈保护)</h2><p>栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在linux中将cookie信息称为canary。</p>
+        
+          <a class="article-more-a" href="/栈溢出的保护机制和利用方法.html#more">more >></a>
+        
+      
+      
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
+
+
+
+
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+      <p class="article-more-link">
+        <a class="article-more-a" href="/栈溢出的保护机制和利用方法.html">展开全文 >></a>
+      </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+  
+  
   
     <article id="post-gdb常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -627,124 +745,6 @@
   
   
   
-    <article id="post-一个有趣的a+b" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/一个有趣的a+b.html">一个有趣的a+b</a>
-    </h1>
-  
-
-
-        
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/一个有趣的a+b.html" class="archive-article-date">
-  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>凯撒加密🤪</p>
-        
-          <a class="article-more-a" href="/一个有趣的a+b.html#more">more >></a>
-        
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-      <p class="article-more-link">
-        <a class="article-more-a" href="/一个有趣的a+b.html">展开全文 >></a>
-      </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-  
-  
-  
     <article id="post-RC4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -828,6 +828,124 @@
     
       <p class="article-more-link">
         <a class="article-more-a" href="/RC4.html">展开全文 >></a>
+      </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+  
+  
+  
+    <article id="post-一个有趣的a+b" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/一个有趣的a+b.html">一个有趣的a+b</a>
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/一个有趣的a+b.html" class="archive-article-date">
+  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>凯撒加密🤪</p>
+        
+          <a class="article-more-a" href="/一个有趣的a+b.html#more">more >></a>
+        
+      
+      
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
+
+
+
+
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+      <p class="article-more-link">
+        <a class="article-more-a" href="/一个有趣的a+b.html">展开全文 >></a>
       </p>
     
 
@@ -1186,128 +1304,6 @@
     
       <p class="article-more-link">
         <a class="article-more-a" href="/PE文件.html">展开全文 >></a>
-      </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-  
-  
-  
-    <article id="post-多媒体网络" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/多媒体网络.html">多媒体网络</a>
-    </h1>
-  
-
-
-        
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/多媒体网络.html" class="archive-article-date">
-  	<time datetime="2019-06-06T16:59:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《计算机网络自顶向下方法》第九章读书笔记</p>
-        
-          <a class="article-more-a" href="/多媒体网络.html#more">more >></a>
-        
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-      <p class="article-more-link">
-        <a class="article-more-a" href="/多媒体网络.html">展开全文 >></a>
       </p>
     
 

