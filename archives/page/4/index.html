@@ -6,29 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>多媒体网络 | Thriumph</title>
+  <title>Archives | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="《计算机网络自顶向下方法》第九章读书笔记">
-<meta name="keywords" content="读书笔记,计算机网络">
-<meta property="og:type" content="article">
-<meta property="og:title" content="多媒体网络">
-<meta property="og:url" content="https://thriumph.top/多媒体网络.html">
+  <meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thriumph">
+<meta property="og:url" content="https://thriumph.top/archives/page/4/index.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="《计算机网络自顶向下方法》第九章读书笔记">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010313006.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010323140.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010339081.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010351103.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010400730.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010441642.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010455999.png">
-<meta property="og:image" content="https://thriumph.top/多媒体网络/20190823010808849.png">
-<meta property="og:updated_time" content="2019-08-23T00:33:01.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="多媒体网络">
-<meta name="twitter:description" content="《计算机网络自顶向下方法》第九章读书笔记">
-<meta name="twitter:image" content="https://thriumph.top/多媒体网络/20190823010313006.png">
+<meta name="twitter:title" content="Thriumph">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -166,224 +153,36 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-多媒体网络" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      多媒体网络
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/计算机网络和因特网.html" class="archive-article-date">
+  	<time datetime="2019-06-06T14:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/计算机网络和因特网.html">计算机网络和因特网</a>
     </h1>
   
 
-
-        
-        <!--显示阅读次数-->
-        
-          <br/>
-          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-          <span class="icon-sort"></span>
-          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-          </span>
-          </a>
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/多媒体网络.html" class="archive-article-date">
-  	<time datetime="2019-06-06T16:59:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《计算机网络自顶向下方法》第九章读书笔记</p>
-<a id="more"></a>
-<h1 id="多媒体网络应用"><a href="#多媒体网络应用" class="headerlink" title="多媒体网络应用"></a>多媒体网络应用</h1><h2 id="视频的性质"><a href="#视频的性质" class="headerlink" title="视频的性质"></a>视频的性质</h2><p>视频的显著特点是高比特率</p>
-<h2 id="音频的性质"><a href="#音频的性质" class="headerlink" title="音频的性质"></a>音频的性质</h2><p><code>脉冲编码调制（Pulse Code Modulation, PCM）</code>将模拟音频转换为数字信号：</p>
-<ul>
-<li><p>模拟音频信号首先以某种固定速率采样。每个采样值是一个任意的实数。</p>
-</li>
-<li><p>然后每个采样值被“四舍五入”为有限个数值中的一个。这种操作被称为量化。这些有限个数值通常是2的幂。</p>
-</li>
-<li><p>每个量化值由固定数量的比特表示。通过音频扬声器播放，这个数字信号则能够转换回来（也就是解码），形成一个模拟信号。然而，解码后的模拟信号仅是初始信号的近似，并且声音质量也许有明显的下降。通过增加采样速率和量化值的数量，解码信号能够更好地接近初始的模拟信号。因此，在解码信号的质量和比特率与数字信号存储空间存在一种折中。</p>
-</li>
-</ul>
-<p>一种接近CD质量立体声音乐的流行压缩技术是MPEG 1第3层，更通常的叫法是MP3。MP3编码器通常能够压缩为许多不同的速率；128kbps是最常用的编码速率，并且能够产生非常小的声音失真。一种相关的标准是高级音频编码（Advanced Audio Coding, AAC）。</p>
-<h2 id="多媒体网络应用的类型"><a href="#多媒体网络应用的类型" class="headerlink" title="多媒体网络应用的类型"></a>多媒体网络应用的类型</h2><p>多媒体应用可以分为三大类: <strong>流式存储音频/视频；会话式IP语音/视频；流式实况音频/视频。</strong></p>
-<h3 id="流式储存音频和视频"><a href="#流式储存音频和视频" class="headerlink" title="流式储存音频和视频"></a>流式储存音频和视频</h3><p>流式存储视频具有三个关键的不同特色：</p>
-<ul>
-<li><p>流。在流式存储视频应用中，客户开始从服务器接收文件几秒之后，通常就开始播放视频。这意味着当客户正在从视频的一个位置开始播放时，与此同时正在从服务器接收该视频的后续部分。这种技术被称为流，它避免了在开始播放之前必须下载整个视频。</p>
-</li>
-<li><p>相互作用。因为媒体是预先录制的，用户可以对多媒体内容进行暂停、重新配置前进、重新配置倒退、快进等操作。从一个客户提出这种请求到该动作在客户端表现出来，可接收的响应时间应该小于几秒。</p>
-</li>
-<li><p>连续播放。一旦视频开始播放，它应该根据初始记录的时序进行。因此，为了在客户端播放，必须从服务器中及时接收数据；否则，用户经历视频帧停滞或帧跳过。</p>
-</li>
-</ul>
-<h3 id="会话式IP语音和视频"><a href="#会话式IP语音和视频" class="headerlink" title="会话式IP语音和视频"></a>会话式IP语音和视频</h3><p>在因特网上的实时会话式语音通常称为因特网电话。也常被称为IP语音（Voice-over-IP, VoIP）</p>
-<h3 id="流式实况音频和视频"><a href="#流式实况音频和视频" class="headerlink" title="流式实况音频和视频"></a>流式实况音频和视频</h3><p>流式实况音频和视频类似于传统的电台广播和电视，只是它通过因特网来传输而已。</p>
-<h1 id="流式存储视频"><a href="#流式存储视频" class="headerlink" title="流式存储视频"></a>流式存储视频</h1><p>流式视频系统可分为三种类型：UDP流、HTTP流和适应性HTTP流</p>
-<p>当视频开始到达客户时，客户不必立即开始播放，反而能够在应用程序缓存中建立该视频的储备。一旦客户建立起几秒“已缓存但尚未播放”的视频储备，客户就可以开始视频播放了。这种客户缓存具有两种重要的优点。第一，客户缓存能够吸收服务器到客户时延中的波动。第二，如果服务器到客户带宽暂时低于视频消耗速率，用户能够继续享受连续的播放，只要客户应用缓存仍没有完全排尽</p>
-<h2 id="UDP流"><a href="#UDP流" class="headerlink" title="UDP流"></a>UDP流</h2><p>使用UDP流，服务器通过UDP以一种稳定的速率记录下视频块，用于哭护的视频消耗速率向匹配的速率传输视频。在将视频块传递给UDP之前，服务器将视频块封装在运输分组中，该运输分组是专门为传输音频和视频而设计的，使用了实时传输协议（Real-Time Transport Protocal, RTP）或某种类似的方案。UDP流的另一种不同的性质是，除了服务器到客户的视频流外，两者间还并行地维护一个单独的控制连接，通过该连接，客户可发送有关会话状态变化的命令。</p>
-<p>UDP流有三个重大不足。首先，由于服务器和控制之间的可用带宽无法预测并且是变化的，恒定速率UDP流不能够提供连续的播放。第二个缺点是它要求如RTSP服务器这样的媒体控制服务器，以对每个进行中的客户会话处理客户到服务器的交互请求和跟踪客户状态。这增加了部署大规模的按需视频系统的总体成本和复杂性。第三个缺点是许多防火前配置为阻塞UDP流量，防止这些防火墙后面的用户接收UDP视频</p>
-<h2 id="HTTP流"><a href="#HTTP流" class="headerlink" title="HTTP流"></a>HTTP流</h2><p>在HTTP流中，视频直接作为具有一个特定URL的普通文件存储在HTTP服务器上。当用户要看视频时，客户和服务器之间建立一个TCP连接，并且发送一个对该URL的HTTP GET请求。服务器则尽可能快地在HTTP响应报文中发送该视频文件。在客户端上，字节收集在一个客户应用缓存中。一旦在缓存中字节数量超过了预先设定的阈值，该客户应用程序开始播放，具体而言，它周期性地从客户应用缓存中抓取视频帧，对帧解压缩并在用户屏幕上显示它们。</p>
-<p>​在TCP上使用HTTP也使得视频穿越防火墙和NAT更为容易。HTTP流消除了因需要媒体服务器带来的不便，减少了在因特网上大规模部署的成本。</p>
-<p>对于流式存储视频，客户能够尝试以高于消耗速率的速率下载视频，因此预取将来会被消耗的视频帧。该预取的视频当然存储在客户应用缓存中。</p>
-<p>当网络中可用速率小于视频速率时，播放将在连续播放期和停滞播放期之间进行变动。当网络中的可用速率大于视频速率时，在初始缓存时延后，用户将享受连续的播放直到视频结束。</p>
-<h1 id="IP语音"><a href="#IP语音" class="headerlink" title="IP语音"></a>IP语音</h1><p>经因特网的实时会话式语音经常被称为因特网电话，通常称为IP语音（VoIP）</p>
-<h2 id="尽力而为服务限制"><a href="#尽力而为服务限制" class="headerlink" title="尽力而为服务限制"></a>尽力而为服务限制</h2><p>因特网的网络层协议提供尽力而为的服务</p>
-<h3 id="端到端延时"><a href="#端到端延时" class="headerlink" title="端到端延时"></a>端到端延时</h3><p>端到端时延得到一个关键成分是一个分组在网络路由器中经历的变化的排队时延。由于这些可变的时延，从在源中产生分组到它在接收方收到的这段时间，对于不同的分组可能会有波动。这个现象称为时延抖动。</p>
-<h2 id="在接收方消除音频的时延抖动"><a href="#在接收方消除音频的时延抖动" class="headerlink" title="在接收方消除音频的时延抖动"></a>在接收方消除音频的时延抖动</h2><h3 id="分组时延抖动"><a href="#分组时延抖动" class="headerlink" title="分组时延抖动"></a>分组时延抖动</h3><p>对于VoIP应用，周期性地产生分组，接收方应该在存在随机网络时延抖动的情况下尝试提供播放语音块。这经常通过结合下面两种机制来实现：</p>
-<ul>
-<li><p>为每个块预先计划一个时间戳。发送方用每个块产生的时刻为它加上时间印记。</p>
-</li>
-<li><p>在接收方延迟播放块。接收的音频块的播放时延必须足够长，以便大多数分组在它们的预定播放时间之前被接收到。这个播放时延可能在整个音频会话期间是固定的，或者在音频会话生命期中适应性地变化。</p>
-</li>
-</ul>
-<h4 id="固定播放时延"><a href="#固定播放时延" class="headerlink" title="固定播放时延"></a>固定播放时延</h4><p>使用固定播放时延策略，接收方试图在块产生正好q ms后播放它。因此如果一个块在时刻t打上时间戳，接收方在时刻t + q播放这个块，假设这个块在那个时间已经到达。在预定播放时间之后到达的分组将被丢弃，并被认为已经丢失。</p>
-<h4 id="适应性播放时延"><a href="#适应性播放时延" class="headerlink" title="适应性播放时延"></a>适应性播放时延</h4><p>ti = 第i个分组的时间戳 = 该分组在发送方产生的时间</p>
-<p>​ ri = 分组i被接收方接收的时间</p>
-<p>​ pi = 分组i在接收方播放的时间</p>
-<p>第i个分组的端到端网络时延是ri – ti。由于网络时延抖动，这个时延在不同的分组之间会发送变化。令di表设计接收到第i个分组时的平均网络时延的估计值。这个估计值根据如下的时间戳来构造：</p>
-<p><img src="/多媒体网络/20190823010313006.png" alt></p>
-<p>式中u是一个固定的常数。这样di是观察到的网络时延r1 – t1, …, ri - ti的一个平滑均值。这个估计值为最近观察到的网络时延设置了比过去一段时间观察到的网络时延有更大的权重。令vi表示于估计平均时延的平均时延绝对偏差的估计值。这个估计值也可从这些时间戳构建：</p>
-<p><img src="/多媒体网络/20190823010323140.png" alt></p>
-<p>​ 为每个接收的分组计算估计值di和vi，尽管它们仅能用于为任何话音突峰期的第一个分组确定播放点。</p>
-<p>​ 一旦计算完了这些估计值，接收方为分组播放应用下列的算法。如果分组i是一个话音突峰期的第一个分组，它的播放时间pi计算如下：</p>
-<p><img src="/多媒体网络/20190823010339081.png" alt></p>
-<p>这里K是一个正的常数。Kvi项的目的是给将来设置足够大的播放时间，以便话音突峰期中只有一小部分到达的分组由于迟到而丢失。在一个话音突峰期中任何后续分组的播放点被计算为对于这个话音突峰期的第一个分组播放时间点的偏移。令</p>
-<p><img src="/多媒体网络/20190823010351103.png" alt></p>
-<p>表示从话音突峰期的第一个分组产生到它播放的时间长度。如果分组j也属于这个话音突峰期，它播放的时刻是</p>
-<p><img src="/多媒体网络/20190823010400730.png" alt></p>
-<h2 id="从丢包中恢复"><a href="#从丢包中恢复" class="headerlink" title="从丢包中恢复"></a>从丢包中恢复</h2><p>丢包恢复方案有前向纠错（Forward Error Correction, FEC）与交织。</p>
-<h3 id="向前纠错"><a href="#向前纠错" class="headerlink" title="向前纠错"></a>向前纠错</h3><p>FEC的基本思想是给初始的分组流增加冗余信息。以稍微增加传输速率为代价，这些冗余信息可用用来重建一些丢失分组的近似或者准确版本。第一种机制是每发送n个块之后发送一个冗余编码的块。这个冗余块通过异或n个初始块来获得。以想和中方式，在这n + 1个分组的组中，如果任何一个分组丢失，接收方能够完全重建丢失的分组。但是如果这一组中有两个或更多分组丢失，接收方则无法重建丢失的分组。通过让组的长度n + 1比较小，当丢失不是很多时，大部分丢失分组都可以恢复。然而组的长度越小，相对增加的传输速率就越大。</p>
-<p>第二个FEC机制是发送一个较低分辨率的音频流作为冗余信息。发送方可能创建一个标称的音频流和一个相应的低分辨率、低比特率的音频流。这个低比特率流被认为是冗余信息。发送方通过从流中取出第n个块并附加上第n – 1个块的冗余信息，以构建第n个分组。以这种方式，只要没有连续分组的丢失，接收方都可以通过播放和后续分组一起到达的低比特率编码来隐藏丢失。当然，低比特率块比标称块的质量要低。然而，在一个流主要是由高质量块组成、偶尔出现低质量块并且没有丢失块的情况下，其整体的音频质量良好。在这种方案中，接收方在播放前只需接收两个分组，因此增加的时延小。此外，如果低比特率编码比标称编码少得多，那么传输速率的额外增加并不大。</p>
-<h3 id="交织"><a href="#交织" class="headerlink" title="交织"></a>交织</h3><p>作为冗余传输的另一种替代方案，VoIP应用可以发送交织的音频。发送方在传输之前对音频数据单元重新排序，使得最初相邻的单元在传输流中以一定距离分离开来。交织可以减轻丢包的影响。一个交织流的单个丢包导致重建流中的多个小间隙，这与在非交织流中将会导致单个大间隙形成对照。</p>
-<p>交织能够明显地提高音频流可感觉到的质量。它的开销也较低。交织明显的缺点是增加了时延。这限制了它在如VoIP这样的会话式应用中的使用，然而它能够很好地处理流式存储音频。交织的一个主要优点是它不增加流的带宽要求。</p>
-<h3 id="差错掩盖"><a href="#差错掩盖" class="headerlink" title="差错掩盖"></a>差错掩盖</h3><p>差错掩盖方案试图为丢失的分组产生一个与初始分组类似的替代物。因为音频信号（特别是语音）呈现出大量的短期自相似性，故该方案是可行的。这些技术适合于工作在相对小的丢包率和小分组的情况。基于接收方的恢复的最简单方式是分组重复。即用在丢失之前刚到达的分组的副本来代替丢失的分组。这种方法的计算复杂度低，并且工作得相当好。基于接收方恢复的另一种形式的内插法，它使用在丢失之前和之后的音频内插形成一个合适分组来隐藏丢失。内插法比分组重复稍微好一些，但是显然需要更高的计算强度。</p>
-<h1 id="实时会话式应用的协议"><a href="#实时会话式应用的协议" class="headerlink" title="实时会话式应用的协议"></a>实时会话式应用的协议</h1><h2 id="RTP"><a href="#RTP" class="headerlink" title="RTP"></a>RTP</h2><p><code>实时传输协议（Real-Time Transport Protocol, RTP）</code>通常运行在UDP之上。发送端在RTP分组中封装媒体块，然后再UDP报文段中封装该分组，然后将该报文段递交给IP。接收端从UDP报文段中提取出这个RTP分组，然后从RTP分组中提取出媒体块，并将这个块传递给媒体播放器来解码和呈现。</p>
-<h3 id="RTP基础"><a href="#RTP基础" class="headerlink" title="RTP基础"></a>RTP基础</h3><p>发送端在每个语音数据块的前面加上一个RTP首部，这个首部包括音频编码的类型、序号和时间戳。RTP首部通常是12字节。音频块和RTP首部一起形成RTP分组。然后向UDP套接字接口发送该RTP分组。在接收端，应用程序从它的套接字接口收到该RTP分组，从RTP分组中提取出该音频块，并且使用RTP分组的额首部字段来适当地解码和播放该音频块</p>
-<h3 id="RTP分组首部字段"><a href="#RTP分组首部字段" class="headerlink" title="RTP分组首部字段"></a>RTP分组首部字段</h3><p><img src="/多媒体网络/20190823010441642.png" alt></p>
-<p>RTP分组中的有效载荷类型字段的长度是7比特。对于音频流，有效载荷类型字段用于指示所使用的音频编码类型。如果发送方在会话过程中决定改变编码，发送方可以通过该有效载荷类型字段来通知接收方这种变化。发送方可能要通过改变该编码来提高语音质量或者减小RTP流比特率。</p>
-<p>当前RTP支持的一些音频有效载荷类型。</p>
-<p><img src="/多媒体网络/20190823010455999.png" alt></p>
-<p>对于一个视频流，有效载荷类型用于指示视频编码类型。发送方也可以在会话期间动态改变视频编码。</p>
-<h2 id="SIP"><a href="#SIP" class="headerlink" title="SIP"></a>SIP</h2><p>会话发起协议（Session Initiation Protocol, SIP）是一个开放和轻型的协议，其功能如下：</p>
-<ul>
-<li><p>提供了在主叫者和被叫者之间经IP网络创建呼叫的机制。它允许主叫者通知被叫者它要开始一个呼叫。它允许参与者约定媒体编码，也允许参与者结束呼叫。</p>
-</li>
-<li><p>提供了主叫者确定被叫者的当前IP地址的机制。因为用户可能动态地分配到地址，而且因为它们可能有多个IP设备，每个都有一个不同的IP地址，所以用户不具有单一的、固定的IP地址。</p>
-</li>
-<li><p>提供二零用于呼叫管理的机制，这些机制包括在呼叫期间增加新媒体流、在呼叫期间改变编码、在呼叫期间邀请新的参与者、呼叫转移和呼叫保持等。</p>
-</li>
-</ul>
-<p>SIP的特性</p>
-<ul>
-<li><p>SIP是一个带外协议，即发送和接收SIP报文使用了一个不同于发送和接收媒体数据的套接字。</p>
-</li>
-<li><p>SIP报文本身是可读的ASCII，这于HTTP报文类似。</p>
-</li>
-<li><p>SIP要求所有的报文都要确认，因此它能够在UDP或者TCP上运行。</p>
-</li>
-</ul>
-<p>SIP注册器把固定的人识别标志翻译为一个动态的IP地址。</p>
-<h1 id="支持多媒体的网络"><a href="#支持多媒体的网络" class="headerlink" title="支持多媒体的网络"></a>支持多媒体的网络</h1><p><strong>三种网络层方法：</strong></p>
-<ul>
-<li><p>区分服务。使用区分服务，当两类流量在一台路由器中排队时，一种类型的流量可以给定严格的优于另一种类型的流量的优先权。</p>
-</li>
-<li><p>每连接服务质量（QoS）保证。使用每连接QoS保证，每个应用的实例显式地预约端到端带宽，并因此具有确保的端到端性能。硬保证意味着应用将必定接收到它所请求的服务质量。软保证意味着应用将以高概率接收到它所请求的服务质量。</p>
-</li>
-<li><p>尽可能利用尽力而为的服务</p>
-</li>
-</ul>
-<h2 id="定制尽力而为网络"><a href="#定制尽力而为网络" class="headerlink" title="定制尽力而为网络"></a>定制尽力而为网络</h2><p>对需要提供多种类型流量机制的见解：</p>
-<ul>
-<li><p>标记分组使得路由器区分属于不同类型流量的分组。</p>
-</li>
-<li><p>希望在流量类型之间的提供流量隔离的度，以便一类流量不会收到另一类流量的负面影响。</p>
-</li>
-<li><p>当为流量类型或流之间提供隔离时，希望尽可能有效地使用资源。</p>
-</li>
-</ul>
-<h2 id="提供多种类型的服务"><a href="#提供多种类型的服务" class="headerlink" title="提供多种类型的服务"></a>提供多种类型的服务</h2><p>3个重要的监管准则：</p>
-<ul>
-<li><p>平均速率。网络可能希望限制一个流的分组能够发送到网络中的长期平均速率。这里一个关键的问题是监管平均速率的时间间隔。一个平均速率被限制为美妙100个分组的流要比一个每分钟6000个分组的源收到的约束更严格，即使在一个足够长的时间间隔上它们有相同的平均速率。</p>
-</li>
-<li><p>峰值速率。平均速率约束限制了一个相对长的时间内能够发送到网络中的流量，而峰值约束限制了一个较短时间内能够发送的最大分组数。</p>
-</li>
-<li><p>突发长度。网络也许还希望限制极端的时间间隔内能够发送到网络中的最大分组数。</p>
-</li>
-</ul>
-<p><strong>漏桶机制</strong> 是一个能够用来表征这些监管限制的抽象。漏桶由一个能够容纳b个令牌的桶组成。令牌加进桶的过程如下。可能潜在地加入桶中的新令牌总是以每秒r个令牌的速率产生。当产生一个令牌时，如果桶填充得少于b个令牌，新产生的令牌加入到该桶中；否则忽略该新产生的令牌，令牌桶保持具有b个令牌的满状态。假设在一个分组流向网络传输之前，必须首先从令牌桶中去除一个令牌。。如果令牌桶是空的，分组必须等待一个令牌。因为在桶中最多能由b个令牌，所以漏桶监管的流的最大突发长度是b个分组。此外，因为令牌产生的速率是r，所以在任何长度为t的时间间隔内能够进入网络中的最大分组数目为rt + b。因此，令牌产生速率r用于限制分组能够进入网络的长期平均速率。</p>
-<p>在加权公平排队（WFQ）规则中，每个流i保证收到至少等于R ∙ wi / (∑wj)的共享链路带宽，其中R是以分组/秒为单位的链路传输速率。当将漏桶机制于WFQ结合时，假设流i的令牌桶最初是满的。然后b个分组的突发到达流i的漏桶监管器。这些分组取出了漏桶中的所有令牌，然后加入了流i的WFQ等待区域。因为这b个分组以至少R ∙ wi / (∑wj)分组/秒的速度得到服务，直到这些分组的最后一个传输完成，所以将由最大时延dmax</p>
-<p><img src="/多媒体网络/20190823010808849.png" alt></p>
-<h2 id="区分服务"><a href="#区分服务" class="headerlink" title="区分服务"></a>区分服务</h2><p>因特网区分服务（Diffserv）体系结构提供服务区分，也就是在因特网中以一种可扩展性方式用不同的方法处理不同类型流量的能力。区分服务体系结构由两个功能元素的集合所组成：</p>
-<ul>
-<li><p>边界功能：分组分类和流量调节。在网络的入边缘，到达的分组被标记。更具体地说，在IPv4或者IPv6分组首部中的区分服务（DS）字段被设置为某个值。分组得到的标记标识了该分组所属的流量类型。然后不同类型的流量将在核心网络得到不同的服务。</p>
-</li>
-<li><p>核心功能：转发。当一个DS标记的分组到达一个Diffserv使能的服务器时，根据与分组类型相关的所谓的每跳行为（Per-Hop Behavior, PHB），该分组被转发到它的下一跳。每跳行为影响在竞争的流量类型之间共享路由器缓存和链路带宽的方式。Diffserv体系结构的一个关键原则是路由器的每跳行为只基于分组标记，即分组所属的流量类型。</p>
-</li>
-</ul>
-<h2 id="资源预约和呼叫准入"><a href="#资源预约和呼叫准入" class="headerlink" title="资源预约和呼叫准入"></a>资源预约和呼叫准入</h2><p>已经定义了两种PHB：加速转发（Expedited Forwarding, EF）PHB规定了一类流量离开路由器的速率必须等于或者大于某个已配置的速率。确保转发（Assured Forwarding, AF）PHB将流量分为4类，其中每个AF类都确保提供某种最小数量的带宽和缓存。</p>
-<p>让流申告它的QoS需求，然后让网络接收该流或者阻塞该流的过程称为呼叫准入过程。如果不总是能够提供充分的资源，并且要确保QoS，则需要一个呼叫准入过程，在这个过程中流申告其QoS需求，然后要么被网络准入，要么被网络阻塞。</p>
-
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare">
-          <strong>本文作者：</strong>
+        <div class="article-info info-on-right">
           
-            Thriumph
-          
-          <br>
-          <strong>本文链接：</strong>
-          https://thriumph.top/多媒体网络.html
-          <br>
-          <strong>版权声明：</strong>
-          本作品采用
-          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
-          进行许可。转载请注明出处！
-          
-            <br>
-            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
-          
-        </div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -399,136 +198,25 @@
 		</ul>
 	</div>
 
-    
+          
 
-    
-
-    
-      
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
+        <div class="clearfix"></div>
+    </header>
   </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//多媒体网络.html" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/PE文件.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          PE文件
-        
-      </div>
-    </a>
   
   
-    <a href="/计算机网络中的安全.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">计算机网络中的安全</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#多媒体网络应用"><span class="toc-number">1.</span> <span class="toc-text">多媒体网络应用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#视频的性质"><span class="toc-number">1.1.</span> <span class="toc-text">视频的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#音频的性质"><span class="toc-number">1.2.</span> <span class="toc-text">音频的性质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多媒体网络应用的类型"><span class="toc-number">1.3.</span> <span class="toc-text">多媒体网络应用的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#流式储存音频和视频"><span class="toc-number">1.3.1.</span> <span class="toc-text">流式储存音频和视频</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#会话式IP语音和视频"><span class="toc-number">1.3.2.</span> <span class="toc-text">会话式IP语音和视频</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#流式实况音频和视频"><span class="toc-number">1.3.3.</span> <span class="toc-text">流式实况音频和视频</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流式存储视频"><span class="toc-number">2.</span> <span class="toc-text">流式存储视频</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UDP流"><span class="toc-number">2.1.</span> <span class="toc-text">UDP流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP流"><span class="toc-number">2.2.</span> <span class="toc-text">HTTP流</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IP语音"><span class="toc-number">3.</span> <span class="toc-text">IP语音</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#尽力而为服务限制"><span class="toc-number">3.1.</span> <span class="toc-text">尽力而为服务限制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#端到端延时"><span class="toc-number">3.1.1.</span> <span class="toc-text">端到端延时</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在接收方消除音频的时延抖动"><span class="toc-number">3.2.</span> <span class="toc-text">在接收方消除音频的时延抖动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分组时延抖动"><span class="toc-number">3.2.1.</span> <span class="toc-text">分组时延抖动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#固定播放时延"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">固定播放时延</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适应性播放时延"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">适应性播放时延</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#从丢包中恢复"><span class="toc-number">3.3.</span> <span class="toc-text">从丢包中恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#向前纠错"><span class="toc-number">3.3.1.</span> <span class="toc-text">向前纠错</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#交织"><span class="toc-number">3.3.2.</span> <span class="toc-text">交织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#差错掩盖"><span class="toc-number">3.3.3.</span> <span class="toc-text">差错掩盖</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实时会话式应用的协议"><span class="toc-number">4.</span> <span class="toc-text">实时会话式应用的协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RTP"><span class="toc-number">4.1.</span> <span class="toc-text">RTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RTP基础"><span class="toc-number">4.1.1.</span> <span class="toc-text">RTP基础</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RTP分组首部字段"><span class="toc-number">4.1.2.</span> <span class="toc-text">RTP分组首部字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIP"><span class="toc-number">4.2.</span> <span class="toc-text">SIP</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#支持多媒体的网络"><span class="toc-number">5.</span> <span class="toc-text">支持多媒体的网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定制尽力而为网络"><span class="toc-number">5.1.</span> <span class="toc-text">定制尽力而为网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#提供多种类型的服务"><span class="toc-number">5.2.</span> <span class="toc-text">提供多种类型的服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#区分服务"><span class="toc-number">5.3.</span> <span class="toc-text">区分服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#资源预约和呼叫准入"><span class="toc-number">5.4.</span> <span class="toc-text">资源预约和呼叫准入</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/archives/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
+    </nav>
   
 
 
-
-
-
-
-  
-  
           </div>
         </div>
       </div>
@@ -568,8 +256,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

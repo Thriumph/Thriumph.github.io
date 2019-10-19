@@ -64,7 +64,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 30
+			总文章数 31
 		</nav>
 
 
@@ -155,6 +155,124 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-基本ROP" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/基本ROP.html">基本ROP</a>
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/基本ROP.html" class="archive-article-date">
+  	<time datetime="2019-08-16T12:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>基本的rop</p>
+        
+          <a class="article-more-a" href="/基本ROP.html#more">more >></a>
+        
+      
+      
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
+
+
+
+
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+      <p class="article-more-link">
+        <a class="article-more-a" href="/基本ROP.html">展开全文 >></a>
+      </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+  
+  
+  
     <article id="post-linux下基本缓冲区溢出shellcode编写" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -182,7 +300,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode:"></a>shellcode:</h1><p>缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。</p>
+        <p>总结一下shellcode编写基本方法</p>
         
           <a class="article-more-a" href="/linux下基本缓冲区溢出shellcode编写.html#more">more >></a>
         
@@ -300,7 +418,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="保护机制"><a href="#保护机制" class="headerlink" title="保护机制"></a>保护机制</h1><h2 id="Canary-栈保护"><a href="#Canary-栈保护" class="headerlink" title="Canary(栈保护)"></a>Canary(栈保护)</h2><p>栈溢出保护是一种缓冲区溢出攻击的缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址让shellcode能够执行。当开启栈保护后，函数开始执行时会先往栈里插入cookie信息，cookie常在ebp的上方，当函数返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候也会将cookie信息覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在linux中将cookie信息称为canary。</p>
+        <p>总结一下常用的保护机制</p>
         
           <a class="article-more-a" href="/栈溢出的保护机制和利用方法.html#more">more >></a>
         
@@ -863,124 +981,6 @@
   
   
   
-    <article id="post-RC4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/RC4.html">RC4</a>
-    </h1>
-  
-
-
-        
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/RC4.html" class="archive-article-date">
-  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在密码学中，RC4（来自Rivest Cipher 4的缩写）是一种流加密算法，密钥长度可变。它加解密使用相同的密钥，因此也属于对称加密算法。RC4是有线等效加密（WEP）中采用的加密算法，是TLS可采用算法之一。</p>
-        
-          <a class="article-more-a" href="/RC4.html#more">more >></a>
-        
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-      <p class="article-more-link">
-        <a class="article-more-a" href="/RC4.html">展开全文 >></a>
-      </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-  
-  
-  
     <article id="post-一个有趣的a+b" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1064,6 +1064,124 @@
     
       <p class="article-more-link">
         <a class="article-more-a" href="/一个有趣的a+b.html">展开全文 >></a>
+      </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+  
+  
+  
+    <article id="post-RC4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/RC4.html">RC4</a>
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/RC4.html" class="archive-article-date">
+  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在密码学中，RC4（来自Rivest Cipher 4的缩写）是一种流加密算法，密钥长度可变。它加解密使用相同的密钥，因此也属于对称加密算法。RC4是有线等效加密（WEP）中采用的加密算法，是TLS可采用算法之一。</p>
+        
+          <a class="article-more-a" href="/RC4.html#more">more >></a>
+        
+      
+      
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
+
+
+
+
+      
+      
+        <div class="declare" hidden="hidden"></div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+      <p class="article-more-link">
+        <a class="article-more-a" href="/RC4.html">展开全文 >></a>
       </p>
     
 
@@ -1221,127 +1339,9 @@
   
   
   
-    <article id="post-DLL注入" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/DLL注入.html">DLL注入</a>
-    </h1>
-  
-
-
-        
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/DLL注入.html" class="archive-article-date">
-  	<time datetime="2019-07-02T14:09:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>dll注入是指向运行中的其他进程强制插入特定的dll文件</p>
-        
-          <a class="article-more-a" href="/DLL注入.html#more">more >></a>
-        
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DLL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-      <p class="article-more-link">
-        <a class="article-more-a" href="/DLL注入.html">展开全文 >></a>
-      </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-  
-  
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 
@@ -1482,11 +1482,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1498,11 +1498,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
+                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
+                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1519,6 +1519,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">re</a>
               </li>
             
             <div class="clearfix"></div>

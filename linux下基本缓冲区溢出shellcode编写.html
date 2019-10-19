@@ -8,19 +8,19 @@
   <link rel="dns-prefetch" href="https://thriumph.top">
   <title>linux下基本缓冲区溢出shellcode编写 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="shellcode:缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。">
+  <meta name="description" content="总结一下shellcode编写基本方法">
 <meta name="keywords" content="二进制安全">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux下基本缓冲区溢出shellcode编写">
 <meta property="og:url" content="https://thriumph.top/linux下基本缓冲区溢出shellcode编写.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="shellcode:缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。">
+<meta property="og:description" content="总结一下shellcode编写基本方法">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://thriumph.top/linux下基本缓冲区溢出shellcode编写/20190819042638629.png">
-<meta property="og:updated_time" content="2019-08-19T12:51:03.539Z">
+<meta property="og:updated_time" content="2019-10-19T03:35:07.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux下基本缓冲区溢出shellcode编写">
-<meta name="twitter:description" content="shellcode:缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。">
+<meta name="twitter:description" content="总结一下shellcode编写基本方法">
 <meta name="twitter:image" content="https://thriumph.top/linux下基本缓冲区溢出shellcode编写/20190819042638629.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
@@ -70,7 +70,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 30
+			总文章数 31
 		</nav>
 
 
@@ -194,8 +194,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode:"></a>shellcode:</h1><p>缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。</p>
+        <p>总结一下shellcode编写基本方法</p>
 <a id="more"></a>
+<h1 id="shellcode"><a href="#shellcode" class="headerlink" title="shellcode:"></a>shellcode:</h1><p>缓冲区溢出攻击中植入进程的代码，shellcode是用作利用软件漏洞的有效载荷的一小段代码，因为它通常启动一个命令shell，攻击者可以从中控制受攻击的机器，所以称它位shellcode。但是任何执行类似任务的代码都可以称为shellcode。 因为有效载荷的功能不仅限于一个shell。</p>
+<!-- more -->
 
 <h1 id="功能："><a href="#功能：" class="headerlink" title="功能："></a>功能：</h1><p>可以是处于恶作剧弹出对话框<br>可能是攻击性的，删除重要文件、窃取数据、上传木马病毒并运行<br>破坏，格式化磁盘</p>
 <h1 id="shellcode基本编写方法："><a href="#shellcode基本编写方法：" class="headerlink" title="shellcode基本编写方法："></a>shellcode基本编写方法：</h1><ul>
@@ -569,11 +571,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+                <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -585,11 +587,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
+                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
+                <a href="javascript:void(0)" class="js-tag color4">DLL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -606,6 +608,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">re</a>
               </li>
             
             <div class="clearfix"></div>
