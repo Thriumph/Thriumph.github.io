@@ -18,7 +18,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/1.png">
 <meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/2.png">
-<meta property="og:updated_time" content="2019-10-18T07:22:44.378Z">
+<meta property="og:updated_time" content="2019-10-20T06:21:11.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CGCTF-CGfsb">
 <meta name="twitter:description" content="一道关于格式化字符串漏洞的题目">
@@ -71,7 +71,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 31
+			总文章数 32
 		</nav>
 
 
@@ -203,7 +203,7 @@
 
 <p><strong>printf(&amp;s)</strong> 正确的写法应该是printf(“%s”,s),这是一个格式化字符串漏洞，只有当pwnme是8的时候，才会调用system(“cat flag”)，但是并没找到对pwnme赋值的操作,所以可以首先找到pwnme的地址，然后利用格式化字符串漏洞用%n将pwnme地址写入8</p>
 <blockquote>
-<p>%d - 十进制 - 输出十进制整数<br>%s - 字符串 - 从内存中读取字符串<br>%x - 十六进制 - 输出十六进制数<br>%c - 字符 - 输出字符<br>%p - 指针 - 指针地址<br>%n - 到目前为止所写的字符数</p>
+<p>%d - 十进制 - 输出十进制整数。加上%n可以用于指向地址写数据<br>%s - 字符串 - 从内存中读取字符串<br>%x - 十六进制 - 输出十六进制数。如%i$x表示要泄漏偏移i处4字节长的16进制数据，%i$lx表示要泄漏偏移i处8字节长的16进制数据，32bit和64bit环境下一样。<br>%c - 字符 - 输出字符，加上%n可用于指向地址写数据<br>%p - 指针 - 指针地址。输出16进制数据，与%x基本一样，只是附加了前缀0x，在32bit下输出4字节，在64bit下输出8字节，可通过输出字节的长度来判断目标环境是32bit还是64bit<br>%n - 到目前为止所写的字符数。%n之前printf已经打印的字符个数赋值给偏移处指针所指向的地址位置，如%100×10$n表示将0x64写入偏移10处保存的指针所指向的地址（4字节），而%$hn表示写入的地址空间为2字节，%$hhn表示写入的地址空间为1字节，%$lln表示写入的地址空间为8字节，在32bit和64bit环境下一样。有时，直接写4字节会导致程序崩溃或等候时间过长，可以通过%$hn或%$hhn来适时调整。</p>
 </blockquote>
 <h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="定位pwnme的地址"><a href="#定位pwnme的地址" class="headerlink" title="定位pwnme的地址"></a>定位pwnme的地址</h2><p>pwnme属于.bss段，是全局变量，没有开启pie保护，所以pwnme的地址是固定的<br>直接用ida查看：地址是0804A068<br>用odjdump查看：objdump -D 5 | grep pwnme</p>
 <h2 id="覆盖pwnme的地址"><a href="#覆盖pwnme的地址" class="headerlink" title="覆盖pwnme的地址"></a>覆盖pwnme的地址</h2><p>测一下偏移<br>在第二个printf函数处下断点gdb调试，确定输入的数据是栈中的第几个参数来确定偏移<br><img src="/CGCTF-CGfsb/2.png" alt><br>偏移为10</p>
@@ -544,15 +544,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">漏洞分析</a>
               </li>
              
               <li class="article-tag-list-item">

