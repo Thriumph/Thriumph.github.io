@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://thriumph.top/PE文件/3.png">
 <meta property="og:image" content="https://thriumph.top/PE文件/4.png">
 <meta property="og:image" content="https://thriumph.top/PE文件/5.png">
-<meta property="og:updated_time" content="2019-08-22T13:59:43.987Z">
+<meta property="og:updated_time" content="2019-10-21T09:15:43.805Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PE文件">
 <meta name="twitter:description" content="总结一下pe文件">
@@ -74,7 +74,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 33
+			总文章数 34
 		</nav>
 
 
@@ -226,8 +226,12 @@
 <p><strong>基地址（imageBase）：</strong>　文件执行时将被映像到指定内存地址中，这个初始内存地址称为基址。</p>
 <p><strong>VA（虚拟地址）：</strong>由于windows运行在保护模式下，所以程序访问存储器所使用的逻辑地址就是<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>，简称VA，又称为内存<a href="https://www.baidu.com/s?wd=%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80&tn=24004469_oem_dg&rsv_dl=gh_pl_sl_csd" target="_blank" rel="noopener">偏移地址</a>。也就是程序被加载到内存中的地址。</p>
 <p><strong>RAW:</strong>文件偏移</p>
-<h2 id="VA-virtual-Address"><a href="#VA-virtual-Address" class="headerlink" title="VA (virtual Address)"></a>VA (virtual Address)</h2><p>在od中打开一个PE文件，这些都是VA<br><img src="/PE文件/2.png" alt></p>
-<h2 id="RVA"><a href="#RVA" class="headerlink" title="RVA"></a>RVA</h2><p><img src="/PE文件/3.png" alt><br>假设虚拟地址VA为00401518，要想知道相对偏移RVA，就要知道00401528属于那个节区，点M查看，是.text 也就是代码区，从00401000开始的，即RVA=00401518-00401000=518<br><img src="/PE文件/4.png" alt></p>
+<h2 id="虚拟内存地址-VA-virtual-Address"><a href="#虚拟内存地址-VA-virtual-Address" class="headerlink" title="虚拟内存地址 VA (virtual Address)"></a>虚拟内存地址 VA (virtual Address)</h2><p>就是PE文件在内存中的地址，因为用的是虚拟内存技术来管理内存，所以叫做虚拟内存，而物理内存是系统已经帮我们封装好了，所以我们不需要去管物理内存。<br>在od中打开一个PE文件，这些都是VA<br><img src="/PE文件/2.png" alt></p>
+<h2 id="相对虚拟地址-RVA（Relative-Virtual-Address）"><a href="#相对虚拟地址-RVA（Relative-Virtual-Address）" class="headerlink" title="相对虚拟地址 RVA（Relative Virtual Address）"></a>相对虚拟地址 RVA（Relative Virtual Address）</h2><p>相对虚拟地址是内存地址基于基地址的偏移，规则是VA=IMage Base+RVA<br><img src="/PE文件/3.png" alt><br>假设虚拟地址VA为00401518，要想知道相对偏移RVA，就要知道00401528属于那个节区，点M查看，是.text 也就是代码区，从00401000开始的，即RVA=00401518-00401000=518<br><img src="/PE文件/4.png" alt></p>
+<h2 id="文件偏移地址（File-Offset）"><a href="#文件偏移地址（File-Offset）" class="headerlink" title="文件偏移地址（File Offset）"></a>文件偏移地址（File Offset）</h2><p>数据在PE文件的偏移位置，通俗的讲就是文件的第几个字节，比如文件偏移地址为0x400，那么指的就是文件的第0x400个字节的地方。</p>
+<h2 id="基地址（Image-Base）"><a href="#基地址（Image-Base）" class="headerlink" title="基地址（Image Base）"></a>基地址（Image Base）</h2><p>PE装入内存的地方，相当于使用fread()函数把PE文件读入内存，而基地址就相当于PE在内存中的首地址，默认exe文件在内存中的基地址是0x00400000（不一定是，站长的32位的Win8的基地址就不是，一般为0x00EB0000），dll文件是0x10000000。</p>
+<h2 id="相对虚拟地址（Relative-Virtual-Address，RVA）"><a href="#相对虚拟地址（Relative-Virtual-Address，RVA）" class="headerlink" title="相对虚拟地址（Relative Virtual Address，RVA）"></a>相对虚拟地址（Relative Virtual Address，RVA）</h2><p>相对虚拟地址是内存地址基于基地址的偏移，规则是VA=IMage Base+RVA</p>
+<h2 id="物理地址偏移（Raw-Offset，RO）"><a href="#物理地址偏移（Raw-Offset，RO）" class="headerlink" title="物理地址偏移（Raw Offset，RO）"></a>物理地址偏移（Raw Offset，RO）</h2><p>这个一般是相对于PE文件在文件中的各区块而言的文件偏移地址。我觉得简单来说这就是一个特殊的File Offset</p>
 <h2 id="VA-to-RAW"><a href="#VA-to-RAW" class="headerlink" title="VA to RAW"></a>VA to RAW</h2><p>想要知道在文件中的偏移，首先要通过VA计算出RVA（如上所示），在通过RAV计算RAW，这时就需要查看区段表了<br><img src="/PE文件/5.png" alt><br>VOffset是内存中的偏移<br>VSize是内存中的大小<br>ROffset是文件中的偏移<br>RSize是文件中的大小<br>则RAW=400+518=918</p>
 <h1 id="IAT导入地址表-EAT机制"><a href="#IAT导入地址表-EAT机制" class="headerlink" title="IAT导入地址表/EAT机制"></a>IAT导入地址表/EAT机制</h1><h2 id="DLL"><a href="#DLL" class="headerlink" title="DLL"></a>DLL</h2><p>DLL是动态链接库，是win特有的系统，16位的DOS时代不存在DLL概念，只有”库”，当需要使用库函数时，编译器会将库函数一起插入到应用程序中。当运行多个程序时，会造成资源浪费，于是引入了动态链接库，内存映射技术使得加载后的DLL代码、资源在多个进程中实现共享。</p>
 <p><strong>加载DLL的两种方法</strong><br>1.<strong>显示链接：</strong>程序使用DLL的时候加载，使用完毕释放内存。<br>2.<strong>隐式链接：</strong>程序开始时即一同加载DLL，程序终止时在释放内存。</p>
@@ -419,7 +423,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PE文件的基本结构"><span class="toc-number">1.</span> <span class="toc-text">PE文件的基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOS头"><span class="toc-number">1.1.</span> <span class="toc-text">DOS头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOS存根"><span class="toc-number">1.2.</span> <span class="toc-text">DOS存根</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NT头"><span class="toc-number">1.3.</span> <span class="toc-text">NT头</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VA，RVA，RAW"><span class="toc-number">2.</span> <span class="toc-text">VA，RVA，RAW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VA-virtual-Address"><span class="toc-number">2.1.</span> <span class="toc-text">VA (virtual Address)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RVA"><span class="toc-number">2.2.</span> <span class="toc-text">RVA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VA-to-RAW"><span class="toc-number">2.3.</span> <span class="toc-text">VA to RAW</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IAT导入地址表-EAT机制"><span class="toc-number">3.</span> <span class="toc-text">IAT导入地址表/EAT机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DLL"><span class="toc-number">3.1.</span> <span class="toc-text">DLL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMAGE-IMPORT-DESCRIPTOR"><span class="toc-number">3.2.</span> <span class="toc-text">IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EAT"><span class="toc-number">3.3.</span> <span class="toc-text">EAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMAGE-EXPORT-DIRECTORY"><span class="toc-number">3.4.</span> <span class="toc-text">IMAGE_EXPORT_DIRECTORY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GetProcAddress（-操作原理"><span class="toc-number">3.5.</span> <span class="toc-text">GetProcAddress（)操作原理</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PE文件的基本结构"><span class="toc-number">1.</span> <span class="toc-text">PE文件的基本结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DOS头"><span class="toc-number">1.1.</span> <span class="toc-text">DOS头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DOS存根"><span class="toc-number">1.2.</span> <span class="toc-text">DOS存根</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NT头"><span class="toc-number">1.3.</span> <span class="toc-text">NT头</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VA，RVA，RAW"><span class="toc-number">2.</span> <span class="toc-text">VA，RVA，RAW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟内存地址-VA-virtual-Address"><span class="toc-number">2.1.</span> <span class="toc-text">虚拟内存地址 VA (virtual Address)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对虚拟地址-RVA（Relative-Virtual-Address）"><span class="toc-number">2.2.</span> <span class="toc-text">相对虚拟地址 RVA（Relative Virtual Address）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件偏移地址（File-Offset）"><span class="toc-number">2.3.</span> <span class="toc-text">文件偏移地址（File Offset）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基地址（Image-Base）"><span class="toc-number">2.4.</span> <span class="toc-text">基地址（Image Base）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相对虚拟地址（Relative-Virtual-Address，RVA）"><span class="toc-number">2.5.</span> <span class="toc-text">相对虚拟地址（Relative Virtual Address，RVA）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#物理地址偏移（Raw-Offset，RO）"><span class="toc-number">2.6.</span> <span class="toc-text">物理地址偏移（Raw Offset，RO）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VA-to-RAW"><span class="toc-number">2.7.</span> <span class="toc-text">VA to RAW</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IAT导入地址表-EAT机制"><span class="toc-number">3.</span> <span class="toc-text">IAT导入地址表/EAT机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DLL"><span class="toc-number">3.1.</span> <span class="toc-text">DLL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMAGE-IMPORT-DESCRIPTOR"><span class="toc-number">3.2.</span> <span class="toc-text">IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EAT"><span class="toc-number">3.3.</span> <span class="toc-text">EAT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IMAGE-EXPORT-DIRECTORY"><span class="toc-number">3.4.</span> <span class="toc-text">IMAGE_EXPORT_DIRECTORY</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GetProcAddress（-操作原理"><span class="toc-number">3.5.</span> <span class="toc-text">GetProcAddress（)操作原理</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -583,6 +587,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">-ctf -pwn</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
@@ -603,10 +611,6 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
@@ -620,6 +624,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">pe文件</a>
               </li>
              
               <li class="article-tag-list-item">
