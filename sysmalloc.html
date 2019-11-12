@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>Tag: 读书笔记 | Thriumph</title>
+  <title>sysmalloc | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="pwn,re,渗透测试">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thriumph">
-<meta property="og:url" content="https://thriumph.top/tags/读书笔记/index.html">
+  <meta name="description" content="sysmalloc用于初始化">
+<meta name="keywords" content="glibc,malloc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sysmalloc">
+<meta property="og:url" content="https://thriumph.top/sysmalloc.html">
 <meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="sysmalloc用于初始化">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://thriumph.top/sysmalloc/1.png">
+<meta property="og:image" content="https://thriumph.top/sysmalloc/2.png">
+<meta property="og:updated_time" content="2019-11-12T11:38:46.310Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thriumph">
+<meta name="twitter:title" content="sysmalloc">
+<meta name="twitter:description" content="sysmalloc用于初始化">
+<meta name="twitter:image" content="https://thriumph.top/sysmalloc/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -154,402 +161,271 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-sysmalloc" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sysmalloc
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/sysmalloc.html" class="archive-article-date">
+  	<time datetime="2019-10-30T07:51:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>sysmalloc用于初始化</p>
+<a id="more"></a>
+<p><img src="/sysmalloc/1.png" alt><br><img src="/sysmalloc/2.png" alt><br>当 _ int_malloc() 函数尝试从 fast bins ， last remainder chunk ， small bins ， large bins 和 top chunk 都失败之后，就会使用 sYSMALLOc() 函数直接向系统申请内存用于分配所需的chunk。</p>
+<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">sysmalloc</span><span class="params">(INTERNAL_SIZE_T nb, mstate av)</span> </span>&#123;</span><br><span class="line">    mchunkptr old_top;</span><br><span class="line">    INTERNAL_SIZE_T old_size;</span><br><span class="line">    <span class="keyword">char</span> *old_end;</span><br><span class="line">    <span class="keyword">long</span> size;</span><br><span class="line">    <span class="keyword">char</span> *brk;</span><br><span class="line">    <span class="keyword">long</span> correction;</span><br><span class="line">    <span class="keyword">char</span> *snd_brk;</span><br><span class="line">    INTERNAL_SIZE_T front_misalign;</span><br><span class="line">    INTERNAL_SIZE_T end_misalign;</span><br><span class="line">    <span class="keyword">char</span> *aligned_brk;</span><br><span class="line">    mchunkptr p;</span><br><span class="line">    mchunkptr remainder;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> remainder_size;</span><br><span class="line">    <span class="keyword">size_t</span> pagesize = GLRO(dl_pagesize);</span><br><span class="line">    <span class="keyword">bool</span> tried_mmap = <span class="literal">false</span>;</span><br><span class="line">    ...</span><br><span class="line">    old_top = av-&gt;top;</span><br><span class="line">    old_size = chunksize(old_top);</span><br><span class="line">    old_end = (<span class="keyword">char</span> *) (chunk_at_offset(old_top, old_size));</span><br><span class="line">    brk = snd_brk = (<span class="keyword">char</span> *) (MORECORE_FAILURE);</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena) &#123;</span><br><span class="line">        heap_info *old_heap, *heap;</span><br><span class="line">        <span class="keyword">size_t</span> old_heap_size;</span><br><span class="line">        old_heap = heap_for_ptr(old_top);</span><br><span class="line">        old_heap_size = old_heap-&gt;size;</span><br><span class="line">        <span class="keyword">if</span> ((<span class="keyword">long</span>) (MINSIZE + nb - old_size) &gt; <span class="number">0</span></span><br><span class="line">                &amp;&amp; grow_heap(old_heap, MINSIZE + nb - old_size) == <span class="number">0</span>) &#123;</span><br><span class="line">            av-&gt;system_mem += old_heap-&gt;size - old_heap_size;</span><br><span class="line">            arena_mem += old_heap-&gt;size - old_heap_size;</span><br><span class="line">            set_head(old_top,</span><br><span class="line">                    (((<span class="keyword">char</span> *) old_heap + old_heap-&gt;size) - (<span class="keyword">char</span> *) old_top) | PREV_INUSE);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ((heap = new_heap(nb + (MINSIZE + <span class="keyword">sizeof</span>(*heap)), mp_.top_pad))) &#123;</span><br><span class="line">            heap-&gt;ar_ptr = av;</span><br><span class="line">            heap-&gt;prev = old_heap;</span><br><span class="line">            av-&gt;system_mem += heap-&gt;size;</span><br><span class="line">            arena_mem += heap-&gt;size;</span><br><span class="line">            top (av) = chunk_at_offset(heap, <span class="keyword">sizeof</span>(*heap));</span><br><span class="line">            set_head(top (av), (heap-&gt;size - <span class="keyword">sizeof</span> (*heap)) | PREV_INUSE);</span><br><span class="line">            old_size = (old_size - MINSIZE ) &amp; ~MALLOC_ALIGN_MASK;</span><br><span class="line">            set_head(chunk_at_offset (old_top, old_size + <span class="number">2</span> * SIZE_SZ),</span><br><span class="line">                    <span class="number">0</span> | PREV_INUSE);</span><br><span class="line">            <span class="keyword">if</span> (old_size &gt;= MINSIZE) &#123;</span><br><span class="line">                set_head(chunk_at_offset (old_top, old_size),</span><br><span class="line">                        (<span class="number">2</span> * SIZE_SZ) | PREV_INUSE);</span><br><span class="line">                set_foot(chunk_at_offset (old_top, old_size), (<span class="number">2</span> * SIZE_SZ));</span><br><span class="line">                set_head(old_top, old_size | PREV_INUSE | NON_MAIN_ARENA);</span><br><span class="line">                _int_free(av, old_top, <span class="number">1</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                set_head(old_top, (old_size + <span class="number">2</span> * SIZE_SZ) | PREV_INUSE);</span><br><span class="line">                set_foot(old_top, (old_size + <span class="number">2</span> * SIZE_SZ));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!tried_mmap)</span><br><span class="line">            <span class="keyword">goto</span> try_mmap;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>old_top、old_size和old_end分别保存了top chunk的指针，大小以及尾部的地址。如果是非主分配区，首先通过heap_for_ptr获得原top chunk对应的heap_info指针。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> heap_for_ptr(ptr) \</span></span><br><span class="line">  ((heap_info *) ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (ptr) &amp; ~(HEAP_MAX_SIZE - <span class="number">1</span>)))</span><br></pre></td></tr></table></figure>
+
+<p>对于非主分配区，因为每个heap是按照HEAP_MAX_SIZE的大小分配且对齐的，而每个topchunk存在于每个heap的剩余空间（高地址处），因此通过heap_for_ptr就能取出heap_info指针，heap_info保存了每个heap的相关信息。获得heap_info指针后，就能获得该heap当前被使用的大小并将其保存在old_heap_size中。当进入到sysmalloc前会尝试在top chunk分配内存，因此代码执行到这里肯定失败了。所以这里只有MINSIZE + nb - old_size&gt;0这一种情况，即这时的top chunk空间不足了，因此首先通过grow_heap尝试向heap的高地址处增加heap当前使用的大小，就是top chunk的大小</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">grow_heap</span><span class="params">(heap_info *h, <span class="keyword">long</span> diff)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> pagesize = GLRO(dl_pagesize);</span><br><span class="line">    <span class="keyword">long</span> new_size;</span><br><span class="line">    diff = ALIGN_UP(diff, pagesize);</span><br><span class="line">    new_size = (<span class="keyword">long</span>) h-&gt;size + diff;</span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) new_size &gt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) HEAP_MAX_SIZE)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) new_size &gt; h-&gt;mprotect_size) &#123;</span><br><span class="line">        <span class="keyword">if</span> (__mprotect((<span class="keyword">char</span> *) h + h-&gt;mprotect_size,</span><br><span class="line">                (<span class="keyword">unsigned</span> <span class="keyword">long</span>) new_size - h-&gt;mprotect_size,</span><br><span class="line">                PROT_READ | PROT_WRITE) != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-2</span>;</span><br><span class="line">        h-&gt;mprotect_size = new_size;</span><br><span class="line">    &#125;</span><br><span class="line">    h-&gt;size = new_size;</span><br><span class="line">    LIBC_PROBE(memory_heap_more, <span class="number">2</span>, h, h-&gt;size);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>h-&gt;size = new_size表示重新设置heap的大小至new_size。<br>在sysmalloc中，假设grow_heap成功，即将top chunk的大小设置为MINSIZE + nb，则重新设置分配区使用的内存大小，并且设置top chunk的size至新值（注意这里的size不能直接设置为MINSIZE + nb是因为在grow_heap中有对齐操作）。假如grow_heap失败，大部分情况下说明heap的使用大小已经接近其最大值HEAP_MAX_SIZE了，此时只能通过new_heap重新分配一个heap，注意传入的参数mp _ .top_pad表示在分配内存时，额外多分配的内存。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> heap_info * internal_function <span class="title">new_heap</span><span class="params">(<span class="keyword">size_t</span> size, <span class="keyword">size_t</span> top_pad)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> pagesize = GLRO(dl_pagesize);</span><br><span class="line">    <span class="keyword">char</span> *p1, *p2;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> ul;</span><br><span class="line">    heap_info *h;</span><br><span class="line">    <span class="keyword">if</span> (size + top_pad &lt; HEAP_MIN_SIZE)</span><br><span class="line">        size = HEAP_MIN_SIZE;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (size + top_pad &lt;= HEAP_MAX_SIZE)</span><br><span class="line">        size += top_pad;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (size &gt; HEAP_MAX_SIZE)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        size = HEAP_MAX_SIZE;</span><br><span class="line">    size = ALIGN_UP(size, pagesize);</span><br><span class="line">    p2 = MAP_FAILED;</span><br><span class="line">    <span class="keyword">if</span> (aligned_heap_area) &#123;</span><br><span class="line">        p2 = (<span class="keyword">char</span> *) MMAP(aligned_heap_area, HEAP_MAX_SIZE, PROT_NONE,</span><br><span class="line">                MAP_NORESERVE);</span><br><span class="line">        aligned_heap_area = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span> (p2 != MAP_FAILED &amp;&amp; ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) p2 &amp; (HEAP_MAX_SIZE - <span class="number">1</span>))) &#123;</span><br><span class="line">            __munmap(p2, HEAP_MAX_SIZE);</span><br><span class="line">            p2 = MAP_FAILED;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (p2 == MAP_FAILED) &#123;</span><br><span class="line">        p1 = (<span class="keyword">char</span> *) MMAP(<span class="number">0</span>, HEAP_MAX_SIZE &lt;&lt; <span class="number">1</span>, PROT_NONE, MAP_NORESERVE);</span><br><span class="line">        <span class="keyword">if</span> (p1 != MAP_FAILED) &#123;</span><br><span class="line">            p2 = (<span class="keyword">char</span> *) (((<span class="keyword">unsigned</span> <span class="keyword">long</span>) p1 + (HEAP_MAX_SIZE - <span class="number">1</span>))</span><br><span class="line">                    &amp; ~(HEAP_MAX_SIZE - <span class="number">1</span>));</span><br><span class="line">            ul = p2 - p1;</span><br><span class="line">            <span class="keyword">if</span> (ul)</span><br><span class="line">                __munmap(p1, ul);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                aligned_heap_area = p2 + HEAP_MAX_SIZE;</span><br><span class="line">            __munmap(p2 + HEAP_MAX_SIZE, HEAP_MAX_SIZE - ul);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            p2 = (<span class="keyword">char</span> *) MMAP(<span class="number">0</span>, HEAP_MAX_SIZE, PROT_NONE, MAP_NORESERVE);</span><br><span class="line">            <span class="keyword">if</span> (p2 == MAP_FAILED)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) p2 &amp; (HEAP_MAX_SIZE - <span class="number">1</span>)) &#123;</span><br><span class="line">                __munmap(p2, HEAP_MAX_SIZE);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (__mprotect(p2, size, PROT_READ | PROT_WRITE) != <span class="number">0</span>) &#123;</span><br><span class="line">        __munmap(p2, HEAP_MAX_SIZE);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    h = (heap_info *) p2;</span><br><span class="line">    h-&gt;size = size;</span><br><span class="line">    h-&gt;mprotect_size = size;</span><br><span class="line">    LIBC_PROBE(memory_heap_new, <span class="number">2</span>, h, h-&gt;size);</span><br><span class="line">    <span class="keyword">return</span> h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先对需要分配的内存大小size做相应的调整。aligned_heap_area表示上一次MMAP分配后的结束地址，如果存在，就首先尝试从该地址分配大小为HEAP_MAX_SIZE的内存。MMAP最后是系统调用，对应的内核函数在《malloc源码分析—2》中已经介绍过了，这里只是一些标志位的区别。分配完后，会检查地址是否对齐，如果不对齐也是失败。<br>如果第一次分配失败了，就会再尝试一次，这次分配HEAP_MAX_SIZE * 2 大小的内存，并且新内存的起始地址由内核决定。因为尝试分配了HEAP _ MAX _ SIZE * 2大小的内存，其中必定包含了大小为HEAP_MAX_SIZE且和HEAP_MAX_SIZE对齐的内存，因此一旦分配成功，就从中截取出这部分内存。<br>如果连第二次也分配失败了，就会通过MMAP进行第三次分配，这次只分配HEAP_MAX_SIZE大小的内存，并且起始地址由内核决定，如果又失败了就返回0。<br>如果三面三次分配内存任何一次成功，就设置相应的可读写位置，并且返回分配区的heap_info指针。</p>
+<p>重新回到sysmalloc中，假设分配成功，就会对刚刚分配得到的heap做相应的设置，其中ar_ptr表示所属的分配区的指针，prev表示上一个heap，所有的heap通过prev形成单向链表，然后通过set_head设置av分配区top chunk的size，这里也可以看出，对于刚分配的heap，包含了heap_info指针、top chunk、以及大于size的未被使用的部分。<br>再接下来就要对原来的top chunk进行最后的处理，这里假设对齐，如果原top chunk的大小不够大，就将其分割成old_size + 2 * SIZE_SZ和2 * SIZE_SZ大小；如果原top chunk的大小足够大，就将其分割成old_size，2 * SIZE_SZ和2 * SIZE_SZ大小，并通过 _ int_free进行释放。</p>
+<h1 id="0x02"><a href="#0x02" class="headerlink" title="0x02"></a>0x02</h1><p>针对主分配区的操作。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">sysmalloc</span><span class="params">(INTERNAL_SIZE_T nb, mstate av)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        size = nb + mp_.top_pad + MINSIZE;</span><br><span class="line">        <span class="keyword">if</span> (contiguous(av))</span><br><span class="line">            size -= old_size;</span><br><span class="line">        size = ALIGN_UP(size, pagesize);</span><br><span class="line">        <span class="keyword">if</span> (size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            brk = (<span class="keyword">char</span> *) (MORECORE(size));</span><br><span class="line">            LIBC_PROBE (memory_sbrk_more, <span class="number">2</span>, brk, size);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (brk != (<span class="keyword">char</span> *) (MORECORE_FAILURE)) &#123;</span><br><span class="line">            <span class="keyword">void</span> (*hook)(<span class="keyword">void</span>) = atomic_forced_read (__after_morecore_hook);</span><br><span class="line">            <span class="keyword">if</span> (__builtin_expect (hook != <span class="literal">NULL</span>, <span class="number">0</span>))</span><br><span class="line">            (*hook)();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (contiguous (av))</span><br><span class="line">                size = ALIGN_UP (size + old_size, pagesize);</span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (size) &lt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (MMAP_AS_MORECORE_SIZE))</span><br><span class="line">                size = MMAP_AS_MORECORE_SIZE;</span><br><span class="line">            <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (size) &gt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (nb))&#123;</span><br><span class="line">                <span class="keyword">char</span> *mbrk = (<span class="keyword">char</span> *) (MMAP (<span class="number">0</span>, size, PROT_READ | PROT_WRITE, <span class="number">0</span>));</span><br><span class="line">                <span class="keyword">if</span> (mbrk != MAP_FAILED)&#123;</span><br><span class="line">                    brk = mbrk;</span><br><span class="line">                    snd_brk = brk + size;</span><br><span class="line">                    set_noncontiguous (av);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MORECORE是一个宏定义，其最终是通过系统调用分配内存，定义在linux内核的mmap.c文件中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">SYSCALL_DEFINE1(brk, <span class="keyword">unsigned</span> <span class="keyword">long</span>, brk)&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> retval;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> newbrk, oldbrk;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span> = <span class="title">current</span>-&gt;<span class="title">mm</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> min_brk;</span><br><span class="line">    <span class="keyword">bool</span> populate;</span><br><span class="line">    down_write(&amp;mm-&gt;mmap_sem);</span><br><span class="line">    min_brk = mm-&gt;start_brk;</span><br><span class="line">    <span class="keyword">if</span> (brk &lt; min_brk)</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    <span class="keyword">if</span> (check_data_rlimit(rlimit(RLIMIT_DATA), brk, mm-&gt;start_brk,</span><br><span class="line">                  mm-&gt;end_data, mm-&gt;start_data))</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    newbrk = PAGE_ALIGN(brk);</span><br><span class="line">    oldbrk = PAGE_ALIGN(mm-&gt;brk);</span><br><span class="line">    <span class="keyword">if</span> (oldbrk == newbrk)</span><br><span class="line">        <span class="keyword">goto</span> set_brk;</span><br><span class="line">    <span class="keyword">if</span> (brk &lt;= mm-&gt;brk) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!do_munmap(mm, newbrk, oldbrk-newbrk))</span><br><span class="line">            <span class="keyword">goto</span> set_brk;</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (find_vma_intersection(mm, oldbrk, newbrk+PAGE_SIZE))</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    <span class="keyword">if</span> (do_brk(oldbrk, newbrk-oldbrk) != oldbrk)</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">set_brk:</span><br><span class="line">    mm-&gt;brk = brk;</span><br><span class="line">    populate = newbrk &gt; oldbrk &amp;&amp; (mm-&gt;def_flags &amp; VM_LOCKED) != <span class="number">0</span>;</span><br><span class="line">    up_write(&amp;mm-&gt;mmap_sem);</span><br><span class="line">    <span class="keyword">if</span> (populate)</span><br><span class="line">        mm_populate(oldbrk, newbrk - oldbrk);</span><br><span class="line">    <span class="keyword">return</span> brk;</span><br><span class="line">out:</span><br><span class="line">    retval = mm-&gt;brk;</span><br><span class="line">    up_write(&amp;mm-&gt;mmap_sem);</span><br><span class="line">    <span class="keyword">return</span> retval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先会对传入堆的新地址brk做一些检查，然后该新地址小于原本的brk，就需要通过do_munmap释放虚拟内存，以减少堆的大小；反之，就通过do_brk增加堆得大小。其中find_vma_intersection用来判断增加堆空间后，是否会占用已经被分配的虚拟内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> struct vm_area_struct * <span class="title">find_vma_intersection</span><span class="params">(struct mm_struct * mm, <span class="keyword">unsigned</span> <span class="keyword">long</span> start_addr, <span class="keyword">unsigned</span> <span class="keyword">long</span> end_addr)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> * <span class="title">vma</span> = <span class="title">find_vma</span>(<span class="title">mm</span>,<span class="title">start_addr</span>);</span></span><br><span class="line">    <span class="keyword">if</span> (vma &amp;&amp; end_addr &lt;= vma-&gt;vm_start)</span><br><span class="line">        vma = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">return</span> vma;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为是增加堆的大小，因此只需要关注do_brk函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">do_brk</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> addr, <span class="keyword">unsigned</span> <span class="keyword">long</span> len)</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">mm_struct</span> *<span class="title">mm</span> = <span class="title">current</span>-&gt;<span class="title">mm</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">vm_area_struct</span> *<span class="title">vma</span>, *<span class="title">prev</span>;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> flags;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rb_node</span> **<span class="title">rb_link</span>, *<span class="title">rb_parent</span>;</span></span><br><span class="line">    <span class="keyword">pgoff_t</span> pgoff = addr &gt;&gt; PAGE_SHIFT;</span><br><span class="line">    <span class="keyword">int</span> error;</span><br><span class="line">    len = PAGE_ALIGN(len);</span><br><span class="line">    <span class="keyword">if</span> (!len)</span><br><span class="line">        <span class="keyword">return</span> addr;</span><br><span class="line">    flags = VM_DATA_DEFAULT_FLAGS | VM_ACCOUNT | mm-&gt;def_flags;</span><br><span class="line">    error = get_unmapped_area(<span class="literal">NULL</span>, addr, len, <span class="number">0</span>, MAP_FIXED);</span><br><span class="line">    <span class="keyword">if</span> (error &amp; ~PAGE_MASK)</span><br><span class="line">        <span class="keyword">return</span> error;</span><br><span class="line">    error = mlock_future_check(mm, mm-&gt;def_flags, len);</span><br><span class="line">    <span class="keyword">if</span> (error)</span><br><span class="line">        <span class="keyword">return</span> error;</span><br><span class="line">    verify_mm_writelocked(mm);</span><br><span class="line">    <span class="keyword">while</span> (find_vma_links(mm, addr, addr + len, &amp;prev, &amp;rb_link,</span><br><span class="line">                  &amp;rb_parent)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (do_munmap(mm, addr, len))</span><br><span class="line">            <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!may_expand_vm(mm, len &gt;&gt; PAGE_SHIFT))</span><br><span class="line">        <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    <span class="keyword">if</span> (mm-&gt;map_count &gt; sysctl_max_map_count)</span><br><span class="line">        <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    <span class="keyword">if</span> (security_vm_enough_memory_mm(mm, len &gt;&gt; PAGE_SHIFT))</span><br><span class="line">        <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    vma = vma_merge(mm, prev, addr, addr + len, flags,</span><br><span class="line">                    <span class="literal">NULL</span>, <span class="literal">NULL</span>, pgoff, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (vma)</span><br><span class="line">        <span class="keyword">goto</span> out;</span><br><span class="line">    vma = kmem_cache_zalloc(vm_area_cachep, GFP_KERNEL);</span><br><span class="line">    <span class="keyword">if</span> (!vma) &#123;</span><br><span class="line">        vm_unacct_memory(len &gt;&gt; PAGE_SHIFT);</span><br><span class="line">        <span class="keyword">return</span> -ENOMEM;</span><br><span class="line">    &#125;</span><br><span class="line">    INIT_LIST_HEAD(&amp;vma-&gt;anon_vma_chain);</span><br><span class="line">    vma-&gt;vm_mm = mm;</span><br><span class="line">    vma-&gt;vm_start = addr;</span><br><span class="line">    vma-&gt;vm_end = addr + len;</span><br><span class="line">    vma-&gt;vm_pgoff = pgoff;</span><br><span class="line">    vma-&gt;vm_flags = flags;</span><br><span class="line">    vma-&gt;vm_page_prot = vm_get_page_prot(flags);</span><br><span class="line">    vma_link(mm, vma, prev, rb_link, rb_parent);</span><br><span class="line">out:</span><br><span class="line">    perf_event_mmap(vma);</span><br><span class="line">    mm-&gt;total_vm += len &gt;&gt; PAGE_SHIFT;</span><br><span class="line">    <span class="keyword">if</span> (flags &amp; VM_LOCKED)</span><br><span class="line">        mm-&gt;locked_vm += (len &gt;&gt; PAGE_SHIFT);</span><br><span class="line">    vma-&gt;vm_flags |= VM_SOFTDIRTY;</span><br><span class="line">    <span class="keyword">return</span> addr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>get_unmapped_area用来检查需要分配的虚拟内存地址是否已经被使用，find_vma_links用来查找需要插入的虚拟内存在红黑树的位置，may_expand_vm用来检查虚拟内存是否会超过系统的限制，vma_merge用来合并虚拟内存，如果不能合并，就通过slab分配一个vma，进行相应的设置，并通过vma_link插入到进程的红黑树中。</p>
+<p>从linux的代码中回来，继续看sysmalloc，假设分配成功，会查找是否有 _ after_morecore_hook函数并执行，这里假设该函数指针为null。<br>假设分配失败，则进入else部分，首先对需要分配的大小按地址对齐，并且设置分配size的最小值为MMAP_AS_MORECORE_SIZE（1MB），然后通过MMAP宏分配内存，如果是通过mmap分配的内存，则设置分配区为不连续标志位。</p>
+<h1 id="0x03"><a href="#0x03" class="headerlink" title="0x03"></a>0x03</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">sysmalloc</span><span class="params">(INTERNAL_SIZE_T nb, mstate av)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (brk != (<span class="keyword">char</span> *) (MORECORE_FAILURE)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (mp_.sbrk_base == <span class="number">0</span>)</span><br><span class="line">                mp_.sbrk_base = brk;</span><br><span class="line">            av-&gt;system_mem += size;</span><br><span class="line">            <span class="keyword">if</span> (brk == old_end &amp;&amp; snd_brk == (<span class="keyword">char</span> *) (MORECORE_FAILURE))</span><br><span class="line">                set_head(old_top, (size + old_size) | PREV_INUSE);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (contiguous (av) &amp;&amp; old_size &amp;&amp; brk &lt; old_end) &#123;</span><br><span class="line">                malloc_printerr(<span class="number">3</span>, <span class="string">"break adjusted to free malloc space"</span>, brk, av);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                front_misalign = <span class="number">0</span>;</span><br><span class="line">                end_misalign = <span class="number">0</span>;</span><br><span class="line">                correction = <span class="number">0</span>;</span><br><span class="line">                aligned_brk = brk;</span><br><span class="line">                <span class="keyword">if</span> (contiguous(av)) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (old_size)</span><br><span class="line">                        av-&gt;system_mem += brk - old_end;</span><br><span class="line">                    front_misalign = (INTERNAL_SIZE_T) chunk2mem(</span><br><span class="line">                            brk) &amp; MALLOC_ALIGN_MASK;</span><br><span class="line">                    <span class="keyword">if</span> (front_misalign &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                        correction = MALLOC_ALIGNMENT - front_misalign;</span><br><span class="line">                        aligned_brk += correction;</span><br><span class="line">                    &#125;</span><br><span class="line">                    correction += old_size;</span><br><span class="line">                    end_misalign = (INTERNAL_SIZE_T) (brk + size + correction);</span><br><span class="line">                    correction += (ALIGN_UP(end_misalign, pagesize)) - end_misalign;</span><br><span class="line">                    assert(correction &gt;= <span class="number">0</span>);</span><br><span class="line">                    snd_brk = (<span class="keyword">char</span> *) (MORECORE(correction));</span><br><span class="line">                    <span class="keyword">if</span> (snd_brk == (<span class="keyword">char</span> *) (MORECORE_FAILURE)) &#123;</span><br><span class="line">                        correction = <span class="number">0</span>;</span><br><span class="line">                        snd_brk = (<span class="keyword">char</span> *) (MORECORE(<span class="number">0</span>));</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="keyword">void</span> (*hook)(</span><br><span class="line">                        <span class="keyword">void</span>) = atomic_forced_read (__after_morecore_hook);</span><br><span class="line">                        <span class="keyword">if</span> (__builtin_expect (hook != <span class="literal">NULL</span>, <span class="number">0</span>))</span><br><span class="line">                        (*hook)();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                ...</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>假设增加了主分配区的top chunk成功，则更新sbrk_base和分配区已分配的内存大小。<br>然后，第一个判断表示，新分配的内存地址和原来的top chunk连续，并且不是通过MMAP分配的，这时只需要更新原来top chunk的大小size。<br>第二个判断表示如果分配区的连续标志位置位，top chunk的大小大于0，但是分配的brk小于原来的top chunk结束地址，这里就判定出错了。<br>进入第三个判断表示新分配的内存地址大于原来的top chunk的结束地址，但是不连续。这种情况下，如果分配区的连续标志位置位，则表示不是通过MMAP分配的，肯定有其他线程调用了brk在堆上分配了内存，av-&gt;system_mem += brk - old_end表示将其他线程分配的内存一并计入到该分配区分配的内存大小。然后将刚刚分配的地址brk按MALLOC_ALIGNMENT对齐。<br>再往下就要处理地址不连续的问题了，因为地址不连续，就要放弃原来top chunk后面一部分的内存大小，并且将这一部分内存大小“补上”到刚刚分配的新内存后面。首先计算堆上补上内存后的结束地址并保存在correction中，然后调用MORECORE继续分配一次，将新分配内存的开始地址保存在snd_brk中。如果分配失败，则将correction设为0，并将snd_brk重置为原来分配的内存的结束地址，表示放弃该次补偿操作；如果分配成功，就调用 __after_morecore_hook函数，这里假设该函数指针为null。</p>
+<h1 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">sysmalloc</span><span class="params">(INTERNAL_SIZE_T nb, mstate av)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (av != &amp;main_arena) &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">if</span> (brk != (<span class="keyword">char</span> *) (MORECORE_FAILURE)) &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="keyword">if</span> (brk == old_end &amp;&amp; snd_brk == (<span class="keyword">char</span> *) (MORECORE_FAILURE))</span><br><span class="line">                ...</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (contiguous (av) &amp;&amp; old_size &amp;&amp; brk &lt; old_end) &#123;</span><br><span class="line">                ...</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                ...</span><br><span class="line">                <span class="keyword">if</span> (contiguous(av)) &#123;</span><br><span class="line">                    ...</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (MALLOC_ALIGNMENT == <span class="number">2</span> * SIZE_SZ)</span><br><span class="line">                    assert (((<span class="keyword">unsigned</span> <span class="keyword">long</span>) chunk2mem (brk) &amp; MALLOC_ALIGN_MASK) == <span class="number">0</span>);</span><br><span class="line">                    <span class="keyword">else</span>&#123;</span><br><span class="line">                        front_misalign = (INTERNAL_SIZE_T) chunk2mem (brk) &amp; MALLOC_ALIGN_MASK;</span><br><span class="line">                        <span class="keyword">if</span> (front_misalign &gt; <span class="number">0</span>)&#123;</span><br><span class="line">                            aligned_brk += MALLOC_ALIGNMENT - front_misalign;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (snd_brk == (<span class="keyword">char</span> *) (MORECORE_FAILURE))&#123;</span><br><span class="line">                        snd_brk = (<span class="keyword">char</span> *) (MORECORE (<span class="number">0</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (snd_brk != (<span class="keyword">char</span> *) (MORECORE_FAILURE)) &#123;</span><br><span class="line">                    av-&gt;top = (mchunkptr) aligned_brk;</span><br><span class="line">                    set_head(av-&gt;top,</span><br><span class="line">                            (snd_brk - aligned_brk + correction) | PREV_INUSE);</span><br><span class="line">                    av-&gt;system_mem += correction;</span><br><span class="line">                    <span class="keyword">if</span> (old_size != <span class="number">0</span>) &#123;</span><br><span class="line">                        old_size = (old_size - <span class="number">4</span> * SIZE_SZ) &amp; ~MALLOC_ALIGN_MASK;</span><br><span class="line">                        set_head(old_top, old_size | PREV_INUSE);</span><br><span class="line">                        chunk_at_offset (old_top, old_size)-&gt;size = (<span class="number">2</span> * SIZE_SZ)</span><br><span class="line">                                | PREV_INUSE;</span><br><span class="line">                        chunk_at_offset (old_top, old_size + <span class="number">2</span> * SIZE_SZ)-&gt;size = (<span class="number">2</span></span><br><span class="line">                                * SIZE_SZ) | PREV_INUSE;</span><br><span class="line">                        <span class="keyword">if</span> (old_size &gt;= MINSIZE) &#123;</span><br><span class="line">                            _int_free(av, old_top, <span class="number">1</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>开头的else表示分配区的连续标志没有置位，这时只要按照MALLOC_ALIGNMENT做简单的对齐就行了，如果是通过brk分配的内存，则通过MORECORE (0)得到新分配的内存的结束地址并保存在snd_brk中。再往下进入if，设置分配区的top指针为经过对齐之后的起始地址aligned_brk，设置top chunk的大小size，aligned_brk表示对齐造成的误差，correction是因为要补偿原来top chunk剩余内存造成的误差，然后设置分配区已分配的内存大小。因为不连续，最后if内是设置原top chunk的fencepost，将原来top chunk的剩余空间拆成两个SIZE_SZ * 2大小的chunk，如果剩下的大小大于可分配的chunk的最小值MINSIZE，就通过 _ int_free释放掉整个剩余。</p>
+<h1 id="0x05"><a href="#0x05" class="headerlink" title="0x05"></a>0x05</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> * <span class="title">sysmalloc</span><span class="params">(INTERNAL_SIZE_T nb, mstate av)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) av-&gt;system_mem &gt; (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (av-&gt;max_system_mem))</span><br><span class="line">        av-&gt;max_system_mem = av-&gt;system_mem;</span><br><span class="line">    check_malloc_state (av);</span><br><span class="line">    p = av-&gt;top;</span><br><span class="line">    size = chunksize(p);</span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">unsigned</span> <span class="keyword">long</span>) (size) &gt;= (<span class="keyword">unsigned</span> <span class="keyword">long</span>) (nb + MINSIZE )) &#123;</span><br><span class="line">        remainder_size = size - nb;</span><br><span class="line">        remainder = chunk_at_offset(p, nb);</span><br><span class="line">        av-&gt;top = remainder;</span><br><span class="line">        set_head(p, nb | PREV_INUSE | (av != &amp;main_arena ? NON_MAIN_ARENA : <span class="number">0</span>));</span><br><span class="line">        set_head(remainder, remainder_size | PREV_INUSE);</span><br><span class="line">        check_malloced_chunk (av, p, nb);</span><br><span class="line">        <span class="keyword">return</span> chunk2mem(p);</span><br><span class="line">    &#125;</span><br><span class="line">    __set_errno(ENOMEM);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里就是获得前面所有代码更新后的top chunk，然后从该top chunk中分配用户需要的大小chunk并返回，如果失败则返回0</p>
+<h1 id="0x06"><a href="#0x06" class="headerlink" title="0x06"></a>0x06</h1><p>sysmalloc用于初始化。进入sysmalloc函数就表示top chunk的空间不够了。假设当前分配区不是主分配区，就通过grow_heap增加top chunk的空间，如果失败就通过new_heap重新分配一个heap，并将该分配区的top chunk指针指向新分配的heap的空闲内存。如果当前分配区是主分配区，首先会通过brk在堆上分配内存以增加top chunk的空间，如果失败再通过MMAP分配。假设新分配内存的地址不连续，而分配区的连续标志位置位，就会继续分配内存以补偿。最后，只要分配成功，就可以从被更新的top chunk分配所需的内存。</p>
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/计算机网络中的安全.html" class="archive-article-date">
-  	<time datetime="2019-06-19T16:49:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/计算机网络中的安全.html">计算机网络中的安全</a>
-    </h1>
-  
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
 
-        <div class="article-info info-on-right">
+
+
+
+      
+      
+        <div class="declare">
+          <strong>本文作者：</strong>
           
+            Thriumph
+          
+          <br>
+          <strong>本文链接：</strong>
+          https://thriumph.top/sysmalloc.html
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+      
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//sysmalloc.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/无线网络和移动网络.html" class="archive-article-date">
-  	<time datetime="2019-06-17T16:21:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/无线网络和移动网络.html">无线网络和移动网络</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    <div class="clearfix"></div>
   </div>
+</div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/链路层和局域网.html" class="archive-article-date">
-  	<time datetime="2019-06-15T16:03:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-16</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/int-molloc.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">_int_molloc</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/链路层和局域网.html">链路层和局域网</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01"><span class="toc-number">1.</span> <span class="toc-text">0x01</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02"><span class="toc-number">2.</span> <span class="toc-text">0x02</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03"><span class="toc-number">3.</span> <span class="toc-text">0x03</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x04"><span class="toc-number">4.</span> <span class="toc-text">0x04</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x05"><span class="toc-number">5.</span> <span class="toc-text">0x05</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x06"><span class="toc-number">6.</span> <span class="toc-text">0x06</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/网络层控制平面.html" class="archive-article-date">
-  	<time datetime="2019-06-14T15:56:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/网络层控制平面.html">网络层控制平面</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/网络层数据平面.html" class="archive-article-date">
-  	<time datetime="2019-06-12T15:44:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-12</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/网络层数据平面.html">网络层数据平面</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/运输层.html" class="archive-article-date">
-  	<time datetime="2019-06-10T15:17:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/运输层.html">运输层</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/应用层.html" class="archive-article-date">
-  	<time datetime="2019-06-08T15:03:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/应用层.html">应用层</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/多媒体网络.html" class="archive-article-date">
-  	<time datetime="2019-06-06T16:59:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/多媒体网络.html">多媒体网络</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/计算机网络和因特网.html" class="archive-article-date">
-  	<time datetime="2019-06-06T14:59:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/计算机网络和因特网.html">计算机网络和因特网</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
+        
+    </div>
+</aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+  
           </div>
         </div>
       </div>
@@ -589,9 +465,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,
