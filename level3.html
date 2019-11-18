@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://thriumph.top">
   <title>level3 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="查看文件信息123456789Thriumph@ubuntu:~/pwn/gfsj/level3$ file level3level3: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, for GNU/Linux 2.6.32, BuildID[">
+  <meta name="description" content="ret2libc">
 <meta name="keywords" content="ctf,pwn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="level3">
 <meta property="og:url" content="https://thriumph.top/level3.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="查看文件信息123456789Thriumph@ubuntu:~/pwn/gfsj/level3$ file level3level3: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, for GNU/Linux 2.6.32, BuildID[">
+<meta property="og:description" content="ret2libc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-18T15:42:54.549Z">
+<meta property="og:updated_time" content="2019-11-18T15:46:25.263Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="level3">
-<meta name="twitter:description" content="查看文件信息123456789Thriumph@ubuntu:~/pwn/gfsj/level3$ file level3level3: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-, for GNU/Linux 2.6.32, BuildID[">
+<meta name="twitter:description" content="ret2libc">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -193,7 +193,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
+        <p>ret2libc</p>
+<a id="more"></a>
 <h1 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Thriumph@ubuntu:~/pwn/gfsj/level3$ file level3</span><br><span class="line">level3: ELF <span class="number">32</span>-bit LSB executable, Intel <span class="number">80386</span>, version <span class="number">1</span> (SYSV), dynamically linked, interpreter /lib/ld-, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, BuildID[sha1]=<span class="number">44</span>a438e03b4d2c1abead90f748a4b5500b7a04c7, <span class="keyword">not</span> stripped</span><br><span class="line">Thriumph@ubuntu:~/pwn/gfsj/level3$ checksec level3</span><br><span class="line">[*] '/home/Thriumph/pwn/gfsj/level3/level3'</span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span></span></span><br></pre></td></tr></table></figure>
 
 <p>开启了NX保护</p>

