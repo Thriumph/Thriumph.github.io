@@ -6,27 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>无线网络和移动网络 | Thriumph</title>
+  <title>windows启动过程 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="《计算机网络自顶向下方法》第七章读书笔记">
-<meta name="keywords" content="读书笔记,计算机网络">
+  <meta name="description" content="一直好奇计算机是如何启动的？之几天看了几篇文章，记录了一下windows系统的启动过程。">
+<meta name="keywords" content="windows">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无线网络和移动网络">
-<meta property="og:url" content="https://thriumph.top/无线网络和移动网络.html">
+<meta property="og:title" content="windows启动过程">
+<meta property="og:url" content="https://thriumph.top/windows启动过程.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="《计算机网络自顶向下方法》第七章读书笔记">
+<meta property="og:description" content="一直好奇计算机是如何启动的？之几天看了几篇文章，记录了一下windows系统的启动过程。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823122814624.png">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823122825585.png">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823122954983.png">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823122937909.png">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823123017524.png">
-<meta property="og:image" content="https://thriumph.top/无线网络和移动网络/20190823123159742.png">
-<meta property="og:updated_time" content="2019-10-22T08:37:58.375Z">
+<meta property="og:image" content="https://thriumph.top/windows启动过程/1.png">
+<meta property="og:updated_time" content="2019-11-20T15:43:53.670Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="无线网络和移动网络">
-<meta name="twitter:description" content="《计算机网络自顶向下方法》第七章读书笔记">
-<meta name="twitter:image" content="https://thriumph.top/无线网络和移动网络/20190823122814624.png">
+<meta name="twitter:title" content="windows启动过程">
+<meta name="twitter:description" content="一直好奇计算机是如何启动的？之几天看了几篇文章，记录了一下windows系统的启动过程。">
+<meta name="twitter:image" content="https://thriumph.top/windows启动过程/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -165,14 +160,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-无线网络和移动网络" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-windows启动过程" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      无线网络和移动网络
+      windows启动过程
     </h1>
   
 
@@ -192,158 +187,24 @@
 
 
         
-        <a href="/无线网络和移动网络.html" class="archive-article-date">
-  	<time datetime="2019-06-17T16:21:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-18</time>
+        <a href="/windows启动过程.html" class="archive-article-date">
+  	<time datetime="2019-11-20T08:47:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-20</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>《计算机网络自顶向下方法》第七章读书笔记</p>
+        <p>一直好奇计算机是如何启动的？之几天看了几篇文章，记录了一下windows系统的启动过程。</p>
 <a id="more"></a>
-
-<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ol>
-<li><strong>基站</strong> 是无线网络基础设施的一个关键部分。基站在有线网络中没有明确的对应设备，它负责向与之关联的无线主机发送数据和从主机那里接收数据。基站通常负责协调与之相关联的多个无线主机的传输。当一台无线主机与某基站“相关联”时，表示该主机位于该基站的无线通信范围内；该主机使用该基站中继它和更大网络之间的数据。蜂窝网络中的 <code>蜂窝塔</code> 和802.11无线LAN中的 <code>接入点</code> 都属于基站。</li>
-</ol>
-<p>2.可以根据两个准则来对无线网络分类：</p>
-<p>①在该无线网络中的分组是否跨越了一个无线跳或多个无线跳；</p>
-<p>②网络中是否有诸如基站这样的基础设施。</p>
-<ul>
-<li>单跳，基于基础设施。 这些网络具有与较大的有线网络连接的基站。此外，该基站与无线主机之间的所有通信都经过一个无线跳。在教室、咖啡屋或图书馆中使用的802.11网络以及4G LTE数据网络都属于这种类型。</li>
-<li>单跳，无基础设施。 在这些网络中，不存在与无线网络相连的基站。在这种单跳网络中的一个节点可以协调其他节点的传输。蓝牙网络和具有自组织模式的802.11网络属于这种类型。</li>
-<li>多跳，基于基础设施。 在这些网络中，一个基站表现为以有线方式与较大网络相连。然而，某种无线节点为了经该基站通信，可能不得不通过其他无线节点中继它们的通信。某些无线传感网络和所谓的无线网状网络就属于这种类型。</li>
-<li>多跳。无基础设施。 在这些网络中没有基站，并且节点为了到达目的地可能必须在几个其他无线节点之间中继报文。节点也可能是移动的，在多个节点中改变连接关系，一类网络被称为移动自组织网络（mobile ad hoc network, MANET）。如果该移动节点是车载的，该网络是车载自组织网络（vehicular ad hoc network, VANET）。</li>
-</ul>
-<h1 id="无线链路和网络特征"><a href="#无线链路和网络特征" class="headerlink" title="无线链路和网络特征"></a>无线链路和网络特征</h1><h3 id="无线链路和有线链路间重要的区别"><a href="#无线链路和有线链路间重要的区别" class="headerlink" title="无线链路和有线链路间重要的区别"></a>无线链路和有线链路间重要的区别</h3><ol>
-<li><p><strong>递减的信号强度。</strong> 电磁波在穿过物体时强度将减弱。即使在自由空间中，信号仍将扩散，这使得信号强度随着发送方和接收方距离的增加而减弱（有时称其为路径损耗）。</p>
-</li>
-<li><p><strong>来自其他源的干扰。</strong> 在同一个频段发送信号的电波源将相互干扰。除了来自发送源的干扰，环境中的电磁噪声也能形成干扰。</p>
-</li>
-<li><p><strong>多径传播。</strong> 当电磁波的一部分受物体和地面反射，在发送方和接收方之间走了不同长度的路径，则会出现多径传播。这使得接收方收到的信号变得模糊。位于发送方和接收方之间的移动物体可导致多径传播随时间而改变。</p>
-</li>
-</ol>
-<h3 id="信噪比（Signal-to-Noise-Ratio-SNR）"><a href="#信噪比（Signal-to-Noise-Ratio-SNR）" class="headerlink" title="信噪比（Signal-to-Noise Ratio, SNR）"></a>信噪比（Signal-to-Noise Ratio, SNR）</h3><p>** 信噪比** 是所受到的信号和噪声强度的相对测量。SNR的度量单位通常是分贝（dB）。以dB度量的SNR是这个比值的20倍，即接收到的信号的振幅与噪声的振幅的以10为底的对数的比值。比特差错率（BER）是在接收方收到的有错传输比特的概率。</p>
-<p>1.对于给定的调制方案，SNR越高，BER越低。由于发送方通过增加它的传输功率就能够增加SNR，因此发送方能够通过增加它的传输功率来降低接收到差错帧的概率。然而，增加传输功率也会伴随着一些缺点：发送方必须消耗更多的能量，并且发送方的传输更可能干扰另一个发送方的传输。</p>
-<p>2.对于给定的SNR，具有较高比特传输率的调制技术将具有较高的BER。</p>
-<p>3.物理层调制技术的动态选择能用于适配对信道条件的调制技术。</p>
-<h3 id="CMDA"><a href="#CMDA" class="headerlink" title="CMDA"></a>CMDA</h3><p>这个信号的变化速率（称为码片速率）比初始数据比特序列的变化速率快得多。假设初始数据比特到达CDMA编码其的速率定义了时间单元；也就是说，每个要发送的初始数据比特需要1比特时隙时间。</p>
-<p>设di为第i个比特时隙中的数据比特值。为计算便利，把具有0值的数据比特表示为-1。每个比特时隙又进一步细分为M个微时隙。发送方使用的CDMA编码由M个值的一个序列cm组成，m = 1, …, M，每个取值为+1或-1。</p>
-<p>对于第i个数据比特di。对于di比特传输时间的第m个微时隙，CDMA编码器的输出Zi,m是di乘以分配的CDMA编码的第m比特cm</p>
-<p><img src="/无线网络和移动网络/20190823122814624.png" alt></p>
-<p>对没有干扰的发送方，接收方将收到编码的比特Zi,m，并且恢复初始的数据比特di，计算如下：</p>
-<p><img src="/无线网络和移动网络/20190823122825585.png" alt></p>
-<p>然而，实际上的CDMA必须在存在干扰发送方的情况下工作，这些发送方用分配的不同编码来编码和传输它们的数据。但是当一个发送方的数据比特和其他发送方发送的比特混在一起时，CDMA发送方就需要其他的方法来恢复该发送方的初始数据比特。</p>
-<p>CDMA的工作有一种假设，即对干扰的传输比特信号是加性的，这意味着，例如在同一个微时隙中，如果3个发送段都发送1，第4个发送端发送-1，那么在那个微时隙中所有的接收方接收的信号都是2。在存在多个发送方时，发送方s计算它编码后的传输计算方式与上面完全相同<br><img src="/无线网络和移动网络/20190823122954983.png" alt></p>
-<p>然而在第i个比特时隙的第m个微时隙期间，接收方现在收到的值是那个微时隙中从所有N个发送方传输的比特总和：</p>
-<p><img src="/无线网络和移动网络/20190823122937909.png" alt></p>
-<p>如果仔细地选择发送方的编码，每个接收方只通过式*中的同样方式使用发送方的编码，就能从聚合的信号中恢复一个给定的发送方发送的数据：</p>
-<p><img src="/无线网络和移动网络/20190823123017524.png" alt></p>
-<h1 id="Wife-802-11和无线Lan"><a href="#Wife-802-11和无线Lan" class="headerlink" title="Wife:802.11和无线Lan"></a>Wife:802.11和无线Lan</h1><p>IEEE 802.11 无限LAN，也成为wife</p>
-<h2 id="802-11结构体系"><a href="#802-11结构体系" class="headerlink" title="802.11结构体系"></a>802.11结构体系</h2><p>1.802.11体系结构的基本构建模块是<code>基本服务集（Basic Service Set, BSS）</code>。一个BSS包含一个或多个无线站点和一个在802.11术语中成为<code>接入点（Access Point, AP）</code>的中央基站。</p>
-<p>2.配置AP的无线LAN经常被称作基础设施无线LAN，其中的“基础设施”是指AP联通互联AP和一台路由器的有线以太网</p>
-<h3 id="信道与关联"><a href="#信道与关联" class="headerlink" title="信道与关联"></a>信道与关联</h3><p>1.当网络管理员安装一个AP时，管理员为该接入点分配一个单字或双字的<code>服务器集标识符（Service Set Identifier, SSID）</code>。管理员还必须为该AP分配一个信道号。在802.11运行的85MHz的频段内，802.11定义了11个部分重叠的信道。当且仅当两个信道由4个或更多信道隔开时它们才无重叠。特别是信道1、6和11的集合是唯一的3个非重叠信道的集合。</p>
-<p>2.<code>WiFi丛林</code>是一个任意物理位置，在这里无线站点能从两个或多个AP中收到很强的信号。为了获得因特网的接入，无线站点需要加入其中一个子网并因此需要与与其中的一个AP相<code>关联</code>。关联意味着这一无线站点在自身和该AP之间船舰一个虚拟线路。特别是，仅有关联的AP才向无线站点发送数据帧，并且该无线站点也仅仅通过该关联AP向因特网发送数据帧。</p>
-<p>3.802.11标准要求每个AP周期性地发送<code>信标帧</code>，每个信标帧包括该AP的SSID和MAC地址。无线站点为了得知正在发送信标帧的AP，扫描11个信道，找出来自可能位于该区域的AP所发送的信标帧。通过信标帧了解到可用AP后，无线站点选择一个AP用于关联。</p>
-<p>4.扫描信道和监听信标帧的过程被称为<code>被动扫描</code>。无线主机也能够执行<code>主动扫描</code>，这是通过向位于无线主机范围内的所有AP广播探测帧完成的。AP用一个探测响应帧应答探测请求帧。无线主机则能够在响应的AP中选择某AP与之相关联。选定与之相关联的AP后，无线主机向AP发送一个关联请求帧，并且该AP以一个关联响应帧进行响应。注意到对于主动扫描需要这种第二次请求/响应握手，因为一个对初始探测请求帧进行响应的AP并不知道主机选择哪个响应的AP进行关联。一旦与一个AP关联，该主机希望加入该AP所属的子网中。因此，该主机通常将通过关联的AP向该子网发送一个DHCP发现报文，以获取在该AP子网中的一个IP地址。一旦获得地址，网络的其他部分将直接视该主机为该子网中的另一台主机。</p>
-<h2 id="802-11-MAC协议"><a href="#802-11-MAC协议" class="headerlink" title="802.11 MAC协议"></a>802.11 MAC协议</h2><p>802.11的设计者为802.11无线LAN选择了一种随机访问协议。这个随机访问协议称作带碰撞避免的CSMA（CSMA/CA）。尽管以太网和802.11都使用载波侦听随机接入，但这两种MAC协议有着重要的区别。首先，802.11使用碰撞避免而非碰撞检测。其次，由于无线信道相对较高的比特率，802.11使用链路层确认/重传方案</p>
-<p><code>802.11 MAC协议并未实现碰撞检测的原因：</code></p>
-<ul>
-<li>检测碰撞的能力要求站点具有同时发送和接收的能力。因为在802.11适配器上，接收信号的强度通常远远小于发送信号的强度，制造具有检测碰撞能力的硬件代价较大。</li>
-<li>即使适配器可以同时发送和监听信号，适配器也会由于隐藏终端问题和衰减问题而无法检测到所有的碰撞。</li>
-</ul>
-<p>当无线LAN中某站点发送一个帧时，该帧会由于多种原因不能无损地到达目的站点。为了处理这种不可忽视的故障情况，802.11 MAC使用链路层确认。目的站点收到一个通过CRC校验的帧后，它等待一个被称作<code>短帧时间间隔（Short Inter-Frame Spacing, SIFS）</code>的一小段时间，然后发回一个确认帧，如果发送站点在给定的时间内未收到确认帧，它假定出现了错误并重传该帧，使用CSMA/CA协议访问该信道。如果在若干固定次重传后仍未收到确认，发送站点将放弃发送并丢弃该帧。</p>
-<p><code>10.802.11的CSMA/CA协议的内容：</code><br>假设一个站点有一个帧要发送。</p>
-<ul>
-<li>如果某站带你最初监听到某信道空闲，它将在一个被称作分布式帧间间隔（Distributed Inter-Frame Space, DIFS）的短时间段后发送该帧。</li>
-<li>否则，该站点选取一个随机回退值并且在侦听信道空闲时递减该值。当侦听到信道忙时，计数值保持不变。</li>
-<li>当计数值减为0时，该站点发送整个数据帧并等待确认。</li>
-<li>如果收到确认，发送站站点知道它的帧以被目的站正确接收了。如果该站点要发送另一帧，它将从第二步开始CSMA/CA协议。如果未收到确认，发送站点将重新进入第二步中的回退阶段，并从一个更大范围内选取随机值。</li>
-</ul>
-<h3 id="处理隐藏终端-RTS和CTS"><a href="#处理隐藏终端-RTS和CTS" class="headerlink" title="处理隐藏终端:RTS和CTS"></a>处理隐藏终端:RTS和CTS</h3><p>为了避免隐藏终端导致的碰撞，IEEE 802.11协议允许站点使用一个短<code>请求发送（Request to Send, RTS）</code>控制帧和一个短<code>允许发送（Clear to Send, CTS）</code>控制帧来预约对信道的访问。当发送方要发送一个DATA帧时，它能够首先向AP发送一个RTS帧，只是传输DATA帧和确认帧需要的总时间。当AP收到RTS帧后，它广播一个CTS帧作为响应。该CTS帧有两个目的：给发送方明确的发送许可，也指示其他站点在预约其内不要发送。RTS和CTS帧的使用能够在两个重要方面提高性能：</p>
-<ul>
-<li>隐藏终端问题被缓解了，因为长DATA帧只有在信道预约后才被传输。</li>
-<li>因为RTS和CTS帧较短，涉及RTS和CTS帧的碰撞将仅持续短RTS和CTS帧的持续期。一旦RTS和CTS帧被正确传输，后续的DATA和ACK帧应当能无碰撞地发送。</li>
-</ul>
-<p>尽管RTS/CTS交换有助于降低碰撞，但它同样引入了时延以及小号了信道资源。因此，RTS/CTS交换仅仅用于长数据帧预约信道。在实际中，每个无线站点可以设置一个RTS门限值，仅当帧长超过门限值时，才使用RTS/CTS序列。</p>
-<h2 id="IEEE-802-11帧"><a href="#IEEE-802-11帧" class="headerlink" title="IEEE 802.11帧"></a>IEEE 802.11帧</h2><h3 id="有效载荷与CRC字段"><a href="#有效载荷与CRC字段" class="headerlink" title="有效载荷与CRC字段"></a>有效载荷与CRC字段</h3><p>帧的核心是有效载荷，它通产是由一个IP数据报或者ARP分组组成。尽管这一字段允许的最大长度为2312字节，但它通常小于1500字节，放置一个IP数据报或一个ARP分组。如同以太网帧一样，802.11包括一个CRC码，从而接收方可以检测所收到帧中的比特错误。比特错误在无线局域网中比在有线局域网中更加普遍，因此CRC在这里更加有用。</p>
-<h3 id="地址字段"><a href="#地址字段" class="headerlink" title="地址字段"></a>地址字段</h3><p>802.11帧具有4个地址字段，其中每个都可以包含一个6字节的MAC地址。地址2是传输该帧的站点的MAC地址。地址1是要接收该帧的无线站点的MAC地址。BSS是一个子网的一部分，并且这个子网经一些路由器接口与其他子网相连，地址3包含这个路由器接口的MAC地址。</p>
-<h3 id="序号、持续期和帧控制字段"><a href="#序号、持续期和帧控制字段" class="headerlink" title="序号、持续期和帧控制字段"></a>序号、持续期和帧控制字段</h3><p>在802.11网络中，无论何时一个站点正确地收到一个来自其他站点的帧，它就回发一个确认。因为确认可能会丢失，发送站点可能会发送一个给定帧的多个副本。使用序号可以使接收方区分新传输的帧和以前的帧的重传。802.11协议允许传输节点预约信道一段时间，包括传输其数据帧的时间和传输确认的时间，这个持续期值被包括在该帧的持续期字段中。控制字段包括许多子字段，比较重要的是，类型和子类型字段用于区分关联、RTS、CTS、ACK和数据帧。到和从字段用于定义不同地址字段的含义。WEP字段指示了是否使用加密</p>
-<h2 id="在相同的IP子网中的移动性"><a href="#在相同的IP子网中的移动性" class="headerlink" title="在相同的IP子网中的移动性"></a>在相同的IP子网中的移动性</h2><p><img src="/无线网络和移动网络/20190823123159742.png" alt></p>
-<h2 id="802-11-中的高级特色"><a href="#802-11-中的高级特色" class="headerlink" title="802.11 中的高级特色"></a>802.11 中的高级特色</h2><h3 id="效率适应"><a href="#效率适应" class="headerlink" title="效率适应"></a>效率适应</h3><p>802.11实现具有一种速率自适应能力，该能力自适应地根据当前和近期信道特点来选择下面的物理层调职技术。如果一个节点连续发送两个帧而没有收到确认，该传输速率降低到前一个较低的速率。如果10个帧连续得到确认，或如果用来跟踪自上次降速以来时间的定时器超时，该传输速率提高到上一个较高的速率。</p>
-<h3 id="功率管理"><a href="#功率管理" class="headerlink" title="功率管理"></a>功率管理</h3><p>802.11标准提供了功率管理能力，以使802.11节点的侦听、传输和接收功能以及其他需要“打开”电路的时间最小化。802.11功率管理按下列方式运行。一个节点能够明显地在睡眠和唤醒状态之间交替。通过将802.11帧首部的功率管理比特设置为1，某节点向接入点指示它将打算睡眠。设置节点中的一个定时器，使得正好在AP计划发送它的信标帧前唤醒节点。因为AP从设置的功率传输比特知道哪个节点打算睡眠，所以该AP知道它不应当向这个节点发送任何帧，先缓存目的地为睡眠主机的任何帧，待以后再传输。</p>
-<h2 id="个人域网络-蓝牙和ZigBee"><a href="#个人域网络-蓝牙和ZigBee" class="headerlink" title="个人域网络:蓝牙和ZigBee"></a>个人域网络:蓝牙和ZigBee</h2><h3 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h3><p>IEEE 802.15.1网络以低功率和低成本在小范围内运行。它本质上是一个低功率、小范围、低速率的“电缆替代”技术，用于计算机与其无线键盘、鼠标或其他外部设备的互联。802.15.1网络有时被称为无线个人网络（Wireless Personal Area Network, WPAN）。802.15.1的链路层和物理层基于早期用于个人域网络的蓝牙规范。</p>
-<h3 id="ZigBee"><a href="#ZigBee" class="headerlink" title="ZigBee"></a>ZigBee</h3><p>IEEE标准化的第二个个人域网络是802.14.5，它被称为ZigBee，其服务目标是低功率、低数据率、低工作周期的应用。ZigBee定义了20kbps、40kbps、100kbps和250kbps的信道速率，这取决于信道的频率。</p>
-<h1 id="蜂窝因特网的接入"><a href="#蜂窝因特网的接入" class="headerlink" title="蜂窝因特网的接入"></a>蜂窝因特网的接入</h1><p>1.蜂窝是指这样的事实，即由一个蜂窝网覆盖的区域被分成许多称作<code>小区</code>的地理覆盖区域。每个小于包含一个<code>收发基站（Base Transceiver Station, BTS）</code>，负责向位于其小区内的移动站点发送或接收信号。一个小区的覆盖区域取决于许多因素，包括BTS的发射功率、用户设备的传输功率、小区中的障碍建筑物以及基站天线的高度。</p>
-<p>2.2G蜂窝系统的<code>全球移动通信系统（GSM）</code>标准对空中接口使用了组合的FDM/TDM。在组合的FDM/TDM系统中，信道被划分为若干频率子带；对于每个子带，时间又被划分为帧和时隙。因此，对于一个组合的FDM/TDM系统，如果信道被划分为F个子带，并且时间被划分为T个时隙，那么该信道将能够支持FT个并发的呼叫。</p>
-<p>3.一个GSM网络的<code>基站控制器（Base Station Controller, BSC）</code>通常服务于几十个收发基站。BSC的责任是为移动用户分配BTS无线信道，执行寻呼，执行移动用户的切换。基站控制器及其控制的收发基站共同构成了<code>GSM基站系统（Base Station System, BSS）</code>。</p>
-<p>4.在用户鉴别和账户管理中以及呼叫建立和切换中，<code>移动交换中心（Mobile sWitching Center, MSC）</code>起着决定性的租用。单个MSC通常包含多达5个BSC，因此每个MSC有大约200 000个用户。一个蜂窝提供商的网络将有若干MSC，使用称为网关MSC的特殊MSC将提供商的蜂窝网络于更大的公共电话网相连。</p>
-<p>5.在3G核心网中有两类节点：<code>服务通用分组无线服务支持节点（Serving Generalized packet radio service Support Node, SGSN）和网关GPRS支持节点（Gateway GPRS Support Node, GGSN）</code>。SGSN负责向位于其连接的无线电接入网中的移动节点交付数据报。SGSM于该区域蜂窝语音网的MSC进行交互，提供用户认证和切换，维护活跃移动节点的位置信息，执行位于无线接入网中的移动节点和GGSN之间的数据报转发。GGSN起着网关的作用，将多个SGSN连接到更大的因特网。GGSN因此是源于移动节点的一个数据报在进入更大因特网之前遇到的3G基础设施的最后一部分。</p>
-<p>6.4G系统体系结构中：</p>
-<ul>
-<li>eNode是2G基站和3G无线电网络控制器的逻辑后代，并且此时还起这关键作用。它的数据报平面作用是在UE和P-GW之间（经过LTE无线电接入网）转发数据报。UE数据报在eNodeB被封装，并且通过4G网络的全IP强化分组核（EPC）以隧道形式传输到P-GW。这些隧道可能于保证服务质量（QoS）相关。</li>
-<li>分组数据网络网关（Packet Data Network Gateway, P-GW）给UE分配IP地址，并且保证QoS实施。作为隧道端点，当向或从UE转发数据报时，它也执行数据报封装/解封装。</li>
-<li>服务网关（S-GW）是数据平面移动性锚点，即所有UE流量将通过S-GW传递。该S-GW也执行收费/记账功能以及法定的流量拦截。</li>
-<li>移动性管理实体（Mobility Management Entity, MME）代表位于它所控制单元中的UE，执行连接和移动性管理。它从HHS接收UE订购信息。</li>
-<li>归属用户服务（Home Subscriber Server, HSS）包含了包括漫游接入能力、服务质量配置文件和鉴别信息的UE信息。</li>
-</ul>
-<p>7.LTE在下行信道采用频分复用和时分复用结合的方法，称之为正交频分复用（Orthogonal Frequency Division Multiplexing, OFDM）技术。</p>
-<h1 id="移动管理"><a href="#移动管理" class="headerlink" title="移动管理"></a>移动管理</h1><p>在一个网络环境中，一个移动节点的永久居所被称为归属网络，在归属网络中代表移动节点执行移动挂历功能的实体叫归属代理。移动节点当前所在的网络叫作外部网络或被访网络，在外部网络中帮助移动节点做移动管理功能的实体称为外部代理。通信者就是希望与该移动节点通信的实体。</p>
-<h2 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h2><p>外部代理的作用之一是为移动节点创建一个所谓的<code>转交地址（Care-Of Address, COA）</code>，该COA的网络部分与外部网络的网络部分相匹配。因此一个移动节点可与两个地址相关联，即其<code>永久地址</code>与其COA，该COA有时又称为<code>外部地址</code>。外部代理的第二个作用是告诉归属代理，该移动节点在它的网络中且具有给定的COA。</p>
-<h3 id="两种方法"><a href="#两种方法" class="headerlink" title="两种方法"></a>两种方法</h3><p><code>间接路由选择方法。</code>通信者指示将数据报寻址到移动节点的固定地址，并将数据报发送到网络中去，完全不知道移动节点是在归属网络中还是正在访问某个外部网络，因此移动性对于通信者来说是完全透明的。这些数据报就像平常一样首先导向移动节点的归属网络。</p>
-<p>归属代理监视到达的数据报，这些数据报寻址的节点的归属网络与该归属代理所在网络相同，但这些节点当前却在某个外部网络中。归属代理截获这些数据报，然后转发它们。通过使用移动节点的COA，该数据报先转发给外部代理，然后再从外部代理转发给移动节点。</p>
-<p>归属代理将通信者的原始完整数据报封装在一个新的较大的数据报中，这个较大的数据报被导向并交付到移动节点的COA。“拥有”该COA的外部代理将接收并拆封该数据报，即从较大的封装数据报中取出通信者的原始数据报，然后再向移动节点转发该原始数据报。</p>
-<p>移动节点向通信者发送数据报时，只要直接将其数据报寻址到通信者（使用自己的永久地址作为源地址，通信者的地址作为目的地址）即可。</p>
-<p>​ 间接路由选择方法存在一个低效的问题，即三角路由选择问题。该问题是指即使在通信者与移动节点之间存在一条更有效的路由，发往移动节点的数据报也要先发给归属代理，然后再发送到外部网络。</p>
-<p><code>​直接路由选择</code>克服了路由选择的低效问题，但却是以增加复杂性为代价的。在直接路由选择方法中，通信者所在网络中的一个通信者代理先知道该移动节点的COA。这可以让通信者向归属代理询问得知，假设移动节点具有一个在归属代理注册过的最新的COA。通信者本身也可能执行通信者代理的功能。</p>
-<h1 id="移动IP"><a href="#移动IP" class="headerlink" title="移动IP"></a>移动IP</h1><p>支持移动性的因特网体系结构与协议合起来称为移动IP。移动IP标准有三部分组成：</p>
-<ul>
-<li>代理发现。移动IP定义了一个归属代理或外部代理用来向移动节点通告其服务的协议，以及移动节点请求一个外部代理或归属代理的服务所使用的协议。</li>
-<li>向归属代理注册。移动IP定义了移动节点和/或外部代理向一个移动节点归属代理注册或注销COA所使用的协议。</li>
-<li>数据报的间接路由选择。该标准也定义了数据报被一个归属代理转发给移动节点的方式，包括转发数据报使用的规则、处理差错情况的规则和集中不同的封装形式。</li>
-</ul>
-<p>到达一个新网络的某移动IP节点，不管是连到一个外部网络还是返回其归属网络，它都必须知道响应的外部代理或归属代理的身份。这个过程被称为代理发现。代理发现可以通过下列两种方式之一实现：<code>代理通过或代理请求。</code></p>
-<p>​借助<code>代理通告</code>，外部代理或归属代理使用一种现有路由器发现协议的扩展新协议来通告其服务。该代理周期性地在所有连接的链路上广播一个类型字段为9的ICMP报文。路由器发现报文也包含路由器的IP地址，因此允许一个移动节点知道该代理的IP地址。路由器发现报文还包括了一个移动性代理通告扩展，其中包含了该移动节点所需的附加信息。在这种扩展中又如下一些较重要的字段：</p>
-<ul>
-<li>归属代理比特（H）。指出该代理是它所在网络的一个归属代理。</li>
-<li>外部代理比特（F）。指出该代理是它所在网络的一个外部代理。</li>
-<li>注册要求比特（R）。指出在该网络中的某个移动用户必须向某个外部代理注册。特别是，一个移动用户不能在外部网络中获得一个转交地址，并假定由它自己承担外部代理的功能，无须向外部代理注册。</li>
-<li>M、G封装比特。指出除了IP-in-IP封装形式外，是否还要用其他的封装形式。</li>
-<li>转交地址（COA）字段。由外部代理提供的一个或多个转交地址的列表。移动用户在向其归属代理注册时将选择这些地址中的一个作为其COA。</li>
-</ul>
-<p><code>使用代理请求</code>，一个想知道代理的移动节点不必等待接收代理通告，就能广播一个代理请求报文，该报文只是一个类型值为10的ICMP报文。收到该请求的代理将直接向该移动节点单播一个代理通告，于是该移动节点将继续处理，就好像刚收到一个未经请求的通告一样。</p>
-<p>1.一旦某个移动IP节点收到一个COA，则该地址必须要向归属代理注册。这可通过外部代理或直接通过移动IP节点自己来完成。共涉及4个步骤：</p>
-<p>2.当收到一个外部代理通告后，一个移动节点立即向外部代理发送一个移动IP注册报文。注册报文承载在一个UDP数据报中并通过端口434发送。注册报文携带以下内容：一个由外部代理通告的COA、归属代理的地址（HA）、移动节点的永久地址（MA）、请求的注册寿命和一个64比特的注册标识。请求的注册寿命指示了注册有效的秒数。如果注册没有在规定的时间内在归属代理上更新，则该注册将变得无效。注册标识就像一个序号，用于收到的注册回答与注册请求的匹配。</p>
-<p>3.外部代理收到注册报文并记录节点的永久IP地址。外部代理知道现在它应该查找这样的数据报，即它封装的数据报的目的地址与该移动节点的永久地址相匹配。外部代理然后向归属代理的434端口发送一个移动IP注册报文。这一报文包括COA、HA、MA、封装格式要求、请求的注册寿命以及注册标识。</p>
-<p>4.归属代理接收注册请求并检查真实性和正确性，归属代理把移动节点的永久IP地址与COA绑定在一起。以后，到达该归属代理的数据报与发往移动节点的数据报将被封装并以隧道方式给COA。归属代理发送一个移动IP注册回答，该响应报文中含有HA、MA、实际注册寿命和被认可的请求报文注册标识。</p>
-<p>5.外部代理接收注册响应，然后将其转发给移动节点。</p>
-<p>6.当某个移动节点离开其网络时，外部代理无须显式地取消某个COA的注册。当移动节点移动到一个新网并注册一个新COA时，上述情况将自动发生。</p>
-<h1 id="管理蜂窝网中的移动性"><a href="#管理蜂窝网中的移动性" class="headerlink" title="管理蜂窝网中的移动性"></a>管理蜂窝网中的移动性</h1><p>在GSM术语中，移动用户的归属网络被称作该移动用户的归属公<code>共地域网络（home Public Land Mobile Network, home PLMN）</code>。为简便起见，直接将GSM归属PLMN称为<code>归属网络</code>。移动用户向某个蜂窝网提供商订购了服务，该蜂窝网就称为了这些用户的归属网络。被访问的PLMN直接称为<code>被访网络</code>。归属网络与被访网络的指责有很大的差别。</p>
-<p>归属网络维护一个称作<code>归属位置注册器（Home Location Register, HLR）</code>的数据库，其中包括它每个用户的永久蜂窝电话号码以及用户个人概要信息。重要的是，HLR也包括这些用户当前的位置信息。这就是说，如果一个移动用户当前漫游到另一个提供商的蜂窝网络中，HLR中将包含足够多的信息来获取被访网络中对移动用户的呼叫应该路由选择到的地址。当一个呼叫定位到一个移动用户后，通信者将与归属网络中一个被称作<code>网关移动服务交换中心（Gateway Mobile services Switching Center, GMSC）</code>的特殊交换机联系，用<code>归属MSC</code>简称。</p>
-<p>被访网络维护一个称作<code>访问者位置注册（Visitor Location Register, VLR）</code>的数据库。VLR为每一个当前在其服务网络中的移动用户包含一个表项，VLR表项因此随着移动用户进入和离开网络而出现或消失。VLR通常与移动交换中心在一起，该中心协调到达或离开被访网络的呼叫建立。</p>
-<h2 id="对移动用户呼叫的路由选择"><a href="#对移动用户呼叫的路由选择" class="headerlink" title="对移动用户呼叫的路由选择"></a>对移动用户呼叫的路由选择</h2><p><code>呼叫定位到被访网络中的移动GSM用户的步骤：</code></p>
-<ul>
-<li>通信者拨打移动用户的电话号码。该号码本身并不设计一个特定的电话线路或位置，号码中的前几位数字足以全局地判别移动用户的归属网络。呼叫从通信者通过公共交换电话网到达移动用户归属网络中的归属MSC。这是呼叫的第一步。</li>
-<li>归属MSC收到该呼叫并查询HLR来确定移动用户的位置。在最简单的情况下，HLR返回移动站点漫游号码（Moblie Station Roaming Number, MSRN），简称漫游号。这个号码与移动用户的永久电话号码不同，后者是与移动用户的归属网络相关联的，而漫游号码是短暂的：当移动用户进入一个被访网络后，会给移动用户临时分配一个漫游号码。漫游号码的作用就相当于移动IP中转交地址的作用。如果HLR不具有该漫游号码，它返回被访网络中的VLR地址。在这种情况下，归属MSC需要查询VLR以便获取移动节点的漫游号码。HLR是如何获得有关移动用户位置信息的？当一个移动电话切换或进入一个由新的VLR所覆盖的被访网络中以后，移动用户必须向被访网络注册，这是通过在移动用户和VLR之间交换信令报文来实现的。被访VLR随后又向移动用户的HLR发送一个位置更新请求报文。这一报文告知HLR可以用来联系移动用户的漫游号码，或者VLR地址。作为这个交换的一部分，VLR同样从HLR那里获取移动用户的信息，以及确定被访网络应该基于移动用户什么样的服务。</li>
-<li>给定一个漫游号码，归属MSC通过网络到达被访网络的MSC建立呼叫的第二步。至此，该呼叫已完成。</li>
-</ul>
-<h2 id="GSM中的切换"><a href="#GSM中的切换" class="headerlink" title="GSM中的切换"></a>GSM中的切换</h2><p><code>当一个基站决定切换一个移动用户时所包括的步骤：</code></p>
-<ul>
-<li>旧基站（BS）通知被访问MSC即将要进行一个切换，通知移动用户将要切换到的BS（或可能的BS集）。</li>
-<li>被访问MSC发起建立到新BS的路径，分配承载重路由选择的呼叫所需的资源，以及用信令告知新BS一个切换即将出现。</li>
-<li>新BS分配并激活一个无线信道供移动用户使用。</li>
-<li>新BS发出信令返回被访问MSC和旧BS，即已经建立了被访问MSC到新BS的路径并且移动用户应当被告知即将发生的切换。新BS提供移动用户与新的BS相关联所需要的所有信息。</li>
-<li>移动用户被告知它应当进行一个切换。到此时为止，移动用户完全不知道网络已经为切换做好所有底层工作。</li>
-<li>移动用户和新BS交换一个或多个报文，以完全激活新BS中新的信道。</li>
-<li>移动用户向新BS发送一个切换完成报文，该报文随后向上转发给被访问MSC。该被访问MSC然后重路由选择到移动用户的正在进行的呼叫，使其经过新BS。</li>
-<li>沿着到旧BS的路径分配的资源随后被释放</li>
-</ul>
-<h1 id="无限和移动性（对高层协议的影响）"><a href="#无限和移动性（对高层协议的影响）" class="headerlink" title="无限和移动性（对高层协议的影响）"></a>无限和移动性（对高层协议的影响）</h1><p>由于无线信道的高比特差错率和切换丢失的可能性，TCP的拥塞控制反应在无限情况下可能会有问题。有三大类可能的方法用于处理这一问题：</p>
-<ul>
-<li>本地恢复。本地恢复的方法的目标是在比特差错出现的当时和当地将其恢复。</li>
-<li>TCP发送方知晓无线链路。让TCP发送方和接收方知道无线链路的存在，从而将在有线网络中发生的拥塞性丢包和在无线网络中发生的差错/丢包区分开，并且仅对有线网络中的拥塞性丢包采用拥塞控制。</li>
-<li>分离连接方法。在分离连接方法中，移动用户和其他断电之间的端到端连接被打断为两个运输层连接：一个从移动主机到无线接入点，一个从无线接入点到其他通信端点。该端到端连接因此是由一个无线部分和一个有线部分分级连形成的。经无线段的运输层能够是一个标准的TCP连接，或是一个特别定制运行在UDP上的差错恢复协议。</li>
-</ul>
+<h1 id="预引导阶段（启动自检阶段）"><a href="#预引导阶段（启动自检阶段）" class="headerlink" title="预引导阶段（启动自检阶段）"></a>预引导阶段（启动自检阶段）</h1><p>上个世纪70年代初，”只读内存”（read-only memory，缩写为ROM）发明，开机程序被刷入rom芯片，计算机通电后，第一件事就是读取它。这块芯片里的程序叫做”基本输入输出系统”（Basic Input/Output System），简称为BIOS。<br>通电自检（Power-On Self Test，POST），这一步主要是读取 BIOS ，然后对内存，CPU，硬盘，键盘等设备进行自检。</p>
+<h1 id="引导阶段（初始化启动阶段）"><a href="#引导阶段（初始化启动阶段）" class="headerlink" title="引导阶段（初始化启动阶段）"></a>引导阶段（初始化启动阶段）</h1><p>自检阶段完成后，BIOS把控制权转交给下一阶段排在第一的储存设备，计算机读取该设备的第一个扇区，也就是读取最前面的512个字节。如果这512个字节的最后两个字节是0x55和0xAA，表明这个设备可以用于启动；如果不是，表明设备不能用于启动，控制权于是被转交给”启动顺序”中的下一个设备。这最前面的512个字节，就叫做”主引导记录”（Master boot record，缩写为MBR），之后根据 BIOS 指定的启动顺序，找到可以启动的优先启动设备，比如本地磁盘，CD Driver ， USB 设备等等，然后准备从这些设备启动系统。</p>
+<h1 id="初始化引导载入程序"><a href="#初始化引导载入程序" class="headerlink" title="初始化引导载入程序"></a>初始化引导载入程序</h1><p>这个阶段首先从启动分区（比如 C 盘） 加载 Ntldr ，然后Ntldr 做如下设置：<br>1、内置内存模式，如果是 x86 的处理器，并且操作系统是 32位，则设置为 32-bit flat memory mode，如果是 64 位操作系统 + 64位处理器，则设置为64位内存模式。<br>2、启动文件系统<br>3、读取 boot.ini 文件</p>
+<h1 id="操作系统选择"><a href="#操作系统选择" class="headerlink" title="操作系统选择"></a>操作系统选择</h1><p>这一步时看是否安装了多个操作系统。、<br>如果计算机中只安装了一个操作系统，或将操作系统列表的显示时间设置为0，那么将不会显示系统启动列表， Windows启动管理器会直接运行 Windows启动加载器(Windows Boot Loader，文件名为Winload. exe）。<br>如果计算机中同时安装了多个操作系统，Windows启动管理器会根据 BCD 存储中的内容创建并显示一个系统启动列表，用户可以从中选择要启动的操作系统。<br>如果是从休眠状态恢复计算机，那么Windows启动管理器将会运行 Windows 恢复加载器(文件名为 Winresume.exe)。</p>
+<h1 id="硬件检测阶段"><a href="#硬件检测阶段" class="headerlink" title="硬件检测阶段"></a>硬件检测阶段</h1><p>这一过程中主要需要用到Ntdetect.com和Ntldr。当我们在前面的操作系统选择阶段选择了想要载入的Windows系统之后，Ntdetect.com首先要将当前计算机中安装的所有硬件信息收集起来，并列成一个表，接着将该表交给Ntldr（这个表的信息稍后会被用来创建注册表中有关硬件的键）。这里需要被收集信息的硬件类型包括：总线/适配器类型、显卡、通讯端口、串口、浮点运算器（CPU）、可移动存储器、键盘、指示装置（鼠标）。至此，硬件检测操作已经成功完成。</p>
+<h1 id="内核加载阶段"><a href="#内核加载阶段" class="headerlink" title="内核加载阶段"></a>内核加载阶段</h1><p>在内核加载阶段，Ntldr 将首先加载Windows内核 Ntoskrnl.exe 和 硬件抽象层 （HAL）。 HAL 有点类似于嵌入式操作系统下的BSP（Borad support package），这个抽象层对硬件底层的特性进行隔离，对操作系统提供统一的调用接口，操作系统移植到不同硬件时只要改变相应的 HAL 就可以，其它的内核组件不需要修改，这个是操作系统通常的设计模式。<br>接下来Ntldr 从HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet 下读取这台机器安装的驱动程序，然后依次加载驱动程序。<br>驱程序加载完成后，Windows做如下设置：<br>1、创建系统环境变量<br>2、启动 win32.sys ，这个是Windows子系统的内核模式部分。<br>3、启动 csrss.exe，这个是Windows子系统的用户模式部分。<br>4、启动 winlogon.exe<br>5、创建虚拟内存页面文件<br>6、对一些必要的文件进行改名，（主要是驱动文件，如果更新后，需要在下次重启前改名）</p>
+<h1 id="初始化内核阶段"><a href="#初始化内核阶段" class="headerlink" title="初始化内核阶段"></a>初始化内核阶段</h1><p>在这一阶段中主要会完成这四项任务：创建Hardware注册表键、对Control Set注册表键进行复制、载入和初始化设备驱动，以及启动服务。<br>** 创建Hardware注册表键 **<br>首先要在注册表中创建Hardware键，Windows内核会使用在前面的硬件检测阶段收集到的硬件信息来创建HKEY_LOCAL_MACHINE/Hardware键，也就是说，注册表中该键的内容并不是固定的，而是会根据当前系统中的硬件配置情况动态更新。<br>** 对Control Set注册表键进行复制 **<br>如果Hardware注册表键创建成功，那么系统内核将会对Control Set键的内容创建一个备份。这个备份将会被用在系统的高级启动菜单中的“最后一次正确配置”选项。例如，如果我们安装了一个新的显卡驱动，重启动系统之后Hardware注册表键还没有创建成功系统就已经崩溃了，这时候如果选择“最后一次正确配置”选项，系统将会自动使用上一次的Control Set注册表键的备份内容重新生成Hardware键，这样就可以撤销掉之前因为安装了新的显卡驱动对系统设置的更改。<br>** 载入和初始化设备驱动 **<br>在这一阶段里，操作系统内核首先会初始化之前在载入内核阶段载入的底层设备驱动，然后内核会在注册表的HKEY_LOCAL_MACHINE/System/CurrentControlSet/Services键下查找所有Start键值为“1”的设备驱动（图4）。这些设备驱动将会在载入之后立刻进行初始化，如果在这一过程中发生了任何错误，系统内核将会自动根据设备驱动的“ErrorControl”键的数值进行处理。“ErrorControl”键的键值共有四种，分别具有如下含义：<br>0，忽略，继续引导，不显示错误信息。<br>1，正常，继续引导，显示错误信息。<br>2，恢复，停止引导，使用“最后一次正确配置”选项重启动系统。如果依然出错则会忽略该错误。<br>3，严重，停止引导，使用“最后一次正确配置”选项重启动系统。如果依然出错则会停止引导，并显示一条错误信息。</p>
+<h1 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h1><p>系统内核成功载入，并且成功初始化所有底层设备驱动后，会话管理器会开始启动高层子系统和服务，然后启动Win32子系统。Win32子系统的作用是控制所有输入/输出设备以及访问显示设备。当所有这些操作都完成后，Windows的图形界面就可以显示出来了，同时我们也将可以使用键盘以及其他I/O设备。<br><img src="/windows启动过程/1.png" alt></p>
 
       
       
@@ -378,7 +239,7 @@
           
           <br>
           <strong>本文链接：</strong>
-          https://thriumph.top/无线网络和移动网络.html
+          https://thriumph.top/windows启动过程.html
           <br>
           <strong>版权声明：</strong>
           本作品采用
@@ -403,11 +264,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">windows</a>
         		</li>
       		
 		</ul>
@@ -463,7 +320,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//无线网络和移动网络.html" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//windows启动过程.html" alt="微信分享二维码">
     </div>
 </div>
 
@@ -477,18 +334,9 @@
   
 <nav id="article-nav">
   
-    <a href="/计算机网络中的安全.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          计算机网络中的安全
-        
-      </div>
-    </a>
   
-  
-    <a href="/链路层和局域网.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">链路层和局域网</div>
+    <a href="/level3.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">level3</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -515,7 +363,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无线链路和网络特征"><span class="toc-number">2.</span> <span class="toc-text">无线链路和网络特征</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#无线链路和有线链路间重要的区别"><span class="toc-number">2.0.1.</span> <span class="toc-text">无线链路和有线链路间重要的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信噪比（Signal-to-Noise-Ratio-SNR）"><span class="toc-number">2.0.2.</span> <span class="toc-text">信噪比（Signal-to-Noise Ratio, SNR）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CMDA"><span class="toc-number">2.0.3.</span> <span class="toc-text">CMDA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wife-802-11和无线Lan"><span class="toc-number">3.</span> <span class="toc-text">Wife:802.11和无线Lan</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11结构体系"><span class="toc-number">3.1.</span> <span class="toc-text">802.11结构体系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#信道与关联"><span class="toc-number">3.1.1.</span> <span class="toc-text">信道与关联</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-MAC协议"><span class="toc-number">3.2.</span> <span class="toc-text">802.11 MAC协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#处理隐藏终端-RTS和CTS"><span class="toc-number">3.2.1.</span> <span class="toc-text">处理隐藏终端:RTS和CTS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IEEE-802-11帧"><span class="toc-number">3.3.</span> <span class="toc-text">IEEE 802.11帧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#有效载荷与CRC字段"><span class="toc-number">3.3.1.</span> <span class="toc-text">有效载荷与CRC字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#地址字段"><span class="toc-number">3.3.2.</span> <span class="toc-text">地址字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#序号、持续期和帧控制字段"><span class="toc-number">3.3.3.</span> <span class="toc-text">序号、持续期和帧控制字段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在相同的IP子网中的移动性"><span class="toc-number">3.4.</span> <span class="toc-text">在相同的IP子网中的移动性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#802-11-中的高级特色"><span class="toc-number">3.5.</span> <span class="toc-text">802.11 中的高级特色</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#效率适应"><span class="toc-number">3.5.1.</span> <span class="toc-text">效率适应</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功率管理"><span class="toc-number">3.5.2.</span> <span class="toc-text">功率管理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个人域网络-蓝牙和ZigBee"><span class="toc-number">3.6.</span> <span class="toc-text">个人域网络:蓝牙和ZigBee</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#蓝牙"><span class="toc-number">3.6.1.</span> <span class="toc-text">蓝牙</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ZigBee"><span class="toc-number">3.6.2.</span> <span class="toc-text">ZigBee</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#蜂窝因特网的接入"><span class="toc-number">4.</span> <span class="toc-text">蜂窝因特网的接入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动管理"><span class="toc-number">5.</span> <span class="toc-text">移动管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#寻址"><span class="toc-number">5.1.</span> <span class="toc-text">寻址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#两种方法"><span class="toc-number">5.1.1.</span> <span class="toc-text">两种方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#移动IP"><span class="toc-number">6.</span> <span class="toc-text">移动IP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#管理蜂窝网中的移动性"><span class="toc-number">7.</span> <span class="toc-text">管理蜂窝网中的移动性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对移动用户呼叫的路由选择"><span class="toc-number">7.1.</span> <span class="toc-text">对移动用户呼叫的路由选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GSM中的切换"><span class="toc-number">7.2.</span> <span class="toc-text">GSM中的切换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无限和移动性（对高层协议的影响）"><span class="toc-number">8.</span> <span class="toc-text">无限和移动性（对高层协议的影响）</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#预引导阶段（启动自检阶段）"><span class="toc-number">1.</span> <span class="toc-text">预引导阶段（启动自检阶段）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#引导阶段（初始化启动阶段）"><span class="toc-number">2.</span> <span class="toc-text">引导阶段（初始化启动阶段）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化引导载入程序"><span class="toc-number">3.</span> <span class="toc-text">初始化引导载入程序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#操作系统选择"><span class="toc-number">4.</span> <span class="toc-text">操作系统选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#硬件检测阶段"><span class="toc-number">5.</span> <span class="toc-text">硬件检测阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内核加载阶段"><span class="toc-number">6.</span> <span class="toc-text">内核加载阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#初始化内核阶段"><span class="toc-number">7.</span> <span class="toc-text">初始化内核阶段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动服务"><span class="toc-number">8.</span> <span class="toc-text">启动服务</span></a></li></ol>
                     </div>
                 </span>
             </div>
