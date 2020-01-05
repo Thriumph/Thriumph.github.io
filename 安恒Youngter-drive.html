@@ -6,16 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://thriumph.top">
-  <title>Tag: malloc | Thriumph</title>
+  <title>安恒Youngter-drive | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="pwn,re,渗透测试">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thriumph">
-<meta property="og:url" content="https://thriumph.top/tags/malloc/index.html">
+  <meta name="description" content="这里一道做了好久的题目，巨坑🐷">
+<meta name="keywords" content="ctf,re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安恒Youngter-drive">
+<meta property="og:url" content="https://thriumph.top/安恒Youngter-drive.html">
 <meta property="og:site_name" content="Thriumph">
+<meta property="og:description" content="这里一道做了好久的题目，巨坑🐷">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-01-05T16:36:05.876Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thriumph">
+<meta name="twitter:title" content="安恒Youngter-drive">
+<meta name="twitter:description" content="这里一道做了好久的题目，巨坑🐷">
   
     <link rel="alternative" href="/atom.xml" title="Thriumph" type="application/atom+xml">
   
@@ -154,150 +158,274 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-安恒Youngter-drive" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      安恒Youngter-drive
+    </h1>
+  
+
+
+        
+        <!--显示阅读次数-->
+        
+          <br/>
+          <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+          <span class="icon-sort"></span>
+          <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                    阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+          </span>
+          </a>
+        
+        <!--显示阅读次数完毕-->
+
+
+        
+        <a href="/安恒Youngter-drive.html" class="archive-article-date">
+  	<time datetime="2020-01-05T07:55:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-05</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里一道做了好久的题目，巨坑🐷</p>
+<a id="more"></a>
+<p>脱掉upx壳后ida查看</p>
+<h1 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main_0</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  HANDLE v1; <span class="comment">// [esp+D0h] [ebp-14h]</span></span><br><span class="line">  HANDLE hObject; <span class="comment">// [esp+DCh] [ebp-8h]</span></span><br><span class="line"></span><br><span class="line">  sub_4110FF();                                 <span class="comment">// 打印一堆东西,输入存在Source里</span></span><br><span class="line">  ::hObject = CreateMutexW(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);            <span class="comment">// 找已经存在的线程</span></span><br><span class="line">  j_strcpy(Dest, Source);                       <span class="comment">// 拷贝字符串给Dest</span></span><br><span class="line">  hObject = CreateThread(<span class="number">0</span>, <span class="number">0</span>, StartAddress, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);<span class="comment">// 创建线程</span></span><br><span class="line">  v1 = CreateThread(<span class="number">0</span>, <span class="number">0</span>, sub_41119F, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>); <span class="comment">// 创建线程</span></span><br><span class="line">  CloseHandle(hObject);</span><br><span class="line">  CloseHandle(v1);</span><br><span class="line">  <span class="keyword">while</span> ( dword_418008 != <span class="number">-1</span> )</span><br><span class="line">    ;</span><br><span class="line">  sub_411190();</span><br><span class="line">  CloseHandle(::hObject);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="sub-411190-判断"><a href="#sub-411190-判断" class="headerlink" title="sub_411190(判断)"></a>sub_411190(判断)</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sub_411880</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i; <span class="comment">// [esp+D0h] [ebp-8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt; <span class="number">29</span>; ++i )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( Source[i] != off_418004[i] )           <span class="comment">// 输入的和418004这个地方比较</span></span><br><span class="line">      <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">"\nflag&#123;%s&#125;\n\n"</span>, Dest);        <span class="comment">// 如果相同就是flag</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>流程挺简单，就是输入字符串存在Source中，然后拷贝给Dest，然后进入sub_411190这个函数中，然后将Source与off_418004这里存的数比较，如果相同，输出的flag是Dest也就是输入的字符串。off_418004中存的是TOiZiZtOrYaToUwPnToBsOaOapsyS，但是不对。应该是对Source进行处理了。</p>
+<h1 id="创建两个线程"><a href="#创建两个线程" class="headerlink" title="创建两个线程"></a>创建两个线程</h1><p>交叉引用找到这里，这个地方也是main函数创建的第一个线程StartAddress</p>
+<h2 id="StartAddress-第一个线程"><a href="#StartAddress-第一个线程" class="headerlink" title="StartAddress(第一个线程)"></a>StartAddress(第一个线程)</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __<span class="function">stdcall <span class="title">StartAddress_0</span><span class="params">(<span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    WaitForSingleObject(hObject, <span class="number">0xFFFFFFFF</span>);   <span class="comment">// WaitForSingleObject函数用来检测hHandle事件的信号状态，在某一线程中调用该函数时，线程暂时挂起，如果在挂起的dwMilliseconds毫秒内，线程所等待的对象变为有信号状态，则该函数立即返回；如果时间已经到达dwMilliseconds毫秒，但hHandle所指向的对象还没有变成有信号状态，函数照样返回</span></span><br><span class="line">    <span class="keyword">if</span> ( dword_418008 &gt; <span class="number">-1</span> )                    <span class="comment">// dword_418008是1D</span></span><br><span class="line">    &#123;</span><br><span class="line">      sub_41112C(Source, dword_418008);         <span class="comment">//这里对Source进行了处理</span></span><br><span class="line">      --dword_418008;                           <span class="comment">// 减1</span></span><br><span class="line">      Sleep(<span class="number">0x64</span>u);                             <span class="comment">//休眠</span></span><br><span class="line">    &#125;</span><br><span class="line">    ReleaseMutex(hObject);                      <span class="comment">// 释放线程拥有的互斥体的控制权。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有一个关键的函数sub_41112C，这里应该就是加密部分了。</p>
+<h2 id="sub-41119F-第二个线程"><a href="#sub-41119F-第二个线程" class="headerlink" title="sub_41119F(第二个线程)"></a>sub_41119F(第二个线程)</h2><p>查看一下main函数中创建的第二个线程sub_41119F</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> __<span class="function">stdcall <span class="title">sub_411B10</span><span class="params">(<span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    WaitForSingleObject(hObject, <span class="number">0xFFFFFFFF</span>);   <span class="comment">// 等待</span></span><br><span class="line">    <span class="keyword">if</span> ( dword_418008 &gt; <span class="number">-1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      Sleep(<span class="number">0x64</span>u);                             <span class="comment">// 休眠</span></span><br><span class="line">      --dword_418008;                           <span class="comment">// 减一</span></span><br><span class="line">    &#125;</span><br><span class="line">    ReleaseMutex(hObject);                      <span class="comment">// 释放</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两个进程因为都有sleep,所以这两个进程是交替执行。首先执行的一个线程，对字符进行操作后减一休眠然后执行第二个线程，第二个线程没有对字符进行操作，只是减一之后进入休眠，然后又开始执行第一个线程，也就是说off_418004是奇数的时候才会对字符进行操作，当是偶数的时候会进入第二个线程进行减一的操作并不会对字符串进行操作。</p>
+<h1 id="堆栈不平衡"><a href="#堆栈不平衡" class="headerlink" title="堆栈不平衡"></a>堆栈不平衡</h1><p>然后看第一个线程的加密部分，f5报错，是因为堆栈不平衡，之后卡了好久。。。</p>
+<p>IDA中Options-&gt;General选中Stack pointer可以查看堆栈指针，定位到sub_411940</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.text:004119F1     loc_4119F1:                             ; CODE XREF: sub_411940:loc_4119DE↑j</span><br><span class="line">.text:004119F1 0D8                 pop     edi</span><br><span class="line">.text:004119F2 0D4                 pop     esi</span><br><span class="line">.text:004119F3 0D0                 pop     ebx</span><br><span class="line">.text:004119F4 0CC                 add     esp, 0CCh</span><br><span class="line">.text:004119FA 000                 cmp     ebp, esp</span><br><span class="line">.text:004119FC 000                 call    j___RTC_CheckEsp</span><br><span class="line">.text:00411A01 000                 mov     esp, ebp</span><br><span class="line">.text:00411A03 000                 pop     ebp</span><br><span class="line">.text:00411A04 -04                 retn</span><br><span class="line">.text:00411A04     sub_411940      endp ; sp-analysis failed</span><br></pre></td></tr></table></figure>
+
+<p>修改sp指针，把-04改成000就行了</p>
+<h1 id="sub-411940-加密函数"><a href="#sub-411940-加密函数" class="headerlink" title="sub_411940(加密函数)"></a>sub_411940(加密函数)</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// a1是Source,a2是29</span></span><br><span class="line"><span class="comment">// off_418000是QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasd</span></span><br><span class="line"><span class="keyword">char</span> *__<span class="function">cdecl <span class="title">sub_411940</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">int</span> a2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> v3; <span class="comment">// [esp+D3h] [ebp-5h]</span></span><br><span class="line"></span><br><span class="line">  v3 = *(_BYTE *)(a2 + a1);                     <span class="comment">// v3是初始地址加29，是输入的字符串的最后一位</span></span><br><span class="line">  <span class="keyword">if</span> ( (v3 &lt; <span class="number">97</span> || v3 &gt; <span class="number">122</span>) &amp;&amp; (v3 &lt; <span class="number">65</span> || v3 &gt; <span class="number">90</span>) )<span class="comment">// v3不是大写字母也不是小写字母</span></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);                                    <span class="comment">// 退出</span></span><br><span class="line">  <span class="keyword">if</span> ( v3 &lt; <span class="number">97</span> || v3 &gt; <span class="number">122</span> )                    <span class="comment">// v3是大写字母</span></span><br><span class="line">  &#123;</span><br><span class="line">    result = off_418000[<span class="number">0</span>];                     <span class="comment">// result指向off_418000的首地址</span></span><br><span class="line">    *(_BYTE *)(a2 + a1) = off_418000[<span class="number">0</span>][*(<span class="keyword">char</span> *)(a2 + a1) - <span class="number">38</span>];<span class="comment">// v3是大写字母off_418000处减38</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span>                                          <span class="comment">// v3是小写字母</span></span><br><span class="line">  &#123;</span><br><span class="line">    result = off_418000[<span class="number">0</span>];</span><br><span class="line">    *(_BYTE *)(a2 + a1) = off_418000[<span class="number">0</span>][*(<span class="keyword">char</span> *)(a2 + a1) - <span class="number">96</span>];<span class="comment">// v3是小写字母off_418000处减96</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以就是将输入的字符串存在Source中并拷贝给Dest,之后输入的字符串循环29次，偶数次的时候不做改变，奇数次的时候对字符串进行倒序判断，当输入的字符串的末尾是大写字母时，字符串QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasd的首地址处减38，当输入的字符串的末尾是小写字母时，字符串QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasd的首地址处减96，之后和字符串TOiZiZtOrYaToUwPnToBsOaOapsyS比较，如果相同，输入的就是flag</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">off_418000 = <span class="string">"QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm"</span></span><br><span class="line">off_418004 = <span class="string">"TOiZiZtOrYaToUwPnToBsOaOapsyS"</span></span><br><span class="line">flag=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(off_418004)):</span><br><span class="line">    <span class="keyword">if</span> i %<span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        flag += off_418004[i]</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">for</span> j,k <span class="keyword">in</span> enumerate(off_418000):</span><br><span class="line">        <span class="keyword">if</span> off_418004[i] == k:</span><br><span class="line">            <span class="keyword">if</span> chr(j+<span class="number">38</span>).isupper():</span><br><span class="line">                flag += chr(j+<span class="number">38</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                flag += chr(j+<span class="number">96</span>)</span><br><span class="line"><span class="keyword">print</span> (flag)</span><br></pre></td></tr></table></figure>
+
+<p>下标从29开使输入长度有30，而在函数sub_411880进行check时只比较前29个字符，最后一位没有进行比较，所以随意添加一位<br>flag{ThisisthreadofwindowshahaIsESE}</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这是一道巨坑的题目</p>
+<ul>
+<li>坑1：这个题有两个线程，这两个线程依次掌握控制权，第一个线程掌握控制权的时候才会对输入的字符串进行操作。</li>
+<li>坑2：堆栈不平衡(这个到是做题中第一次见到的)，一般出现的原因可能是程序代码有一些干扰代码，让IDA的反汇编分析出现错误。比如用push + n条指令 + retn来实际跳转，而IDA会以为retn是函数要结束，结果它分析后发现调用栈不平衡，因此就提示sp analysis failed.还有可能是因为编译器的优化，IDA无法正确识别一个函数体的结尾部分，通俗来说就是找不到C中的“大括号”应该位于哪里。比如说<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">one_function</span><span class="params">( <span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">another_function</span><span class="params">( <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> ( a == <span class="number">0</span> || b == <span class="number">0</span> )</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">return</span> one_function(a,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>return one_function(a,b)这条语句，在某些编译器里可能会编译成这样的指令序列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov esp, ebp</span><br><span class="line">pop ebp</span><br><span class="line">jmp one_funcion</span><br></pre></td></tr></table></figure>
+
+<p>而IDA是通过retn指令来识别函数的结束的，它不知道这里的意思，会把它当成一个函数内部的跳转，最后就会出现sp analysis failed了</p>
+<ul>
+<li>坑3：对字符串的操作是倒序的，这个小问题没注意到也浪费了好长时间</li>
+<li>坑4：最初分析的时候一直认为flag是29位的，回头仔细看才发现是30位，最后一位是没有进行判断的<br>总之，通过这个题学到了很多</li>
+<li><em>参考*</em><br><a href="https://bbs.pediy.com/thread-158896.html" target="_blank" rel="noopener">https://bbs.pediy.com/thread-158896.html</a><br><a href="https://bbs.pediy.com/thread-140002.html" target="_blank" rel="noopener">https://bbs.pediy.com/thread-140002.html</a></li>
+</ul>
+
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/sysmalloc.html" class="archive-article-date">
-  	<time datetime="2019-10-30T07:51:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/sysmalloc.html">sysmalloc</a>
-    </h1>
-  
+      <!- 百度自动推送方式提交 -->
+      
+        <script>
+        (function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+        </script>
+      
+      <!- 百度自动推送方式提交结束 -->
 
-        <div class="article-info info-on-right">
+
+
+
+      
+      
+        <div class="declare">
+          <strong>本文作者：</strong>
           
+            Thriumph
+          
+          <br>
+          <strong>本文链接：</strong>
+          https://thriumph.top/安恒Youngter-drive.html
+          <br>
+          <strong>版权声明：</strong>
+          本作品采用
+          <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
+          进行许可。转载请注明出处！
+          
+            <br>
+            <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a>
+          
+        </div>
+      
+
+
+
+      
+    </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ctf</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">re</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+      
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
   </div>
-</article>
-  
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://thriumph.top//安恒Youngter-drive.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/int-molloc.html" class="archive-article-date">
-  	<time datetime="2019-10-29T05:01:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/int-molloc.html">_int_molloc</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
+    <div class="clearfix"></div>
   </div>
+</div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/libc-malloc.html" class="archive-article-date">
-  	<time datetime="2019-10-28T04:18:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-28</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/CVE-2010-2883分析复现.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CVE-2010-2883分析复现</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/libc-malloc.html">__libc_malloc</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#main函数"><span class="toc-number">1.</span> <span class="toc-text">main函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sub-411190-判断"><span class="toc-number">2.</span> <span class="toc-text">sub_411190(判断)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建两个线程"><span class="toc-number">3.</span> <span class="toc-text">创建两个线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#StartAddress-第一个线程"><span class="toc-number">3.1.</span> <span class="toc-text">StartAddress(第一个线程)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sub-41119F-第二个线程"><span class="toc-number">3.2.</span> <span class="toc-text">sub_41119F(第二个线程)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆栈不平衡"><span class="toc-number">4.</span> <span class="toc-text">堆栈不平衡</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sub-411940-加密函数"><span class="toc-number">5.</span> <span class="toc-text">sub_411940(加密函数)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
+        
+    </div>
+</aside>
 
 
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+  
+  
           </div>
         </div>
       </div>
@@ -337,9 +465,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: false,
