@@ -9,14 +9,14 @@
   <title>mbr引导区病毒 | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="改编一个mbr引导区病毒。">
-<meta name="keywords" content="病毒">
+<meta name="keywords" content="病毒,windows">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mbr引导区病毒">
 <meta property="og:url" content="https://thriumph.top/mbr引导区病毒.html">
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="改编一个mbr引导区病毒。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-20T17:29:42.087Z">
+<meta property="og:updated_time" content="2020-01-05T16:50:11.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mbr引导区病毒">
 <meta name="twitter:description" content="改编一个mbr引导区病毒。">
@@ -69,7 +69,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 50
+			总文章数 52
 		</nav>
 
 
@@ -195,7 +195,7 @@
       
         <p>改编一个mbr引导区病毒。</p>
 <a id="more"></a>
-<h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>一个简单的病毒，通过改写mbr,达到不能开机的效果😬</p>
+<h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>一个简单的病毒(不能传播的假病毒)，通过改写mbr,达到不能开机的效果😬</p>
 <h1 id="mbr"><a href="#mbr" class="headerlink" title="mbr"></a>mbr</h1><p>MBR是硬盘的主引导记录，也就是硬盘的0柱面、0磁头、1扇区称为主引导扇区。mbr占用512个字节(200h)，它用于硬盘启动时将系统控制权交给用户指定的,所以就是先于操作系统拿到控制权。<br>计算机开机启动过程：<a href="https://thriumph.top/windows%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.html">https://thriumph.top/windows%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B.html</a></p>
 <h1 id="病毒原理"><a href="#病毒原理" class="headerlink" title="病毒原理"></a>病毒原理</h1><p>1.准备要写入的mbr。<br>2.提升程序权限,调用CreateFile函数去打开物理驱动器的时候，必须具备调试权限，否则就会打开失败，打开失败我们就不能对mbr进行读取了。<br>3.写入mbr,这样就有拿到优先操作系统的控制权了。</p>
 <h1 id="汇编源码"><a href="#汇编源码" class="headerlink" title="汇编源码"></a>汇编源码</h1><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">assume</span> <span class="built_in">cs</span>:code </span><br><span class="line">code <span class="meta">segment</span></span><br><span class="line"><span class="symbol">start:</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,<span class="number">12h</span>           <span class="comment">;使用12号功能，对显示器进行设置    </span></span><br><span class="line"><span class="keyword">int</span> <span class="number">10h</span>              <span class="comment">;显示器的设置</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">bp</span>, <span class="number">7C18H</span>        <span class="comment">;字符串的起始偏移</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">cx</span>, <span class="number">13h</span>          <span class="comment">;字符串长度</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">ax</span>,<span class="number">1301h</span>         <span class="comment">;AH = 13h 调用功能号13 ,在teletype模式下显示字符串,AL = 01H</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">bx</span>,<span class="number">0Ch</span>           <span class="comment">;BH = 00H BL = 0CH</span></span><br><span class="line"><span class="keyword">mov</span> <span class="built_in">dx</span>,<span class="number">0h</span>            <span class="comment">;起始的行列</span></span><br><span class="line"><span class="keyword">int</span> <span class="number">10h</span></span><br><span class="line"><span class="keyword">jmp</span> $       <span class="comment">;无线循环，防止代码进入数据区</span></span><br><span class="line">code ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
@@ -264,6 +264,10 @@
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">病毒</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">windows</a>
         		</li>
       		
 		</ul>
@@ -535,6 +539,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ctf - re</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">加密算法</a>
               </li>
              
@@ -547,11 +555,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">windows</a>
+                <a href="javascript:void(0)" class="js-tag color3">病毒</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">病毒</a>
+                <a href="javascript:void(0)" class="js-tag color3">windows</a>
               </li>
              
               <li class="article-tag-list-item">
