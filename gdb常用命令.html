@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="记录一些常用的命令">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-19T12:50:42.435Z">
+<meta property="og:updated_time" content="2020-03-09T07:16:08.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gdb常用命令">
 <meta name="twitter:description" content="记录一些常用的命令">
@@ -69,7 +69,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 53
+			总文章数 55
 		</nav>
 
 
@@ -314,6 +314,19 @@
 <p>fp（文件的地址）</p>
 <p>fpchain：显示FILE的链接列表</p>
 <p>orange：中的测试house of orange条件_IO_flush_lockp</p>
+<h2 id="查找plt-got"><a href="#查找plt-got" class="headerlink" title="查找plt,got"></a>查找plt,got</h2><p>plt 可以直接使用pwntools中的ELF(elf).symbols(function_name)<br>got 可以直接使用pwntools中的ELF(elf).got(function_name)<br>plt_2 可以直接使用pwntools中的ELF(lib).symbols(function_name)</p>
+<h2 id="堆操作"><a href="#堆操作" class="headerlink" title="堆操作"></a>堆操作</h2><p>tracemalloc on跟踪每次malloc</p>
+<p>parseheap 把堆的布局输出</p>
+<p>heapinfo展示heap的信息</p>
+<h2 id="开启和关闭ALSR"><a href="#开启和关闭ALSR" class="headerlink" title="开启和关闭ALSR"></a>开启和关闭ALSR</h2><p>0：关闭ASLR</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c &quot;echo 0 &gt; /proc/sys/kernel/randomize_va_space&quot;</span><br></pre></td></tr></table></figure>
+
+<p>1：保留的ASLR</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c &quot;echo 1 &gt; /proc/sys/kernel/randomize_va_space&quot;</span><br></pre></td></tr></table></figure>
+
+<p>2：完全的ASLR</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash -c &quot;echo 2 &gt; /proc/sys/kernel/randomize_va_space&quot;</span><br></pre></td></tr></table></figure>
+
 
       
       
@@ -481,7 +494,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础命令"><span class="toc-number">1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#显示内存数据"><span class="toc-number">2.</span> <span class="toc-text">显示内存数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#p"><span class="toc-number">2.1.</span> <span class="toc-text">p</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x"><span class="toc-number">2.2.</span> <span class="toc-text">x</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#info"><span class="toc-number">2.3.</span> <span class="toc-text">info</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找数据"><span class="toc-number">3.</span> <span class="toc-text">查找数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwngdb"><span class="toc-number">4.</span> <span class="toc-text">Pwngdb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwndbg"><span class="toc-number">5.</span> <span class="toc-text">pwndbg</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#peda"><span class="toc-number">6.</span> <span class="toc-text">peda</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基础命令"><span class="toc-number">1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#显示内存数据"><span class="toc-number">2.</span> <span class="toc-text">显示内存数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#p"><span class="toc-number">2.1.</span> <span class="toc-text">p</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x"><span class="toc-number">2.2.</span> <span class="toc-text">x</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#info"><span class="toc-number">2.3.</span> <span class="toc-text">info</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找数据"><span class="toc-number">3.</span> <span class="toc-text">查找数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Pwngdb"><span class="toc-number">4.</span> <span class="toc-text">Pwngdb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#pwndbg"><span class="toc-number">5.</span> <span class="toc-text">pwndbg</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#peda"><span class="toc-number">6.</span> <span class="toc-text">peda</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#查找plt-got"><span class="toc-number">6.1.</span> <span class="toc-text">查找plt,got</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#堆操作"><span class="toc-number">6.2.</span> <span class="toc-text">堆操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开启和关闭ALSR"><span class="toc-number">6.3.</span> <span class="toc-text">开启和关闭ALSR</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -637,11 +650,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
+                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
+                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,7 +670,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
+                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -685,11 +698,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">glibc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">malloc</a>
+                <a href="javascript:void(0)" class="js-tag color5">heap</a>
               </li>
              
               <li class="article-tag-list-item">

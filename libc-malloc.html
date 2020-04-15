@@ -9,14 +9,14 @@
   <title>__libc_malloc | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="当我们使用malloc的时候，函数调用的是__libc_malloc函数。 __ libc_malloc函数是用来封装 _int_malloc函数的。">
-<meta name="keywords" content="glibc,malloc">
+<meta name="keywords" content="二进制安全,heap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="__libc_malloc">
 <meta property="og:url" content="https://thriumph.top/libc-malloc.html">
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="当我们使用malloc的时候，函数调用的是__libc_malloc函数。 __ libc_malloc函数是用来封装 _int_malloc函数的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-29T05:04:52.693Z">
+<meta property="og:updated_time" content="2020-03-12T07:27:54.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="__libc_malloc">
 <meta name="twitter:description" content="当我们使用malloc的时候，函数调用的是__libc_malloc函数。 __ libc_malloc函数是用来封装 _int_malloc函数的。">
@@ -69,7 +69,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 53
+			总文章数 55
 		</nav>
 
 
@@ -234,6 +234,11 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> arena_lock(ptr, size) do &#123;                        \</span></span><br><span class="line">      <span class="keyword">if</span> (ptr &amp;&amp; !arena_is_corrupt (ptr))                     \</span><br><span class="line">        (<span class="keyword">void</span>) mutex_lock (&amp;ptr-&gt;mutex);                      \</span><br><span class="line">      <span class="keyword">else</span>                                    \</span><br><span class="line">        ptr = arena_get2 (ptr, (size), <span class="literal">NULL</span>);                     \</span><br><span class="line">  &#125; <span class="keyword">while</span> (<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
 <p>获得分配去的指针后，就会调用 _ int_malloc开始分配内存了</p>
+<h1 id="libc-malloc总结"><a href="#libc-malloc总结" class="headerlink" title="libc_malloc总结"></a>libc_malloc总结</h1><p>要么没有申请到内存</p>
+<p>要么通过mmap/brk申请内存</p>
+<p>要么在其arena中分配内存（或者出错退出）</p>
+<p>最终返回内存（return）</p>
+<p>核心：调用_int_malloc函数</p>
 
       
       
@@ -293,11 +298,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">heap</a>
         		</li>
       		
 		</ul>
@@ -377,8 +382,8 @@
     </a>
   
   
-    <a href="/guess-num.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">guess_num</div>
+    <a href="/万年历.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">万年历</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -405,7 +410,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-malloc"><span class="toc-number">1.</span> <span class="toc-text">__libc_malloc</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc-hook-ini"><span class="toc-number">2.</span> <span class="toc-text">malloc_hook_ini</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ptmalloc-init"><span class="toc-number">3.</span> <span class="toc-text">ptmalloc_init</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-mallopt"><span class="toc-number">4.</span> <span class="toc-text">libc_mallopt</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#arena-get"><span class="toc-number">5.</span> <span class="toc-text">arena_get</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-malloc"><span class="toc-number">1.</span> <span class="toc-text">__libc_malloc</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc-hook-ini"><span class="toc-number">2.</span> <span class="toc-text">malloc_hook_ini</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ptmalloc-init"><span class="toc-number">3.</span> <span class="toc-text">ptmalloc_init</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-mallopt"><span class="toc-number">4.</span> <span class="toc-text">libc_mallopt</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#arena-get"><span class="toc-number">5.</span> <span class="toc-text">arena_get</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#libc-malloc总结"><span class="toc-number">6.</span> <span class="toc-text">libc_malloc总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -561,11 +566,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
+                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
+                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -581,7 +586,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
+                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -609,11 +614,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">glibc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">malloc</a>
+                <a href="javascript:void(0)" class="js-tag color5">heap</a>
               </li>
              
               <li class="article-tag-list-item">

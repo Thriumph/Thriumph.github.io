@@ -17,7 +17,7 @@
 <meta property="og:description" content="简单记录一下pwn环境配置">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://thriumph.top/pwn环境配置/1.png">
-<meta property="og:updated_time" content="2019-09-21T10:44:20.984Z">
+<meta property="og:updated_time" content="2020-03-07T09:28:16.822Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="pwn环境配置">
 <meta name="twitter:description" content="简单记录一下pwn环境配置">
@@ -71,7 +71,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 53
+			总文章数 55
 		</nav>
 
 
@@ -231,7 +231,10 @@
 <h1 id="pwndbg-def-peda切换"><a href="#pwndbg-def-peda切换" class="headerlink" title="pwndbg,def,peda切换"></a>pwndbg,def,peda切换</h1><p>更改~/.gdbinit文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">define init-peda</span><br><span class="line">source ~/peda/peda.py</span><br><span class="line">end</span><br><span class="line">document init-peda</span><br><span class="line">Initializes the PEDA (Python Exploit Development Assistant for GDB) framework</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">define init-pwndbg</span><br><span class="line"># 此处为pwndbg的gdbinit.py的目录</span><br><span class="line">source /home/Thriumph/pwndbg/gdbinit.py</span><br><span class="line">end</span><br><span class="line">document init-pwndbg</span><br><span class="line">Initializes the PwnDBG</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">define init-gef</span><br><span class="line">source /home/Thriumph/.gdbinit-gef.py</span><br><span class="line">end</span><br><span class="line">document init-gef</span><br><span class="line">Initializes the Gef</span><br><span class="line">end</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
 
-<p>创建/bin/gdb-peda和/bin/pwndbg和/bin/gef<br><img src="/pwn环境配置/1.png" alt></p>
+<p>创建/bin/gdb-peda和/bin/pwndbg和/bin/gef</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">cat  /bin/gdb-peda</span><br><span class="line">#!/bin/sh</span><br><span class="line">exec gdb -q -ex init-peda &quot;$@&quot;</span><br><span class="line"></span><br><span class="line">cat /bin/pwndbg</span><br><span class="line">#!/bin/sh</span><br><span class="line">exec gdb -q -ex init-pwndbg &quot;$@&quot;</span><br><span class="line"></span><br><span class="line">cat /bin/gef</span><br><span class="line">#!/bin/sh</span><br><span class="line">exec gdb -q -ex init-gef &quot;$@&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/pwn环境配置/1.png" alt></p>
 
       
       
@@ -555,11 +558,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
+                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
+                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -575,7 +578,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
+                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -603,11 +606,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">glibc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">malloc</a>
+                <a href="javascript:void(0)" class="js-tag color5">heap</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -9,14 +9,14 @@
   <title>_int_molloc | Thriumph</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="_int_malloc()函数是内存分配的核心">
-<meta name="keywords" content="glibc,malloc">
+<meta name="keywords" content="二进制安全,heap">
 <meta property="og:type" content="article">
 <meta property="og:title" content="_int_molloc">
 <meta property="og:url" content="https://thriumph.top/int-molloc.html">
 <meta property="og:site_name" content="Thriumph">
 <meta property="og:description" content="_int_malloc()函数是内存分配的核心">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-29T11:53:30.158Z">
+<meta property="og:updated_time" content="2020-03-12T07:29:30.388Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="_int_molloc">
 <meta name="twitter:description" content="_int_malloc()函数是内存分配的核心">
@@ -69,7 +69,7 @@
 		</nav>
 		
 		<nav>
-			总文章数 53
+			总文章数 55
 		</nav>
 
 
@@ -310,6 +310,7 @@
 <h2 id="再次使用malloc-consolidate"><a href="#再次使用malloc-consolidate" class="headerlink" title="再次使用malloc_consolidate"></a>再次使用malloc_consolidate</h2><p>当topchunk也不够使用的时候，此时不会直接去调用sysmalloc申请内存。而是在else if里面再次调用mslloc_consolidate对fastbins中的chunk进行整理，然后进入下一次循环，在后面的循环中再次判断是否有可用的chunk可以使用，如果还没有，最后就要执行sysmalloc函数进行申请内存</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (have_fastchunks (av))</span><br><span class="line">        &#123;</span><br><span class="line">          malloc_consolidate (av);</span><br><span class="line">          <span class="comment">/* restore original bin index */</span></span><br><span class="line">          <span class="keyword">if</span> (in_smallbin_range (nb))</span><br><span class="line">            idx = smallbin_index (nb);</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">            idx = largebin_index (nb);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">         Otherwise, relay to handle system-dependent cases</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">void</span> *p = sysmalloc (nb, av);</span><br><span class="line">          <span class="keyword">if</span> (p != <span class="literal">NULL</span>)</span><br><span class="line">            alloc_perturb (p, bytes);</span><br><span class="line">          <span class="keyword">return</span> p;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>①请求大小在fastbin的范围内：在fastbins中找是否有对应的chunk可以使用<br>②请求大小在smallbin的范围内：在smallbin中找是否有对应的chunk可以使用<br>③请求大小在largebin的范围内：先调用malloc_consolidate对fastbins进行整理。然后在unsortedbin中查看是否有满足要求的chunk可以使用<br>④在largebin中寻找可用的chunk来使用<br>⑤寻找较大的bin链中是否有可用的chunk来使用<br>⑥切割topchunk来使用<br>⑦topchunk也不够了，再次调用malloc_consolidate整理fastbins<br>⑧topchunk不够用，再次malloc_consolidate之后还没有可以用的，最终调用sysmalloc（系统调用）申请内存</p>
 
       
       
@@ -369,11 +370,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">glibc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">二进制安全</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">malloc</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">heap</a>
         		</li>
       		
 		</ul>
@@ -481,7 +482,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#定义相关变量"><span class="toc-number">1.</span> <span class="toc-text">定义相关变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#计算-chunk-size"><span class="toc-number">2.</span> <span class="toc-text">计算 chunk size</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#request2size"><span class="toc-number">2.1.</span> <span class="toc-text">request2size</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ptmalloc中关于chunk的定义"><span class="toc-number">2.2.</span> <span class="toc-text">ptmalloc中关于chunk的定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#检测arena"><span class="toc-number">3.</span> <span class="toc-text">检测arena</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fastbin"><span class="toc-number">4.</span> <span class="toc-text">fastbin</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#判断malloc的大小是否在fastbin范围内"><span class="toc-number">4.1.</span> <span class="toc-text">判断malloc的大小是否在fastbin范围内</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找可用freechunk"><span class="toc-number">4.2.</span> <span class="toc-text">寻找可用freechunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统检测"><span class="toc-number">4.3.</span> <span class="toc-text">系统检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alloc-perturb"><span class="toc-number">4.4.</span> <span class="toc-text">alloc_perturb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallbin"><span class="toc-number">5.</span> <span class="toc-text">smallbin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#largebin"><span class="toc-number">6.</span> <span class="toc-text">largebin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc-consolidate"><span class="toc-number">7.</span> <span class="toc-text">malloc_consolidate</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for循环"><span class="toc-number">8.</span> <span class="toc-text">for循环</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin"><span class="toc-number">8.1.</span> <span class="toc-text">unsortedbin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin的检测"><span class="toc-number">8.2.</span> <span class="toc-text">unsortedbin的检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断是否切割last-remainde"><span class="toc-number">8.3.</span> <span class="toc-text">判断是否切割last_remainde</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取走unsortedbin中对应的freechunk（精准匹配则返回）"><span class="toc-number">8.4.</span> <span class="toc-text">取走unsortedbin中对应的freechunk（精准匹配则返回）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#consolidate"><span class="toc-number">8.5.</span> <span class="toc-text">consolidate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到-smallbins"><span class="toc-number">8.5.1.</span> <span class="toc-text">插入到 smallbins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到largebins"><span class="toc-number">8.5.2.</span> <span class="toc-text">插入到largebins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到链表头"><span class="toc-number">8.5.3.</span> <span class="toc-text">插入到链表头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到链表尾"><span class="toc-number">8.5.4.</span> <span class="toc-text">插入到链表尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入链表中间"><span class="toc-number">8.5.5.</span> <span class="toc-text">插入链表中间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin-1"><span class="toc-number">8.6.</span> <span class="toc-text">unsortedbin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#largebin的判断获取"><span class="toc-number">8.7.</span> <span class="toc-text">largebin的判断获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#largebin的MINISIZE操作"><span class="toc-number">8.8.</span> <span class="toc-text">largebin的MINISIZE操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找更大的chunk"><span class="toc-number">8.9.</span> <span class="toc-text">寻找更大的chunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#topchunk"><span class="toc-number">8.10.</span> <span class="toc-text">topchunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次使用malloc-consolidate"><span class="toc-number">8.11.</span> <span class="toc-text">再次使用malloc_consolidate</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#定义相关变量"><span class="toc-number">1.</span> <span class="toc-text">定义相关变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#计算-chunk-size"><span class="toc-number">2.</span> <span class="toc-text">计算 chunk size</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#request2size"><span class="toc-number">2.1.</span> <span class="toc-text">request2size</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ptmalloc中关于chunk的定义"><span class="toc-number">2.2.</span> <span class="toc-text">ptmalloc中关于chunk的定义</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#检测arena"><span class="toc-number">3.</span> <span class="toc-text">检测arena</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fastbin"><span class="toc-number">4.</span> <span class="toc-text">fastbin</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#判断malloc的大小是否在fastbin范围内"><span class="toc-number">4.1.</span> <span class="toc-text">判断malloc的大小是否在fastbin范围内</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找可用freechunk"><span class="toc-number">4.2.</span> <span class="toc-text">寻找可用freechunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统检测"><span class="toc-number">4.3.</span> <span class="toc-text">系统检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#alloc-perturb"><span class="toc-number">4.4.</span> <span class="toc-text">alloc_perturb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallbin"><span class="toc-number">5.</span> <span class="toc-text">smallbin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#largebin"><span class="toc-number">6.</span> <span class="toc-text">largebin</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#malloc-consolidate"><span class="toc-number">7.</span> <span class="toc-text">malloc_consolidate</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for循环"><span class="toc-number">8.</span> <span class="toc-text">for循环</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin"><span class="toc-number">8.1.</span> <span class="toc-text">unsortedbin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin的检测"><span class="toc-number">8.2.</span> <span class="toc-text">unsortedbin的检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#判断是否切割last-remainde"><span class="toc-number">8.3.</span> <span class="toc-text">判断是否切割last_remainde</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#取走unsortedbin中对应的freechunk（精准匹配则返回）"><span class="toc-number">8.4.</span> <span class="toc-text">取走unsortedbin中对应的freechunk（精准匹配则返回）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#consolidate"><span class="toc-number">8.5.</span> <span class="toc-text">consolidate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到-smallbins"><span class="toc-number">8.5.1.</span> <span class="toc-text">插入到 smallbins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到largebins"><span class="toc-number">8.5.2.</span> <span class="toc-text">插入到largebins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到链表头"><span class="toc-number">8.5.3.</span> <span class="toc-text">插入到链表头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入到链表尾"><span class="toc-number">8.5.4.</span> <span class="toc-text">插入到链表尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插入链表中间"><span class="toc-number">8.5.5.</span> <span class="toc-text">插入链表中间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#unsortedbin-1"><span class="toc-number">8.6.</span> <span class="toc-text">unsortedbin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#largebin的判断获取"><span class="toc-number">8.7.</span> <span class="toc-text">largebin的判断获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#largebin的MINISIZE操作"><span class="toc-number">8.8.</span> <span class="toc-text">largebin的MINISIZE操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找更大的chunk"><span class="toc-number">8.9.</span> <span class="toc-text">寻找更大的chunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#topchunk"><span class="toc-number">8.10.</span> <span class="toc-text">topchunk</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#再次使用malloc-consolidate"><span class="toc-number">8.11.</span> <span class="toc-text">再次使用malloc_consolidate</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -637,11 +638,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
+                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
+                <a href="javascript:void(0)" class="js-tag color4">ctf</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -657,7 +658,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">二进制安全</a>
+                <a href="javascript:void(0)" class="js-tag color4">pwn</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -685,11 +686,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">glibc</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">malloc</a>
+                <a href="javascript:void(0)" class="js-tag color5">heap</a>
               </li>
              
               <li class="article-tag-list-item">
