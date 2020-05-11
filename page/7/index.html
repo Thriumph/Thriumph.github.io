@@ -1,0 +1,713 @@
+<!--
+	作者：Sariay
+	时间：2018-08-26
+	描述：There may be a bug, but don't worry, Qiling(器灵) says that it can work normally! aha!
+-->
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head><meta name="generator" content="Hexo 3.9.0">
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      Thriumph
+    
+  </title>
+  <meta name="author" content="Thriumph">
+  <meta name="keywords" content="pwn,re,渗透测试">
+  <meta name="description" content="不将就、不妥协、不停留">
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" href="/css/Annie.css">
+  
+  <!-- jquery -->
+	<script src="/plugin/jquery/jquery.min.js"></script>
+
+<script>
+    const CONFIG_BGIMAGE = {
+      mode: 'normal',
+      normalSrc: 'https://source.unsplash.com/collection/954550/1920x1080',
+      randomYouMax: 110,
+      randomYouSrc: '/',
+	  randomOtherSrc: '/',
+	  preloaderEnable: true
+    }
+	
+    const CONFIG_LEACLOUD_COUNT = {
+      enable: true,
+	  appId: 'kL7JiFr2neE843z5adAoDHih-gzGzoHsz',
+	  appKey: 'AsJ5lg1K8yyk6Rdo39i5dX1h',
+	  serverURLs: '' || ' '
+    }
+  </script>
+</head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground bg-pan-br">
+	<div class="mask">
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<div class="motto text-shadow-pop-left">
+					<p class="content" id="motto-content">获取中...</p>
+					<p>-<p>
+					<p class="author" id="motto-author">Just a minute...</p>
+				</div>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more" class="scroll-down">
+				<span class="icon-anchor1 animation-scroll-down"></span>
+			</a>
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><span>0.0%</span></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			主页
+		
+	</p>
+
+	
+	
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<span class="logo"> 
+			<img src="/img/logo.png">
+		</span>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	
+	<div class="nav-body">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+	
+	<div class="nav-footer">
+		<ul id="global-social">
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-one"><span class="path1"></span><span class="path2"></span></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-zhihu"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-github"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-sina-weibo "></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-pinterest2"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-twitter"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/atom.xml" target="_blank">
+				<span class="icon-rss"></span>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			
+
+
+
+	<!--cart style-->
+	<div class="layout-cart">
+	<div id="layout-cart">
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/运输层.html" title=" 运输层 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						六月 10日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/运输层.html" title="运输层">							
+							
+	<a href="/运输层.html" itemprop="url">
+		运输层
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							《计算机网络自顶向下方法》第三章读书笔记
+
+
+概述和运输层服务传输层位于应用层和网络层之间，是分层的网络体系结构中重要的部分，该层为运行在不同主机上的应用...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/运输层.html_visitors" data-url="/运输层.html" data-title="运输层">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/运输层.html_likes" data-url="/运输层.html" data-title="运输层" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/应用层.html" title=" 应用层 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						六月 8日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/应用层.html" title="应用层">							
+							
+	<a href="/应用层.html" itemprop="url">
+		应用层
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							《计算机网络自顶向下方法》第二章读书笔记
+
+
+应用层协议原理网络应用程序体系结构应用体系结构 由应用程序研发者设计，规定了如何在各种端系统上组织该应用程序...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/应用层.html_visitors" data-url="/应用层.html" data-title="应用层">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/应用层.html_likes" data-url="/应用层.html" data-title="应用层" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/多媒体网络.html" title=" 多媒体网络 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						六月 7日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/多媒体网络.html" title="多媒体网络">							
+							
+	<a href="/多媒体网络.html" itemprop="url">
+		多媒体网络
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							《计算机网络自顶向下方法》第九章读书笔记
+
+多媒体网络应用视频的性质视频的显著特点是高比特率
+音频的性质脉冲编码调制（Pulse Code Modulat...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/多媒体网络.html_visitors" data-url="/多媒体网络.html" data-title="多媒体网络">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/多媒体网络.html_likes" data-url="/多媒体网络.html" data-title="多媒体网络" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/计算机网络和因特网.html" title=" 计算机网络和因特网 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						六月 6日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/计算机网络和因特网.html" title="计算机网络和因特网">							
+							
+	<a href="/计算机网络和因特网.html" itemprop="url">
+		计算机网络和因特网
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							《计算机网络自顶向下方法》第一章读书笔记自顶向下方法挺通俗易懂的٩(๑òωó๑)۶
+
+
+
+什么是因特网什么是因特网具体构成描述主机(端系统)通过通信链路和...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/计算机网络和因特网.html_visitors" data-url="/计算机网络和因特网.html" data-title="计算机网络和因特网">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/计算机网络和因特网.html_likes" data-url="/计算机网络和因特网.html" data-title="计算机网络和因特网" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/迷宫问题.html" title=" 迷宫问题 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						六月 1日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/迷宫问题.html" title="迷宫问题">							
+							
+	<a href="/迷宫问题.html" itemprop="url">
+		迷宫问题
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							迷宫问题
+
+12345678910111213141516171819202122232425262728293031323334353637383940...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/迷宫问题.html_visitors" data-url="/迷宫问题.html" data-title="迷宫问题">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/迷宫问题.html_likes" data-url="/迷宫问题.html" data-title="迷宫问题" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+			<div class="post" id="post">
+				<a class="post-cover" href="/十大排序.html" title=" 十大排序 " target="_blank">
+					
+					<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg"/>
+				</a>
+
+				<div class="post-text">
+					<p class="post-time">
+						五月 1日, 2019
+					</p>	
+					<h3 class="post-title" id="post-title-index">
+						<a href="/十大排序.html" title="十大排序">							
+							
+	<a href="/十大排序.html" itemprop="url">
+		十大排序
+	</a>
+
+						</a>
+					</h3>
+					<p class="post-content">
+						
+							冒泡排序，选择排序，插入排序，希尔排序，归并排序，快速排序，堆排序，计数排序，桶排序，基数排序
+
+** 稳定：** 如果a原本在b前面，而a=b，排序之后...
+						
+					</p>
+					<p class="post-meta">
+						
+
+	
+    <span class="leancloud_visitors" id="/十大排序.html_visitors" data-url="/十大排序.html" data-title="十大排序">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">0</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/十大排序.html_likes" data-url="/十大排序.html" data-title="十大排序" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+					</p>
+				</div>
+			</div>
+		
+	</div>
+	
+	
+	<div id="pagination">
+		
+	</div>
+
+	
+
+</div>
+	
+
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div id="navigation-show">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by Thriumph. All Rights Reserved.
+			
+			
+				<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			
+		</p>
+		<p>
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_site_pv">
+	    	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+		</span>
+
+		<span id="busuanzi_container_site_uv">
+	  		本站访客数<span id="busuanzi_value_site_uv"></span>人次
+		</span>
+		
+	
+
+
+
+
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- Local or hitokoto! -->
+
+	<script src="/plugin/motto/motto.js"></script>
+	
+	<script type="text/javascript">
+		(function motto(){
+			let mottoText = getMingYanContent().split('</br> - </br>'),
+			
+			mottoTextContent = mottoText[0]?mottoText[0]:'请刷新...',
+			
+			mottoTextFrom = mottoText[1]?mottoText[1]:'one/一个';
+			
+			mottoTextContent = mottoTextContent.trim().substring(0, 100);
+		
+			$("#motto-content").html( mottoTextContent);
+			$("#motto-author").html( mottoTextFrom  );
+		})();	
+	</script>	
+
+
+
+<!-- love effect -->
+
+	<script src="/plugin/love/love.js"></script>
+
+
+<!-- back to top -->
+
+	<div id="totop">
+	<span class="icon-circle-up"></span>
+</div>
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	
+	<script src="//s6.cnzz.com/stat.php?id=&web_id=" type="text/javascript"></script>
+
+	
+	
+	
+ 
+
+<!-- leancloud -->
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+  <script src="/plugin/leancloud/av-min.js"></script>
+<script src="/js/leancloud-count.js"></script>
+
+	
+
+  
+
+
+<script src="/plugin/chinese/chinese.js"></script>
+<script src="/plugin/imagelazyloader/yall.min.js"></script>
+<script src="/plugin/imageloaded/imagesloaded.pkgd.min.js"></script>
+<script src="/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/plugin/resizediv/resizediv.js"></script>
+<script src="/js/main.js"></script>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":200,"height":400,"hOffset":-20,"vOffset":80},"mobile":{"show":false}});</script></body>	
+</html>

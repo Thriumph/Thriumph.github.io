@@ -1,0 +1,1038 @@
+<!--
+	作者：Sariay
+	时间：2018-08-26
+	描述：There may be a bug, but don't worry, Qiling(器灵) says that it can work normally! aha!
+-->
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head><meta name="generator" content="Hexo 3.9.0">
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      Apache web服务器配置 | Thriumph
+    
+  </title>
+  <meta name="author" content="Thriumph">
+  <meta name="keywords" content="pwn,re,渗透测试">
+  <meta name="description" content="不将就、不妥协、不停留">
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" href="/css/Annie.css">
+  
+  <!-- jquery -->
+	<script src="/plugin/jquery/jquery.min.js"></script>
+
+<script>
+    const CONFIG_BGIMAGE = {
+      mode: 'normal',
+      normalSrc: 'https://source.unsplash.com/collection/954550/1920x1080',
+      randomYouMax: 110,
+      randomYouSrc: '/',
+	  randomOtherSrc: '/',
+	  preloaderEnable: true
+    }
+	
+    const CONFIG_LEACLOUD_COUNT = {
+      enable: true,
+	  appId: 'kL7JiFr2neE843z5adAoDHih-gzGzoHsz',
+	  appKey: 'AsJ5lg1K8yyk6Rdo39i5dX1h',
+	  serverURLs: '' || ' '
+    }
+  </script>
+</head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground bg-pan-br">
+	<div class="mask">
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<div class="motto text-shadow-pop-left">
+					<p class="content" id="motto-content">获取中...</p>
+					<p>-<p>
+					<p class="author" id="motto-author">Just a minute...</p>
+				</div>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more" class="scroll-down">
+				<span class="icon-anchor1 animation-scroll-down"></span>
+			</a>
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><span>0.0%</span></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			「Apache web服务器配置」
+		
+	</p>
+
+	
+	
+		<span id="star-button" rel="unlike">
+			<i class="icon-heart"></i>
+		</span>
+	
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<span class="logo"> 
+			<img src="/img/logo.png">
+		</span>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	
+	<div class="nav-body">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+	
+	<div class="nav-footer">
+		<ul id="global-social">
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-one"><span class="path1"></span><span class="path2"></span></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-zhihu"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-github"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-sina-weibo "></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-pinterest2"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-twitter"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/atom.xml" target="_blank">
+				<span class="icon-rss"></span>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			<!--
+	时间：2018-11-17
+	描述：
+		插件名称：katelog.min.js
+		插件作者：KELEN
+		插件来源: https://github.com/KELEN/katelog
+-->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		<script src="/plugin/toc/katelog.min.js"></script>
+
+		
+	 
+
+<div class="layout-post">
+	<div id="layout-post">
+		<div class="article-title">
+			
+	<a href="/Apache-web服务器配置.html" itemprop="url">
+		Apache web服务器配置
+	</a>
+
+		</div>
+
+		<div class="article-meta">
+			<span>
+				<i class="icon-calendar1"></i>
+				
+				
+
+
+
+
+	更新于
+
+	<a href="/Apache-web服务器配置.html" itemprop="url">
+		<time datetime="2020-03-27T15:08:52.000Z" itemprop="dateUpdated">
+	  		2020-05-10
+	  </time>
+	</a> 
+
+
+
+			</span>
+			<span>
+				
+	<i class="icon-price-tags"></i>
+	
+		<a href="/tags/linux/" class=" ">
+			linux
+		</a>
+	
+		
+			</span>
+			
+			
+
+	
+    <span class="leancloud_visitors" id="/Apache-web服务器配置.html_visitors" data-url="/Apache-web服务器配置.html" data-title="Apache web服务器配置">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">1</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/Apache-web服务器配置.html_likes" data-url="/Apache-web服务器配置.html" data-title="Apache web服务器配置" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+		</div>
+
+		<div class="article-content" id="article-content">
+			<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>Ubuntu18.04</p>
+<p>将网络设置为nat模式，保证可以连接网络</p>
+<h1 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h1><p>掌握ApacheWeb服务器的安装、基本配置</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p> Apache HTTP服务器是世界上使用最广泛的Web服务器。它提供了许多强大的功能，包括可动态加载的模块，强大的媒体支持以及与其他流行软件的广泛集成</p>
+<h1 id="ApacheWeb服务器配置"><a href="#ApacheWeb服务器配置" class="headerlink" title="ApacheWeb服务器配置"></a>ApacheWeb服务器配置</h1><h2 id="设置静态ip"><a href="#设置静态ip" class="headerlink" title="设置静态ip"></a>设置静态ip</h2><p><img src="/Apache-web服务器配置/1.png" alt></p>
+<p><img src="/Apache-web服务器配置/2.png" alt></p>
+<p>在编辑虚拟机设置里面的网络适配器类型改为NAT模式得到子网掩码和网关（子网掩码：255.255.255.0 网关：192.168.75.2）</p>
+<p><img src="/Apache-web服务器配置/3.png" alt></p>
+<p>使用ifconfig查看网卡名称和ip（网卡名称ens33，ip是192.168.75.131）</p>
+<p><img src="/Apache-web服务器配置/4.png" alt></p>
+<p>修改相关的配置文件（sudo vi /etc/network/interfaces）</p>
+<p><img src="/Apache-web服务器配置/5.png" alt></p>
+<h2 id="安装Apache2"><a href="#安装Apache2" class="headerlink" title="安装Apache2"></a>安装Apache2</h2><p>命令：sudo apt-get install apache2</p>
+<p><img src="/Apache-web服务器配置/6.png" alt></p>
+<p>查看是否安装成功</p>
+<p>命令：apache2 -version</p>
+<p><img src="/Apache-web服务器配置/7.png" alt></p>
+<h3 id="配置UFW防火墙"><a href="#配置UFW防火墙" class="headerlink" title="配置UFW防火墙"></a>配置UFW防火墙</h3><p>为了配置Apache，我们首先需要允许外部访问我们系统的某些Web端口，并在UFW防火墙上允许Apache。列出UFW应用程序配置文件为了配置防火墙。</p>
+<p>命令：sudo ufw app list</p>
+<p><img src="/Apache-web服务器配置/8.png" alt></p>
+<p>在UFW上允许Apache并验证其状态,允许Apache将为网络流量打开端口80，同时为服务器提供最大的安全性。</p>
+<p>命令：sudo ufw allow ‘Apache’</p>
+<p><img src="/Apache-web服务器配置/9.png" alt></p>
+<h3 id="配置Apache"><a href="#配置Apache" class="headerlink" title="配置Apache"></a>配置Apache</h3><h3 id="步骤1："><a href="#步骤1：" class="headerlink" title="步骤1："></a>步骤1：</h3><p>验证Apache服务是否正在运行</p>
+<p>输入命令：sudo systemctl status apache2</p>
+<p><img src="/Apache-web服务器配置/10.png" alt></p>
+<p>状态:active（running）验证apache2服务是否正在运行</p>
+<h3 id="步骤2："><a href="#步骤2：" class="headerlink" title="步骤2："></a>步骤2：</h3><p>验证Apache是否正常运行并侦听IP地址</p>
+<p>还可以通过从Apache服务器请求页面来验证Apache是否正在运行。 使用服务器的IP来访问Apache登录页面。</p>
+<p>了解服务器的IP： hostname -I</p>
+<p><img src="/Apache-web服务器配置/11.png" alt></p>
+<p>然后在Web浏览器输入IP或者输入localhost</p>
+<p><img src="/Apache-web服务器配置/12.png" alt></p>
+<p><img src="/Apache-web服务器配置/13.png" alt></p>
+<p>此时Apache配置成功</p>
+<h1 id="Apache-文件和目录"><a href="#Apache-文件和目录" class="headerlink" title="Apache 文件和目录"></a>Apache 文件和目录</h1><p><code>/var/www/html</code> ：实际的Web内容（默认情况下只包含之前看到的默认Apache页面）由<code>/var/www/html</code>目录提供。 这可以通过更改Apache配置文件来更改。</p>
+<p><code>/etc/apache2</code> ：Apache配置目录。 所有Apache配置文件驻留在此处。</p>
+<p><code>/etc/apache2/apache2.conf</code>的主配置文件。 这可以修改为对Apache全局配置进行更改。 该文件负责在配置目录中加载许多其他文件。</p>
+<p><code>/etc/apache2/ports.conf</code> ：该文件指定Apache将监听的端口。 默认情况下，当启用提供SSL功能的模块时，Apache会监听端口80，并在端口443上进行监听。</p>
+<p><code>/etc/apache2/sites-available/ ：</code>可以存储每个站点“虚拟主机”的目录。 Apache不会使用此目录中找到的配置文件，除非它们链接到<code>sites-enabled</code>了<code>sites-enabled</code>目录（见下文）。 通常，所有服务器块配置都在此目录中完成，然后通过使用<code>a2ensite</code>命令链接到另一个目录来启用。</p>
+<p><code>/etc/apache2/sites-enabled/ ：</code>存储启用了每个站点“虚拟主机”的目录。 通常，这些是通过链接到具有a2ensite的<code>sites-available</code>目录中找到的配置文件创建的。 Apache在启动或重新加载以编译完整配置时读取此目录中找到的配置文件和链接。</p>
+<p><code>/etc/apache2/conf-available/</code> <strong>，</strong> <code>/etc/apache2/conf-enabled/</code> ：这些目录与<code>sites-available</code>和<code>sites-enabled</code>目录具有相同的关系，但用于存储不属于虚拟主机 <code>conf-available</code>目录中的文件可以使用<code>a2enconf</code>命令启用，并使用<code>a2enconf</code>命令禁用。</p>
+<p><code>/etc/apache2/mods-available/</code> <strong>，</strong> <code>/etc/apache2/mods-enabled/</code> ：这些目录分别包含可用和启用的模块。 以<code>.load</code>结尾的文件包含加载特定模块的片段，而以<code>.conf</code>结尾的文件包含这些模块的配置。 可以使用<code>a2enmod</code>和<code>a2dismod</code>命令启用和禁用模块。</p>
+<p><code>/var/log/apache2/access.log</code> ：默认情况下，对Web服务器的每个请求都记录在此日志文件中，除非Apache被配置为执行其他操作。</p>
+<p><code>var/log/apache2/error.log</code> ：默认情况下，所有错误都记录在此文件中。 Apache配置中的<code>LogLevel</code>指令指定错误日志将包含多少细节。</p>
+<h1 id="建立基于IP地址的虚拟主机"><a href="#建立基于IP地址的虚拟主机" class="headerlink" title="建立基于IP地址的虚拟主机"></a>建立基于IP地址的虚拟主机</h1><p>添加一块虚拟网卡</p>
+<p>命令：ifconfig</p>
+<p><img src="/Apache-web服务器配置/14.png" alt></p>
+<p>查看当前网卡配置，打开配置文件/etc/network/interfaces</p>
+<p>命令：cat /etc/network/interfaces</p>
+<p><img src="/Apache-web服务器配置/15.png" alt></p>
+<p>选择添加我们自己的网卡配置，第一个网卡（ens33）配置一定要是外网的，如果配置成内网的，系统不能上外网。</p>
+<p>添加一个ip是192.168.75.135的虚拟网卡</p>
+<p>命令：vi /etc/network/interfaces</p>
+<p>添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto ens33:1</span><br><span class="line">iface ens33:1 inet static</span><br><span class="line">address 192.168.75.135</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/16.png" alt></p>
+<p>重启之后生效，ifconfig命令查看</p>
+<p><img src="/Apache-web服务器配置/17.png" alt></p>
+<p>此时有两块网卡,ip分别是192.168.75.134和192.168.75.135</p>
+<p>设置域名:</p>
+<p>ysm1.com对应192.168.75.134</p>
+<p>ysm2.com对应192.168.75.135</p>
+<p>修改host文件，添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.75.134  ysm1.com</span><br><span class="line">192.168.75.135  ysm2.com</span><br></pre></td></tr></table></figure>
+
+<p>命令:sudo vi /etc/hosts</p>
+<p><img src="/Apache-web服务器配置/18.png" alt></p>
+<p>默认情况下启用的服务器块能够提供来自 /var/www/html的文档。 但是，我们将在/var/www/创建一个目录，保留默认目录</p>
+<p>建立两个虚拟主机的文档根目录及相应的测试页面</p>
+<p>命令：</p>
+<p>sudo mkdir -p /var/www/ysm1.com/html</p>
+<p>sudo mkdir -p /var/www/ysm2.com/html</p>
+<p>分配目录的所有权</p>
+<p>命令：</p>
+<p>sudo chown -R $USER:$USER /var/www/ysm1.com/html</p>
+<p>sudo chown -R $USER:$USER /var/www/ysm2.com/html<br> sudo chmod -R 755 /var/www/ysm1.com</p>
+<p>sudo chmod -R 755 /var/www/ysm2.com</p>
+<p><img src="/Apache-web服务器配置/19.png" alt></p>
+<p>然后创建一个索引页面，如果Apache运行我们的域名，我们以后可以访问它们进行测试。 通过编辑器或创建HTML文件</p>
+<p>创建ysm1的页面</p>
+<p>命令：</p>
+<p>vi /var/www/ysm1.com/html/index.html</p>
+<p><img src="/Apache-web服务器配置/20.png" alt></p>
+<p>编辑ysm1 ip:192.168.75.134</p>
+<p>创建ysm2的页面</p>
+<p>命令：</p>
+<p>vi /var/www/ysm2.com/html/index.html</p>
+<p>编辑ysm2 ip:192.168.75.135</p>
+<p><img src="/Apache-web服务器配置/21.png" alt></p>
+<p>Apache需要一个虚拟主机文件来提供服务器的内容。 已经创建了用于此目的的默认配置文件，但我们将为自定义配置创建一个新配置文件</p>
+<p>配置ysm1</p>
+<p>命令：sudo vi /etc/apache2/sites-available/ysm1.com.conf</p>
+<p><img src="/Apache-web服务器配置/22.png" alt></p>
+<p>输入域名的以下自定义配置详细信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerAdmin admin@ysm1.com</span><br><span class="line">ServerName ysm1.com</span><br><span class="line">ServerAlias www.ysm1.com</span><br><span class="line">DocumentRoot /var/www/ysm1.com/html</span><br><span class="line">ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</span><br><span class="line">CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/23.png" alt></p>
+<p>配置ysm2</p>
+<p>命令：sudo vi /etc/apache2/sites-available/ysm2.com.conf</p>
+<p><img src="/Apache-web服务器配置/24.png" alt></p>
+<p>输入域名的以下自定义配置详细信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerAdmin admin@ysm2.com</span><br><span class="line">ServerName ysm2.com</span><br><span class="line">ServerAlias www.ysm2.com</span><br><span class="line">DocumentRoot /var/www/ysm2.com/html</span><br><span class="line">ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</span><br><span class="line">CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/25.png" alt></p>
+<p>启用域配置文件</p>
+<p>命令：</p>
+<p>sudo a2ensite ysm1.com.conf</p>
+<p>sudo a2ensite ysm2.com.conf <img src="/Apache-web服务器配置/26.png" alt></p>
+<p>输出将建议激活新配置，但我们可以在运行以下禁用原始配置文件的命令后集体执行此操作</p>
+<p>输入命令：sudo a2dissite 000-default.conf</p>
+<p><img src="/Apache-web服务器配置/27.png" alt></p>
+<p>最后输入命令：systemctl reload apache2</p>
+<p>然后测试是否存在任何配置错误：</p>
+<p>sudo apache2ctl configtest</p>
+<p><img src="/Apache-web服务器配置/28.png" alt></p>
+<p>报错AH00558: apache2: Could not reliably determine the server’s fully qualified domain name, using 127.0.1.1. Set the ‘ServerName’ directive globally to suppress this message</p>
+<p>输入以下命令以解决上述错误：</p>
+<p>echo “ServerName ysm1.com” | sudo tee /etc/apache2/conf-available/servername.conf</p>
+<p>sudo a2enconf servername</p>
+<p>systemctl reload apache2</p>
+<p><img src="/Apache-web服务器配置/29.png" alt></p>
+<p>再次输入sudo apache2ctl configtest测试</p>
+<p><img src="/Apache-web服务器配置/30.png" alt></p>
+<p>这次只输出Syntax OK，成功</p>
+<p>打开网页输入ip（192.168.75.134和192.168.75.135）以及域名（ysm1.com和ysm2.com）测试</p>
+<p><img src="/Apache-web服务器配置/32.png" alt></p>
+<p><img src="/Apache-web服务器配置/32.png" alt></p>
+<p><img src="/Apache-web服务器配置/33.png" alt></p>
+<p>如图所示，配置成功</p>
+<h1 id="建立基于名字的虚拟主机"><a href="#建立基于名字的虚拟主机" class="headerlink" title="建立基于名字的虚拟主机"></a>建立基于名字的虚拟主机</h1><p>思路：在同一主机上针对相同的ip地址和端口号建立基于不同域名的虚拟主机。</p>
+<p>让m416.ysm.com和awm.ysm.com对应IP地址192.168.75.136</p>
+<p>新建一个名为ens33:2,ip为192.168.75.136的虚拟网卡</p>
+<p>命令：vi /etc/network/interfaces</p>
+<p>添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto ens33:2</span><br><span class="line">iface ens33:2 inet static</span><br><span class="line">address 192.168.75.136</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/34.png" alt></p>
+<p>重启生效</p>
+<p>Ifconfig查看</p>
+<p><img src="/Apache-web服务器配置/35.png" alt></p>
+<p>在/etc/hosts文件中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">192.168.75.136 m416.ysm.com</span><br><span class="line">192.168.75.136 awm.ysm.com</span><br></pre></td></tr></table></figure>
+
+<p>命令:vi /etc/hosts</p>
+<p><img src="/Apache-web服务器配置/36.png" alt></p>
+<p>建立两个虚拟主机的文档根目录及相应的测试页面</p>
+<p>命令：</p>
+<p>sudo mkdir -p /var/www/m416/ysm.com/html</p>
+<p>sudo mkdir -p /var/www/awm/ysm.com/html</p>
+<p>分配目录的所有权</p>
+<p>命令：</p>
+<p>sudo chown -R $USER:$USER /var/www/m416/ysm.com/html</p>
+<p>sudo chown -R $USER:$USER /var/www/awm/ysm.com/html<br>sudo chmod -R 755 /var/www/m416/ysm.com</p>
+<p>sudo chmod -R 755 /var/www/awm/ysm.com</p>
+<p><img src="/Apache-web服务器配置/37.png" alt></p>
+<p>创建m416页面，编辑welcome to named_based m416.ysm.com</p>
+<p>命令：</p>
+<p>vi /var/www/m416/ysm.com/html/index.html</p>
+<p>添加welcome to named_based m416.ysm.com</p>
+<p><img src="/Apache-web服务器配置/38.png" alt></p>
+<p>创建awm页面，welcome to named_based awm.ysm.com</p>
+<p>vi /var/www/awm/ysm.com/html/index.html</p>
+<p>添加welcome to named_based awm.ysm.com</p>
+<p><img src="/Apache-web服务器配置/39.png" alt></p>
+<p>Apache需要一个虚拟主机文件来提供服务器的内容。 已经创建了用于此目的的默认配置文件，但我们将为自定义配置创建一个新配置文件</p>
+<p>配置m416.ysm.com</p>
+<p>命令：sudo vi /etc/apache2/sites-available/m416.ysm.com.conf</p>
+<p>添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerAdmin admin@m416.ysm.com</span><br><span class="line">ServerName m416.ysm.com</span><br><span class="line">ServerAlias m416.ysm.com</span><br><span class="line">DocumentRoot /var/www/m416/ysm.com/html</span><br><span class="line">ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</span><br><span class="line">CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/40.png" alt></p>
+<p>配置awm.ysm.com</p>
+<p>命令：sudo vi /etc/apache2/sites-available/awm.ysm.com.conf</p>
+<p>添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">ServerAdmin admin@awm.ysm.com</span><br><span class="line">ServerName awm.ysm.com</span><br><span class="line">ServerAlias awm.ysm.com</span><br><span class="line">DocumentRoot /var/www/awm/ysm.com/html</span><br><span class="line">ErrorLog $&#123;APACHE_LOG_DIR&#125;/error.log</span><br><span class="line">CustomLog $&#123;APACHE_LOG_DIR&#125;/access.log combined</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/41.png" alt></p>
+<p>启用域配置文件</p>
+<p>命令：</p>
+<p>sudo a2ensite m416.ysm.com.conf</p>
+<p>sudo a2ensite awm.ysm.com.conf</p>
+<p><img src="/Apache-web服务器配置/42.png" alt></p>
+<p>输出将建议激活新配置，但我们可以在运行以下禁用原始配置文件的命令后集体执行此操作</p>
+<p>输入命令：sudo a2dissite 000-default.conf</p>
+<p>测试是否存在任何配置错误：</p>
+<p>sudo apache2ctl configtest</p>
+<p><img src="/Apache-web服务器配置/43.png" alt></p>
+<p>Syntax OK说明配置成功</p>
+<p>测试：</p>
+<p>打开浏览器，分别输入m416.ysm.com和awm.ysm.com</p>
+<p><img src="/Apache-web服务器配置/44.png" alt></p>
+<p><img src="/Apache-web服务器配置/45.png" alt></p>
+<h1 id="建立基于别名的基于访问的虚拟主机"><a href="#建立基于别名的基于访问的虚拟主机" class="headerlink" title="建立基于别名的基于访问的虚拟主机"></a>建立基于别名的基于访问的虚拟主机</h1><p>创建目录</p>
+<p> mkdir /var/www/html/YSM*</p>
+<p>开启证能，修改配置文件httpd.conf</p>
+<p>命令：</p>
+<p>vi /etc/httpd/httpd.conf</p>
+<p>输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/var/www/html&quot;&gt;</span><br><span class="line">     AllowOverride All          // 默认是 none ，这里改为 all</span><br><span class="line">    Order allow,deny</span><br><span class="line">    Allow from all</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p>给需要认证的目录添加配置，修改httpd.conf文件，添加如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Directory &quot;/var/www/html/YSM&quot;&gt;     //YSM就是我们要认证的目录</span><br><span class="line">    AllowOverride AuthConfig       // 这里必须使用 AuthConfig</span><br><span class="line">    Order allow,deny</span><br><span class="line">    Allow from all</span><br><span class="line">&lt;/Directory&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/46.png" alt></p>
+<p>给测试目录设置用户名和密码</p>
+<p>命令：</p>
+<p>htpasswd -c /var/www/html/YSM/.htpasswd YSM</p>
+<p><img src="/Apache-web服务器配置/47.png" alt></p>
+<p>创建htaccess文件</p>
+<p>命令：vim .htaccess</p>
+<p>添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AuthUserFile /var/www/html/YSM/.htpasswd</span><br><span class="line">AuthName &quot;david&quot;</span><br><span class="line">AuthType Basic</span><br><span class="line">require valid-user</span><br></pre></td></tr></table></figure>
+
+<p><img src="/Apache-web服务器配置/48.png" alt></p>
+<p>测试成功</p>
+<p><img src="/Apache-web服务器配置/49.png" alt></p>
+<h1 id="配置和管理MySQL数据库"><a href="#配置和管理MySQL数据库" class="headerlink" title="配置和管理MySQL数据库"></a>配置和管理MySQL数据库</h1><h2 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h2><p>命令：sudo apt-get install mysql-server</p>
+<p><img src="/Apache-web服务器配置/50.png" alt></p>
+<h2 id="mysql数据库安全性配置"><a href="#mysql数据库安全性配置" class="headerlink" title="mysql数据库安全性配置"></a>mysql数据库安全性配置</h2><p>命令：sudo mysql_secure_installation</p>
+<p><img src="/Apache-web服务器配置/51.png" alt></p>
+<p>以下是我的配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">root@yangshuming:/home/yangshuming# sudo mysql_secure_installation</span><br><span class="line"></span><br><span class="line">Securing the MySQL server deployment.</span><br><span class="line"></span><br><span class="line">Connecting to MySQL using a blank password.</span><br><span class="line"></span><br><span class="line">VALIDATE PASSWORD PLUGIN can be used to test passwords</span><br><span class="line">and improve security. It checks the strength of password</span><br><span class="line">and allows the users to set only those passwords which are</span><br><span class="line">secure enough. Would you like to setup VALIDATE PASSWORD plugin?</span><br><span class="line"></span><br><span class="line">Press y|Y for Yes, any other key for No: N</span><br><span class="line">Please set the password for root here.</span><br><span class="line"></span><br><span class="line">New password: </span><br><span class="line"></span><br><span class="line">Re-enter new password: </span><br><span class="line">By default, a MySQL installation has an anonymous user,</span><br><span class="line">allowing anyone to log into MySQL without having to have</span><br><span class="line">a user account created for them. This is intended only for</span><br><span class="line">testing, and to make the installation go a bit smoother.</span><br><span class="line">You should remove them before moving into a production</span><br><span class="line">environment.</span><br><span class="line">Remove anonymous users? (Press y|Y for Yes, any other key for No) : N</span><br><span class="line"></span><br><span class="line"> ... skipping.</span><br><span class="line"></span><br><span class="line">Normally, root should only be allowed to connect from</span><br><span class="line">&apos;localhost&apos;. This ensures that someone cannot guess at</span><br><span class="line">the root password from the network.</span><br><span class="line"></span><br><span class="line">Disallow root login remotely? (Press y|Y for Yes, any other key for No) : Y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">By default, MySQL comes with a database named &apos;test&apos; that</span><br><span class="line">anyone can access. This is also intended only for testing,</span><br><span class="line">and should be removed before moving into a production</span><br><span class="line">environment.</span><br><span class="line"></span><br><span class="line">Remove test database and access to it? (Press y|Y for Yes, any other key for No) : N</span><br><span class="line"></span><br><span class="line"> ... skipping.</span><br><span class="line">Reloading the privilege tables will ensure that all changes</span><br><span class="line">made so far will take effect immediately.</span><br><span class="line"></span><br><span class="line">Reload privilege tables now? (Press y|Y for Yes, any other key for No) : Y</span><br><span class="line">Success.</span><br><span class="line"></span><br><span class="line">All done!</span><br></pre></td></tr></table></figure>
+
+<h2 id="检测"><a href="#检测" class="headerlink" title="检测"></a>检测</h2><p>命令:systemctl status mysql.service</p>
+<p><img src="/Apache-web服务器配置/52.png" alt></p>
+<p>active(running)说明运行正常</p>
+<h2 id="登录mysql数据库"><a href="#登录mysql数据库" class="headerlink" title="登录mysql数据库"></a>登录mysql数据库</h2><p>默认的MySQL安装之后根用户是没有密码的，命令执行后会让你设置root的密码，进入root后才能进行其他设置</p>
+<p>命令：sudo mysql -uroot -p</p>
+<p><img src="/Apache-web服务器配置/53.png" alt></p>
+<p>在命令行下通过show databases；查看当前数据库的命令如下所示</p>
+<p><img src="/Apache-web服务器配置/54.png" alt></p>
+<h2 id="选择数据库"><a href="#选择数据库" class="headerlink" title="选择数据库"></a>选择数据库</h2><p>要选择一个数据库使它成为所有事务的当前数据库，可使用如下命令：</p>
+<p>use 数据库名称;</p>
+<p>比如use YSM;</p>
+<p><img src="/Apache-web服务器配置/55.png" alt></p>
+<h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><p><img src="/Apache-web服务器配置/56.png" alt></p>
+<p>然后，可通过“desc student；”命令查看表结构</p>
+<p><img src="/Apache-web服务器配置/57.png" alt></p>
+<h2 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h2><p>例如，在表student中添加一个字段class，类型为varchar(10)，如下所示</p>
+<p><img src="/Apache-web服务器配置/58.png" alt></p>
+<p>在表student中修改原字段名depa为新字段class并将其字段类型更改为 char(10)，如下所示：</p>
+<p><img src="/Apache-web服务器配置/59.png" alt></p>
+<h1 id="配置php应用程序"><a href="#配置php应用程序" class="headerlink" title="配置php应用程序"></a>配置php应用程序</h1><h2 id="安装php"><a href="#安装php" class="headerlink" title="安装php"></a>安装php</h2><p>apt install php</p>
+<p><img src="/Apache-web服务器配置/60.png" alt></p>
+<p>安装其他模块</p>
+<p>命令：</p>
+<p>sudo apt-get install libapache2-mod-php</p>
+<p>sudo apt-get install php7.0-mysql</p>
+<p><img src="/Apache-web服务器配置/61.png" alt></p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p><img src="/Apache-web服务器配置/62.png" alt></p>
+<h1 id="Discuz论坛搭建"><a href="#Discuz论坛搭建" class="headerlink" title="Discuz论坛搭建"></a>Discuz论坛搭建</h1><p>首先把之前的文件删除，避免影响以后的实验，此时hosts文件如下图所示</p>
+<p><img src="/Apache-web服务器配置/63.png" alt></p>
+<p>此时我的ip是192.168.75.134，对应ysm.com</p>
+<h2 id="安装Discuz"><a href="#安装Discuz" class="headerlink" title="安装Discuz"></a>安装Discuz</h2><p>下载一个Discuz 压缩包：</p>
+<p>命令：</p>
+<p>wget ‘<a href="http://download.comsenz.com/DiscuzX/3.3/Discuz_X3.3_SC_UTF8.zip&#39;" target="_blank" rel="noopener">http://download.comsenz.com/DiscuzX/3.3/Discuz_X3.3_SC_UTF8.zip&#39;</a></p>
+<p><img src="/Apache-web服务器配置/64.png" alt></p>
+<p>为了将压缩包解压，需要安装一个 unzip：</p>
+<p>命令：</p>
+<p>sudo apt-get install unzip</p>
+<p><img src="/Apache-web服务器配置/65.png" alt></p>
+<p>下载完成后，解压这个压缩包(解压完后，就能在 <em>upload</em> 文件夹里看到discuz的源码了)：</p>
+<p>命令：</p>
+<p>sudo unzip Discuz_X3.3_SC_UTF8.zip</p>
+<p><img src="/Apache-web服务器配置/66.png" alt></p>
+<h2 id="配置Discuz"><a href="#配置Discuz" class="headerlink" title="配置Discuz"></a>配置Discuz</h2><p>由于 PHP 默认访问 /var/www/html/ 文件夹，所以我们需要把 upload 文件夹里的文件都复制到 /var/www/html/ 文件夹：</p>
+<p>命令：</p>
+<p>sudo mv upload/* /var/www/html</p>
+<p>将目录切换到 php 访问的文件夹下：</p>
+<p>命令：cd /var/www/html</p>
+<p><img src="/Apache-web服务器配置/67.png" alt></p>
+<p>修改一下 config、data、uc_server/data/、uc_client/data/cache 目录权限</p>
+<p>命令：<br> sudo chmod -R 777 config/ data/ uc_server/data/ uc_client/data/cache/</p>
+<p>将 apache 指定到 index.html</p>
+<p>sudo mv /var/www/html/index.html /var/www/html/index~.html</p>
+<p>重启 Apache 服务：</p>
+<p>sudo /etc/init.d/apache2 restart</p>
+<p><img src="/Apache-web服务器配置/68.png" alt></p>
+<p>此时Discuz 论坛已经部署完成，可以通过浏览器访问论坛查看效果。</p>
+<p>通过IP地址查看：<a href="http://192.168.75.134/install" target="_blank" rel="noopener">http://192.168.75.134/install</a></p>
+<p>通过域名查看：ysm.com</p>
+<p><img src="/Apache-web服务器配置/69.png" alt></p>
+<p><img src="/Apache-web服务器配置/70.png" alt></p>
+<p>点击我同意</p>
+<p><img src="/Apache-web服务器配置/71.png" alt></p>
+<p>报错：xml_parser_create()   不支持    该函数需要 PHP 支持 XML。请联系空间商，确定开启了此项功能</p>
+<p>安装php7.2-xml</p>
+<p>命令：apt-get install -y php7.2-xml</p>
+<p><img src="/Apache-web服务器配置/72.png" alt></p>
+<p>报错：文件目录不可写不存在</p>
+<p>给文件权限：chmod -R 777 /var/www/html</p>
+<p><img src="/Apache-web服务器配置/73.png" alt></p>
+<p>此时不再报错</p>
+<p><img src="/Apache-web服务器配置/74.png" alt></p>
+<p>点击下一步，设置运行环境为全新安装</p>
+<p><img src="/Apache-web服务器配置/75.png" alt></p>
+<p>点击下一步，输入密码，如果数据库密码不是root，自行修改</p>
+<p><img src="/Apache-web服务器配置/76.png" alt></p>
+<p>论坛已完成安装，点击访问</p>
+<p><img src="/Apache-web服务器配置/77.png" alt></p>
+	
+		</div>
+		
+		<div id="current-post-cover" data-scr="/img/cart_cover.jpg"></div>
+
+		<!-- relate post, comment...-->
+		<div class="investment-container">
+			<div class="investment-header">
+				<div class="investment-title-1">
+					<div class="on">相关文章</div>
+					<div>评论</div>
+					<div>分享</div>
+				</div>
+				<div class="investment-title-2">	            
+					
+	<span>
+		<a id="totop-post-page">返回顶部</a>
+		
+			<a href="/VSFTPD服务器配置.html" title="VSFTPD服务器配置" rel="prev">
+				&laquo;上一篇
+			</a>
+		
+		
+			<a href="/DHCP服务配置.html" title="DHCP服务配置" rel="next">
+				下一篇&raquo;
+			</a>
+			
+	</span>
+
+
+      		
+				</div>	
+			</div>
+			
+			<div class="investment-content">
+				<div class="investment-content-list">
+					
+
+<div class="relate-post">
+	
+		<ul>
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/IPTABLES防火墙配置.html" title="IPTABLES防火墙配置">
+								IPTABLES防火墙配置			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								三月 27日, 2020				
+							</p>
+							<p class="relate-post-content">
+								iptables的基本配置方法查看是否安装防火墙which iptables
+whereis iptables
+
+ 如上图所示，iptables已经安装，如果没有安装，使用sudo apt-get install iptables安装...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/IPTABLES防火墙配置.html" title="IPTABLES防火墙配置">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="IPTABLES防火墙配置"/>
+							</a>
+						</div>
+					</li>												
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/搭建email服务器.html" title="搭建email服务器">
+								搭建email服务器			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								三月 27日, 2020				
+							</p>
+							<p class="relate-post-content">
+								安装Ubuntu 18.04附带了systemd-resolve，需要禁用它，因为它绑定到53端口，与Dnsmasq端口冲突。
+运行以下命令以禁用已解析的服务：
+systemctl disable systemd-resolved
+s...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/搭建email服务器.html" title="搭建email服务器">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="搭建email服务器"/>
+							</a>
+						</div>
+					</li>												
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/ssh服务配置.html" title="ssh服务配置">
+								ssh服务配置			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								三月 27日, 2020				
+							</p>
+							<p class="relate-post-content">
+								目的掌握linux系统中ssh服务器的配置
+掌握ssh安全远程登陆的方法
+掌握ssh采用公钥认证登陆
+条件局域网中有两台主机ip为192.168.75.134（服务器，yangshuming）和192.168.75.132（客户端ub...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/ssh服务配置.html" title="ssh服务配置">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="ssh服务配置"/>
+							</a>
+						</div>
+					</li>												
+			
+		</ul>
+	
+</div>	
+				</div>
+				<div class="investment-content-list">
+					<div class="layout-comment">
+
+	
+		<div class="config-info">
+			Please check the parameter of <b>comment</b> in config.yml of hexo-theme-Annie!
+		</div>	
+	
+
+</div>
+				</div>
+				<div class="investment-content-list">
+					<div class="layout-share">
+	
+	
+
+		
+			
+			<!-- socialShare share -->
+			<div class="social-share"></div>
+
+<!--  css & js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+			
+		
+		
+	
+</div>
+
+
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<!-- show math formula -->
+
+
+
+	 
+	<script src="/plugin/clipboard/clipboard.js"></script>
+	<script>
+		// Copy code !
+	    function preprocessing() {
+	        $("#article-content .highlight").each(function() {
+	            $(this).wrap('<div id="post-code"></div>');
+	        })
+
+	        $("#article-content #post-code").each(function() {
+	            $(this).prepend('<nav class="copy-nav"><span><i class="code-language"></i></span></nav>');
+	        })
+
+	        $("#article-content .copy-nav").each(function() {
+	            let languageClass = $(this).next().attr('class'),
+	                language = ((languageClass.length > 9) && (languageClass != null)) ? languageClass.substr(10) : "none"; //why 9? Need to check language?
+
+	            $(this).find('.code-language').text(language);
+	            $(this).append('<span class="copy-btn icon-paste"></span>');
+	        });
+	    }
+
+		function copy() {
+		    $('#article-content #post-code').each(function(i) {
+		        let codeCopyId = 'codeCopy-' + i;
+
+		        let codeNode = $(this).find('.code'),
+		            copyButton = $(this).find('.copy-btn');
+
+		        codeNode.attr('id', codeCopyId);
+		        copyButton.attr('data-clipboard-target-id', codeCopyId);
+		    })
+   
+			let clipboard = new ClipboardJS('.copy-btn', {
+					target: function(trigger) {
+						return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+					}
+		      	});
+
+			//pure js
+			function showTooltip(elem, msg) {		   
+				elem.setAttribute('aria-label', msg);
+				elem.setAttribute('class', 'copy-btn icon-clipboard1');
+				setTimeout(function() {
+					elem.setAttribute('class', 'copy-btn icon-paste');
+				}, 2000);
+			}
+
+			clipboard.on('success', function(e) {
+			    e.clearSelection();
+			    console.info('Action:', e.action);		   
+			    console.info('Trigger:', e.trigger);
+			    showTooltip(e.trigger, 'Copied!');   
+			});
+			
+			clipboard.on('error', function(e) {
+			    console.error('Action:', e.action);
+			    console.error('Trigger:', e.trigger);
+			});
+		}
+		
+		(function copyCode(){
+			if ($('.layout-post').length) {
+			    preprocessing();
+			    copy();
+			} 
+		})();
+	</script>
+
+
+
+
+
+<link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+<script src="/plugin/fancybox/jquery.fancybox.js"></script>
+
+<script type="text/javascript">
+	(function gallerySet(){
+		let titleID = $('.article-title a'),
+			imageID = $('.article-content img'),
+			videoID = $('.article-content video');
+		
+		let postTitle = titleID.text() ? titleID.text() : "No post title!";
+		
+		imageID.each(function() {
+			let imgPath = $(this).attr('src'),
+				imgTitle = $(this).attr('alt') ? $(this).attr('alt') : "No image description!";
+		
+			//给每个匹配的<img>元素打包, 即添加父元素<a>
+			$(this).wrap('<a data-fancybox="gallery" data-caption="《 ' + postTitle + ' 》' + imgTitle + '"href="' + imgPath + '"> </a>');
+		});
+		
+		videoID.each(function() {
+			let videoPath = $(this).attr('src');
+		
+			//给每个匹配的<img>元素打包, 即添加父元素<a>
+			$(this).wrap('<a data-fancybox href=" ' + videoPath + ' "> </a>');
+		});
+		
+		//TODO：支持html5 video
+
+		if($('#layout-post').length) {
+			$('[data-fancybox="gallery"]').fancybox({
+				loop: true,
+				buttons: [
+					"zoom",
+					"share",
+					"slideShow",
+					"fullScreen",
+					//"download",
+					"thumbs",
+					"close"
+				],
+				protect: true
+			});
+		}
+	})();
+</script>
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div id="navigation-show">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by Thriumph. All Rights Reserved.
+			
+			
+				<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			
+		</p>
+		<p>
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_page_pv">
+	  		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+
+	
+
+
+
+
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- Local or hitokoto! -->
+
+	<script src="/plugin/motto/motto.js"></script>
+	
+	<script type="text/javascript">
+		(function motto(){
+			let mottoText = getMingYanContent().split('</br> - </br>'),
+			
+			mottoTextContent = mottoText[0]?mottoText[0]:'请刷新...',
+			
+			mottoTextFrom = mottoText[1]?mottoText[1]:'one/一个';
+			
+			mottoTextContent = mottoTextContent.trim().substring(0, 100);
+		
+			$("#motto-content").html( mottoTextContent);
+			$("#motto-author").html( mottoTextFrom  );
+		})();	
+	</script>	
+
+
+
+<!-- love effect -->
+
+	<script src="/plugin/love/love.js"></script>
+
+
+<!-- back to top -->
+
+	<div id="totop">
+	<span class="icon-circle-up"></span>
+</div>
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	
+	<script src="//s6.cnzz.com/stat.php?id=&web_id=" type="text/javascript"></script>
+
+	
+	
+	
+ 
+
+<!-- leancloud -->
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+  <script src="/plugin/leancloud/av-min.js"></script>
+<script src="/js/leancloud-count.js"></script>
+
+	
+
+  
+
+
+<script src="/plugin/chinese/chinese.js"></script>
+<script src="/plugin/imagelazyloader/yall.min.js"></script>
+<script src="/plugin/imageloaded/imagesloaded.pkgd.min.js"></script>
+<script src="/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/plugin/resizediv/resizediv.js"></script>
+<script src="/js/main.js"></script>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":200,"height":400,"hOffset":-20,"vOffset":80},"mobile":{"show":false}});</script></body>	
+</html>
