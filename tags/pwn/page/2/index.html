@@ -1,0 +1,1660 @@
+<!--
+	作者：Sariay
+	时间：2018-08-26
+	描述：There may be a bug, but don't worry, Qiling(器灵) says that it can work normally! aha!
+-->
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head><meta name="generator" content="Hexo 3.9.0">
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      tag: pwn | Thriumph
+    
+  </title>
+  <meta name="author" content="Thriumph">
+  <meta name="keywords" content="pwn,re,渗透测试">
+  <meta name="description" content="不将就、不妥协、不停留">
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" href="/css/Annie.css">
+  
+  <!-- jquery -->
+	<script src="/plugin/jquery/jquery.min.js"></script>
+
+<script>
+    const CONFIG_BGIMAGE = {
+      mode: 'normal',
+      normalSrc: 'https://source.unsplash.com/collection/954550/1920x1080',
+      randomYouMax: 110,
+      randomYouSrc: '/',
+	  randomOtherSrc: '/',
+	  preloaderEnable: true
+    }
+	
+    const CONFIG_LEACLOUD_COUNT = {
+      enable: true,
+	  appId: 'kL7JiFr2neE843z5adAoDHih-gzGzoHsz',
+	  appKey: 'AsJ5lg1K8yyk6Rdo39i5dX1h',
+	  serverURLs: '' || ' '
+    }
+  </script>
+</head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground bg-pan-br">
+	<div class="mask">
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<div class="motto text-shadow-pop-left">
+					<p class="content" id="motto-content">获取中...</p>
+					<p>-<p>
+					<p class="author" id="motto-author">Just a minute...</p>
+				</div>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more" class="scroll-down">
+				<span class="icon-anchor1 animation-scroll-down"></span>
+			</a>
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><span>0.0%</span></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			标签
+		
+	</p>
+
+	
+	
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<span class="logo"> 
+			<img src="/img/logo.png">
+		</span>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	
+	<div class="nav-body">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+	
+	<div class="nav-footer">
+		<ul id="global-social">
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-one"><span class="path1"></span><span class="path2"></span></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-zhihu"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-github"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-sina-weibo "></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-pinterest2"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-twitter"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/atom.xml" target="_blank">
+				<span class="icon-rss"></span>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			<!--
+	时间：2018-11-08
+	描述：The archive module refers to 'https://1984n.win/archives-post/' & 'http://1900.live/one-theme/', include js、css. Relevant rights reserved by them! 
+-->
+<div class="layout-archive">
+    <div class="i-container">
+        <i class="fa fa-book i-tag">
+			<!--
+	Thec counter of post number  for archive.ejs.  
+-->
+
+		 
+	
+	pwn 11 
+		
+
+		</i>
+    </div>
+
+    <!-- Archive by year, display in page( archive ) -->
+    <div id="layout-archive-year" style="display: 
+        
+        
+        <ul>
+            
+                <li>
+                    <a href="/网鼎杯部分wp.html">
+            			<em year="2020">
+                            05-11
+                        </em>
+        			    <span itemprop="name">
+                            网鼎杯部分wp
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/网络设备配置与管理.html">
+            			<em year="2020">
+                            04-22
+                        </em>
+        			    <span itemprop="name">
+                            网络设备配置与管理
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/数字中国创新大赛.html">
+            			<em year="2020">
+                            04-19
+                        </em>
+        			    <span itemprop="name">
+                            数字中国创新大赛
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/IPTABLES防火墙配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            IPTABLES防火墙配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/搭建email服务器.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            搭建email服务器
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/ssh服务配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            ssh服务配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Samba服务.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            Samba服务
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/VSFTPD服务器配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            VSFTPD服务器配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Apache-web服务器配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            Apache web服务器配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/DHCP服务配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            DHCP服务配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/DNS服务配置.html">
+            			<em year="2020">
+                            03-27
+                        </em>
+        			    <span itemprop="name">
+                            DNS服务配置
+                        </span>
+        			    
+                			<a href="/tags/Linux/" class="tag">
+                				Linux
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/hitcontraining-uaf.html">
+            			<em year="2020">
+                            03-22
+                        </em>
+        			    <span itemprop="name">
+                            hitcontraining_uaf
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/ez-pz-hackover-2016.html">
+            			<em year="2020">
+                            03-16
+                        </em>
+        			    <span itemprop="name">
+                            ez_pz_hackover_2016
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Alloc-to-Stack-Arbitary-Alloc.html">
+            			<em year="2020">
+                            03-14
+                        </em>
+        			    <span itemprop="name">
+                            Alloc to Stack&amp;Arbitary Alloc
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/roarctf-2019-easy-pwn.html">
+            			<em year="2020">
+                            03-11
+                        </em>
+        			    <span itemprop="name">
+                            roarctf_2019_easy_pwn
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/House-of-Spirit.html">
+            			<em year="2020">
+                            03-04
+                        </em>
+        			    <span itemprop="name">
+                            House of Spirit
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/ciscn-2019-s-3.html">
+            			<em year="2020">
+                            02-22
+                        </em>
+        			    <span itemprop="name">
+                            ciscn_2019_s_3
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/babyheap-0ctf-2017-fastbin-attack.html">
+            			<em year="2020">
+                            02-10
+                        </em>
+        			    <span itemprop="name">
+                            babyheap_0ctf_2017(fastbin-attack)
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Fastbin-Double-Free.html">
+            			<em year="2020">
+                            02-04
+                        </em>
+        			    <span itemprop="name">
+                            Fastbin Double Free
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/堆利用fastbin-attach.html">
+            			<em year="2020">
+                            01-28
+                        </em>
+        			    <span itemprop="name">
+                            堆利用fastbin attach
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Chunk-Extend.html">
+            			<em year="2020">
+                            01-22
+                        </em>
+        			    <span itemprop="name">
+                            Chunk Extend
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/babyfengshui-33c3-2016.html">
+            			<em year="2020">
+                            01-18
+                        </em>
+        			    <span itemprop="name">
+                            babyfengshui_33c3_2016
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/ciscn_2019_c_1.html">
+            			<em year="2020">
+                            01-12
+                        </em>
+        			    <span itemprop="name">
+                            ciscn_2019_c_1
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/BUUCTF刷题(pwn).html">
+            			<em year="2020">
+                            01-12
+                        </em>
+        			    <span itemprop="name">
+                            BUUCTF刷题(pwn)
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/安恒Youngter-drive.html">
+            			<em year="2020">
+                            01-05
+                        </em>
+        			    <span itemprop="name">
+                            安恒Youngter-drive
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/BUUCTF逆向刷题.html">
+            			<em year="2020">
+                            01-03
+                        </em>
+        			    <span itemprop="name">
+                            BUUCTF逆向刷题
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/CVE-2010-2883分析复现.html">
+            			<em year="2020">
+                            01-01
+                        </em>
+        			    <span itemprop="name">
+                            CVE-2010-2883分析复现
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                			<a href="/tags/漏洞分析/" class="tag">
+                				漏洞分析
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/GXYCTF逆向部分wp.html">
+            			<em year="2019">
+                            12-28
+                        </em>
+        			    <span itemprop="name">
+                            GXYCTF逆向部分wp
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/南邮ctf.html">
+            			<em year="2019">
+                            11-27
+                        </em>
+        			    <span itemprop="name">
+                            南邮ctf
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/贪吃蛇.html">
+            			<em year="2019">
+                            11-22
+                        </em>
+        			    <span itemprop="name">
+                            贪吃蛇
+                        </span>
+        			    
+                			<a href="/tags/python/" class="tag">
+                				python
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/mbr引导区病毒.html">
+            			<em year="2019">
+                            11-21
+                        </em>
+        			    <span itemprop="name">
+                            mbr引导区病毒
+                        </span>
+        			    
+                			<a href="/tags/病毒/" class="tag">
+                				病毒
+                			</a>
+                        
+                			<a href="/tags/windows/" class="tag">
+                				windows
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/windows启动过程.html">
+            			<em year="2019">
+                            11-20
+                        </em>
+        			    <span itemprop="name">
+                            windows启动过程
+                        </span>
+        			    
+                			<a href="/tags/windows/" class="tag">
+                				windows
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/攻防世界pwn新手区.html">
+            			<em year="2019">
+                            11-18
+                        </em>
+        			    <span itemprop="name">
+                            攻防世界pwn新手区
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/pwn/" class="tag">
+                				pwn
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/sysmalloc.html">
+            			<em year="2019">
+                            10-30
+                        </em>
+        			    <span itemprop="name">
+                            sysmalloc
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                			<a href="/tags/heap/" class="tag">
+                				heap
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/int-molloc.html">
+            			<em year="2019">
+                            10-29
+                        </em>
+        			    <span itemprop="name">
+                            _int_molloc
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                			<a href="/tags/heap/" class="tag">
+                				heap
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/libc-malloc.html">
+            			<em year="2019">
+                            10-28
+                        </em>
+        			    <span itemprop="name">
+                            __libc_malloc
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                			<a href="/tags/heap/" class="tag">
+                				heap
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/万年历.html">
+            			<em year="2019">
+                            10-23
+                        </em>
+        			    <span itemprop="name">
+                            万年历
+                        </span>
+        			    
+                			<a href="/tags/python/" class="tag">
+                				python
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Roalctf-polyre.html">
+            			<em year="2019">
+                            10-19
+                        </em>
+        			    <span itemprop="name">
+                            Roalctf-polyre
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                			<a href="/tags/re/" class="tag">
+                				re
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/Windows RDP 远程代码执行高危漏洞(CVE-2019-0708).html">
+            			<em year="2019">
+                            09-19
+                        </em>
+        			    <span itemprop="name">
+                            Windows RDP 远程代码执行高危漏洞(CVE-2019-0708)
+                        </span>
+        			    
+                			<a href="/tags/漏洞分析/" class="tag">
+                				漏洞分析
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/base家族C语言实现.html">
+            			<em year="2019">
+                            09-17
+                        </em>
+        			    <span itemprop="name">
+                            base家族C语言实现
+                        </span>
+        			    
+                			<a href="/tags/密码学/" class="tag">
+                				密码学
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/信息收集.html">
+            			<em year="2019">
+                            09-16
+                        </em>
+        			    <span itemprop="name">
+                            信息收集
+                        </span>
+        			    
+                			<a href="/tags/渗透测试/" class="tag">
+                				渗透测试
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/玩转RSA.html">
+            			<em year="2019">
+                            08-24
+                        </em>
+        			    <span itemprop="name">
+                            玩转RSA
+                        </span>
+        			    
+                			<a href="/tags/密码学/" class="tag">
+                				密码学
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/中关村信息安全专项赛.html">
+            			<em year="2019">
+                            08-20
+                        </em>
+        			    <span itemprop="name">
+                            中关村信息安全专项赛
+                        </span>
+        			    
+                			<a href="/tags/ctf/" class="tag">
+                				ctf
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/格式化字符串漏洞.html">
+            			<em year="2019">
+                            08-17
+                        </em>
+        			    <span itemprop="name">
+                            格式化字符串漏洞
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/基本ROP.html">
+            			<em year="2019">
+                            08-16
+                        </em>
+        			    <span itemprop="name">
+                            基本ROP
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/linux下基本缓冲区溢出shellcode编写.html">
+            			<em year="2019">
+                            08-15
+                        </em>
+        			    <span itemprop="name">
+                            linux下基本缓冲区溢出shellcode编写
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/栈溢出的保护机制和利用方法.html">
+            			<em year="2019">
+                            08-14
+                        </em>
+        			    <span itemprop="name">
+                            栈溢出的保护机制和利用方法
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/gdb常用命令.html">
+            			<em year="2019">
+                            08-13
+                        </em>
+        			    <span itemprop="name">
+                            gdb常用命令
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/pwn环境配置.html">
+            			<em year="2019">
+                            08-12
+                        </em>
+        			    <span itemprop="name">
+                            pwn环境配置
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/栈帧.html">
+            			<em year="2019">
+                            08-11
+                        </em>
+        			    <span itemprop="name">
+                            栈帧
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/关于二进制.html">
+            			<em year="2019">
+                            08-10
+                        </em>
+        			    <span itemprop="name">
+                            关于二进制
+                        </span>
+        			    
+                			<a href="/tags/二进制安全/" class="tag">
+                				二进制安全
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/RC4.html">
+            			<em year="2019">
+                            07-10
+                        </em>
+        			    <span itemprop="name">
+                            RC4
+                        </span>
+        			    
+                			<a href="/tags/密码学/" class="tag">
+                				密码学
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/一个有趣的a+b.html">
+            			<em year="2019">
+                            07-10
+                        </em>
+        			    <span itemprop="name">
+                            一个有趣的a+b
+                        </span>
+        			    
+                			<a href="/tags/密码学/" class="tag">
+                				密码学
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/windows消息钩取.html">
+            			<em year="2019">
+                            07-06
+                        </em>
+        			    <span itemprop="name">
+                            windows消息钩取
+                        </span>
+        			    
+                			<a href="/tags/windows/" class="tag">
+                				windows
+                			</a>
+                        
+                			<a href="/tags/hook/" class="tag">
+                				hook
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/DLL注入.html">
+            			<em year="2019">
+                            07-02
+                        </em>
+        			    <span itemprop="name">
+                            DLL注入
+                        </span>
+        			    
+                			<a href="/tags/DLL/" class="tag">
+                				DLL
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/PE文件.html">
+            			<em year="2019">
+                            07-01
+                        </em>
+        			    <span itemprop="name">
+                            PE文件
+                        </span>
+        			    
+                			<a href="/tags/pe文件/" class="tag">
+                				pe文件
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/计算机网络中的安全.html">
+            			<em year="2019">
+                            06-20
+                        </em>
+        			    <span itemprop="name">
+                            计算机网络中的安全
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/无线网络和移动网络.html">
+            			<em year="2019">
+                            06-18
+                        </em>
+        			    <span itemprop="name">
+                            无线网络和移动网络
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/链路层和局域网.html">
+            			<em year="2019">
+                            06-16
+                        </em>
+        			    <span itemprop="name">
+                            链路层和局域网
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/网络层控制平面.html">
+            			<em year="2019">
+                            06-14
+                        </em>
+        			    <span itemprop="name">
+                            网络层控制平面
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/网络层数据平面.html">
+            			<em year="2019">
+                            06-12
+                        </em>
+        			    <span itemprop="name">
+                            网络层数据平面
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/运输层.html">
+            			<em year="2019">
+                            06-10
+                        </em>
+        			    <span itemprop="name">
+                            运输层
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/应用层.html">
+            			<em year="2019">
+                            06-08
+                        </em>
+        			    <span itemprop="name">
+                            应用层
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/多媒体网络.html">
+            			<em year="2019">
+                            06-07
+                        </em>
+        			    <span itemprop="name">
+                            多媒体网络
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/计算机网络和因特网.html">
+            			<em year="2019">
+                            06-06
+                        </em>
+        			    <span itemprop="name">
+                            计算机网络和因特网
+                        </span>
+        			    
+                			<a href="/tags/读书笔记/" class="tag">
+                				读书笔记
+                			</a>
+                        
+                			<a href="/tags/计算机网络/" class="tag">
+                				计算机网络
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/迷宫问题.html">
+            			<em year="2019">
+                            06-01
+                        </em>
+        			    <span itemprop="name">
+                            迷宫问题
+                        </span>
+        			    
+                			<a href="/tags/数据结构/" class="tag">
+                				数据结构
+                			</a>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/十大排序.html">
+            			<em year="2019">
+                            05-01
+                        </em>
+        			    <span itemprop="name">
+                            十大排序
+                        </span>
+        			    
+                			<a href="/tags/数据结构/" class="tag">
+                				数据结构
+                			</a>
+                        
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+     <!-- Archive by month, called by page( categories, tags... ) -->
+    <div id="layout-archive-month" style="display: 
+         
+            block"> 
+        
+
+        
+        
+            
+
+            
+                
+                <h3 class="archive-year">
+                    <!-- <a href="/archives/2019/11"> -->
+                    <a>
+                        2019 - 11
+                    </a>
+                </h3>
+            
+
+            <ul>
+                <li>
+                    <a href="/攻防世界pwn新手区.html">
+                        <em>
+                            11-18
+                        </em>
+                        <span itemprop="name">
+                            攻防世界pwn新手区
+                        </span>
+                        
+                            <a href="/tags/ctf/" class="tag">
+                                ctf
+                            </a>
+                        
+                            <a href="/tags/pwn/" class="tag">
+                                pwn
+                            </a>
+                               
+                    </a>
+                </li>
+            </ul>
+        
+    </div>
+
+    
+        
+	
+
+	
+		<ul class="pagination-2">
+			
+				<li class="pagination-2-prev">
+					<a href="/tags/pwn/">&laquo; 上一页 </a>
+				</li>
+			
+			
+			
+		</ul>
+	
+
+    
+</div>
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div id="navigation-show">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by Thriumph. All Rights Reserved.
+			
+			
+				<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			
+		</p>
+		<p>
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_site_pv">
+	    	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+		</span>
+
+		<span id="busuanzi_container_site_uv">
+	  		本站访客数<span id="busuanzi_value_site_uv"></span>人次
+		</span>
+		
+	
+
+
+
+
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- Local or hitokoto! -->
+
+	<script src="/plugin/motto/motto.js"></script>
+	
+	<script type="text/javascript">
+		(function motto(){
+			let mottoText = getMingYanContent().split('</br> - </br>'),
+			
+			mottoTextContent = mottoText[0]?mottoText[0]:'请刷新...',
+			
+			mottoTextFrom = mottoText[1]?mottoText[1]:'one/一个';
+			
+			mottoTextContent = mottoTextContent.trim().substring(0, 100);
+		
+			$("#motto-content").html( mottoTextContent);
+			$("#motto-author").html( mottoTextFrom  );
+		})();	
+	</script>	
+
+
+
+<!-- love effect -->
+
+	<script src="/plugin/love/love.js"></script>
+
+
+<!-- back to top -->
+
+	<div id="totop">
+	<span class="icon-circle-up"></span>
+</div>
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	
+	<script src="//s6.cnzz.com/stat.php?id=&web_id=" type="text/javascript"></script>
+
+	
+	
+	
+ 
+
+<!-- leancloud -->
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+  <script src="/plugin/leancloud/av-min.js"></script>
+<script src="/js/leancloud-count.js"></script>
+
+	
+
+  
+
+
+<script src="/plugin/chinese/chinese.js"></script>
+<script src="/plugin/imagelazyloader/yall.min.js"></script>
+<script src="/plugin/imageloaded/imagesloaded.pkgd.min.js"></script>
+<script src="/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/plugin/resizediv/resizediv.js"></script>
+<script src="/js/main.js"></script>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":200,"height":400,"hOffset":-20,"vOffset":80},"mobile":{"show":false}});</script></body>	
+</html>

